@@ -1,0 +1,10 @@
+{
+    "policies": {
+        "Preferences": {
+            "app.update.auto": {
+                "Value": true,
+                "Status": "default"
+            }
+        }
+    }
+}

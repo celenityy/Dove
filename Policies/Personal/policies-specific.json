@@ -1,0 +1,7 @@
+{
+    "policies": {
+        "AppAutoUpdate": true,
+        "DisableAppUpdate": false,
+        "ManualAppUpdateOnly": false
+    }
+}
