@@ -12,4 +12,4 @@ Dove offers easy to use install scripts for various platforms. All you have to d
 
 Fedora Linux:
 
-`bash -c "$(curl -fsSL https://codeberg.org/Magnesium1062/Dove/raw/branch/master/fedora_install.sh"`
+`bash -c "$(curl -fsSL https://codeberg.org/Magnesium1062/Dove/raw/branch/master/fedora_install.sh)"`
