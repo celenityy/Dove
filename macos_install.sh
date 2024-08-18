@@ -1,10 +1,10 @@
 #!/bin/zsh
 
-wget https://codeberg.org/Magnesium1062/Dove/raw/branch/master/mozilla.cfg
+wget https://codeberg.org/Magnesium1062/Dove/raw/branch/main/mozilla.cfg
 
 sudo mv mozilla.cfg /Applications/Thunderbird.app/Contents/Resources/mozilla.cfg
 
-wget https://codeberg.org/Magnesium1062/Dove/raw/branch/master/defaults/pref/local-settings.js
+wget https://codeberg.org/Magnesium1062/Dove/raw/branch/main/defaults/pref/local-settings.js
 
 sudo mkdir -p /Applications/Thunderbird.app/Contents/Resources/defaults/pref
 
