@@ -658,69 +658,40 @@
       "Extensions": {
         "uBlock0@raymondhill.net": {
           "adminSettings": {
-            "selectedFilterLists": [
-              "user-filters",
-              "ublock-filters",
-              "ublock-badware",
-              "ublock-privacy",
-              "ublock-unbreak",
-              "ublock-quick-fixes",
-              "adguard-generic",
-              "adguard-mobile",
-              "easylist",
-              "adguard-spyware-url",
-              "adguard-spyware",
-              "block-lan",
-              "easyprivacy",
-              "urlhaus-1",
-              "curben-phishing",
-              "adguard-cookies",
-              "ublock-cookies-adguard",
-              "fanboy-cookiemonster",
-              "ublock-cookies-easylist",
-              "adguard-social",
-              "fanboy-social",
-              "fanboy-thirdparty_social",
-              "adguard-popup-overlays",
-              "adguard-mobile-app-banners",
-              "adguard-other-annoyances",
-              "adguard-widgets",
-              "easylist-annoyances",
-              "easylist-chat",
-              "easylist-newsletters",
-              "easylist-notifications",
-              "ublock-annoyances",
-              "dpollock-0",
-              "plowe-0",
-              "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
-              "https://raw.githubusercontent.com/yokoffing/filterlists/main/block_third_party_fonts.txt",
-              "https://divested.dev/blocklists/Fingerprinting.ubl",
-              "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif-ips.txt",
-              "https://raw.githubusercontent.com/yokoffing/filterlists/main/click2load.txt"
-            ]
+            "assetsBootstrapLocation": "https://codeberg.org/Magnesium1062/Phoenix/raw/branch/main/uBlock/assets.json",
+            "userSettings": {
+              "advancedUserEnabled": true,
+              "autoUpdate": true,
+              "cnameUncloakEnabled": true,
+              "dynamicFilteringEnabled": true,
+              "firewallPaneMinimized": false,
+              "hyperlinkAuditingDisabled": true,
+              "prefetchingDisabled": true,
+              "showIconBadge": true
+            }
           }
         }
+      },
+      "SearchEngines": {
+        "Add": [
+          {
+            "Name": "Brave",
+            "URLTemplate": "https://search.brave.com/search?q={searchTerms}",
+            "Method": "GET",
+            "IconURL": "https://cdn.search.brave.com/serp/v1/static/brand/eebf5f2ce06b0b0ee6bbd72d7e18621d4618b9663471d42463c692d019068072-brave-lion-favicon.png",
+            "Alias": "br",
+            "Description": "Brave Search: private, independent, open",
+            "SuggestURLTemplate": "https://search.brave.com/api/suggest?q={searchTerms}"
+          }
+        ],
+        "Default": "Brave",
+        "PreventInstalls": false,
+        "Remove": [
+          "Google",
+          "Bing",
+          "Amazon.com"
+        ]
       }
-    },
-    "SearchEngines": {
-      "Add": [
-        {
-          "Name": "Brave",
-          "URLTemplate": "https://search.brave.com/search?q={searchTerms}",
-          "Method": "GET",
-          "IconURL": "https://cdn.search.brave.com/serp/v1/static/brand/eebf5f2ce06b0b0ee6bbd72d7e18621d4618b9663471d42463c692d019068072-brave-lion-favicon.png",
-          "Alias": "br",
-          "Description": "Brave Search: private, independent, open",
-          "SuggestURLTemplate": "https://search.brave.com/api/suggest?q={searchTerms}"
-        }
-      ],
-      "Default": "Brave",
-      "PreventInstalls": false,
-      "Remove": [
-        "Google",
-        "Bing",
-        "Amazon.com"
-      ]
     },
     "Preferences": {
       "app.update.auto": {
