@@ -63,9 +63,6 @@
         "Proxy": {
             "UseProxyForDNS": true
         },
-        "RequestedLocales": [
-            "en-US"
-        ],
         "SearchEngines": {
             "Add": [
                 {
