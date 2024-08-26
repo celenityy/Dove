@@ -94,6 +94,14 @@
                     "Alias": "eco",
                     "Description": "Search Ecosia",
                     "SuggestURLTemplate": "https://ac.ecosia.org/autocomplete?q={searchTerms}&type=list"
+                },
+                {
+                    "Name": "Mullvad Leta",
+                    "URLTemplate": "https://leta.mullvad.net/?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://mullvad.net/favicon.ico",
+                    "Alias": "leta",
+                    "Description": "A privacy focused search engine provided by Mullvad for customers of our VPN."
                 }
             ],
             "Default": "Brave",
