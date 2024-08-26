@@ -146,6 +146,15 @@
                     "Alias": "qwant",
                     "Description": "Qwant The search engine that doesn't know anything about you.",
                     "SuggestURLTemplate": "https://api.qwant.com/v3/suggest/?q={searchTerms}"
+                },
+                {
+                    "Name": "Startpage",
+                    "URLTemplate": "https://www.startpage.com/sp/search?query={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://www.startpage.com/favicon.ico",
+                    "Alias": "sp",
+                    "Description": "Startpage Search",
+                    "SuggestURLTemplate": "https://www.startpage.com/osuggestions?q={searchTerms}"
                 }
             ],
             "Default": "Brave",
