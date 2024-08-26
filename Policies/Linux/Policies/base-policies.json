@@ -76,6 +76,15 @@
                     "Alias": "br",
                     "Description": "Brave Search: private, independent, open",
                     "SuggestURLTemplate": "https://search.brave.com/api/suggest?q={searchTerms}"
+                },
+                {
+                    "Name": "DuckDuckGo (Lite)",
+                    "URLTemplate": "https://lite.duckduckgo.com/lite/?q={searchTerms}",
+                    "Method": "POST",
+                    "IconURL": "https://duckduckgo.com/favicon.ico",
+                    "Alias": "ddgl",
+                    "Description": "Search DuckDuckGo (Lite)",
+                    "SuggestURLTemplate": "https: //duckduckgo.com/ac/?q={searchTerms}&type=list"
                 }
             ],
             "Default": "Brave",
