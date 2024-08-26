@@ -123,6 +123,14 @@
                     "SuggestURLTemplate": "https://kagi.com/api/autosuggest?q={searchTerms}"
                 },
                 {
+                    "Name": "Mojeek",
+                    "URLTemplate": "https://www.mojeek.com/search?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://www.mojeek.com/favicon.png",
+                    "Alias": "mojeek",
+                    "Description": "Search the web using Mojeek"
+                },
+                {
                     "Name": "Mullvad Leta",
                     "URLTemplate": "https://leta.mullvad.net/?q={searchTerms}",
                     "Method": "GET",
