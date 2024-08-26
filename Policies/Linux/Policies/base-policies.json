@@ -131,8 +131,16 @@
                     "Description": "Search the web using Mojeek"
                 },
                 {
-                    "Name": "Mullvad Leta",
-                    "URLTemplate": "https://leta.mullvad.net/?q={searchTerms}",
+                    "Name": "Mullvad Leta (Brave)",
+                    "URLTemplate": "https://leta.mullvad.net/?q={searchTerms}&engine=brave",
+                    "Method": "GET",
+                    "IconURL": "https://mullvad.net/favicon.ico",
+                    "Alias": "leta",
+                    "Description": "A privacy focused search engine provided by Mullvad for customers of our VPN."
+                },
+                {
+                    "Name": "Mullvad Leta (Google)",
+                    "URLTemplate": "https://leta.mullvad.net/?q={searchTerms}&engine=google",
                     "Method": "GET",
                     "IconURL": "https://mullvad.net/favicon.ico",
                     "Alias": "leta",
