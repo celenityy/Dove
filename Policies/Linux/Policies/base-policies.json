@@ -1,0 +1,90 @@
+{
+    "policies": {
+        "3rdparty": {
+            "Extensions": {
+                "uBlock0@raymondhill.net": {
+                    "adminSettings": {
+                        "assetsBootstrapLocation": "https://codeberg.org/Magnesium1062/Phoenix/raw/branch/main/uBlock/assets.json",
+                        "userSettings": {
+                            "advancedUserEnabled": true,
+                            "autoUpdate": true,
+                            "cnameUncloakEnabled": true,
+                            "dynamicFilteringEnabled": true,
+                            "firewallPaneMinimized": false,
+                            "hyperlinkAuditingDisabled": true,
+                            "prefetchingDisabled": true,
+                            "showIconBadge": true
+                        }
+                    }
+                }
+            }
+        },
+        "CaptivePortal": false,
+        "DisableSystemAddonUpdate": false,
+        "DisableTelemetry": true,
+        "DNSOverHTTPS": {
+            "Enabled": true,
+            "Locked": false,
+            "ProviderURL": "https://dns.quad9.net/dns-query",
+            "Fallback": false
+        },
+        "ExtensionSettings": {
+            "*": {
+                "blocked_install_message": "I am Iron Man.",
+                "install_sources": [
+                    "https://addons.thunderbird.net/*",
+                    "https://addons.mozilla.org/*",
+                    "about:addons",
+                    "https://github.com/gorhill/uBlock/releases/*",
+                    "https://objects.githubusercontent.com/*"
+                ],
+                "allowed_types": [
+                    "extension",
+                    "theme"
+                ],
+                "updates_disabled": false,
+                "temporarily_allow_weak_signatures": false
+            },
+            "uBlock0@raymondhill.net": {
+                "installation_mode": "normal_installed",
+                "install_url": "https://github.com/gorhill/uBlock/releases/download/1.59.0/uBlock0_1.59.0.thunderbird.xpi",
+                "updates_disabled": false,
+                "temporarily_allow_weak_signatures": false
+            }
+        },
+        "ExtensionUpdate": true,
+        "NetworkPrediction": false,
+        "OfferToSaveLogins": false,
+        "PasswordManagerEnabled": false,
+        "PDFjs": {
+            "EnablePermissions": false
+        },
+        "PromptForDownloadLocation": true,
+        "Proxy": {
+            "UseProxyForDNS": true
+        },
+        "RequestedLocales": [
+            "en-US"
+        ],
+        "SearchEngines": {
+            "Add": [
+                {
+                    "Name": "Brave",
+                    "URLTemplate": "https://search.brave.com/search?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://cdn.search.brave.com/serp/v1/static/brand/eebf5f2ce06b0b0ee6bbd72d7e18621d4618b9663471d42463c692d019068072-brave-lion-favicon.png",
+                    "Alias": "br",
+                    "Description": "Brave Search: private, independent, open",
+                    "SuggestURLTemplate": "https://search.brave.com/api/suggest?q={searchTerms}"
+                }
+            ],
+            "Default": "Brave",
+            "PreventInstalls": false,
+            "Remove": [
+                "Google",
+                "Bing",
+                "Amazon.com"
+            ]
+        }
+    }
+}
