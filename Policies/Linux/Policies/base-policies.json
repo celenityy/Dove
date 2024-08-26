@@ -96,6 +96,24 @@
                     "SuggestURLTemplate": "https://ac.ecosia.org/autocomplete?q={searchTerms}&type=list"
                 },
                 {
+                    "Name": "Kagi",
+                    "URLTemplate": "https://kagi.com/search?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://kagi.com/favicon.ico",
+                    "Alias": "kagi",
+                    "Description": "A privacy-focused, user-centric search engine.",
+                    "SuggestURLTemplate": "https://kagi.com/api/autosuggest?q={searchTerms}"
+                },
+                {
+                    "Name": "Kagi (HTML)",
+                    "URLTemplate": "https://kagi.com/html/search?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://kagi.com/favicon.ico",
+                    "Alias": "kagi",
+                    "Description": "A privacy-focused, user-centric search engine.",
+                    "SuggestURLTemplate": "https://kagi.com/api/autosuggest?q={searchTerms}"
+                },
+                {
                     "Name": "Mullvad Leta",
                     "URLTemplate": "https://leta.mullvad.net/?q={searchTerms}",
                     "Method": "GET",
