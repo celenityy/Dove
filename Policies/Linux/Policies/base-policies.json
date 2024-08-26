@@ -78,6 +78,15 @@
                     "SuggestURLTemplate": "https://search.brave.com/api/suggest?q={searchTerms}"
                 },
                 {
+                    "Name": "DuckDuckGo (HTML)",
+                    "URLTemplate": "https://html.duckduckgo.com/html/?q={searchTerms}",
+                    "Method": "POST",
+                    "IconURL": "https://duckduckgo.com/favicon.ico",
+                    "Alias": "ddgh",
+                    "Description": "Search DuckDuckGo (HTML)",
+                    "SuggestURLTemplate": "https: //duckduckgo.com/ac/?q={searchTerms}&type=list"
+                },
+                {
                     "Name": "DuckDuckGo (Lite)",
                     "URLTemplate": "https://lite.duckduckgo.com/lite/?q={searchTerms}",
                     "Method": "POST",
