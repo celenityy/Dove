@@ -85,6 +85,15 @@
                     "Alias": "ddgl",
                     "Description": "Search DuckDuckGo (Lite)",
                     "SuggestURLTemplate": "https: //duckduckgo.com/ac/?q={searchTerms}&type=list"
+                },
+                {
+                    "Name": "Ecosia",
+                    "URLTemplate": "https://www.ecosia.org/search?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://www.ecosia.org/static/icons/favicon.ico",
+                    "Alias": "eco",
+                    "Description": "Search Ecosia",
+                    "SuggestURLTemplate": "https://ac.ecosia.org/autocomplete?q={searchTerms}&type=list"
                 }
             ],
             "Default": "Brave",
