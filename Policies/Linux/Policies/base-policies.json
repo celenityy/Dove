@@ -137,6 +137,15 @@
                     "IconURL": "https://mullvad.net/favicon.ico",
                     "Alias": "leta",
                     "Description": "A privacy focused search engine provided by Mullvad for customers of our VPN."
+                },
+                {
+                    "Name": "Qwant",
+                    "URLTemplate": "https://www.qwant.com?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://www.qwant.com/public/favicon.066f5ee2ab77b590bb5846c32c57cb84.ico",
+                    "Alias": "qwant",
+                    "Description": "Qwant The search engine that doesn't know anything about you.",
+                    "SuggestURLTemplate": "https://api.qwant.com/v3/suggest/?q={searchTerms}"
                 }
             ],
             "Default": "Brave",
