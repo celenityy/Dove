@@ -14,7 +14,8 @@
                             "hyperlinkAuditingDisabled": true,
                             "prefetchingDisabled": true,
                             "showIconBadge": true
-                        }
+                        },
+                        "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true\nno-scripting: * true\nno-scripting: addons.thunderbird.net false\nno-scripting: duckduckgo.com false\nno-scripting: search.brave.com false\nno-scripting: login.microsoftonline.com false\nno-scripting: login.live.com false\nno-scripting: okta.com false\nno-scripting: accounts.google.com false\nno-scripting: www.google.com false\nno-scripting: login.aol.com false\nno-scripting: login.yahoo.net false"
                     }
                 }
             }
