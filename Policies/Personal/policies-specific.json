@@ -2,6 +2,19 @@
     "policies": {
         "AppAutoUpdate": true,
         "DisableAppUpdate": false,
-        "ManualAppUpdateOnly": false
+        "ManualAppUpdateOnly": false,
+        "Preferences": {
+            "intl.accept_languages": {
+                "Value": "en-US, en",
+                "Status": "locked"
+            },
+            "intl.locale.requested": {
+                "Value": "en-US",
+                "Status": "locked"
+            }
+        },
+        "RequestedLocales": [
+            "en-US"
+        ]
     }
 }
