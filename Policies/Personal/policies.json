@@ -698,7 +698,7 @@
           "IconURL": "https://duckduckgo.com/favicon.ico",
           "Alias": "ddgh",
           "Description": "Search DuckDuckGo (HTML)",
-          "SuggestURLTemplate": "https: //duckduckgo.com/ac/?q={searchTerms}&type=list"
+          "SuggestURLTemplate": "https://duckduckgo.com/ac/?q={searchTerms}&type=list"
         },
         {
           "Name": "DuckDuckGo (Lite)",
@@ -707,7 +707,7 @@
           "IconURL": "https://duckduckgo.com/favicon.ico",
           "Alias": "ddgl",
           "Description": "Search DuckDuckGo (Lite)",
-          "SuggestURLTemplate": "https: //duckduckgo.com/ac/?q={searchTerms}&type=list"
+          "SuggestURLTemplate": "https://duckduckgo.com/ac/?q={searchTerms}&type=list"
         },
         {
           "Name": "Ecosia",
@@ -791,10 +791,21 @@
       "app.update.auto": {
         "Value": true,
         "Status": "default"
+      },
+      "intl.accept_languages": {
+        "Value": "en-US, en",
+        "Status": "locked"
+      },
+      "intl.locale.requested": {
+        "Value": "en-US",
+        "Status": "locked"
       }
     },
     "AppAutoUpdate": true,
     "DisableAppUpdate": false,
-    "ManualAppUpdateOnly": false
+    "ManualAppUpdateOnly": false,
+    "RequestedLocales": [
+      "en-US"
+    ]
   }
 }
