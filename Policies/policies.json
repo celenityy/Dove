@@ -805,6 +805,7 @@
         "Amazon.com"
       ]
     },
+    "SSLVersionMin": "tls1.2",
     "Preferences": {
       "app.update.auto": {
         "Value": true,

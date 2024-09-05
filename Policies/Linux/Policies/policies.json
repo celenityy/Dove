@@ -39,12 +39,6 @@
       }
     },
     "CaptivePortal": false,
-    "Cookies": {
-      "AcceptThirdParty": "from-visited",
-      "ExpireAtSessionEnd": true,
-      "RejectTracker": true,
-      "Locked": true
-    },
     "DisableSystemAddonUpdate": false,
     "DisableTelemetry": true,
     "DNSOverHTTPS": {
@@ -810,6 +804,7 @@
         "Bing",
         "Amazon.com"
       ]
-    }
+    },
+    "SSLVersionMin": "tls1.2"
   }
 }
