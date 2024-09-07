@@ -1,3 +1,5 @@
+# ⚠️ **IMPORTANT UPDATE** - SEE [HERE](https://codeberg.org/celenity/Dove/issues/1)
+
 # Dove
 
 Dove is a suite of configurations & advanced modifications for Mozilla Thunderbird, designed to put the user first.
