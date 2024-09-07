@@ -34,7 +34,7 @@ echo
 
 
 echo_green_text "Overwriting old mozilla.cfg with new mozilla.cfg"
-sudo mv -v mozilla.cfg /usr/lib64/firefox/mozilla.cfg || error_fn
+sudo mv -v mozilla.cfg /usr/lib64/thunderbird/mozilla.cfg || error_fn
 echo
 
 echo_green_text "Uninstalling the old dove-policies package"
