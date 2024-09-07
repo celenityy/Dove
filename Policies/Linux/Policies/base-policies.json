@@ -4,7 +4,7 @@
             "Extensions": {
                 "uBlock0@raymondhill.net": {
                     "adminSettings": {
-                        "assetsBootstrapLocation": "https://codeberg.org/Magnesium1062/Phoenix/raw/branch/main/uBlock/assets.json",
+                        "assetsBootstrapLocation": "https://codeberg.org/celenity/Phoenix/raw/branch/main/uBlock/assets.json",
                         "userSettings": {
                             "advancedUserEnabled": true,
                             "autoUpdate": true,
@@ -119,7 +119,7 @@
                     "URLTemplate": "https://search.brave.com/search?q={searchTerms}",
                     "Method": "GET",
                     "IconURL": "https://cdn.search.brave.com/serp/v1/static/brand/eebf5f2ce06b0b0ee6bbd72d7e18621d4618b9663471d42463c692d019068072-brave-lion-favicon.png",
-                    "Alias": "br",
+                    "Alias": "brave",
                     "Description": "Brave Search: private, independent, open",
                     "SuggestURLTemplate": "https://search.brave.com/api/suggest?q={searchTerms}"
                 },
@@ -191,6 +191,13 @@
                     "IconURL": "https://mullvad.net/favicon.ico",
                     "Alias": "leta",
                     "Description": "A privacy focused search engine provided by Mullvad for customers of our VPN."
+                },
+                {
+                    "Name": "No Search",
+                    "URLTemplate": "https://nosearch.invalid/{searchTerms}",
+                    "Method": "GET",
+                    "Alias": "nosearch",
+                    "Description": "Just a placeholder for users who don't wish to set a default search engine. :)"
                 },
                 {
                     "Name": "Qwant",

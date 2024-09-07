@@ -29,7 +29,7 @@ fi
 
 
 echo_green_text "Downloading mozilla.cfg"
-wget -nv https://codeberg.org/Magnesium1062/Dove/raw/branch/main/mozilla.cfg || error_fn
+wget -nv https://codeberg.org/celenity/Dove/raw/branch/main/mozilla.cfg || error_fn
 echo
 
 
@@ -39,7 +39,7 @@ echo
 
 
 echo_green_text "Downloading local-settings.js"
-wget -nv https://codeberg.org/Magnesium1062/Dove/raw/branch/main/defaults/pref/local-settings.js || error_fn
+wget -nv https://codeberg.org/celenity/Dove/raw/branch/main/defaults/pref/local-settings.js || error_fn
 echo
 
 
