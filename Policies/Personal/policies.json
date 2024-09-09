@@ -752,6 +752,21 @@
     "Proxy": {
       "UseProxyForDNS": true
     },
+    "SSLVersionMin": "tls1.2",
+    "Preferences": {
+      "app.update.auto": {
+        "Value": true,
+        "Status": "default"
+      },
+      "intl.accept_languages": {
+        "Value": "en-US, en",
+        "Status": "locked"
+      },
+      "intl.locale.requested": {
+        "Value": "en-US",
+        "Status": "locked"
+      }
+    },
     "SearchEngines": {
       "Add": [
         {
@@ -865,21 +880,6 @@
         "Bing",
         "Amazon.com"
       ]
-    },
-    "SSLVersionMin": "tls1.2",
-    "Preferences": {
-      "app.update.auto": {
-        "Value": true,
-        "Status": "default"
-      },
-      "intl.accept_languages": {
-        "Value": "en-US, en",
-        "Status": "locked"
-      },
-      "intl.locale.requested": {
-        "Value": "en-US",
-        "Status": "locked"
-      }
     },
     "AppAutoUpdate": true,
     "DisableAppUpdate": false,
