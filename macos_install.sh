@@ -1,10 +1,10 @@
 #!/bin/zsh
 
-wget https://codeberg.org/celenity/Dove/raw/branch/main/mozilla.cfg
+wget https://dove.celenity.dev/mozilla.cfg
 
 sudo mv mozilla.cfg /Applications/Thunderbird.app/Contents/Resources/mozilla.cfg
 
-wget https://codeberg.org/celenity/Dove/raw/branch/main/defaults/pref/local-settings.js
+wget https://dove.celenity.dev/defaults/pref/local-settings.js
 
 sudo mkdir -p /Applications/Thunderbird.app/Contents/Resources/defaults/pref
 

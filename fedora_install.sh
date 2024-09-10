@@ -29,7 +29,7 @@ fi
 
 
 echo_green_text "Downloading mozilla.cfg"
-wget -nv https://codeberg.org/celenity/Dove/raw/branch/main/mozilla.cfg || error_fn
+wget -nv https://dove.celenity.dev/mozilla.cfg || error_fn
 echo
 
 
@@ -39,7 +39,7 @@ echo
 
 
 echo_green_text "Downloading local-settings.js"
-wget -nv https://codeberg.org/celenity/Dove/raw/branch/main/defaults/pref/local-settings.js || error_fn
+wget -nv https://dove.celenity.dev/defaults/pref/local-settings.js || error_fn
 echo
 
 
@@ -58,7 +58,7 @@ echo
 
 
 echo_green_text "Adding Dove-Policies COPR Repo to DNF"
-sudo dnf copr enable retold3202/Dove-Policies || error_fn
+sudo dnf copr enable celenity/dove-policies || error_fn
 echo
 
 echo_green_text "Updating DNF cache"

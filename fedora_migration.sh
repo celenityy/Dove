@@ -29,7 +29,7 @@ fi
 
 
 echo_green_text "Downloading new mozilla.cfg"
-wget -nv https://codeberg.org/celenity/Dove/raw/branch/main/mozilla.cfg || error_fn
+wget -nv https://dove.celenity.dev/mozilla.cfg || error_fn
 echo
 
 
