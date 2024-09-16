@@ -71,4 +71,4 @@ sudo dnf install dove-policies || error_fn
 echo
 
 
-echo_gree_text "All done. Congratulations, you've successfully installed Dove.\nEnjoy :)\n"
+echo_green_text "All done. Congratulations, you've successfully installed Dove.\nEnjoy :)\n"
