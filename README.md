@@ -20,14 +20,16 @@ ___
 - [Dove](#dove)
 - [📖 Glossary](#-glossary)
 - [🚀 Install ](#-install-)
-  - [🐧 GNU/Linux ](#-gnulinux-)
-  - [🍎 macOS ](#-macos-)
-  - [🪟 Windows ](#-windows-)
+	- [🐧 GNU/Linux ](#-gnulinux-)
+	- [🍎 macOS ](#-macos-)
+	- [🪟 Windows ](#-windows-)
 - [👋 Uninstall ](#-uninstall-)
-  - [🐧 GNU/Linux ](#-gnulinux--1)
-  - [🍎 macOS: ](#-macos--1)
+	- [🐧 GNU/Linux ](#-gnulinux--1)
+	- [🍎 macOS: ](#-macos--1)
 - [⚠️ Manual Mode *(Not recommended)* ](#️-manual-mode-not-recommended-)
 - [💜 Attribution ](#-attribution-)
+
+</details>
 
 # 🚀 Install <a name="install"></a>
 
