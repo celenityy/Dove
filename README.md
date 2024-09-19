@@ -18,24 +18,24 @@ ___
 **<details><summary>Click me</summary>**
 
 - [Dove](#dove)
-- [📖 Glossary](#-glossary)
-- [🚀 Install ](#-install-)
-	- [🐧 GNU/Linux ](#-gnulinux-)
-	- [🍎 macOS ](#-macos-)
-	- [🪟 Windows ](#-windows-)
-- [👋 Uninstall ](#-uninstall-)
-	- [🐧 GNU/Linux ](#-gnulinux--1)
-	- [🍎 macOS: ](#-macos--1)
-- [⚠️ Manual Mode *(Not recommended)* ](#️-manual-mode-not-recommended-)
-- [💜 Attribution ](#-attribution-)
+- [📖 Glossary](#glossary)
+- [🚀 Install ](#install)
+	- [🐧 GNU/Linux ](#gnu-linux)
+	- [🍎 macOS ](#macos)
+	- [🪟 Windows ](#windows)
+- [👋 Uninstall ](#uninstall)
+	- [🐧 GNU/Linux ](#gnu-linux-1)
+	- [🍎 macOS: ](#macos)
+- [⚠️ Manual Mode *(Not recommended)* ](#️manual-mode-not-recommended)
+- [💜 Attribution ](#attribution)
 
 </details>
 
-# 🚀 Install <a name="install"></a>
+# 🚀 Install
 
 Dove offers easy to use install scripts for various platforms. All you have to do is have Thunderbird installed & ready, paste the command that corresponds to your platform of choice in your terminal, and you should be good to go. :)
 
-## 🐧 GNU/Linux <a name="gnulinux"></a>
+## 🐧 GNU-Linux
 
 ![Gnulove](assets/Gnulove.jpg)
 
@@ -85,11 +85,11 @@ See upstream Codeberg issue [here](https://codeberg.org/celenity/Phoenix/issues/
 
 ___
 
-# 👋 Uninstall <a name="uninstall"></a>
+# 👋 Uninstall
 
 If Dove isn't right for you - no worries! We also have easy to use uninstall scripts. Please be sure to [leave us feedback](https://dove.celenity.dev/issues) though so we can improve for the future!
 
-## 🐧 GNU/Linux <a name="gnulinux-1"></a>
+## 🐧 GNU-Linux
 
 **<details><summary>Arch</summary>** <a name="arch-1"></a>
 
@@ -117,13 +117,13 @@ If Dove isn't right for you - no worries! We also have easy to use uninstall scr
 
 ___
 
-## 🍎 macOS: <a name="macos-1"></a>
+## 🍎 macOS
 
 `bash -c "$(curl -fsSL https://dove.celenity.dev/macos_uninstall.sh)"`
 
 ___
 
-# ⚠️ Manual Mode *(Not recommended)* <a name="manual-mode-not-recommended"></a>
+# ⚠️ Manual Mode *(Not recommended)*
 
 By default, Dove leverages Mozilla's [Centralized Management](https://support.mozilla.org/kb/customizing-firefox-using-autoconfig#w_centralized-management) feature to automatically update its configurations. This allows fast, easy updates & fixes as needed, regardless of your platform. Dove's Policies are updated separately, through the [AUR](https://aur.archlinux.org/packages/dove-policies) on Arch Linux, [COPR](https://copr.fedorainfracloud.org/coprs/dove/phoenix-policies/) on Fedora, the [MPR](https://mpr.makedeb.org/packages/dove-policies) on Debian/Ubuntu/Derivatives, & our [Homebrew](https://brew.sh/) [Tap](https://codeberg.org/celenity/Dove-Policies-macOS) on macOS. 
 
@@ -192,7 +192,7 @@ Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
 
 ___
 
-# 💜 Attribution <a name="attribution"></a>
+# 💜 Attribution
 
 Huge thank you to the following projects & individuals for making Dove possible. Please show them support!
 
