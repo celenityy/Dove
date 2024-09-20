@@ -151,23 +151,31 @@ However, if this is not desirable for you & your situation, you can manually ins
 
 **1:** Download our `base.cfg` file [here](https://dove.celenity.dev/base.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
 
+```sh
 `wget https://dove.celenity.dev/base.cfg`
+```
 
 **2:** Download `local-settings.js` from [here](https://dove.celenity.dev/manual/defaults/pref/local-settings.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
 
+```sh
 `wget https://dove.celenity.dev/manual/defaults/pref/local-settings.js`
+```
 
 **3:** Download `policies.json` from [here](https://dove.celenity.dev/Policies/policies.json) if you're on macOS/Windows, or [here](https://dove.celenity.dev/Policies/Linux/Policies/policies.json) if you're on Linux. You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
 
 **<details><summary>macOS/Windows</summary>**
 
+```sh
 `wget https://dove.celenity.dev/Policies/policies.json`
+```
 </details>
 
 
 **<details><summary>GNU/Linux</summary>**
 
+```sh
 `wget https://dove.celenity.dev/Policies/Linux/Policies/policies.json`
+```
 </details>
 
 <br>
@@ -179,31 +187,45 @@ However, if this is not desirable for you & your situation, you can manually ins
 
 **5:** Move `base.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command, assuming `/usr/lib64/thunderbird` is your installation directory:
 
+```sh
 `sudo mv base.cfg /usr/lib64/thunderbird/base.cfg`
+```
 
 **6:** If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults`, create another folder titled `pref`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
 
+```sh
 `sudo mkdir -p /usr/lib64/thunderbird/defaults/pref`
+```
 
 On macOS & Linux, you'll also want to ensure that the folder you created has proper permissions:
 
+```sh
 `sudo chmod 755 /usr/lib64/thunderbird/defaults/pref`
+```
 
 **7:** Move `local-settings.js` to the `pref` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
 
+```sh
 `sudo mv local-settings.js /usr/lib64/thunderbird/defaults/pref/local-settings.js`
+```
 
 **8:** In the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
 
+```sh
 `sudo mkdir -p /usr/lib64/thunderbird/distribution`
+```
 
 On macOS & Linux, you'll also want to ensure that the folder you created has proper permissions:
 
+```sh
 `sudo chmod 755 /usr/lib64/thunderbird/distribution`
+```
 
 **9:** Finally, move `policies.json` to the `distribution` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
 
+```sh
 `sudo mv policies.json /usr/lib64/thunderbird/distribution/policies.json`
+```
 
 Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
 
