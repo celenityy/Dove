@@ -18,16 +18,16 @@ ___
 **<details><summary>Click me</summary>**
 
 - [Dove](#dove)
-- [📖 Glossary](#glossary)
-- [🚀 Install ](#install)
-	- [🐧 GNU/Linux ](#gnu-linux)
-	- [🍎 macOS ](#macos)
-	- [🪟 Windows ](#windows)
-- [👋 Uninstall ](#uninstall)
-	- [🐧 GNU/Linux ](#gnu-linux-1)
-	- [🍎 macOS: ](#macos)
-- [⚠️ Manual Mode *(Not recommended)* ](#️manual-mode-not-recommended)
-- [💜 Attribution ](#attribution)
+- [📖 Glossary](#-glossary)
+- [🚀 Install](#-install)
+	- [🐧 GNU-Linux](#-gnu-linux)
+	- [🍎 macOS ](#-macos-)
+	- [🪟 Windows ](#-windows-)
+- [👋 Uninstall](#-uninstall)
+	- [🐧 GNU-Linux](#-gnu-linux-1)
+	- [🍎 macOS](#-macos)
+- [⚠️ Manual Mode *(Not recommended)*](#️-manual-mode-not-recommended)
+- [💜 Attribution](#-attribution)
 
 </details>
 
@@ -46,23 +46,31 @@ Dove offers easy to use install scripts for various platforms. All you have to d
 
 **yay**:
 
+```sh
 `bash -c "$(curl -fsSL https://dove.celenity.dev/arch_install_yay.sh)"`
+```
 
 **paru**:
 
+```sh
 `bash -c "$(curl -fsSL https://dove.celenity.dev/arch_install_paru.sh)"`
+```
 
 </details>
 
 **<details><summary>Debian/Ubuntu & Derivatives</summary>** <a name="debian"></a>
 
+```sh
 `sudo bash -c "$(curl -fsSL https://dove.celenity.dev/debian_install.sh)"`
+```
 
 </details>
 
 **<details><summary>Fedora</summary>** <a name="fedora"></a>
 
+```sh
 `sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_install.sh)"`
+```
 
 </details>
 
@@ -73,8 +81,9 @@ ___
 > [!IMPORTANT] 
 > ⚠️ **You must have [Homebrew](https://brew.sh/) installed**
 
+```sh
 `bash -c "$(curl -fsSL https://dove.celenity.dev/macos_install.sh)"`
-
+```
 ___
 
 ## 🪟 Windows <a name="windows"></a>
@@ -95,23 +104,30 @@ If Dove isn't right for you - no worries! We also have easy to use uninstall scr
 
 **yay**:
 
+```sh
 `bash -c "$(curl -fsSL https://dove.celenity.dev/arch_uninstall_yay.sh)"`
+```
 
 **paru**:
 
+```sh
 `bash -c "$(curl -fsSL https://dove.celenity.dev/arch_uninstall_paru.sh)"`
-
+```
 </details>
 
 **<details><summary>Debian/Ubuntu & Derivatives</summary>** <a name="debian-1"></a>
 
+```sh
 `sudo bash -c "$(curl -fsSL https://dove.celenity.dev/debian_uninstall.sh)"`
+```
 
 </details>
 
 **<details><summary>Fedora</summary>** <a name="fedora-1"></a>
 
+```sh
 `sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_uninstall.sh)"`
+```
 
 </details>
 
@@ -119,8 +135,9 @@ ___
 
 ## 🍎 macOS
 
+```sh
 `bash -c "$(curl -fsSL https://dove.celenity.dev/macos_uninstall.sh)"`
-
+```
 ___
 
 # ⚠️ Manual Mode *(Not recommended)*
