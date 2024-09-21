@@ -19,23 +19,23 @@ ___
 
 - [Dove](#dove)
 - [📖 Glossary](#-glossary)
-- [🚀 Install ](#-install-)
-	- [🐧 GNU/Linux ](#-gnulinux-)
+- [🚀 Install](#-install)
+	- [🐧 GNU-Linux](#-gnu-linux)
 	- [🍎 macOS ](#-macos-)
 	- [🪟 Windows ](#-windows-)
-- [👋 Uninstall ](#-uninstall-)
-	- [🐧 GNU/Linux ](#-gnulinux--1)
-	- [🍎 macOS: ](#-macos--1)
-- [⚠️ Manual Mode *(Not recommended)* ](#️-manual-mode-not-recommended-)
-- [💜 Attribution ](#-attribution-)
+- [👋 Uninstall](#-uninstall)
+	- [🐧 GNU-Linux](#-gnu-linux-1)
+	- [🍎 macOS](#-macos)
+- [⚠️ Manual Mode *(Not recommended)*](#️-manual-mode-not-recommended)
+- [💜 Attribution](#-attribution)
 
 </details>
 
-# 🚀 Install <a name="install"></a>
+# 🚀 Install
 
 Dove offers easy to use install scripts for various platforms. All you have to do is have Thunderbird installed & ready, paste the command that corresponds to your platform of choice in your terminal, and you should be good to go. :)
 
-## 🐧 GNU/Linux <a name="gnulinux"></a>
+## 🐧 GNU-Linux
 
 ![Gnulove](assets/Gnulove.jpg)
 
@@ -46,23 +46,31 @@ Dove offers easy to use install scripts for various platforms. All you have to d
 
 **yay**:
 
-`bash -c "$(curl -fsSL https://dove.celenity.dev/arch_install_yay.sh)"`
+```sh
+bash -c "$(curl -fsSL https://dove.celenity.dev/arch_install_yay.sh)"
+```
 
 **paru**:
 
-`bash -c "$(curl -fsSL https://dove.celenity.dev/arch_install_paru.sh)"`
+```sh
+bash -c "$(curl -fsSL https://dove.celenity.dev/arch_install_paru.sh)"
+```
 
 </details>
 
 **<details><summary>Debian/Ubuntu & Derivatives</summary>** <a name="debian"></a>
 
-`sudo bash -c "$(curl -fsSL https://dove.celenity.dev/debian_install.sh)"`
+```sh
+sudo bash -c "$(curl -fsSL https://dove.celenity.dev/debian_install.sh)"
+```
 
 </details>
 
 **<details><summary>Fedora</summary>** <a name="fedora"></a>
 
-`sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_install.sh)"`
+```sh
+sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_install.sh)"
+```
 
 </details>
 
@@ -73,8 +81,9 @@ ___
 > [!IMPORTANT] 
 > ⚠️ **You must have [Homebrew](https://brew.sh/) installed**
 
-`bash -c "$(curl -fsSL https://dove.celenity.dev/macos_install.sh)"`
-
+```sh
+bash -c "$(curl -fsSL https://dove.celenity.dev/macos_install.sh)"
+```
 ___
 
 ## 🪟 Windows <a name="windows"></a>
@@ -85,45 +94,53 @@ See upstream Codeberg issue [here](https://codeberg.org/celenity/Phoenix/issues/
 
 ___
 
-# 👋 Uninstall <a name="uninstall"></a>
+# 👋 Uninstall
 
 If Dove isn't right for you - no worries! We also have easy to use uninstall scripts. Please be sure to [leave us feedback](https://dove.celenity.dev/issues) though so we can improve for the future!
 
-## 🐧 GNU/Linux <a name="gnulinux-1"></a>
+## 🐧 GNU-Linux
 
 **<details><summary>Arch</summary>** <a name="arch-1"></a>
 
 **yay**:
 
-`bash -c "$(curl -fsSL https://dove.celenity.dev/arch_uninstall_yay.sh)"`
+```sh
+bash -c "$(curl -fsSL https://dove.celenity.dev/arch_uninstall_yay.sh)"
+```
 
 **paru**:
 
-`bash -c "$(curl -fsSL https://dove.celenity.dev/arch_uninstall_paru.sh)"`
-
+```sh
+bash -c "$(curl -fsSL https://dove.celenity.dev/arch_uninstall_paru.sh)"
+```
 </details>
 
 **<details><summary>Debian/Ubuntu & Derivatives</summary>** <a name="debian-1"></a>
 
-`sudo bash -c "$(curl -fsSL https://dove.celenity.dev/debian_uninstall.sh)"`
+```sh
+sudo bash -c "$(curl -fsSL https://dove.celenity.dev/debian_uninstall.sh)"
+```
 
 </details>
 
 **<details><summary>Fedora</summary>** <a name="fedora-1"></a>
 
-`sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_uninstall.sh)"`
+```sh
+sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_uninstall.sh)"
+```
 
 </details>
 
 ___
 
-## 🍎 macOS: <a name="macos-1"></a>
+## 🍎 macOS
 
-`bash -c "$(curl -fsSL https://dove.celenity.dev/macos_uninstall.sh)"`
-
+```sh
+bash -c "$(curl -fsSL https://dove.celenity.dev/macos_uninstall.sh)"
+```
 ___
 
-# ⚠️ Manual Mode *(Not recommended)* <a name="manual-mode-not-recommended"></a>
+# ⚠️ Manual Mode *(Not recommended)*
 
 By default, Dove leverages Mozilla's [Centralized Management](https://support.mozilla.org/kb/customizing-firefox-using-autoconfig#w_centralized-management) feature to automatically update its configurations. This allows fast, easy updates & fixes as needed, regardless of your platform. Dove's Policies are updated separately, through the [AUR](https://aur.archlinux.org/packages/dove-policies) on Arch Linux, [COPR](https://copr.fedorainfracloud.org/coprs/dove/phoenix-policies/) on Fedora, the [MPR](https://mpr.makedeb.org/packages/dove-policies) on Debian/Ubuntu/Derivatives, & our [Homebrew](https://brew.sh/) [Tap](https://codeberg.org/celenity/Dove-Policies-macOS) on macOS. 
 
@@ -134,23 +151,31 @@ However, if this is not desirable for you & your situation, you can manually ins
 
 **1:** Download our `base.cfg` file [here](https://dove.celenity.dev/base.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
 
-`wget https://dove.celenity.dev/base.cfg`
+```sh
+wget https://dove.celenity.dev/base.cfg
+```
 
 **2:** Download `local-settings.js` from [here](https://dove.celenity.dev/manual/defaults/pref/local-settings.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
 
-`wget https://dove.celenity.dev/manual/defaults/pref/local-settings.js`
+```sh
+wget https://dove.celenity.dev/manual/defaults/pref/local-settings.js
+```
 
 **3:** Download `policies.json` from [here](https://dove.celenity.dev/Policies/policies.json) if you're on macOS/Windows, or [here](https://dove.celenity.dev/Policies/Linux/Policies/policies.json) if you're on Linux. You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
 
 **<details><summary>macOS/Windows</summary>**
 
-`wget https://dove.celenity.dev/Policies/policies.json`
+```sh
+wget https://dove.celenity.dev/Policies/policies.json
+```
 </details>
 
 
 **<details><summary>GNU/Linux</summary>**
 
-`wget https://dove.celenity.dev/Policies/Linux/Policies/policies.json`
+```sh
+wget https://dove.celenity.dev/Policies/Linux/Policies/policies.json
+```
 </details>
 
 <br>
@@ -162,37 +187,51 @@ However, if this is not desirable for you & your situation, you can manually ins
 
 **5:** Move `base.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command, assuming `/usr/lib64/thunderbird` is your installation directory:
 
-`sudo mv base.cfg /usr/lib64/thunderbird/base.cfg`
+```sh
+sudo mv base.cfg /usr/lib64/thunderbird/base.cfg
+```
 
 **6:** If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults`, create another folder titled `pref`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
 
-`sudo mkdir -p /usr/lib64/thunderbird/defaults/pref`
+```sh
+sudo mkdir -p /usr/lib64/thunderbird/defaults/pref
+```
 
 On macOS & Linux, you'll also want to ensure that the folder you created has proper permissions:
 
-`sudo chmod 755 /usr/lib64/thunderbird/defaults/pref`
+```sh
+sudo chmod 755 /usr/lib64/thunderbird/defaults/pref
+```
 
 **7:** Move `local-settings.js` to the `pref` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
 
-`sudo mv local-settings.js /usr/lib64/thunderbird/defaults/pref/local-settings.js`
+```sh
+sudo mv local-settings.js /usr/lib64/thunderbird/defaults/pref/local-settings.js
+```
 
 **8:** In the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
 
-`sudo mkdir -p /usr/lib64/thunderbird/distribution`
+```sh
+sudo mkdir -p /usr/lib64/thunderbird/distribution
+```
 
 On macOS & Linux, you'll also want to ensure that the folder you created has proper permissions:
 
-`sudo chmod 755 /usr/lib64/thunderbird/distribution`
+```sh
+sudo chmod 755 /usr/lib64/thunderbird/distribution
+```
 
 **9:** Finally, move `policies.json` to the `distribution` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
 
-`sudo mv policies.json /usr/lib64/thunderbird/distribution/policies.json`
+```sh
+sudo mv policies.json /usr/lib64/thunderbird/distribution/policies.json
+```
 
 Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
 
 ___
 
-# 💜 Attribution <a name="attribution"></a>
+# 💜 Attribution
 
 Huge thank you to the following projects & individuals for making Dove possible. Please show them support!
 
