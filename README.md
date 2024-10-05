@@ -26,7 +26,7 @@ ___
 - [👋 Uninstall](#uninstall)
 	- [🐧 GNU-Linux](#gnu-linux-1)
 	- [🍎 macOS](#macos)
-- [⚠️ Manual Mode *(Not recommended)*](#manual-mode-not-recommended)
+- [📛Manual Mode *(Not recommended)*](#manual-mode-not-recommended)
 - [💜 Attribution](#attribution)
 
 </details>
