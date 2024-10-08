@@ -13,29 +13,29 @@ Dove is built off of & heavily based on its sister project, [Phoenix](https://ce
 
 ___
 
-# 📖 Glossary
+# 📖Glossary
 
 **<details><summary>Click me</summary>**
 
 - [Dove](#dove)
-- [📖 Glossary](#-glossary)
-- [🚀 Install](#-install)
-	- [🐧 GNU-Linux](#-gnu-linux)
-	- [🍎 macOS ](#-macos-)
-	- [🪟 Windows ](#-windows-)
-- [👋 Uninstall](#-uninstall)
-	- [🐧 GNU-Linux](#-gnu-linux-1)
-	- [🍎 macOS](#-macos)
-- [⚠️ Manual Mode *(Not recommended)*](#️-manual-mode-not-recommended)
-- [💜 Attribution](#-attribution)
+- [📖 Glossary](#glossary)
+- [🚀 Install](#install)
+	- [🐧 GNU-Linux](#gnu-linux)
+	- [🍎 macOS ](#macos)
+	- [🪟 Windows ](#windows)
+- [👋 Uninstall](#uninstall)
+	- [🐧 GNU-Linux](#gnu-linux-1)
+	- [🍎 macOS](#macos-1)
+- [📛Manual Mode *(Not recommended)*](#manual-mode-not-recommended)
+- [💜 Attribution](#attribution)
 
 </details>
 
-# 🚀 Install
+# 🚀Install
 
 Dove offers easy to use install scripts for various platforms. All you have to do is have Thunderbird installed & ready, paste the command that corresponds to your platform of choice in your terminal, and you should be good to go. :)
 
-## 🐧 GNU-Linux
+## 🐧GNU-Linux
 
 ![Gnulove](assets/Gnulove.jpg)
 
@@ -76,7 +76,7 @@ sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_install.sh)"
 
 ___
 
-## 🍎 macOS <a name="macos"></a>
+## 🍎macOS
 
 > [!IMPORTANT] 
 > ⚠️ **You must have [Homebrew](https://brew.sh/) installed**
@@ -86,7 +86,7 @@ bash -c "$(curl -fsSL https://dove.celenity.dev/macos_install.sh)"
 ```
 ___
 
-## 🪟 Windows <a name="windows"></a>
+## 🪟Windows
 
 See upstream Codeberg issue [here](https://codeberg.org/celenity/Phoenix/issues/3) & GitHub issue [here](https://github.com/celenityy/Phoenix/issues/1)
 
@@ -94,11 +94,11 @@ See upstream Codeberg issue [here](https://codeberg.org/celenity/Phoenix/issues/
 
 ___
 
-# 👋 Uninstall
+# 👋Uninstall
 
 If Dove isn't right for you - no worries! We also have easy to use uninstall scripts. Please be sure to [leave us feedback](https://dove.celenity.dev/issues) though so we can improve for the future!
 
-## 🐧 GNU-Linux
+## 🐧GNU-Linux
 
 **<details><summary>Arch</summary>** <a name="arch-1"></a>
 
@@ -133,14 +133,14 @@ sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_uninstall.sh)"
 
 ___
 
-## 🍎 macOS
+## 🍎macOS
 
 ```sh
 bash -c "$(curl -fsSL https://dove.celenity.dev/macos_uninstall.sh)"
 ```
 ___
 
-# ⚠️ Manual Mode *(Not recommended)*
+# 📛Manual Mode *(Not recommended)*
 
 By default, Dove leverages Mozilla's [Centralized Management](https://support.mozilla.org/kb/customizing-firefox-using-autoconfig#w_centralized-management) feature to automatically update its configurations. This allows fast, easy updates & fixes as needed, regardless of your platform. Dove's Policies are updated separately, through the [AUR](https://aur.archlinux.org/packages/dove-policies) on Arch Linux, [COPR](https://copr.fedorainfracloud.org/coprs/dove/phoenix-policies/) on Fedora, the [MPR](https://mpr.makedeb.org/packages/dove-policies) on Debian/Ubuntu/Derivatives, & our [Homebrew](https://brew.sh/) [Tap](https://codeberg.org/celenity/Dove-Policies-macOS) on macOS. 
 
@@ -231,7 +231,7 @@ Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
 
 ___
 
-# 💜 Attribution
+# 💜Attribution
 
 Huge thank you to the following projects & individuals for making Dove possible. Please show them support!
 
