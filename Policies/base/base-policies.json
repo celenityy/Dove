@@ -116,7 +116,6 @@
         "PDFjs": {
             "EnablePermissions": false
         },
-        "PrivateBrowsingModeAvailability": 0,
         "PromptForDownloadLocation": true,
         "Proxy": {
             "UseProxyForDNS": true
