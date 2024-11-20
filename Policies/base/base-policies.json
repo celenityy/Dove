@@ -216,7 +216,6 @@
                     "Name": "No Search",
                     "URLTemplate": "https://nosearch.invalid/{searchTerms}",
                     "Method": "GET",
-                    "Alias": "@nosearch",
                     "Description": "Just a placeholder for users who don't wish to set a default search engine. :)"
                 },
                 {
