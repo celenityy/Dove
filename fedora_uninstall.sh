@@ -17,24 +17,32 @@ error_fn() {
 	exit 1
 }
 
-echo_green_text "Removing mozilla.cfg"
+## Uninstall Dove
+echo_green_text "Removing dove.cfg..."
+sudo rm -f /usr/lib/thunderbird/dove.cfg || error_fn
+echo
+
+echo_green_text "Removing dove.js..."
+sudo rm -f /etc/thunderbird/defaults/pref/dove.js || error_fn
+echo
+
+echo_green_text "Removing legacy mozilla.cfg if installed..."
 sudo rm -f /usr/lib64/thunderbird/mozilla.cfg || error_fn
 echo
 
-
-echo_green_text "Removing local-settings.js"
+echo_green_text "Removing legacy local-settings.js if installed..."
 sudo rm -f /usr/lib64/thunderbird/defaults/pref/local-settings.js || error_fn
 echo
 
-echo_green_text "Uninstalling dove-policies"
+echo_green_text "Uninstalling dove-policies..."
 sudo dnf remove dove-policies || error_fn
 echo
 
-echo_green_text "Removing Dove-Policies COPR Repo"
+echo_green_text "Removing Dove-Policies COPR Repo..."
 sudo dnf copr remove celenity/dove-policies || error_fn
 echo
 
-echo_green_text "Updating DNF cache"
+echo_green_text "Updating DNF cache..."
 sudo dnf update --refresh || error_fn
 echo
 

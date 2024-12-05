@@ -16,18 +16,25 @@ error_fn() {
 	echo
 	exit 1
 }
+## Uninstall Dove
+echo_green_text "Removing dove.cfg..."
+sudo rm -f /usr/lib/thunderbird/dove.cfg || error_fn
+echo
 
-echo_green_text "Removing mozilla.cfg"
+echo_green_text "Removing dove.js..."
+sudo rm -f /etc/thunderbird/defaults/pref/dove.js || error_fn
+echo
+
+echo_green_text "Removing legacy mozilla.cfg if installed..."
 sudo rm -f /usr/lib/thunderbird/mozilla.cfg || error_fn
 echo
 
-
-echo_green_text "Removing local-settings.js"
+echo_green_text "Removing legacy local-settings.js if installed..."
 sudo rm -f /usr/lib/thunderbird/defaults/pref/local-settings.js || error_fn
 echo
 
 
-echo_green_text "Uninstalling dove-policies"
+echo_green_text "Uninstalling dove-policies..."
 paru -Rcns dove-policies || error_fn
 echo
 

@@ -28,45 +28,45 @@ if [ $(id --user) -ne 0 ]; then
 fi
 
 
-echo_green_text "Downloading mozilla.cfg"
-wget -nv https://dove.celenity.dev/mozilla.cfg || error_fn
+echo_green_text "Downloading dove.cfg..."
+wget -nv https://dove.celenity.dev/dove.cfg || error_fn
 echo
 
 
-echo_green_text "Moving mozilla.cfg to /usr/lib64/thunderbird/mozilla.cfg"
-sudo mv -v mozilla.cfg /usr/lib64/thunderbird/mozilla.cfg || error_fn
+echo_green_text "Moving dove.cfg to /usr/lib64/thunderbird/dove.cfg..."
+sudo mv -v dove.cfg /usr/lib64/thunderbird/dove.cfg || error_fn
 echo
 
 
-echo_green_text "Downloading local-settings.js"
-wget -nv https://dove.celenity.dev/defaults/pref/local-settings.js || error_fn
+echo_green_text "Downloading dove.js..."
+wget -nv https://dove.celenity.dev/defaults/pref/dove.js || error_fn
 echo
 
 
-echo_green_text "Creating /usr/lib64/thunderbird/defaults/pref directory"
-sudo mkdir -v -p /usr/lib64/thunderbird/defaults/pref || error_fn
+echo_green_text "Creating /etc/thunderbird/defaults/pref directory..."
+sudo mkdir -v -p /etc/thunderbird/defaults/pref || error_fn
 echo
 
-echo_green_text "Changing permissions of /usr/lib64/thunderbird/defaults/pref to 755"
-sudo chmod -v 755 /usr/lib64/thunderbird/defaults/pref || error_fn
-echo
-
-
-echo_green_text "Moving local-settings.js to /usr/lib64/thunderbird/defaults/pref/local-settings.js"
-sudo mv -v local-settings.js /usr/lib64/thunderbird/defaults/pref/local-settings.js || error_fn
+echo_green_text "Changing permissions of /etc/thunderbird/defaults/pref to 655..."
+sudo chmod -v 655 /etc/thunderbird/defaults/pref || error_fn
 echo
 
 
-echo_green_text "Adding Dove-Policies COPR Repo to DNF"
+echo_green_text "Moving dove.js to /etc/thunderbird/defaults/pref/dove.js..."
+sudo mv -v dove.js /etc/thunderbird/defaults/pref/dove.js || error_fn
+echo
+
+
+echo_green_text "Adding Dove-Policies COPR Repo to DNF..."
 sudo dnf copr enable celenity/dove-policies || error_fn
 echo
 
-echo_green_text "Updating DNF cache"
+echo_green_text "Updating DNF cache..."
 sudo dnf update --refresh || error_fn
 echo
 
 
-echo_green_text "Installing dove-policies package"
+echo_green_text "Installing dove-policies package..."
 sudo dnf install dove-policies || error_fn
 echo
 

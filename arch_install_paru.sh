@@ -20,36 +20,36 @@ error_fn() {
 	exit 1
 }
 
-echo_green_text "Downloading mozilla.cfg"
-wget -nv https://dove.celenity.dev/mozilla.cfg || error_fn
+echo_green_text "Downloading dove.cfg..."
+wget -nv https://dove.celenity.dev/dove.cfg || error_fn
 echo
 
 
-echo_green_text "Moving mozilla.cfg to /usr/lib/thunderbird/mozilla.cfg"
+echo_green_text "Moving dove.cfg to /usr/lib/thunderbird/dove.cfg..."
 sudo mv -v mozilla.cfg /usr/lib/firefox/thunderbird.cfg || error_fn
 echo
 
 
-echo_green_text "Downloading local-settings.js"
-wget -nv https://dove.celenity.dev/defaults/pref/local-settings.js || error_fn
+echo_green_text "Downloading dove.js..."
+wget -nv https://dove.celenity.dev/defaults/pref/dove.js || error_fn
 echo
 
 
-echo_green_text "Creating /usr/lib/thunderbird/defaults/pref directory"
-sudo mkdir -v -p /usr/lib/thunderbird/defaults/pref || error_fn
+echo_green_text "Creating /etc/thunderbird/defaults/pref directory..."
+sudo mkdir -v -p /etc/thunderbird/defaults/pref || error_fn
 echo
 
-echo_green_text "Changing permissions of /usr/lib/thunderbird/defaults/pref to 755"
-sudo chmod -v 755 /usr/lib/thunderbird/defaults/pref || error_fn
-echo
-
-
-echo_green_text "Moving local-settings.js to /usr/lib/thunderbird/defaults/pref/local-settings.js"
-sudo mv -v local-settings.js /usr/lib/thunderbird/defaults/pref/local-settings.js || error_fn
+echo_green_text "Changing permissions of /etc/thunderbird/defaults/pref to 655..."
+sudo chmod -v 655 /etc/thunderbird/defaults/pref || error_fn
 echo
 
 
-echo_green_text "Installing dove-policies from the AUR"
+echo_green_text "Moving dove.js to /etc/thunderbird/defaults/pref/dove.js..."
+sudo mv -v dove.js /etc/thunderbird/defaults/pref/dove.js || error_fn
+echo
+
+
+echo_green_text "Installing dove-policies from the AUR..."
 paru -S dove-policies || error_fn
 echo
 

@@ -1,16 +1,16 @@
 #!/bin/zsh
 
-wget https://dove.celenity.dev/mozilla.cfg
+wget https://dove.celenity.dev/dove.cfg
 
-sudo mv mozilla.cfg /Applications/Thunderbird.app/Contents/Resources/mozilla.cfg
+sudo mv -v dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg
 
-wget https://dove.celenity.dev/defaults/pref/local-settings.js
+wget https://dove.celenity.dev/defaults/pref/dove.js
 
 sudo mkdir -p /Applications/Thunderbird.app/Contents/Resources/defaults/pref
 
-sudo chmod 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref
+sudo chmod 655 /Applications/Thunderbird.app/Contents/Resources/defaults/pref
 
-sudo mv local-settings.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/local-settings.js
+sudo mv -v dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js
 
 brew tap celenity/Dove-Policies-macOS https://codeberg.org/celenity/Dove-Policies-macOS
 

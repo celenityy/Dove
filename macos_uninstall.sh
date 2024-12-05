@@ -1,5 +1,9 @@
 #!/bin/zsh
 
+sudo rm -f /Applications/Thunderbird.app/Contents/Resources/dove.cfg
+
+sudo rm -f /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js
+
 sudo rm -f /Applications/Thunderbird.app/Contents/Resources/mozilla.cfg
 
 sudo rm -f /Applications/Thunderbird.app/Contents/Resources/defaults/pref/local-settings.js

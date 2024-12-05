@@ -18,16 +18,16 @@ ___
 **<details><summary>Click me</summary>**
 
 - [Dove](#dove)
-- [📖 Glossary](#glossary)
-- [🚀 Install](#install)
-	- [🐧 GNU-Linux](#gnu-linux)
-	- [🍎 macOS ](#macos)
-	- [🪟 Windows ](#windows)
-- [👋 Uninstall](#uninstall)
-	- [🐧 GNU-Linux](#gnu-linux-1)
-	- [🍎 macOS](#macos-1)
+- [📖Glossary](#glossary)
+- [🚀Install](#install)
+	- [🐧GNU-Linux](#gnu-linux)
+	- [🍎macOS](#macos)
+	- [🪟Windows](#windows)
+- [👋Uninstall](#uninstall)
+	- [🐧GNU-Linux](#gnu-linux-1)
+	- [🍎macOS](#macos-1)
 - [📛Manual Mode *(Not recommended)*](#manual-mode-not-recommended)
-- [💜 Attribution](#attribution)
+- [💜Attribution](#attribution)
 
 </details>
 
@@ -149,82 +149,102 @@ By default, Dove leverages Mozilla's [Centralized Management](https://support.mo
 
 However, if this is not desirable for you & your situation, you can manually install Dove with the following steps:
 
-**1:** Download our `base.cfg` file [here](https://dove.celenity.dev/base.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
+**1:** Download our `dove.cfg` file [here](https://dove.celenity.dev/manual/dove.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
 
 ```sh
-wget https://dove.celenity.dev/base.cfg
+wget https://dove.celenity.dev/manual/dove.cfg
 ```
 
-**2:** Download `local-settings.js` from [here](https://dove.celenity.dev/manual/defaults/pref/local-settings.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
+**2:** Download `dove.js` from [here](https://dove.celenity.dev/defaults/pref/dove.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
 
 ```sh
-wget https://dove.celenity.dev/manual/defaults/pref/local-settings.js
+wget https://dove.celenity.dev/defaults/pref/dove.js
 ```
 
-**3:** Download `policies.json` from [here](https://dove.celenity.dev/Policies/policies.json) if you're on macOS/Windows, or [here](https://dove.celenity.dev/Policies/Linux/Policies/policies.json) if you're on Linux. You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
-
-**<details><summary>macOS/Windows</summary>**
+**3:** Download `policies.json` from [here](https://dove.celenity.dev/policies/Policies/policies.json). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
 
 ```sh
-wget https://dove.celenity.dev/Policies/policies.json
+wget https://dove.celenity.dev/policies/Policies/policies.json
 ```
-</details>
-
-
-**<details><summary>GNU/Linux</summary>**
-
-```sh
-wget https://dove.celenity.dev/Policies/Linux/Policies/policies.json
-```
-</details>
-
-<br>
 
 **4:** Locate your Thunderbird installation directory. This will vary depending on your platform, you can generally find it by navigating to `Help` (Located on top bar) -> `Troubleshooting information` & checking the directory next to `Application Binary`. For example, on Fedora Linux, I see `/usr/lib64/thunderbird/thunderbird` next to `Application Binary`. This means our installation directory is `/usr/lib64/thunderbird`.
 
 > [!CAUTION] 
 >**Unless you're on Fedora Linux, your directory will probably be different, and you should replace this path on the following steps with your actual installation directory's path.**
 
-**5:** Move `base.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command, assuming `/usr/lib64/thunderbird` is your installation directory:
+**5:** Move `dove.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command, assuming `/usr/lib64/thunderbird` is your installation directory:
 
 ```sh
-sudo mv base.cfg /usr/lib64/thunderbird/base.cfg
+sudo mv dove.cfg /usr/lib64/thunderbird/dove.cfg
 ```
 
-**6:** If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults`, create another folder titled `pref`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
+**6:** **For macOS & Flatpak users**: If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory *(it won't be)*, you could run the following command:
 
 ```sh
 sudo mkdir -p /usr/lib64/thunderbird/defaults/pref
 ```
 
+**For Linux users:** If it does not already exist, you will want to create a folder named `thunderbird` located in your system's `etc` directory. Inside this `thunderbird` folder, create a new folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. This will work **regardless of your distribution** - even Snaps are supported. You can also just run the command below:
+
+```sh
+sudo mkdir -p /etc/thunderbird/defaults/pref
+```
+
 On macOS & Linux, you'll also want to ensure that the folder you created has proper permissions:
 
 ```sh
-sudo chmod 755 /usr/lib64/thunderbird/defaults/pref
+sudo chmod 655 /usr/lib64/thunderbird/defaults/pref
 ```
 
-**7:** Move `local-settings.js` to the `pref` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
+**For all non-Flatpak Linux users:**
+```sh
+sudo chmod 655 /etc/thunderbird/defaults/pref
+```
+
+**7:** Move `dove.js` to the `pref` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
 
 ```sh
-sudo mv local-settings.js /usr/lib64/thunderbird/defaults/pref/local-settings.js
+sudo mv dove.js /usr/lib64/thunderbird/defaults/pref/dove.js
 ```
 
-**8:** In the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
+**For all non-Flatpak Linux users:**
+```sh
+sudo mv dove.js /etc/thunderbird/defaults/pref/dove.js
+```
+
+**8:** On macOS & Windows, in the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
 
 ```sh
 sudo mkdir -p /usr/lib64/thunderbird/distribution
 ```
 
+Linux users should **instead** create a `policies` folder inside of a `thunderbird` folder located in `/etc`. This will work **regardless** of your distribution, and even for Snaps.
+
+```sh
+sudo mkdir -p /etc/thunderbird/policies
+```
+
 On macOS & Linux, you'll also want to ensure that the folder you created has proper permissions:
 
 ```sh
-sudo chmod 755 /usr/lib64/thunderbird/distribution
+sudo chmod 655 /usr/lib64/thunderbird/distribution
 ```
 
-**9:** Finally, move `policies.json` to the `distribution` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
+**For all non-Flatpak Linux users:**
+```sh
+sudo chmod 655 /etc/thunderbird/policies
+```
+
+**9:** Finally, those on Windows & macOS should move `policies.json` to the `distribution` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
 
 ```sh
 sudo mv policies.json /usr/lib64/thunderbird/distribution/policies.json
+```
+
+Linux users should **instead** move `policies.json` to their `/etc/thunderbird/policies` folder they just created.
+
+```sh
+sudo mv policies.json /etc/thunderbird/policies/policies.json
 ```
 
 Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
