@@ -37,39 +37,14 @@ Dove offers easy to use install scripts for various platforms. All you have to d
 
 ## 🐧GNU-Linux
 
-![Gnulove](assets/Gnulove.jpg)
-
 > [!IMPORTANT] 
 > **⚠️ Thunderbird Flatpak & Snap packages are currently not supported.**
 
-**<details><summary>Arch</summary>** <a name="arch"></a>
-
-**yay**:
-
-```sh
-bash -c "$(curl -fsSL https://dove.celenity.dev/arch_install_yay.sh)"
-```
-
-**paru**:
+> [!NOTE]
+> Dove only supports 39, 40 and 41 versions of Fedora.
 
 ```sh
-bash -c "$(curl -fsSL https://dove.celenity.dev/arch_install_paru.sh)"
-```
-
-</details>
-
-**<details><summary>Debian/Ubuntu & Derivatives</summary>** <a name="debian"></a>
-
-```sh
-sudo bash -c "$(curl -fsSL https://dove.celenity.dev/debian_install.sh)"
-```
-
-</details>
-
-**<details><summary>Fedora</summary>** <a name="fedora"></a>
-
-```sh
-sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_install.sh)"
+sudo bash -c "$(curl -fsSL https://dove.celenity.dev/install.sh)"
 ```
 
 </details>
@@ -82,7 +57,7 @@ ___
 > ⚠️ **You must have [Homebrew](https://brew.sh/) installed**
 
 ```sh
-bash -c "$(curl -fsSL https://dove.celenity.dev/macos_install.sh)"
+bash -c "$(curl -fsSL https://dove.celenity.dev/install.sh)"
 ```
 ___
 
@@ -100,33 +75,8 @@ If Dove isn't right for you - no worries! We also have easy to use uninstall scr
 
 ## 🐧GNU-Linux
 
-**<details><summary>Arch</summary>** <a name="arch-1"></a>
-
-**yay**:
-
 ```sh
-bash -c "$(curl -fsSL https://dove.celenity.dev/arch_uninstall_yay.sh)"
-```
-
-**paru**:
-
-```sh
-bash -c "$(curl -fsSL https://dove.celenity.dev/arch_uninstall_paru.sh)"
-```
-</details>
-
-**<details><summary>Debian/Ubuntu & Derivatives</summary>** <a name="debian-1"></a>
-
-```sh
-sudo bash -c "$(curl -fsSL https://dove.celenity.dev/debian_uninstall.sh)"
-```
-
-</details>
-
-**<details><summary>Fedora</summary>** <a name="fedora-1"></a>
-
-```sh
-sudo bash -c "$(curl -fsSL https://dove.celenity.dev/fedora_uninstall.sh)"
+sudo bash -c "$(curl -fsSL https://dove.celenity.dev/uninstall.sh)"
 ```
 
 </details>
@@ -136,13 +86,14 @@ ___
 ## 🍎macOS
 
 ```sh
-bash -c "$(curl -fsSL https://dove.celenity.dev/macos_uninstall.sh)"
+bash -c "$(curl -fsSL https://dove.celenity.dev/uninstall.sh)"
 ```
+
 ___
 
 # 📛Manual Mode *(Not recommended)*
 
-By default, Dove leverages Mozilla's [Centralized Management](https://support.mozilla.org/kb/customizing-firefox-using-autoconfig#w_centralized-management) feature to automatically update its configurations. This allows fast, easy updates & fixes as needed, regardless of your platform. Dove's Policies are updated separately, through the [AUR](https://aur.archlinux.org/packages/dove-policies) on Arch Linux, [COPR](https://copr.fedorainfracloud.org/coprs/dove/phoenix-policies/) on Fedora, the [MPR](https://mpr.makedeb.org/packages/dove-policies) on Debian/Ubuntu/Derivatives, & our [Homebrew](https://brew.sh/) [Tap](https://codeberg.org/celenity/Dove-Policies-macOS) on macOS. 
+By default, Dove leverages Mozilla's [Centralized Management](https://support.mozilla.org/kb/customizing-firefox-using-autoconfig#w_centralized-management) feature to automatically update its configurations. This allows fast, easy updates & fixes as needed, regardless of your platform. Dove's Policies are updated separately, through the [AUR](https://aur.archlinux.org/packages/dove-policies) on Arch Linux, [COPR](https://copr.fedorainfracloud.org/coprs/dove/phoenix-policies/) on Fedora, the [MPR](https://mpr.makedeb.org/packages/dove-policies) on Debian/Ubuntu/Derivatives, & our [Homebrew](https://brew.sh/) [Tap](https://codeberg.org/celenity/tap) on macOS. 
 
 > [!CAUTION] 
 >**This is typically set-up & handled through our install scripts, and this is the set-up we would recommend most users stick to.**
