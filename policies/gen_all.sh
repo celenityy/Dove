@@ -7,8 +7,5 @@ jq -s '.[0] * .[1]' policies/Policies/temp.json ~/Projects/Phoenix/policies/Bloc
 
 rm -f policies/Policies/temp.json
 
-# Replace ~/Projects/Dove-Policies-Fedora with the directory where Dove-Policies-Fedora is located, otherwise you can comment this out
-cp policies/Policies/policies.json ~/Projects/Dove-Policies-Fedora/policies.json
-
 # Replace ~/Projects/Dove-Policies-Debian with the directory where Dove-Policies-Debian is located, otherwise you can comment this out
 cp policies/Policies/policies.json ~/Projects/Dove-Policies-Debian/dove-policies/policies.json
