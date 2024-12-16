@@ -20,52 +20,10 @@ error_fn() {
 
 
 ## Uninstall Dove
-echo_green_text "Removing dove.cfg..."
-sudo rm -f /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
-echo
 
-echo_green_text "Removing dove.js..."
-sudo rm -f /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
-echo
 
-echo_green_text "Removing legacy mozilla.cfg if installed..."
-sudo rm -f /Applications/Thunderbird.app/Contents/Resources/mozilla.cfg || error_fn
-echo
-
-echo_green_text "Removing legacy local-settings.js if installed..."
-sudo rm -f /Applications/Thunderbird.app/Contents/Resources/defaults/pref/local-settings.js || error_fn
-echo
-
-echo_green_text "Unloading ~/Library/LaunchAgents/com.user.updatepoliciesdove.plist..."
-sudo launchctl unload -w  ~/Library/LaunchAgents/com.user.updatepoliciesdove.plist || error_fn
-echo
-
-echo_green_text "Removing ~/Library/LaunchAgents/com.user.updatepoliciesdove.plist..."
-sudo rm -f ~/Library/LaunchAgents/com.user.updatepoliciesdove.plist || error_fn
-echo
-
-echo_green_text "Removing /usr/local/sbin/update_policies_dove.sh..."
-sudo rm -f /usr/local/sbin/update_policies_dove.sh || error_fn
-echo
-
-echo_green_text "Removing policies.json..."
-sudo rm -f /Applications/Thunderbird.app/Contents/Resources/distribution/policies.json || error_fn
-echo
-
-echo_green_text "Uninstalling dove-policies..."
-brew uninstall dove-policies || error_fn
-echo
-
-echo_green_text "Removing celenity's Tap from Homebrew..."
-brew untap celenity/tap || error_fn
-echo
-
-echo_green_text "Removing legacy Dove-Policies-macOS Tap from Homebrew if installed..."
-brew untap celenity/Dove-Policies-macOS || error_fn
-echo
-
-echo_green_text "Updating Homebrew cache..."
-brew update || error_fn
+echo_green_text "Uninstalling dove..."
+brew uninstall dove || error_fn
 echo
 
 echo_green_text "Thanks for giving Dove a shot. Sorry to see you go :(. Please leave feedback on how we can improve! https://dove.celenity.dev/issues"
