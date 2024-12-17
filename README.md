@@ -1,15 +1,33 @@
 # Dove
 
-**Dove is a suite of configurations & advanced modifications for Mozilla Thunderbird, designed to put the user first.**
+**Dove is a suite of configurations & advanced modifications for Mozilla Thunderbird, designed to put the user first - with a focus on privacy, security, freedom, functionality, & usability.**
 
-It is not a simple user.js like you might expect - but it is not a fork either. It is installed on top of your standard Thunderbird installation.
+___
 
-**Dove strives to create the best email experience possible, and does so through significantly hardening user privacy & security, and protecting user freedom.** We also include various other QOL tweaks, performance enhancements, & nice-to-have features where possible.
+Dove works by leveraging Thunderbird's [AutoConfig](https://enterprise.thunderbird.net/deploy/mcd-thunderbird-autoconfig) & [Enterprise Policies](https://github.com/thunderbird/policy-templates/tree/master/templates/central) functionality, and is installed on top of your standard, official Thunderbird installation. **This allows us to go above and beyond what a simple `user.js` file can offer, without the security risks of using a fork**. For example, forks often fall behind on Thunderbird updates, **which can leave users open to severe, detrimental vulnerabilities.** Dove's approach allows users to continue receiving immediate updates, directly from Mozilla.
 
-Dove is built off of & heavily based on its sister project, [Phoenix](https://celenity.dev/phoenix), which you should also check out.
+Dove's approach also provides users with a seamless experience that is accessible and easy to use. Gone are the days of creating `override` files, manually keeping track of updates, & resetting old preferences. **Not only is Dove the most effective & comprehensive approach to configuring Thunderbird, it is also the most accessible & easiest to use.**
+
+Dove's settings & changes to Thunderbird are carefully considered based on extensive research & studying of Thunderbird's inner workings. **For an incomplete, non-exhaustive list of Dove's features & enhancements, see [here](https://dove.celenity.dev/features).**
+
+**Dove is designed to maintain compatibility with email providers and to avoid breakage as much as possible, while still substantially improving privacy & security compared to vanilla Thunderbird & most other email clients.**
+
+**You should also see [here](https://dove.celenity.dev/compare) for a comparison between Dove, standard Thunderbird, thunderbird-user.js, & other projects of similar nature.**
+
+**Dove also disables various anti-features & strives to put the user back in control of their email experience.** Additionally, Dove includes quality of life enhancements, performance improvements, and other 'goodies' where possible and where it doesn't compromise user privacy or security.
+
+At the end of the day, above all else:
+
+**Dove is designed from the ground up to always put the user first.**
+
+> [!IMPORTANT]
+>**⚠️ All users MUST read the Wiki [here](https://dove.celenity.dev/wiki) before proceeding. The [Important](https://dove.celenity.dev/important) pages is of extra importance!!**
 
 > [!NOTE]
-> This project is hosted on both [Codeberg](https://codeberg.org/celenity/Dove) (which will be the primary & preferred place to contribute), & [GitHub](https://github.com/celenityy/Dove).
+> This project is hosted on both [Codeberg](https://codeberg.org/celenity/Dove) **(which is the primary & preferred place to contribute)** & [GitHub](https://github.com/celenityy/Dove).
+
+> [!NOTE]
+> **Firefox users should consider taking a look at [Phoenix](https://phoenix.celenity.dev) - Dove's sister project**
 
 ___
 
@@ -20,107 +38,82 @@ ___
 - [Dove](#dove)
 - [📖Glossary](#glossary)
 - [🚀Install](#install)
-	- [🐧GNU-Linux](#gnu-linux)
-	- [🍎macOS](#macos)
-	- [🪟Windows](#windows)
 - [👋Uninstall](#uninstall)
-	- [🐧GNU-Linux](#gnu-linux-1)
-	- [🍎macOS](#macos-1)
-- [📛Manual Mode *(Not recommended)*](#manual-mode-not-recommended)
+- [📛Manual Installation](#manual-installation)
 - [💜Attribution](#attribution)
 
 </details>
 
 # 🚀Install
 
-Dove offers easy to use install scripts for various platforms. All you have to do is have Thunderbird installed & ready, paste the command that corresponds to your platform of choice in your terminal, and you should be good to go. :)
+Dove currently provides official support for:
 
-## 🐧GNU-Linux
+* **Arch Linux**
+* **Fedora Linux** *(39-41)*
+* **macOS**
 
-> [!IMPORTANT] 
-> **⚠️ Thunderbird Flatpak & Snap packages are currently not supported.**
+> [!IMPORTANT]
+> ⚠️ **macOS users must have [Homebrew](https://brew.sh/) installed, and must grant Terminal the `App Management` Permission.**
 
-> [!NOTE]
-> Dove only supports 39, 40 and 41 versions of Fedora.
+> [!IMPORTANT]
+> ⚠️ **Flatpak & Snap packages of Thunderbird are currently not supported.**
 
-```sh
-sudo bash -c "$(curl -fsSL https://dove.celenity.dev/install.sh)"
-```
+Other platforms have unfortunately proven difficult to support, though progress **is** being made. Contributions are always welcome and appreciated.
 
-</details>
-
-___
-
-## 🍎macOS
-
-> [!IMPORTANT] 
-> ⚠️ **You must have [Homebrew](https://brew.sh/) installed**
+**If your platform is supported, simply run the following command in your terminal to install Dove:**
 
 ```sh
 bash -c "$(curl -fsSL https://dove.celenity.dev/install.sh)"
 ```
-___
 
-## 🪟Windows
-
-See upstream Codeberg issue [here](https://codeberg.org/celenity/Phoenix/issues/3) & GitHub issue [here](https://github.com/celenityy/Phoenix/issues/1)
-
-**HELP WANTED!!**
+**If you would like to use Dove on an unsupported platform, see [📛Manual Installation](#manual-installation).**
 
 ___
 
 # 👋Uninstall
 
-If Dove isn't right for you - no worries! We also have easy to use uninstall scripts. Please be sure to [leave us feedback](https://dove.celenity.dev/issues) though so we can improve for the future!
+If Dove isn't right for you - no worries!
 
-## 🐧GNU-Linux
-
-```sh
-sudo bash -c "$(curl -fsSL https://dove.celenity.dev/uninstall.sh)"
-```
-
-</details>
-
-___
-
-## 🍎macOS
+**Simply run the following command in your terminal to uninstall Dove:**
 
 ```sh
 bash -c "$(curl -fsSL https://dove.celenity.dev/uninstall.sh)"
 ```
 
+Please [leave us feedback](https://dove.celenity.dev/issues) on the way out, so we can improve for the future!
+
 ___
 
-# 📛Manual Mode *(Not recommended)*
-
-By default, Dove leverages Mozilla's [Centralized Management](https://support.mozilla.org/kb/customizing-firefox-using-autoconfig#w_centralized-management) feature to automatically update its configurations. This allows fast, easy updates & fixes as needed, regardless of your platform. Dove's Policies are updated separately, through the [AUR](https://aur.archlinux.org/packages/dove-policies) on Arch Linux, [COPR](https://copr.fedorainfracloud.org/coprs/dove/phoenix-policies/) on Fedora, the [MPR](https://mpr.makedeb.org/packages/dove-policies) on Debian/Ubuntu/Derivatives, & our [Homebrew](https://brew.sh/) [Tap](https://codeberg.org/celenity/tap) on macOS. 
+# 📛Manual Installation
 
 > [!CAUTION] 
->**This is typically set-up & handled through our install scripts, and this is the set-up we would recommend most users stick to.**
+>**This is NOT recommended for most users.**
 
-However, if this is not desirable for you & your situation, you can manually install Dove with the following steps:
+By default, Dove is installed & updated via your operating system's package manager. This allows for fast, easy updates & fixes as needed, right with the rest of your system!
 
-**1:** Download our `dove.cfg` file [here](https://dove.celenity.dev/manual/dove.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
+However, if this is not desirable for you & your situation, or you would simply like to use Dove on an unsupported operating system, you can manually install Dove with the following steps:
+
+**1:** Download `dove.cfg` file from [here](https://dove.celenity.dev/dove.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
 
 ```sh
-wget https://dove.celenity.dev/manual/dove.cfg
+wget https://dove.celenity.dev/dove.cfg
 ```
 
-**2:** Download `dove.js` from [here](https://dove.celenity.dev/defaults/pref/dove.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
+**2:** Download `dove.js` from [here](https://dove.celenity.dev/defaults/pref/dove.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
 
 ```sh
 wget https://dove.celenity.dev/defaults/pref/dove.js
 ```
 
-**3:** Download `policies.json` from [here](https://dove.celenity.dev/policies/Policies/policies.json). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
+**3:** Download `policies.json` from [here](https://dove.celenity.dev/policies.json). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
 
 ```sh
-wget https://dove.celenity.dev/policies/Policies/policies.json
+wget https://dove.celenity.dev/policies.json
 ```
 
 **4:** Locate your Thunderbird installation directory. This will vary depending on your platform, you can generally find it by navigating to `Help` (Located on top bar) -> `Troubleshooting information` & checking the directory next to `Application Binary`. For example, on Fedora Linux, I see `/usr/lib64/thunderbird/thunderbird` next to `Application Binary`. This means our installation directory is `/usr/lib64/thunderbird`.
 
-> [!CAUTION] 
+> [!CAUTION]
 >**Unless you're on Fedora Linux, your directory will probably be different, and you should replace this path on the following steps with your actual installation directory's path.**
 
 **5:** Move `dove.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command, assuming `/usr/lib64/thunderbird` is your installation directory:
@@ -135,19 +128,22 @@ sudo mv dove.cfg /usr/lib64/thunderbird/dove.cfg
 sudo mkdir -p /usr/lib64/thunderbird/defaults/pref
 ```
 
-**For Linux users:** If it does not already exist, you will want to create a folder named `thunderbird` located in your system's `etc` directory. Inside this `thunderbird` folder, create a new folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. This will work **regardless of your distribution** - even Snaps are supported. You can also just run the command below:
+**For GNU/Linux users:** If it does not already exist, you will want to create a folder named `thunderbird` located in your system's `etc` directory. Inside this `thunderbird` folder, create a new folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. This will work **regardless of your distribution** - even Snaps are supported. You can also just run the command below:
 
 ```sh
 sudo mkdir -p /etc/thunderbird/defaults/pref
 ```
 
-On macOS & Linux, you'll also want to ensure that the folder you created has proper permissions:
+On macOS & GNU/Linux, you'll also want to ensure that the folder you created has proper permissions:
+
+**For macOS users:** - assuming `/usr/lib64/thunderbird` is your installation directory *(it won't be)*
 
 ```sh
-sudo chmod 655 /usr/lib64/thunderbird/defaults/pref
+sudo chmod 744 /usr/lib64/thunderbird/defaults/pref
 ```
 
-**For all non-Flatpak Linux users:**
+**For all non-Flatpak GNU/Linux users:**
+
 ```sh
 sudo chmod 655 /etc/thunderbird/defaults/pref
 ```
@@ -158,7 +154,8 @@ sudo chmod 655 /etc/thunderbird/defaults/pref
 sudo mv dove.js /usr/lib64/thunderbird/defaults/pref/dove.js
 ```
 
-**For all non-Flatpak Linux users:**
+**For all non-Flatpak GNU/Linux users:**
+
 ```sh
 sudo mv dove.js /etc/thunderbird/defaults/pref/dove.js
 ```
@@ -169,19 +166,22 @@ sudo mv dove.js /etc/thunderbird/defaults/pref/dove.js
 sudo mkdir -p /usr/lib64/thunderbird/distribution
 ```
 
-Linux users should **instead** create a `policies` folder inside of a `thunderbird` folder located in `/etc`. This will work **regardless** of your distribution, and even for Snaps.
+GNU/Linux users should **instead** create a `policies` folder inside of a `thunderbird` folder located in `/etc`. This will work **regardless** of your distribution, and even for Snaps.
 
 ```sh
 sudo mkdir -p /etc/thunderbird/policies
 ```
 
-On macOS & Linux, you'll also want to ensure that the folder you created has proper permissions:
+On macOS & GNU/Linux, you'll also want to ensure that the folder you created has proper permissions:
+
+**For macOS users:** - assuming `/usr/lib64/thunderbird` is your installation directory *(it won't be)*
 
 ```sh
-sudo chmod 655 /usr/lib64/thunderbird/distribution
+sudo chmod 744 /usr/lib64/thunderbird/distribution
 ```
 
-**For all non-Flatpak Linux users:**
+**For all non-Flatpak GNU/Linux users:**
+
 ```sh
 sudo chmod 655 /etc/thunderbird/policies
 ```
@@ -192,7 +192,7 @@ sudo chmod 655 /etc/thunderbird/policies
 sudo mv policies.json /usr/lib64/thunderbird/distribution/policies.json
 ```
 
-Linux users should **instead** move `policies.json` to their `/etc/thunderbird/policies` folder they just created.
+GNU/Linux users should **instead** move `policies.json` to their `/etc/thunderbird/policies` folder they just created.
 
 ```sh
 sudo mv policies.json /etc/thunderbird/policies/policies.json
@@ -205,6 +205,8 @@ ___
 # 💜Attribution
 
 Huge thank you to the following projects & individuals for making Dove possible. Please show them support!
+
+**Also see Phoenix's Attribution page [here](https://phoenix.celenity.dev#attribution)**.
 
 - **[thunderbird-user.js](https://github.com/HorlogeSkynet/thunderbird-user.js)**
     - 🪪 [Samuel FORESTIER](https://github.com/HorlogeSkynet) + [Daniel Nathan Gray](https://github.com/dngray)
