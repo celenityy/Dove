@@ -13,17 +13,19 @@ echo_green_text() {
 error_fn() {
 	echo
 	echo -e "\033[31mSomething went wrong! The script failed.\033[0m"
-	echo -e "\033[31mPlease report this (with the output message) to https://phoenix.celenity.dev/issues\033[0m"
+	echo -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
 	echo
 	exit 1
 }
 
 
 ## Uninstall Dove
-
-
-echo_green_text "Uninstalling dove..."
+echo_green_text "Uninstalling dove if installed..."
 brew uninstall dove || error_fn
+echo
+
+echo_green_text "Uninstalling dove-user if installed..."
+brew uninstall dove-user || error_fn
 echo
 
 echo_green_text "Thanks for giving Dove a shot. Sorry to see you go :(. Please leave feedback on how we can improve! https://dove.celenity.dev/issues"
