@@ -31,8 +31,24 @@ echo_green_text "Updating Homebrew cache..."
 brew update && brew upgrade --force --verbose || error_fn
 echo
 
-echo_green_text "Installing dove package..."
-brew install dove || error_fn
-echo
+echo -e ""
+echo -e "${brown}Where is your installation of Thunderbird located?${coloroff}";
+echo -e "${brown}Your options are:${coloroff}";
+echo -e "${blue}system${coloroff} - ${green}/Applications/Thunderbird.app${coloroff}";
+echo -e "${red}user${coloroff}  - ${green}~/Applications/Thunderbird.app${coloroff}";
+read -p 'Enter your selection: ' LOCATION
+case ${LOCATION} in
+	"system" | "System" | "SYSTEM")
+		echo_green_text "Installing dove package..."
+		brew install dove || error_fn
+		echo
+		;;
+	"user" | "User" | "USER")
+		echo_green_text "Installing dove-user package..."
+		brew install dove-user || error_fn
+		echo
+		;;
+esac
+;;
 
 echo_green_text "All done. :) Congratulations, you've successfully installed Dove."
