@@ -4,16 +4,7 @@
 			"path": "."
 		},
 		{
-			"path": "../Dove-Policies-Fedora"
-		},
-		{
-			"path": "../Dove-Policies-macOS"
-		},
-		{
 			"path": "../Dove.wiki"
-		},
-		{
-			"path": "../Dove-Policies-Arch"
 		},
 		{
 			"path": "../Dove-Policies-Debian"
