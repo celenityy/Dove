@@ -24,32 +24,8 @@ error_fn() {
 
 
 ## Install Dove
-echo_green_text "Downloading dove.cfg..."
-wget -nv https://dove.celenity.dev/dove.cfg || error_fn
-echo
-
-echo_green_text "Moving dove.cfg to /usr/lib/thunderbird/dove.cfg..."
-sudo mv -v mozilla.cfg /usr/lib/firefox/thunderbird.cfg || error_fn
-echo
-
-echo_green_text "Downloading dove.js..."
-wget -nv https://dove.celenity.dev/defaults/pref/dove.js || error_fn
-echo
-
-echo_green_text "Creating /etc/thunderbird/defaults/pref directory..."
-sudo mkdir -v -p /etc/thunderbird/defaults/pref || error_fn
-echo
-
-echo_green_text "Changing permissions of /etc/thunderbird/defaults/pref to 655..."
-sudo chmod -v 655 /etc/thunderbird/defaults/pref || error_fn
-echo
-
-echo_green_text "Moving dove.js to /etc/thunderbird/defaults/pref/dove.js..."
-sudo mv -v dove.js /etc/thunderbird/defaults/pref/dove.js || error_fn
-echo
-
-echo_green_text "Installing dove-policies from the AUR..."
-paru -S dove-policies || error_fn
+echo_green_text "Installing dove from the AUR..."
+paru -S dove || error_fn
 echo
 
 echo_green_text "All done. Congratulations, you've successfully installed Dove.\nEnjoy :)\n"
