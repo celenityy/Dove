@@ -962,8 +962,7 @@
     },
     "ExtensionUpdate": true,
     "NetworkPrediction": false,
-    "OfferToSaveLogins": false,
-    "PasswordManagerEnabled": false,
+    "OfferToSaveLoginsDefault": false,
     "PDFjs": {
       "EnablePermissions": false
     },
