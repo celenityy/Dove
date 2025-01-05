@@ -1202,6 +1202,10 @@
             "xpinstall.whitelist.required": {
                 "Value": true,
                 "Status": "locked"
+            },
+            "mail.dove.policies.applied": {
+                "Value": true,
+                "Status": "locked"
             }
         },
         "PromptForDownloadLocation": true,
