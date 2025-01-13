@@ -920,7 +920,15 @@
                 "Status": "locked"
             },
             "dom.origin-trials.private-attribution.state": {
-                "Value": 0,
+                "Value": 2,
+                "Status": "locked"
+            },
+            "dom.prefetch_dns_for_anchor_http_document": {
+                "Value": false,
+                "Status": "locked"
+            },
+            "dom.prefetch_dns_for_anchor_https_document": {
+                "Value": false,
                 "Status": "locked"
             },
             "dom.private-attribution.submission.enabled": {
@@ -1135,6 +1143,10 @@
                 "Value": false,
                 "Status": "locked"
             },
+            "network.early-hints.preconnect.max_connections": {
+                "Value": 0,
+                "Status": "locked"
+            },
             "network.preconnect": {
                 "Value": false,
                 "Status": "locked"
@@ -1155,20 +1167,12 @@
                 "Value": false,
                 "Status": "locked"
             },
-            "network.trr.custom_uri": {
+            "network.trr.default_provider_uri": {
                 "Value": "https://dns.quad9.net/dns-query",
                 "Status": "default"
-            },
-            "network.trr.default_provider_uri": {
-                "Value": "",
-                "Status": "locked"
             },
             "network.trr.mode": {
                 "Value": 3,
-                "Status": "default"
-            },
-            "network.trr.uri": {
-                "Value": "https://dns.quad9.net/dns-query",
                 "Status": "default"
             },
             "pdfjs.enablePermissions": {
