@@ -2,6 +2,16 @@
 
 **Dove is a suite of configurations & advanced modifications for Mozilla Thunderbird, designed to put the user first - with a focus on privacy, security, freedom, functionality, & usability.**
 
+> [!NOTE]
+> While Dove's home is [Codeberg](https://codeberg.org/celenity/Dove), this repo is also mirrored to both [GitLab](https://gitlab.com/celenity/Dove) & [GitHub](https://github.com/celenityy/Dove).
+
+> [!NOTE]
+> **Firefox users should consider taking a look at [Phoenix](https://phoenix.celenity.dev) - Dove's sister project.**
+
+### Want to join the Dove Community?
+
+We'd love to see you over on [Matrix](https://matrix.to/#/#dove:unredacted.org) *(Recommended)* and [Discord](https://discord.gg/GartyGah9m)!
+
 ___
 
 Dove works by leveraging Thunderbird's [AutoConfig](https://enterprise.thunderbird.net/deploy/mcd-thunderbird-autoconfig) & [Enterprise Policies](https://github.com/thunderbird/policy-templates/tree/master/templates/central) functionality, and is installed on top of your standard, official Thunderbird installation. **This allows us to go above and beyond what a simple `user.js` file can offer, without the security risks of using a fork**. For example, forks often fall behind on Thunderbird updates, **which can leave users open to severe, detrimental vulnerabilities.** Dove's approach allows users to continue receiving immediate updates, directly from Mozilla.
@@ -23,12 +33,6 @@ At the end of the day, above all else:
 > [!IMPORTANT]
 >**⚠️ All users MUST read the Wiki [here](https://dove.celenity.dev/wiki) before proceeding. The [Important](https://dove.celenity.dev/important) pages is of extra importance!!**
 
-> [!NOTE]
-> This project is hosted on both [Codeberg](https://codeberg.org/celenity/Dove) **(which is the primary & preferred place to contribute)** & [GitHub](https://github.com/celenityy/Dove).
-
-> [!NOTE]
-> **Firefox users should consider taking a look at [Phoenix](https://phoenix.celenity.dev) - Dove's sister project**
-
 ___
 
 # 📖Glossary
@@ -36,6 +40,7 @@ ___
 **<details><summary>Click me</summary>**
 
 - [Dove](#dove)
+		- [Want to join the Dove Community?](#want-to-join-the-dove-community)
 - [📖Glossary](#glossary)
 - [🚀Install](#install)
 - [👋Uninstall](#uninstall)
