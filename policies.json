@@ -2483,6 +2483,10 @@
         "Value": false,
         "Status": "default"
       },
+      "extensions.webcompat.smartblockEmbeds.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
       "extensions.webcompat-reporter.enabled": {
         "Value": false,
         "Status": "locked"
@@ -3039,6 +3043,10 @@
         "Value": "",
         "Status": "default"
       },
+      "network.cookie.CHIPS.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
       "network.cookie.cookieBehavior": {
         "Value": 5,
         "Status": "default"
@@ -3047,8 +3055,16 @@
         "Value": true,
         "Status": "default"
       },
+      "network.cookie.cookieBehavior.optInPartitioning.pbmode": {
+        "Value": true,
+        "Status": "default"
+      },
       "network.cookie.cookieBehavior.pbmode": {
         "Value": 5,
+        "Status": "default"
+      },
+      "network.cookie.cookieBehavior.trackerCookieBlocking": {
+        "Value": true,
         "Status": "default"
       },
       "network.cookie.noPersistentStorage": {
@@ -3456,8 +3472,8 @@
         "Status": "locked"
       },
       "mail.dove.policies.status": {
-        "Value": true,
-        "Status": "successfully applied :D"
+        "Value": "successfully applied :D",
+        "Status": "locked"
       }
     },
     "Proxy": {

@@ -1671,6 +1671,10 @@
                 "Value": false,
                 "Status": "default"
             },
+            "extensions.webcompat.smartblockEmbeds.enabled": {
+                "Value": true,
+                "Status": "default"
+            },
             "extensions.webcompat-reporter.enabled": {
                 "Value": false,
                 "Status": "locked"
@@ -2225,6 +2229,10 @@
             },
             "network.connectivity-service.IPv6.url": {
                 "Value": "",
+                "Status": "default"
+            },
+            "network.cookie.CHIPS.enabled": {
+                "Value": true,
                 "Status": "default"
             },
             "network.cookie.cookieBehavior": {
