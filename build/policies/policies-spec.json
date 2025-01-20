@@ -2644,8 +2644,8 @@
                 "Status": "locked"
             },
             "mail.dove.policies.status": {
-                "Value": true,
-                "Status": "successfully applied :D"
+                "Value": "successfully applied :D",
+                "Status": "locked"
             }
         },
         "Proxy": {
