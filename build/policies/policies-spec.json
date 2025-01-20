@@ -1219,9 +1219,9 @@
                 "Value": true,
                 "Status": "locked"
             },
-            "mail.dove.policies.applied": {
+            "mail.dove.policies.status": {
                 "Value": true,
-                "Status": "locked"
+                "Status": "successfully applied :D"
             }
         },
         "PromptForDownloadLocation": true,

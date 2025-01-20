@@ -8,4 +8,4 @@ pref("general.config.filename", "dove.cfg", locked);
 pref("general.config.vendor", "dove", locked);
 pref("general.config.obscure_value", 0);
 
-pref("mail.dove.js.applied", true, locked);
+pref("mail.dove.js.status", "successfully applied :D", locked);
