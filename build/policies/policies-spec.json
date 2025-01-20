@@ -2235,8 +2235,16 @@
                 "Value": true,
                 "Status": "default"
             },
+            "network.cookie.cookieBehavior.optInPartitioning.pbmode": {
+                "Value": true,
+                "Status": "default"
+            },
             "network.cookie.cookieBehavior.pbmode": {
                 "Value": 5,
+                "Status": "default"
+            },
+            "network.cookie.cookieBehavior.trackerCookieBlocking": {
+                "Value": true,
                 "Status": "default"
             },
             "network.cookie.noPersistentStorage": {
