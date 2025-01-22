@@ -8,4 +8,4 @@
 
 rm archives/dove.zip
 
-zip -R archives/dove.zip 'filter.pac' 'configs/*' 'defaults/*' 'defaults/pref/*' 'etc/*' 'etc/profile.d/*' 'dove.cfg' 'policies.json' 'README.md' -x 'build/*' 'legacy/*' '.git*' '.DS_Store'
+zip -R archives/dove.zip 'filter.pac' 'configs/*' 'etc/*' 'etc/profile.d/*' 'dove.cfg' 'policies.json' 'prefs/*' 'README.md' -x 'build/*' 'legacy/*' '.git*' '.DS_Store'
