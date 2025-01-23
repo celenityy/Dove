@@ -294,7 +294,7 @@ pref("mail.phishing.detection.enabled", true); // [DEFAULT]
 pref("mail.phishing.detection.ipaddresses", true); // [DEFAULT]
 pref("mail.phishing.detection.mismatched_hosts", true); // [DEFAULT]
 
-lockPref("mail.dove.status", "009");
+pref("mail.dove.status", "009");
 
 // 010 MISC.
 
