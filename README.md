@@ -124,7 +124,7 @@ wget https://dove.celenity.dev/policies.json
 **5:** Move `dove.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command, assuming `/usr/lib64/thunderbird` is your installation directory:
 
 ```sh
-sudo mv dove.cfg /usr/lib64/thunderbird/dove.cfg
+sudo cp dove.cfg /usr/lib64/thunderbird/dove.cfg
 ```
 
 **6:** **For macOS & Flatpak users**: If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory *(it won't be)*, you could run the following command:
@@ -156,13 +156,13 @@ sudo chmod 655 /etc/thunderbird/defaults/pref
 **7:** Move `dove.js` to the `pref` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
 
 ```sh
-sudo mv dove.js /usr/lib64/thunderbird/defaults/pref/dove.js
+sudo cp dove.js /usr/lib64/thunderbird/defaults/pref/dove.js
 ```
 
 **For all non-Flatpak GNU/Linux users:**
 
 ```sh
-sudo mv dove.js /etc/thunderbird/defaults/pref/dove.js
+sudo cp dove.js /etc/thunderbird/defaults/pref/dove.js
 ```
 
 **8:** On macOS & Windows, in the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
@@ -194,13 +194,13 @@ sudo chmod 655 /etc/thunderbird/policies
 **9:** Finally, those on Windows & macOS should move `policies.json` to the `distribution` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
 
 ```sh
-sudo mv policies.json /usr/lib64/thunderbird/distribution/policies.json
+sudo cp policies.json /usr/lib64/thunderbird/distribution/policies.json
 ```
 
 GNU/Linux users should **instead** move `policies.json` to their `/etc/thunderbird/policies` folder they just created.
 
 ```sh
-sudo mv policies.json /etc/thunderbird/policies/policies.json
+sudo cp policies.json /etc/thunderbird/policies/policies.json
 ```
 
 Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
