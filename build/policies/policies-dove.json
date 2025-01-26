@@ -303,6 +303,10 @@
                 "Value": true,
                 "Status": "locked"
             },
+            "mail.external_protocol_requires_permission": {
+                "Value": true,
+                "Status": "default"
+            },
             "mail.html_compose": {
                 "Value": false,
                 "Status": "default"

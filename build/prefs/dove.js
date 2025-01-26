@@ -306,6 +306,10 @@ pref("mail.phishing.detection.enabled", true); // [DEFAULT]
 pref("mail.phishing.detection.ipaddresses", true); // [DEFAULT]
 pref("mail.phishing.detection.mismatched_hosts", true); // [DEFAULT]
 
+/// Always warn users before launching other apps...
+
+pref("mail.external_protocol_requires_permission", true);
+
 pref("mail.dove.status", "009");
 
 // 010 MISC.
