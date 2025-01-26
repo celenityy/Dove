@@ -631,6 +631,10 @@
                 "Value": 2,
                 "Status": "user"
             },
+            "pdfjs.firstRun": {
+                "Value": false,
+                "Status": "default"
+            },
             "places.history.enabled": {
                 "Value": false,
                 "Status": "default"

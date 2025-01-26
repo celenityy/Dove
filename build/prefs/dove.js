@@ -24,6 +24,10 @@ pref("mail.provider.suppress_dialog_on_startup", true); // [HIDDEN]
 
 pref("mail.shell.checkDefaultClient", false);
 
+/// Never check default PDF viewer
+
+pref("pdfjs.firstRun", false);
+
 /// Skip Onboarding
 
 pref("mail.rights.override", true);
