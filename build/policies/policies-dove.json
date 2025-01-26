@@ -375,6 +375,10 @@
                 "Value": true,
                 "Status": "default"
             },
+            "mail.save_msg_filename_underscores_for_space": {
+                "Value": true,
+                "Status": "default"
+            },
             "mail.server.default.mdn_not_in_to_cc": {
                 "Value": 0,
                 "Status": "default"

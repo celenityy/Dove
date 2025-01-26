@@ -466,6 +466,10 @@ pref("mail.SpellCheckBeforeSend", true);
 
 pref("mail.dark-reader.enabled", true);
 
+/// By default, when saving a message to a file, use underscores instead of spaces in the file name...
+
+pref("mail.save_msg_filename_underscores_for_space", true);
+
 pref("mail.dove.status", "012");
 
 // 013 DO NOT TOUCH
