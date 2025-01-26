@@ -284,6 +284,7 @@ pref("mail.spotlight.enable", false); // [DEFAULT]
 pref("mail.spotlight.firstRunDone", true);
 pref("mail.winsearch.enable", false); // [DEFAULT]
 pref("mail.winsearch.firstRunDone", true);
+pref("searchintegration.enable", false);
 
 pref("mail.dove.status", "008");
 
