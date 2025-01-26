@@ -423,7 +423,23 @@
                 "Value": true,
                 "Status": "default"
             },
+            "mail.spotlight.enable": {
+                "Value": false,
+                "Status": "default"
+            },
+            "mail.spotlight.firstRunDone": {
+                "Value": true,
+                "Status": "default"
+            },
             "mail.suppress_content_language": {
+                "Value": true,
+                "Status": "default"
+            },
+            "mail.winsearch.enable": {
+                "Value": false,
+                "Status": "default"
+            },
+            "mail.winsearch.firstRunDone": {
                 "Value": true,
                 "Status": "default"
             },

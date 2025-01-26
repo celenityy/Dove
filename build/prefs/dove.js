@@ -273,6 +273,13 @@ pref("network.http.referer.XOriginPolicy", 2, sticky);
 
 pref("extensions.cardbook.useOnlyEmail", true);
 
+/// Disable macOS Spotlight & Windows file indexing email by default
+
+pref("mail.spotlight.enable", false); // [DEFAULT]
+pref("mail.spotlight.firstRunDone", true);
+pref("mail.winsearch.enable", false); // [DEFAULT]
+pref("mail.winsearch.firstRunDone", true);
+
 pref("mail.dove.status", "008");
 
 // 009 MISC. SECURITY
