@@ -18,6 +18,7 @@ pref("mail.dove.status", "001");
 /// Disable Mozilla Email Provisioner/Creating new email addresses with their "partners"
 
 pref("mail.provider.enabled", false);
+pref("mail.provider.suppress_dialog_on_startup", true); // [HIDDEN]
 
 /// Never check default mail client
 

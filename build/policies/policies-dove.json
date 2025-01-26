@@ -367,6 +367,10 @@
                 "Value": false,
                 "Status": "default"
             },
+            "mail.provider.suppress_dialog_on_startup": {
+                "Value": true,
+                "Status": "default"
+            },
             "mail.rights.override": {
                 "Value": true,
                 "Status": "default"
