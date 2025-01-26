@@ -115,6 +115,18 @@
             }
         },
         "Preferences": {
+            "browser.download.manager.focusWhenStarting": {
+                "Value": true,
+                "Status": "default"
+            },
+            "browser.download.manager.showAlertOnComplete": {
+                "Value": true,
+                "Status": "default"
+            },
+            "browser.download.manager.showWhenStarting": {
+                "Value": true,
+                "Status": "default"
+            },
             "calendar.extract.service.enabled": {
                 "Value": false,
                 "Status": "default"

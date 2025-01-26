@@ -308,7 +308,14 @@ pref("mail.phishing.detection.mismatched_hosts", true); // [DEFAULT]
 
 /// Always warn users before launching other apps...
 
-pref("mail.external_protocol_requires_permission", true);
+pref("mail.external_protocol_requires_permission", true); // [HIDDEN]
+
+/// Always alert users when downloads are initiated (and completed)
+// https://searchfox.org/comm-central/source/mail/app/profile/all-thunderbird.js#505
+
+pref("browser.download.manager.focusWhenStarting", true);
+pref("browser.download.manager.showAlertOnComplete", true);
+pref("browser.download.manager.showWhenStarting", true);
 
 pref("mail.dove.status", "009");
 
