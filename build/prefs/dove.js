@@ -362,6 +362,11 @@ pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true);
 
 pref("svg.disabled", true);
 
+/// Prevent status bar spoofing
+// https://searchfox.org/comm-central/source/mail/app/profile/all-thunderbird.js#542
+
+pref("dom.disable_window_status_change", true); // [DEFAULT]
+
 pref("mail.dove.status", "010");
 
 // 011 Configure DKIM Verifier...

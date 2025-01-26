@@ -131,6 +131,10 @@
                 "Value": false,
                 "Status": "default"
             },
+            "dom.disable_window_status_change": {
+                "Value": true,
+                "Status": "default"
+            },
             "dom.webnotifications.enabled": {
                 "Value": false,
                 "Status": "default"
