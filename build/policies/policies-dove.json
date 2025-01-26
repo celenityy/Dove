@@ -101,6 +101,12 @@
                 "updates_disabled": false,
                 "temporarily_allow_weak_signatures": false
             },
+            "dkim_verifier@pl": {
+                "installation_mode": "normal_installed",
+                "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/addon-438634-latest.xpi",
+                "updates_disabled": false,
+                "temporarily_allow_weak_signatures": false
+            },
             "uBlock0@raymondhill.net": {
                 "installation_mode": "normal_installed",
                 "install_url": "https://github.com/gorhill/uBlock/releases/download/1.62.0/uBlock0_1.62.0.thunderbird.xpi",
@@ -119,6 +125,114 @@
             },
             "extensions.cardbook.useOnlyEmail": {
                 "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.arh.read": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.arh.replaceAddonResult": {
+                "Value": false,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.debug": {
+                "Value": false,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.display.favicon.show": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.display.keySecure": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.dkim.enable": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.dns.nameserver": {
+                "Value": "9.9.9.9",
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.error.algorithm.rsa.weakKeyLength.treatAs": {
+                "Value": 1,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.error.algorithm.sign.rsa-sha1.treatAs": {
+                "Value": 1,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.error.detailedReasons": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.error.illformed_i.treatAs": {
+                "Value": 1,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.error.illformed_s.treatAs": {
+                "Value": 1,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.error.policy.key_insecure.treatAs": {
+                "Value": 1,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.key.storing": {
+                "Value": 2,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.DMARC.shouldBeSigned.enable": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.DMARC.shouldBeSigned.neededPolicy": {
+                "Value": "none",
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.dkim.unsignedHeadersWarning.mode": {
+                "Value": 30,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.signRules.autoAddRule.enable": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.signRules.autoAddRule.for": {
+                "Value": 0,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.signRules.autoAddRule.onlyIfFromAddressInSDID": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.signRules.checkDefaultRules": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.signRules.enable": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.signRules.error.wrong_sdid.asWarning": {
+                "Value": false,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.policy.signRules.sdid.allowSubDomains": {
+                "Value": false,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.saveResult": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.showDKIMFromTooltip": {
+                "Value": 50,
+                "Status": "default"
+            },
+            "extensions.dkim_verifier.showDKIMHeader": {
+                "Value": 50,
                 "Status": "default"
             },
             "extensions.getAddons.search.browseURL": {
