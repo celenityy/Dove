@@ -592,6 +592,10 @@
                 "Value": true,
                 "Status": "default"
             },
+            "media.peerconnection.ice.relay_only": {
+                "Value": true,
+                "Status": "default"
+            },
             "network.cookie.cookieBehavior": {
                 "Value": 5,
                 "Status": "default"
