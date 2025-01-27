@@ -52,7 +52,6 @@
       "ProviderURL": "https://dns.quad9.net/dns-query",
       "Fallback": false
     },
-    "OfferToSaveLoginsDefault": false,
     "Preferences": {
       "accessibility.force_disabled": {
         "Value": 1,
@@ -734,12 +733,16 @@
         "Value": true,
         "Status": "default"
       },
+      "browser.safebrowsing.provider.google.advisoryName": {
+        "Value": "Google Safe Browsing (Legacy)",
+        "Status": "default"
+      },
       "browser.safebrowsing.provider.google.dataSharing.enabled": {
         "Value": false,
         "Status": "locked"
       },
       "browser.safebrowsing.provider.google.gethashURL": {
-        "Value": "https://safebrowsing.google.com/safebrowsing/gethash?client=SAFEBROWSING_ID&appver=%MAJOR_VERSION%&pver=2.2",
+        "Value": "",
         "Status": "default"
       },
       "browser.safebrowsing.provider.google.reportMalwareMistakeURL": {
@@ -755,7 +758,7 @@
         "Status": "default"
       },
       "browser.safebrowsing.provider.google.updateURL": {
-        "Value": "https://safebrowsing.google.com/safebrowsing/downloads?client=SAFEBROWSING_ID&appver=%MAJOR_VERSION%&pver=2.2&key=%GOOGLE_SAFEBROWSING_API_KEY%",
+        "Value": "",
         "Status": "default"
       },
       "browser.safebrowsing.provider.google4.dataSharing.enabled": {
@@ -840,6 +843,10 @@
       },
       "browser.sessionhistory.max_total_viewers": {
         "Value": 7,
+        "Status": "default"
+      },
+      "browser.sessionstore.disable_platform_collection": {
+        "Value": false,
         "Status": "default"
       },
       "browser.sessionstore.interval": {
@@ -1762,8 +1769,16 @@
         "Value": false,
         "Status": "default"
       },
+      "network.auth.non-web-content-triggered-resources-http-auth-allow": {
+        "Value": false,
+        "Status": "default"
+      },
       "network.auth.subresource-http-auth-allow": {
         "Value": 1,
+        "Status": "default"
+      },
+      "network.auth.subresource-img-cross-origin-http-auth-allow": {
+        "Value": false,
         "Status": "default"
       },
       "network.captive-portal-service.enabled": {
@@ -2018,8 +2033,40 @@
         "Value": "https://dns.quad9.net/dns-query",
         "Status": "default"
       },
+      "network.trr.disable-ECS": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.trr.display_fallback_warning": {
+        "Value": true,
+        "Status": "default"
+      },
       "network.trr.mode": {
         "Value": 3,
+        "Status": "default"
+      },
+      "network.trr.retry_on_recoverable_errors": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.trr.send_accept-language_headers": {
+        "Value": false,
+        "Status": "default"
+      },
+      "network.trr.send_empty_accept-encoding_headers": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.trr.send_user-agent_headers": {
+        "Value": false,
+        "Status": "default"
+      },
+      "network.trr.strict_native_fallback": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.trr_ui.show_fallback_warning_option": {
+        "Value": true,
         "Status": "default"
       },
       "network.websocket.allowInsecureFromHTTPS": {
@@ -2142,10 +2189,6 @@
         "Value": false,
         "Status": "default"
       },
-      "signon.rememberSignons": {
-        "Value": false,
-        "Status": "default"
-      },
       "signon.storeWhenAutocompleteOff": {
         "Value": false,
         "Status": "default"
@@ -2178,8 +2221,24 @@
         "Value": "successfully applied :D",
         "Status": "locked"
       },
+      "browser.download.manager.focusWhenStarting": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.download.manager.showAlertOnComplete": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.download.manager.showWhenStarting": {
+        "Value": true,
+        "Status": "default"
+      },
       "calendar.extract.service.enabled": {
         "Value": false,
+        "Status": "default"
+      },
+      "dom.disable_window_status_change": {
+        "Value": true,
         "Status": "default"
       },
       "dom.webnotifications.enabled": {
@@ -2188,6 +2247,114 @@
       },
       "extensions.cardbook.useOnlyEmail": {
         "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.arh.read": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.arh.replaceAddonResult": {
+        "Value": false,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.debug": {
+        "Value": false,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.display.favicon.show": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.display.keySecure": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.dkim.enable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.dns.nameserver": {
+        "Value": "9.9.9.9",
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.error.algorithm.rsa.weakKeyLength.treatAs": {
+        "Value": 1,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.error.algorithm.sign.rsa-sha1.treatAs": {
+        "Value": 1,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.error.detailedReasons": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.error.illformed_i.treatAs": {
+        "Value": 1,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.error.illformed_s.treatAs": {
+        "Value": 1,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.error.policy.key_insecure.treatAs": {
+        "Value": 1,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.key.storing": {
+        "Value": 2,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.DMARC.shouldBeSigned.enable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.DMARC.shouldBeSigned.neededPolicy": {
+        "Value": "none",
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.dkim.unsignedHeadersWarning.mode": {
+        "Value": 30,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.signRules.autoAddRule.enable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.signRules.autoAddRule.for": {
+        "Value": 0,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.signRules.autoAddRule.onlyIfFromAddressInSDID": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.signRules.checkDefaultRules": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.signRules.enable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.signRules.error.wrong_sdid.asWarning": {
+        "Value": false,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.policy.signRules.sdid.allowSubDomains": {
+        "Value": false,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.saveResult": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.showDKIMFromTooltip": {
+        "Value": 50,
+        "Status": "default"
+      },
+      "extensions.dkim_verifier.showDKIMHeader": {
+        "Value": 50,
         "Status": "default"
       },
       "extensions.getAddons.search.browseURL": {
@@ -2258,6 +2425,10 @@
         "Value": true,
         "Status": "locked"
       },
+      "mail.external_protocol_requires_permission": {
+        "Value": true,
+        "Status": "default"
+      },
       "mail.html_compose": {
         "Value": false,
         "Status": "default"
@@ -2322,11 +2493,19 @@
         "Value": false,
         "Status": "default"
       },
+      "mail.provider.suppress_dialog_on_startup": {
+        "Value": true,
+        "Status": "default"
+      },
       "mail.rights.override": {
         "Value": true,
         "Status": "default"
       },
       "mail.sanitize_date_header": {
+        "Value": true,
+        "Status": "default"
+      },
+      "mail.save_msg_filename_underscores_for_space": {
         "Value": true,
         "Status": "default"
       },
@@ -2374,7 +2553,23 @@
         "Value": true,
         "Status": "default"
       },
+      "mail.spotlight.enable": {
+        "Value": false,
+        "Status": "default"
+      },
+      "mail.spotlight.firstRunDone": {
+        "Value": true,
+        "Status": "default"
+      },
       "mail.suppress_content_language": {
+        "Value": true,
+        "Status": "default"
+      },
+      "mail.winsearch.enable": {
+        "Value": false,
+        "Status": "default"
+      },
+      "mail.winsearch.firstRunDone": {
         "Value": true,
         "Status": "default"
       },
@@ -2490,6 +2685,10 @@
         "Value": false,
         "Status": "default"
       },
+      "media.peerconnection.enabled": {
+        "Value": false,
+        "Status": "default"
+      },
       "media.peerconnection.ice.default_address_only": {
         "Value": true,
         "Status": "default"
@@ -2542,8 +2741,16 @@
         "Value": 2,
         "Status": "user"
       },
+      "pdfjs.firstRun": {
+        "Value": false,
+        "Status": "default"
+      },
       "places.history.enabled": {
         "Value": false,
+        "Status": "default"
+      },
+      "signon.rememberSignons": {
+        "Value": true,
         "Status": "default"
       },
       "mail.dove.policies.status": {
@@ -3598,6 +3805,12 @@
         "updates_disabled": false,
         "temporarily_allow_weak_signatures": false
       },
+      "dkim_verifier@pl": {
+        "installation_mode": "normal_installed",
+        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/addon-438634-latest.xpi",
+        "updates_disabled": false,
+        "temporarily_allow_weak_signatures": false
+      },
       "uBlock0@raymondhill.net": {
         "installation_mode": "normal_installed",
         "install_url": "https://github.com/gorhill/uBlock/releases/download/1.62.0/uBlock0_1.62.0.thunderbird.xpi",
@@ -4361,6 +4574,7 @@
         "http://mozilla-ohttp-fakespot.fastly-edge.com/",
         "https://mozilla-ohttp-fakespot.fastly-edge.com/"
       ]
-    }
+    },
+    "OfferToSaveLoginsDefault": true
   }
 }

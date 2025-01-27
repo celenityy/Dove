@@ -3,7 +3,7 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.01.22.1", locked);
+pref("mail.dove.version", "2025.01.27.1", locked);
 
 pref("mail.dove.status", "000");
 
