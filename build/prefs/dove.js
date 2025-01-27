@@ -374,6 +374,7 @@ pref("dom.disable_window_status_change", true); // [DEFAULT]
 
 /// Re-enable Password Manager by default
 // This is useful & important for Thunderbird, since it's the only way to store account passwords...
+// Also no UI toggle for it :/
 
 pref("signon.rememberSignons", true); // [DEFAULT]
 
