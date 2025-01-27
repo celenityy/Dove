@@ -114,6 +114,7 @@
                 "temporarily_allow_weak_signatures": false
             }
         },
+        "OfferToSaveLoginsDefault": true,
         "Preferences": {
             "browser.download.manager.focusWhenStarting": {
                 "Value": true,
@@ -637,6 +638,10 @@
             },
             "places.history.enabled": {
                 "Value": false,
+                "Status": "default"
+            },
+            "signon.rememberSignons": {
+                "Value": true,
                 "Status": "default"
             },
             "mail.dove.policies.status": {

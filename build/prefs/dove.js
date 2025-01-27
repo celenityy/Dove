@@ -1,7 +1,7 @@
 //
 // The Phoenix shall be followed by a Dove: one of great strength and great beauty, to help carry out its conquest.
 
-// Built from Phoenix (Hardened)
+// Built from Phoenix (Extended)
 
 pref("mail.dove.version", "2025.01.22.1", locked);
 
@@ -371,6 +371,11 @@ pref("svg.disabled", true);
 // https://searchfox.org/comm-central/source/mail/app/profile/all-thunderbird.js#542
 
 pref("dom.disable_window_status_change", true); // [DEFAULT]
+
+/// Re-enable Password Manager by default
+// This is useful & important for Thunderbird, since it's the only way to store account passwords...
+
+pref("signon.rememberSignons", true); // [DEFAULT]
 
 pref("mail.dove.status", "010");
 
