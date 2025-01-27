@@ -580,6 +580,10 @@
                 "Value": false,
                 "Status": "default"
             },
+            "media.peerconnection.enabled": {
+                "Value": false,
+                "Status": "default"
+            },
             "media.peerconnection.ice.default_address_only": {
                 "Value": true,
                 "Status": "default"

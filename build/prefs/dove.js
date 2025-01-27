@@ -367,6 +367,12 @@ pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true);
 
 pref("svg.disabled", true);
 
+/// Disable WebRTC
+// We already take care of privacy concerns here; this is for attack surface reduction...
+// https://x.com/GrapheneOS/status/1728921946396725618
+
+pref("media.peerconnection.enabled", false);
+
 /// Prevent status bar spoofing
 // https://searchfox.org/comm-central/source/mail/app/profile/all-thunderbird.js#542
 
