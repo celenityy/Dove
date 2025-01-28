@@ -333,6 +333,10 @@ pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
 
+/// Prefer viewing emails in plaintext by default
+
+pref("mailnews.display.prefer_plaintext", true);
+
 /// By default, load summary of RSS feeds instead of the full webpage & prevent loading additional webpage content
 
 pref("rss.message.loadWebPageOnSelect", 0);

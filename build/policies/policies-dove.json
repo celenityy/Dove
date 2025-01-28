@@ -492,6 +492,10 @@
                 "Value": 3,
                 "Status": "default"
             },
+            "mailnews.display.prefer_plaintext": {
+                "Value": true,
+                "Status": "default"
+            },
             "mailnews.downloadToTempFile": {
                 "Value": false,
                 "Status": "locked"
