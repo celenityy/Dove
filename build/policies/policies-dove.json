@@ -448,6 +448,10 @@
                 "Value": true,
                 "Status": "default"
             },
+            "mail.smtpserver.default.hello_argument": {
+                "Value": "[127.0.0.1]",
+                "Status": "default"
+            },
             "mail.spellcheck.inline": {
                 "Value": true,
                 "Status": "default"

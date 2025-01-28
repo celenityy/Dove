@@ -287,6 +287,11 @@ pref("mail.winsearch.enable", false); // [DEFAULT]
 pref("mail.winsearch.firstRunDone", true);
 pref("searchintegration.enable", false);
 
+/// Prevent local IP address leakage via EHLO/HELO...
+// https://blog.plee.me/2014/11/mozilla-thunderbird-changing-the-ehlo-helo-value-in-the-received-header-for-outgoing-mail/
+
+pref("mail.smtpserver.default.hello_argument", "[127.0.0.1]"); // [HIDDEN]
+
 pref("mail.dove.status", "008");
 
 // 009 MISC. SECURITY
