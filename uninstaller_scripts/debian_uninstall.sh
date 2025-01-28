@@ -19,39 +19,26 @@ error_fn() {
 }
 
 
-## Uninstall Dove
-echo_green_text "Removing dove.cfg..."
-sudo rm -f /usr/lib/thunderbird/dove.cfg || error_fn
-echo
+## Uninstall Phoenix
+echo_green_text "Removing Dove package..."
+	sudo apt remove dove
 
-echo_green_text "Removing dove.js..."
-sudo rm -f /etc/thunderbird/defaults/pref/dove.js || error_fn
-echo
-
-echo_green_text "Removing legacy mozilla.cfg if installed..."
-sudo rm -f /usr/lib/thunderbird/mozilla.cfg || error_fn
-echo
-
-echo_green_text "Removing legacy local-settings.js if installed..."
-sudo rm -f /usr/lib/thunderbird/defaults/pref/local-settings.js || error_fn
-echo
-
-echo_green_text "Uninstalling dove-policies..."
-sudo apt remove dove-policies || error_fn
-echo
-
-read -p  $'\e[32mDo you want remove Prebuilt MPR Repo? [Y/n] \e[0m' RESULT
+echo -e "\033[32mWould you also like to remove celenity's OBS Repo? [Y/n] \033[0m"
+read RESULT
 echo
 
 case ${RESULT} in
 
 		"y" | "yes" | "YES" | "Y")
-			echo_green_text "Removing Prebuilt MPR Repo"
-			sudo rm -v /etc/apt/sources.list.d/prebuilt-mpr.list || error_fn
+			echo_green_text "Removing celenity's OBS..."
+			sudo rm /etc/apt/sources.list.d/home:celenity.list || error_fn
 			echo
 
-			echo_green_text "Removing GPG keyof Prebuilt MPR Repo"
-			sudo rm -v /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg || error_fn
+			echo_green_text "Remoing celenity's GPG key..."
+			sudo rm /etc/apt/trusted.gpg.d/home_celenity.gpg || error_fn
+
+			echo_green_text "Updating APT cache..."
+			sudo apt update || error_fn
 			echo
 			;;
 		
@@ -59,8 +46,4 @@ case ${RESULT} in
 			;;
 esac
 
-echo_green_text "Updating APT cache..."
-sudo apt update || error_fn
-echo
-
-echo_green_text "Thanks for giving Dove a shot. Sorry to see you go :(. Please leave feedback on how we can improve! https://dove.celenity.dev/issues"
+echo_green_text "Thanks for giving Phoenix a shot. Sorry to see you go :(. Please leave feedback on how we can improve! https://dove.celenity.dev/issues"
