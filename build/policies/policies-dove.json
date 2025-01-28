@@ -304,6 +304,10 @@
                 "Value": false,
                 "Status": "default"
             },
+            "mail.collect_email_address_outgoing": {
+                "Value": false,
+                "Status": "default"
+            },
             "mail.compose.add_link_preview": {
                 "Value": false,
                 "Status": "default"

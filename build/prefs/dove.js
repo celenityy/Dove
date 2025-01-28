@@ -293,6 +293,10 @@ pref("mail.winsearch.enable", false); // [DEFAULT]
 pref("mail.winsearch.firstRunDone", true);
 pref("searchintegration.enable", false);
 
+/// Disable automatic collection of email addresses for Thunderbird's Address Book...
+
+pref("mail.collect_email_address_outgoing", false);
+
 pref("mail.dove.status", "008");
 
 // 009 MISC. SECURITY
