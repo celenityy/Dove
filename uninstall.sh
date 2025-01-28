@@ -1,14 +1,18 @@
 #!/bin/bash
 
+## Downloaded files save in /tmp
+cd /tmp
+
 ## Colours
-blue='\e[1;34m';
-brown='\e[0;33m';
-coloroff='\e[0m'; # Colour off
-cyan='\e[1;36m';
-gray='\e[1;30m';
-green='\e[0;32m';
-purple='\e[0;35m';
-red='\e[1;31m';
+blue='\e[1;34m'
+brown='\e[0;33m'
+coloroff='\e[0m' # Colour off
+cyan='\e[1;36m'
+gray='\e[1;30m'
+green='\e[0;32m'
+purple='\e[1;35m'
+red='\e[1;31m'
+yellow='\e[1;33m'
 
 ## Download and run uninstall script
 uninstall_dove() {
@@ -17,9 +21,6 @@ uninstall_dove() {
 	echo
 	sudo bash $2
 }
-
-## Downloaded files save in /tmp
-cd /tmp
 
 ## Scripts are here
 URL="https://dove.celenity.dev/uninstaller_scripts"
@@ -31,45 +32,63 @@ SCRIPT=("arch_uninstall_paru.sh"
 		"fedora_uninstall.sh"
 		"macos_uninstall.sh")
 
-echo -e "${purple}Welcome to the Dove uninstaller!${coloroff}";
-echo -e "${purple}We're sorry to see you go :(${coloroff}";
-echo -e "";
-echo -e "${brown}To begin, please choose your platform.${coloroff}";
-echo -e "${brown}Your options are:${coloroff}";
-echo -e "${cyan}arch${coloroff}   - ${green}Arch Linux (AUR)${coloroff}";
-echo -e "${red}debian${coloroff} - ${green}Debian GNU/Linux (& Derivatives, such as Ubuntu)${coloroff}";
-echo -e "${blue}fedora${coloroff} - ${green}Fedora Linux${coloroff}";
-echo -e "${gray}macOS${coloroff}  - ${green}macOS${coloroff}";
-read -p 'Enter your selection: ' DISTRO
+echo -e "${purple}Welcome to the Dove uninstaller!${coloroff}"
+echo -e "${purple}We're sorry to see you go :(${coloroff}"
+echo -e ""
+echo -e "${yellow}To begin, please choose your platform (Its name or its number)${coloroff}"
+echo -e "${yellow}Your options are:${coloroff}"
+echo -e "${cyan}1. arch${coloroff}   - ${green}Arch Linux (AUR)${coloroff}"
+echo -e "${red}2. debian${coloroff} - ${green}Debian GNU/Linux & Derivatives (openSUSE Build System)${coloroff}"
+echo -e "${blue}3. fedora${coloroff} - ${green}Fedora Linux (COPR)${coloroff}"
+echo -e "${gray}4. macOS${coloroff}  - ${green}macOS (Homebrew)${coloroff}"
+echo -e "${brown}5. exit${coloroff}   - ${green}Exit form the Phoenix uninstaller${coloroff}"
+read -p 'Enter your selection: ' PLATFORM
 
-case ${DISTRO} in
+case ${PLATFORM} in
 
-	"arch" | "Arch" | "ARCH")
+	"arch" | "Arch" | "ARCH" | 1)
 		echo -e "";
-		echo -e "${brown}Please choose your AUR helper.${coloroff}";
-		echo -e "${brown}Your options are:${coloroff}";
-		echo -e "${blue}paru${coloroff} - ${green}Paru${coloroff}";
-		echo -e "${red}yay${coloroff}  - ${green}Yay (Yet Another Yogurt)${coloroff}";
-		read -p 'Enter your selection: ' HELPER
-		case ${HELPER} in
-			"paru" | "Paru" | "PARU")
-				uninstall_dove ${URL}/${SCRIPT[0]} ${SCRIPT[0]}
+		echo -e "${yellow}Please choose your AUR helper (Its name or its number)${coloroff}"
+		echo -e "${yellow}Your options are:${coloroff}"
+		echo -e "${blue}1. paru${coloroff} - ${green}Paru${coloroff}"
+		echo -e "${red}2. yay${coloroff}  - ${green}Yay (Yet Another Yogurt)${coloroff}"
+		read -p 'Enter your selection: ' AUR_HELPER
+		case ${AUR_HELPER} in
+			"paru" | "Paru" | "PARU" | 1)
+				TARGET_SCRIPT="${SCRIPT[0]}"
 				;;
-			"yay" | "Yay" | "YAY")
-				uninstall_dove ${URL}/${SCRIPT[1]} ${SCRIPT[1]}
+
+			"yay" | "Yay" | "YAY" | 2)
+				TARGET_SCRIPT="${SCRIPT[1]}"
+				;;
+
+			*)
+				echo -e "${red}Invalid option.${coloroff}"
+				exit 1
 				;;
 		esac
 		;;
 
-	"debian" | "Debian" | "DEBIAN")
-		uninstall_dove ${URL}/${SCRIPT[2]} ${SCRIPT[2]}
+	"debian" | "Debian" | "DEBIAN" | 2)
+		TARGET_SCRIPT="${SCRIPT[2]}"
 		;;
 
-	"fedora"| "Fedora" | "FEDORA")
-		uninstall_dove ${URL}/${SCRIPT[3]} ${SCRIPT[3]}
+	"fedora"| "Fedora" | "FEDORA" | 3)
+		TARGET_SCRIPT="${SCRIPT[3]}"
 		;;
 
-	"macOS" | "macos" | "MacOS" | "MACOS")
-		uninstall_dove ${URL}/${SCRIPT[4]} ${SCRIPT[4]}
+	"macOS" | "macos" | "MacOS" | "MACOS" | 4)
+		TARGET_SCRIPT="${SCRIPT[4]}"
 		;;
+
+	"exit" | "Exit" | "EXIT" | 5)
+		exit 0
+		;;
+
+	*)
+		echo -e "${red}Invalid option.${coloroff}"
+		exit 1
 esac
+
+## Download and run choosen platform script
+uninstall_dove "${URL}"/"${TARGET_SCRIPT}" "${TARGET_SCRIPT}"

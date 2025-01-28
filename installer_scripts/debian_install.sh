@@ -4,6 +4,17 @@
 ## Downloaded files save in /tmp for moving
 cd /tmp
 
+## Colours
+blue='\e[1;34m'
+brown='\e[0;33m'
+coloroff='\e[0m' # Colour off
+cyan='\e[1;36m'
+gray='\e[1;30m'
+green='\e[0;32m'
+purple='\e[0;35m'
+red='\e[1;31m'
+yellow='\e[1;33m'
+
 
 ## Functions
 echo_red_text() {
@@ -17,80 +28,29 @@ echo_green_text() {
 error_fn() {
 	echo
 	echo -e "\033[31mSomething went wrong! The script failed.\033[0m"
-	echo -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
+	echo -e "\033[31mPlease report this (with the output message) to https://Dove.celenity.dev/issues\033[0m"
 	echo
 	exit 1
 }
 
 
-## Find Release codename. For example, bookworm is codename of Debian 12
-Release_CodeName=$(grep 'VERSION_CODENAME' /etc/os-release | cut -d'=' -f2)
-
-if [ $(id --user) -ne 0 ]; then
-	echo_red_text "You must run this script with sudo"
-	echo
-	exit 1
-fi
-
-
 ## Install Dove
-echo_green_text "Downloading dove.cfg..."
-wget -nv https://dove.celenity.dev/dove.cfg || error_fn
+echo_green_text "Adding celenity's OBS Repo to APT..."
+echo 'deb http://download.opensuse.org/repositories/home:/celenity/Debian_12/ /' | \
+	sudo tee /etc/apt/sources.list.d/home:celenity.list
 echo
 
-echo_green_text "Moving dove.cfg to /usr/lib/thunderbird/dove.cfg..."
-sudo mv -v dove.cfg /usr/lib/thunderbird/dove.cfg || error_fn
-echo
-
-echo_green_text "Downloading dove.js..."
-wget -nv https://dove.celenity.dev/defaults/pref/dove.js || error_fn
-echo
-
-echo_green_text "Creating /etc/thunderbird/defaults/pref directory..."
-sudo mkdir -v -p /etc/thunderbird/defaults/pref || error_fn
-echo
-
-echo_green_text "Changing permissions of /etc/thunderbird/defaults/pref to 655..."
-sudo chmod -v 655 /etc/thunderbird/defaults/pref || error_fn
-echo
-
-echo_green_text "Moving dove.js to /etc/thunderbird/defaults/pref/dove.js..."
-sudo mv -v dove.js /etc/thunderbird/defaults/pref/dove.js || error_fn
-echo
-
-echo_green_text "Adding Prebuilt MPR repo if not already installed..."
-wget -O- -nv 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | \
-	gpg --dearmor | \
-	sudo tee /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg 1> /dev/null
-
-echo "deb [signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg]" \ 
-	"https://proget.makedeb.org prebuilt-mpr ${Release_CodeName}" | \
-	sudo tee /etc/apt/sources.list.d/prebuilt-mpr.list
+echo_green_text "Adding celenity's GPG key..."
+wget -O-  https://download.opensuse.org/repositories/home:celenity/Debian_12/Release.key 2>/dev/null | \
+	gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_celenity.gpg > /dev/null
 echo
 
 echo_green_text "Updating APT cache..."
 sudo apt update || error_fn
 echo
 
-echo_green_text "Installing Makedeb if not already installed..."
-sudo apt install makedeb || error_fn
+echo_green_text "Installing Dove..."
+sudo apt install dove || error_fn
 echo
 
-echo_green_text "Installing git if not already installed..."
-sudo apt install git || error_fn
-echo
-
-echo_green_text "Cloning Mist..."
-git clone "https://mpr.makedeb.org/mist.git" || error_fn
-echo
-
-echo_green_text "Building & Installing Mist..."
-cd mist/
-makedeb -s -i
-echo
-
-echo_green_text "Installing dove-policies package..."
-sudo apt install dove-policies || error_fn
-echo
-
-echo_green_text "All done. Congratulations, you've successfully installed Dove.\nEnjoy :)\n"
+echo_green_text "All done. :) Congratulations, you've successfully installed Dove.\n"
