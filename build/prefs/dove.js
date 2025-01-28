@@ -201,6 +201,11 @@ pref("mail.sanitize_date_header", true);
 
 pref("mail.smtpserver.default.hello_argument", "[127.0.0.1]"); // [HIDDEN]
 
+/// Prevent leaking display names of contacts in address fields...
+// https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
+
+pref("extensions.cardbook.useOnlyEmail", true);
+
 pref("mail.dove.status", "006");
 
 // 007 E2EE
@@ -279,11 +284,6 @@ pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
 /// Strip referers, but allow toggling per session, since they may be needed on rare occasions.
 
 pref("network.http.referer.XOriginPolicy", 2, sticky);
-
-/// Prevent leaking sensitive information from the Cardbook extension
-// https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
-
-pref("extensions.cardbook.useOnlyEmail", true);
 
 /// Disable macOS Spotlight & Windows file indexing email by default
 
