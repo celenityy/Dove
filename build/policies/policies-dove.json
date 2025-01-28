@@ -504,6 +504,10 @@
                 "Value": true,
                 "Status": "default"
             },
+            "mailnews.display.disallow_mime_handlers": {
+                "Value": 3,
+                "Status": "default"
+            },
             "mailnews.display.html_as": {
                 "Value": 3,
                 "Status": "default"

@@ -333,6 +333,12 @@ pref("browser.download.manager.focusWhenStarting", true);
 pref("browser.download.manager.showAlertOnComplete", true);
 pref("browser.download.manager.showWhenStarting", true);
 
+/// Limit classes that can process incoming data
+// Enables a blocklist to avoid HTML, inline images, and other unknown content types
+// https://searchfox.org/comm-central/source/mailnews/mailnews.js#728
+
+pref("mailnews.display.disallow_mime_handlers", 3);
+
 pref("mail.dove.status", "009");
 
 // 010 MISC.
