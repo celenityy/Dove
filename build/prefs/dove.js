@@ -135,6 +135,7 @@ pref("mail.dove.status", "004");
 
 /// Always show full email addresses
 
+pref("mail.addressDisplayFormat", 0); // [DEFAULT, HIDDEN] Sets preferred address display format to "Full name and email address"
 pref("mail.showCondensedAddresses", false);
 
 /// Always show email information & headers

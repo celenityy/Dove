@@ -288,6 +288,10 @@
                 "Value": false,
                 "Status": "default"
             },
+            "mail.addressDisplayFormat": {
+                "Value": 0,
+                "Status": "default"
+            },
             "mail.chat.enabled": {
                 "Value": false,
                 "Status": "default"
