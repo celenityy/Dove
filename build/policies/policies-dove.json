@@ -264,6 +264,10 @@
                 "Value": false,
                 "Status": "locked"
             },
+            "extensions.webcompat.enable_shims": {
+                "Value": true,
+                "Status": "default"
+            },
             "geo.enabled": {
                 "Value": false,
                 "Status": "default"
