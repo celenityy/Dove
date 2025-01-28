@@ -496,6 +496,10 @@
                 "Value": true,
                 "Status": "default"
             },
+            "mailnews.display.date_senders_timezone": {
+                "Value": true,
+                "Status": "default"
+            },
             "mailnews.display.html_as": {
                 "Value": 3,
                 "Status": "default"

@@ -141,6 +141,7 @@ pref("mail.showCondensedAddresses", false);
 /// Always show email information & headers
 
 pref("mail.show_headers", 2);
+pref("mailnews.display.date_senders_timezone", true); // Display timezone of sender
 pref("mailnews.headers.showMessageId", true);
 pref("mailnews.headers.showOrganization", true);
 pref("mailnews.headers.showReferences", true);
