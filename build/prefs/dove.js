@@ -532,6 +532,10 @@ pref("mail.dark-reader.enabled", true);
 
 pref("mail.save_msg_filename_underscores_for_space", true);
 
+/// Show progress when saving/sending a message...
+
+pref("mailnews.show_send_progress", true); // [DEFAULT]
+
 pref("mail.dove.status", "012");
 
 // 013 DO NOT TOUCH

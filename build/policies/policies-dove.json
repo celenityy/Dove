@@ -572,6 +572,10 @@
                 "Value": 1,
                 "Status": "default"
             },
+            "mailnews.show_send_progress": {
+                "Value": true,
+                "Status": "default"
+            },
             "mailnews.start_page.enabled": {
                 "Value": false,
                 "Status": "default"
