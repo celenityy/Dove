@@ -312,6 +312,10 @@
                 "Value": false,
                 "Status": "default"
             },
+            "mail.compose.warn_public_recipients.aggressive": {
+                "Value": true,
+                "Status": "default"
+            },
             "mail.dark-reader.enabled": {
                 "Value": true,
                 "Status": "default"

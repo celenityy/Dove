@@ -297,6 +297,10 @@ pref("searchintegration.enable", false);
 
 pref("mail.collect_email_address_outgoing", false);
 
+/// Alert users if they have not addressed a BCC (Blind Carbon Copy) warning
+
+pref("mail.compose.warn_public_recipients.aggressive", true);
+
 pref("mail.dove.status", "008");
 
 // 009 MISC. SECURITY
