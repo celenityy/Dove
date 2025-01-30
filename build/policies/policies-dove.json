@@ -104,14 +104,16 @@
             "dkim_verifier@pl": {
                 "installation_mode": "normal_installed",
                 "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
-                "updates_disabled": false,
-                "temporarily_allow_weak_signatures": false
+                "private_browsing": false,
+                "temporarily_allow_weak_signatures": false,
+                "updates_disabled": false
             },
             "uBlock0@raymondhill.net": {
                 "installation_mode": "normal_installed",
                 "install_url": "https://github.com/gorhill/uBlock/releases/download/1.62.0/uBlock0_1.62.0.thunderbird.xpi",
-                "updates_disabled": false,
-                "temporarily_allow_weak_signatures": false
+                "private_browsing": true,
+                "temporarily_allow_weak_signatures": false,
+                "updates_disabled": false
             }
         },
         "OfferToSaveLoginsDefault": true,
