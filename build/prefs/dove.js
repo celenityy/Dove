@@ -371,10 +371,19 @@ pref("mail.identity.default.compose_html", false);
 
 pref("mailnews.display.prefer_plaintext", true);
 
-/// By default, load summary of RSS feeds instead of the full webpage & prevent loading additional webpage content
+/// Load summary of RSS feeds instead of the full webpage by default
+
+pref("rss.show.summary", 1);
+
+/// Open RSS webpages in your web browser instead of Thunderbird...
+// https://support.mozilla.org/kb/how-subscribe-news-feeds-and-blogs
+
+pref("rss.show.content-base", 3);
+
+/// Prevent selection of RSS messages from automatically loading the web page...
+// https://support.mozilla.org/kb/how-subscribe-news-feeds-and-blogs
 
 pref("rss.message.loadWebPageOnSelect", 0);
-pref("rss.show.summary", 1);
 
 /// Do not allow calendar to extract data from emails by default
 
