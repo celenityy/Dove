@@ -409,6 +409,10 @@ pref("dom.disable_window_status_change", true); // [DEFAULT]
 
 pref("signon.rememberSignons", true); // [DEFAULT]
 
+/// Add our own extension recommendations...
+pref("extensions.getAddons.discovery.api_url", "https://dove.celenity.dev/extensions/recommendations.json"); // https://searchfox.org/mozilla-central/source/testing/profiles/common/user.js
+pref("extensions.recommendations.privacyPolicyUrl", "https://dove.celenity.dev/privacy#extension-recommendations");
+
 pref("mail.dove.status", "010");
 
 // 011 Configure DKIM Verifier...

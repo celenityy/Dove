@@ -252,12 +252,20 @@
                 "Value": 50,
                 "Status": "default"
             },
+            "extensions.getAddons.discovery.api_url": {
+                "Value": "https://dove.celenity.dev/extensions/recommendations.json",
+                "Status": "default"
+            },
             "extensions.getAddons.search.browseURL": {
                 "Value": "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%",
                 "Status": "default"
             },
             "extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net": {
                 "Value": true,
+                "Status": "default"
+            },
+            "extensions.recommendations.privacyPolicyUrl": {
+                "Value": "https://dove.celenity.dev/privacy#extension-recommendations",
                 "Status": "default"
             },
             "extensions.strictCompatibility": {

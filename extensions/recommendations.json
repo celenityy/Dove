@@ -1,0 +1,71 @@
+{
+    "results": [
+        {
+            "description_text": "Verifies the DKIM-Signatures of e-mails. Source: https://addons.thunderbird.net",
+            "addon": {
+                "id": 438634,
+                "authors": [
+                    {
+                        "id": 1890578,
+                        "name": "Philippe Lieser",
+                        "url": "https://addons.thunderbird.net/thunderbird/user/lieser/",
+                        "username": "lieser"
+                    }
+                ],
+                "current_version": {
+                    "files": [
+                        {
+                            "is_restart_required": false,
+                            "is_webextension": true,
+                            "is_mozilla_signed_extension": true,
+                            "platform": "all",
+                            "status": "public",
+                            "url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi"
+                        }
+                    ]
+                },
+                "guid": "dkim_verifier@pl",
+                "icon_url": "https://dove.celenity.dev/extensions/recommendations/icons/dkim-verifier.svg",
+                "name": "DKIM Verifier - ⚖️ MIT",
+                "slug": "dkim-verifier",
+                "type": "extension",
+                "url": "https://addons.thunderbird.net/thunderbird/addon/dkim-verifier/"
+            },
+            "is_recommendation": true
+        },
+        {
+            "description_text": "Finally, an efficient wide-spectrum content blocker. Easy on CPU and memory. Source: https://github.com/gorhill/uBlock",
+            "addon": {
+                "id": 988489,
+                "authors": [
+                    {
+                        "id": 11423598,
+                        "name": "Raymond Hill",
+                        "url": "https://addons.thunderbird.net/thunderbird/user/gorhill/",
+                        "username": "gorhill"
+                    }
+                ],
+                "current_version": {
+                    "files": [
+                        {
+                            "is_restart_required": false,
+                            "is_webextension": true,
+                            "is_mozilla_signed_extension": true,
+                            "platform": "all",
+                            "status": "public",
+                            "url": "https://github.com/gorhill/uBlock/releases/download/1.62.0/uBlock0_1.62.0.thunderbird.xpi"
+                        }
+                    ]
+                },
+                "guid": "uBlock0@raymondhill.net",
+                "icon_url": "https://dove.celenity.dev/extensions/recommendations/icons/ublock-origin.svg",
+                "name": "uBlock Origin - ⚖️ GPL-3.0-only",
+                "slug": "ublock-origin",
+                "type": "extension",
+                "url": "https://github.com/gorhill/uBlock/"
+            },
+            "is_recommendation": true
+        }
+    ],
+    "count": 2
+}
