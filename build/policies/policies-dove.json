@@ -346,6 +346,10 @@
                 "Value": true,
                 "Status": "default"
             },
+            "mail.dark-reader.show-toggle": {
+                "Value": true,
+                "Status": "default"
+            },
             "mail.default_send_format": {
                 "Value": 1,
                 "Status": "default"

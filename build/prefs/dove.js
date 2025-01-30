@@ -548,6 +548,7 @@ pref("mail.SpellCheckBeforeSend", true);
 /// Enable dark theme for the message pane
 
 pref("mail.dark-reader.enabled", true);
+pref("mail.dark-reader.show-toggle", true); // [HIDDEN] Enables the UI toggle https://searchfox.org/comm-central/source/mail/base/content/msgHdrView.js#2787
 
 /// By default, when saving a message to a file, use underscores instead of spaces in the file name...
 
