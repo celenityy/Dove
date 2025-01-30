@@ -169,9 +169,14 @@ pref("purple.conversations.im.send_read", false); // [CHAT]
 
 pref("purple.conversations.im.send_typing", false);
 
-/// Disable reporting chat idle status
+/// Disable reporting chat idle status...
 
 pref("messenger.status.reportIdle", false);
+
+/// Disable reporting chat status as 'away' when idle...
+// Defense in depth
+
+pref("messenger.status.awayWhenIdle", false);
 
 /// Prevent sending user agent with emails, as it is unnecessary, not even defined in spec, & leaks information
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1114475
