@@ -301,6 +301,14 @@ pref("mail.collect_email_address_outgoing", false);
 
 pref("mail.compose.warn_public_recipients.aggressive", true);
 
+/// Explicitly disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo...
+// https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
+
+pref("chat.prpls.prpl-facebook.disable", true); // [DEFAULT]
+pref("chat.prpls.prpl-gtalk.disable", true); // [DEFAULT]
+pref("chat.prpls.prpl-twitter.disable", true); // [DEFAULT]
+pref("chat.prpls.prpl-yahoo.disable", true); // [DEFAULT]
+
 pref("mail.dove.status", "008");
 
 // 009 MISC. SECURITY

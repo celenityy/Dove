@@ -134,6 +134,22 @@
                 "Value": false,
                 "Status": "default"
             },
+            "chat.prpls.prpl-facebook.disable": {
+                "Value": true,
+                "Status": "default"
+            },
+            "chat.prpls.prpl-gtalk.disable": {
+                "Value": true,
+                "Status": "default"
+            },
+            "chat.prpls.prpl-twitter.disable": {
+                "Value": true,
+                "Status": "default"
+            },
+            "chat.prpls.prpl-yahoo.disable": {
+                "Value": true,
+                "Status": "default"
+            },
             "dom.disable_window_status_change": {
                 "Value": true,
                 "Status": "default"
