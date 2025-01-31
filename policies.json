@@ -5,26 +5,12 @@
         "uBlock0@raymondhill.net": {
           "adminSettings": {
             "assetsBootstrapLocation": "https://phoenix.celenity.dev/uBlock/assets.json",
-            "userSettings": {
-              "advancedUserEnabled": true,
-              "autoUpdate": true,
-              "cnameUncloakEnabled": true,
-              "dynamicFilteringEnabled": true,
-              "firewallPaneMinimized": false,
-              "hyperlinkAuditingDisabled": true,
-              "prefetchingDisabled": true,
-              "suspendUntilListsAreLoaded": true
-            },
-            "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true\nno-scripting: * true\nno-scripting: addons.thunderbird.net false\nno-scripting: duckduckgo.com false\nno-scripting: search.brave.com false\nno-scripting: login.microsoftonline.com false\nno-scripting: login.live.com false\nno-scripting: okta.com false\nno-scripting: accounts.google.com false\nno-scripting: www.google.com false\nno-scripting: login.aol.com false\nno-scripting: login.yahoo.net false"
+            "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true\nno-scripting: * true\nno-scripting: addons.thunderbird.net false\nno-scripting: duckduckgo.com false\nno-scripting: search.brave.com false\nno-scripting: login.microsoftonline.com false\nno-scripting: login.live.com false\nno-scripting: okta.com false\nno-scripting: accounts.google.com false\nno-scripting: www.google.com false\nno-scripting: login.aol.com false\nno-scripting: login.yahoo.net false\nno-scripting: browserleaks.com false\nno-scripting: deviceinfo.me false\nno-scripting: permission.site false\nno-scripting: abrahamjuliot.github.io false"
           },
           "advancedSettings": [
             [
               "autoCommentFilterTemplate",
               "{{url}}"
-            ],
-            [
-              "autoUpdatePeriod",
-              "1"
             ],
             [
               "filterAuthorMode",
@@ -33,6 +19,20 @@
             [
               "updateAssetBypassBrowserCache",
               "true"
+            ]
+          ],
+          "userSettings": [
+            [
+              "advancedUserEnabled",
+              "true"
+            ],
+            [
+              "dynamicFilteringEnabled",
+              "true"
+            ],
+            [
+              "firewallPaneMinimized",
+              "false"
             ]
           ]
         }
@@ -362,6 +362,10 @@
         "Status": "locked"
       },
       "browser.newtabpage.activity-stream.contextualContent.fakespot.enabled": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.discoverystream.contextualContent.fakespot.enabled": {
         "Value": false,
         "Status": "default"
       },
@@ -933,16 +937,8 @@
         "Value": true,
         "Status": "default"
       },
-      "browser.startup.homepage": {
-        "Value": "about:home",
-        "Status": "default"
-      },
       "browser.startup.homepage_override.mstone": {
         "Value": "ignore",
-        "Status": "default"
-      },
-      "browser.startup.page": {
-        "Value": 1,
         "Status": "default"
       },
       "browser.startup.upgradeDialog.enabled": {
@@ -1453,6 +1449,10 @@
         "Value": 5,
         "Status": "default"
       },
+      "extensions.experiments.enabled": {
+        "Value": false,
+        "Status": "default"
+      },
       "extensions.formautofill.addresses.enabled": {
         "Value": false,
         "Status": "default"
@@ -1469,15 +1469,19 @@
         "Value": "",
         "Status": "default"
       },
-      "extensions.getAddons.discovery.api_url": {
-        "Value": "data;",
-        "Status": "default"
-      },
       "extensions.getAddons.showPane": {
-        "Value": false,
+        "Value": true,
         "Status": "default"
       },
       "extensions.htmlaboutaddons.recommendations.enabled": {
+        "Value": false,
+        "Status": "default"
+      },
+      "extensions.install.requireBuiltInCerts": {
+        "Value": true,
+        "Status": "locked"
+      },
+      "extensions.installDistroAddons": {
         "Value": false,
         "Status": "default"
       },
@@ -1501,9 +1505,81 @@
         "Value": true,
         "Status": "default"
       },
-      "extensions.recommendations.privacyPolicyUrl": {
-        "Value": "",
-        "Status": "default"
+      "extensions.quarantineIgnoredByUser.ads@mozac.org": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.bravesearch@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.cookies@mozac.org": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.ddg@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.duckduckgo-html@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.duckduckgo-lite@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.ecosia@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.kagi@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.kagi-html@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.leta-brave@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.leta-google@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.metager@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.mojeek@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.no-search@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.qwant@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.qwant-junior@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.startpage@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.swisscows@celenity.dev": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "extensions.quarantineIgnoredByUser.wikipedia@search.mozilla.org": {
+        "Value": false,
+        "Status": "locked"
       },
       "extensions.recommendations.themeRecommendationUrl": {
         "Value": "",
@@ -1511,6 +1587,10 @@
       },
       "extensions.systemAddon.update.enabled": {
         "Value": true,
+        "Status": "default"
+      },
+      "extensions.ui.lastCategory": {
+        "Value": "addons://list/extension",
         "Status": "default"
       },
       "extensions.update.autoUpdateDefault": {
@@ -1528,6 +1608,10 @@
       "extensions.update.notifyUser": {
         "Value": true,
         "Status": "default"
+      },
+      "extensions.update.requireBuiltInCerts": {
+        "Value": true,
+        "Status": "locked"
       },
       "extensions.webapi.testing": {
         "Value": false,
@@ -1866,6 +1950,10 @@
         "Status": "default"
       },
       "network.early-hints.enabled": {
+        "Value": false,
+        "Status": "default"
+      },
+      "network.early-hints.over-http-v1-1.enabled": {
         "Value": false,
         "Status": "default"
       },
@@ -2237,12 +2325,32 @@
         "Value": false,
         "Status": "default"
       },
+      "chat.prpls.prpl-facebook.disable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "chat.prpls.prpl-gtalk.disable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "chat.prpls.prpl-twitter.disable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "chat.prpls.prpl-yahoo.disable": {
+        "Value": true,
+        "Status": "default"
+      },
       "dom.disable_window_status_change": {
         "Value": true,
         "Status": "default"
       },
       "dom.webnotifications.enabled": {
-        "Value": false,
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.abuseReport.enabled": {
+        "Value": true,
         "Status": "default"
       },
       "extensions.cardbook.useOnlyEmail": {
@@ -2357,20 +2465,44 @@
         "Value": 50,
         "Status": "default"
       },
+      "extensions.getAddons.discovery.api_url": {
+        "Value": "https://dove.celenity.dev/extensions/recommendations.json",
+        "Status": "default"
+      },
       "extensions.getAddons.search.browseURL": {
         "Value": "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%",
         "Status": "default"
       },
+      "extensions.quarantineIgnoredByUser.dkim_verifier@pl": {
+        "Value": false,
+        "Status": "locked"
+      },
       "extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net": {
         "Value": true,
+        "Status": "default"
+      },
+      "extensions.recommendations.privacyPolicyUrl": {
+        "Value": "https://dove.celenity.dev/privacy#extension-recommendations",
         "Status": "default"
       },
       "extensions.strictCompatibility": {
         "Value": false,
         "Status": "locked"
       },
+      "extensions.webcompat.enable_shims": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.webcompat.perform_injections": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.webcompat.perform_ua_overrides": {
+        "Value": true,
+        "Status": "default"
+      },
       "geo.enabled": {
-        "Value": false,
+        "Value": true,
         "Status": "default"
       },
       "geo.provider.ms-windows-location": {
@@ -2389,6 +2521,22 @@
         "Value": false,
         "Status": "default"
       },
+      "mail.addressDisplayFormat": {
+        "Value": 0,
+        "Status": "default"
+      },
+      "mail.biff.alert.show_preview": {
+        "Value": false,
+        "Status": "default"
+      },
+      "mail.biff.alert.show_sender": {
+        "Value": false,
+        "Status": "default"
+      },
+      "mail.biff.alert.show_subject": {
+        "Value": false,
+        "Status": "default"
+      },
       "mail.chat.enabled": {
         "Value": false,
         "Status": "default"
@@ -2401,11 +2549,23 @@
         "Value": false,
         "Status": "default"
       },
+      "mail.collect_email_address_outgoing": {
+        "Value": false,
+        "Status": "default"
+      },
       "mail.compose.add_link_preview": {
         "Value": false,
         "Status": "default"
       },
+      "mail.compose.warn_public_recipients.aggressive": {
+        "Value": true,
+        "Status": "default"
+      },
       "mail.dark-reader.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "mail.dark-reader.show-toggle": {
         "Value": true,
         "Status": "default"
       },
@@ -2545,6 +2705,10 @@
         "Value": true,
         "Status": "default"
       },
+      "mail.smtpserver.default.hello_argument": {
+        "Value": "[127.0.0.1]",
+        "Status": "default"
+      },
       "mail.spellcheck.inline": {
         "Value": true,
         "Status": "default"
@@ -2589,8 +2753,20 @@
         "Value": true,
         "Status": "default"
       },
+      "mailnews.display.date_senders_timezone": {
+        "Value": true,
+        "Status": "default"
+      },
+      "mailnews.display.disallow_mime_handlers": {
+        "Value": 3,
+        "Status": "default"
+      },
       "mailnews.display.html_as": {
         "Value": 3,
+        "Status": "default"
+      },
+      "mailnews.display.prefer_plaintext": {
+        "Value": true,
         "Status": "default"
       },
       "mailnews.downloadToTempFile": {
@@ -2649,6 +2825,10 @@
         "Value": 1,
         "Status": "default"
       },
+      "mailnews.show_send_progress": {
+        "Value": true,
+        "Status": "default"
+      },
       "mailnews.start_page.enabled": {
         "Value": false,
         "Status": "default"
@@ -2694,6 +2874,10 @@
         "Status": "default"
       },
       "media.peerconnection.ice.no_host": {
+        "Value": true,
+        "Status": "default"
+      },
+      "media.peerconnection.ice.relay_only": {
         "Value": true,
         "Status": "default"
       },
@@ -2762,6 +2946,7 @@
       "UseProxyForDNS": true
     },
     "SearchEngines": {
+      "Default": "Brave",
       "PreventInstalls": false,
       "Remove": [
         "Google",
@@ -2897,11 +3082,34 @@
           "Description": "Search with Swisscows",
           "SuggestURLTemplate": "https://swisscows.com/api/suggest?query={searchTerms}"
         }
-      ],
-      "Default": "Brave"
+      ]
     },
     "SSLVersionMin": "tls1.2",
     "ExtensionSettings": {
+      "bravesearch@celenity.dev": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "Deprecated"
+      },
+      "kagi@celenity.dev": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "Deprecated"
+      },
+      "kagi-html@celenity.dev": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "Deprecated"
+      },
+      "metager@celenity.dev": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "Deprecated"
+      },
+      "leta-brave@celenity.dev": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "Deprecated"
+      },
+      "leta-google@celenity.dev": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "Deprecated"
+      },
       "ads@mozac.org": {
         "installation_mode": "blocked",
         "blocked_install_message": "Mozilla Android Components - Ads Telemetry..."
@@ -3081,6 +3289,10 @@
       "daum-kr@search.mozilla.org": {
         "installation_mode": "blocked",
         "blocked_install_message": "Mozilla's extension for the built-in Daum Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/daum-kr/manifest.json"
+      },
+      "ddg@search.mozilla.org": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "Mozilla's extension for the built-in DuckDuckGo Search Engine. We replace with our own to set it as the default..."
       },
       "ebay@search.mozilla.org": {
         "installation_mode": "blocked",
@@ -3807,15 +4019,17 @@
       },
       "dkim_verifier@pl": {
         "installation_mode": "normal_installed",
-        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/addon-438634-latest.xpi",
-        "updates_disabled": false,
-        "temporarily_allow_weak_signatures": false
+        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
+        "private_browsing": false,
+        "temporarily_allow_weak_signatures": false,
+        "updates_disabled": false
       },
       "uBlock0@raymondhill.net": {
         "installation_mode": "normal_installed",
         "install_url": "https://github.com/gorhill/uBlock/releases/download/1.62.0/uBlock0_1.62.0.thunderbird.xpi",
-        "updates_disabled": false,
-        "temporarily_allow_weak_signatures": false
+        "private_browsing": true,
+        "temporarily_allow_weak_signatures": false,
+        "updates_disabled": false
       }
     },
     "Cookies": {

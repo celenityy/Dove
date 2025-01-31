@@ -4,7 +4,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.01.27.1", locked);
+pref("browser.phoenix.version", "2025.01.30.1", locked);
 
 // 000 ABOUT:CONFIG
 
@@ -198,11 +198,13 @@ pref("extensions.getAddons.discovery.api_url", "data;"); // https://searchfox.or
 pref("extensions.getAddons.showPane", false);
 pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 pref("extensions.recommendations.themeRecommendationUrl", "");
+pref("extensions.ui.lastCategory", "addons://list/extension"); // [HIDDEN] Ensure default view of `about:addons` is local/installed extensions...
 pref("extensions.webservice.discoverURL", "");
 
 /// Fakespot
 
 pref("browser.newtabpage.activity-stream.contextualContent.fakespot.enabled", false);
+pref("browser.newtabpage.activity-stream.discoverystream.contextualContent.fakespot.enabled", false);
 pref("browser.shopping.experience2023.active", false);
 pref("browser.shopping.experience2023.ads.enabled", false, locked); // [DEFAULT]
 pref("browser.shopping.experience2023.ads.exposure", false, locked); // [HIDDEN]
@@ -508,6 +510,7 @@ pref("network.preconnect", false);
 // Ex. like Cromite https://github.com/uazo/cromite/blob/master/build/patches/Client-hints-overrides.patch
 
 pref("network.early-hints.enabled", false);
+pref("network.early-hints.over-http-v1-1.enabled", false);
 pref("network.early-hints.preconnect.enabled", false);
 pref("network.early-hints.preconnect.max_connections", 0);
 
@@ -1008,6 +1011,12 @@ pref("layout.css.visited_links_enabled", false);
 
 pref("browser.pagethumbnails.capturing_disabled", true); // [HIDDEN]
 
+/// Allow permissions manager to write to disk
+// This is already Firefox's default - but it's hidden, so this exposes it to the about:config
+// https://searchfox.org/mozilla-central/source/extensions/permissions/PermissionManager.cpp#758
+
+pref("permissions.memory_only", false); // [HIDDEN - DEFAULT]
+
 pref("browser.phoenix.core.status", "013");
 
 // 014 EXTENSIONS
@@ -1018,11 +1027,17 @@ pref("browser.phoenix.core.status", "013");
 
 pref("extensions.autoDisableScopes", 15, locked); // [DEFAULT] Defense in depth, ensures extensions installed via directories are disabled by default...
 pref("extensions.enabledScopes", 5); // [DEFAULT]
+pref("extensions.installDistroAddons", false); // https://support.mozilla.org/kb/deploying-firefox-with-extensions
 
 /// Only allow signed extensions
 
 pref("extensions.langpacks.signatures.required", true); // [DEFAULT]
 pref("xpinstall.whitelist.required", true); // [DEFAULT]
+
+/// Only allow installation and updates for extensions using Firefox's built-in certs...
+
+pref("extensions.install.requireBuiltInCerts", true, locked); // [HIDDEN]
+pref("extensions.update.requireBuiltInCerts", true, locked); // [HIDDEN]
 
 /// Block extensions signed with weak signature algorithms
 
@@ -1036,6 +1051,11 @@ pref("extensions.blocklist.enabled", true); // [DEFAULT]
 
 pref("extensions.postDownloadThirdPartyPrompt", false, locked);
 
+/// Prevent unprivileged extensions from accessing experimental APIs by default
+// https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
+
+pref("extensions.experiments.enabled", false); // [DEFAULT, except on ex. Nightly...]
+
 /// Allow LocalCDN to work on quarantined domains
 
 pref("extensions.quarantineIgnoredByUser.{b86e4813-687a-43e6-ab65-0bde4ab75758}", true);
@@ -1043,6 +1063,34 @@ pref("extensions.quarantineIgnoredByUser.{b86e4813-687a-43e6-ab65-0bde4ab75758}"
 /// Allow Mullvad's extension to work on quarantined domains
 
 pref("extensions.quarantineIgnoredByUser.{d19a89b9-76c1-4a61-bcd4-49e8de916403}", true);
+
+/// Block our search 'extensions' from accessing quarantined domains...
+
+pref("extensions.quarantineIgnoredByUser.ddg@celenity.dev", false, locked); // DuckDuckGo
+pref("extensions.quarantineIgnoredByUser.duckduckgo-html@celenity.dev", false, locked); // DuckDuckGo HTML
+pref("extensions.quarantineIgnoredByUser.duckduckgo-lite@celenity.dev", false, locked); // DuckDuckGo Lite
+pref("extensions.quarantineIgnoredByUser.ecosia@celenity.dev", false, locked); // Ecosia
+pref("extensions.quarantineIgnoredByUser.mojeek@celenity.dev", false, locked); // Mojeek
+pref("extensions.quarantineIgnoredByUser.no-search@celenity.dev", false, locked); // No Search
+pref("extensions.quarantineIgnoredByUser.qwant@celenity.dev", false, locked); // Qwant
+pref("extensions.quarantineIgnoredByUser.qwant-junior@celenity.dev", false, locked); // Qwant Junior
+pref("extensions.quarantineIgnoredByUser.startpage@celenity.dev", false, locked); // Startpage
+pref("extensions.quarantineIgnoredByUser.swisscows@celenity.dev", false, locked); // Startpage
+
+/// We can also include our deprecated search 'extensions' for defense in depth...
+
+pref("extensions.quarantineIgnoredByUser.bravesearch@celenity.dev", false, locked); // Brave Search
+pref("extensions.quarantineIgnoredByUser.kagi@celenity.dev", false, locked); // Kagi
+pref("extensions.quarantineIgnoredByUser.kagi-html@celenity.dev", false, locked); // Kagi HTML
+pref("extensions.quarantineIgnoredByUser.leta-brave@celenity.dev", false, locked); // Mullvad Leta (Brave)
+pref("extensions.quarantineIgnoredByUser.leta-google@celenity.dev", false, locked); // Mullvad Leta (Google)
+pref("extensions.quarantineIgnoredByUser.metager@celenity.dev", false, locked); // MetaGer
+
+/// Block certain Mozilla extensions from accessing quarantined domains...
+
+pref("extensions.quarantineIgnoredByUser.ads@mozac.org", false, locked); // Mozilla Android Components - Ads Telemetry...
+pref("extensions.quarantineIgnoredByUser.cookies@mozac.org", false, locked); // Mozilla Android Components - Search Telemetry...
+pref("extensions.quarantineIgnoredByUser.wikipedia@search.mozilla.org", false, locked); // Wikipedia (en) - search engine...
 
 pref("browser.phoenix.core.status", "014");
 
@@ -1068,8 +1116,8 @@ pref("pdfjs.enablePermissions", false); // [DEFAULT]
 /// Prevent checking if default PDF viewer
 // https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js
 
-pref("browser.shell.checkpDF", false);
-pref("browser.shell.checkpDF.silencedByUser", true);
+pref("browser.shell.checkDefaultPDF", false);
+pref("browser.shell.checkDefaultPDF.silencedByUser", true);
 
 /// Never open Microsoft Edge for PDFs
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml
@@ -1178,11 +1226,6 @@ pref("browser.phoenix.core.status", "016");
 
 // 017 FINGERPRINTING PROTECTION
 
-/// Unbreak websites with FPP (if enabled)
-// Currently covers Apple Maps (completely broken)
-
-pref("privacy.fingerprintingProtection.granularOverrides", "[{\"firstPartyDomain\": \"apple.com\", \"overrides\": \"-WebGLRenderCapability\"}]");
-
 /// Round window sizes
 
 pref("privacy.window.maxInnerHeight", 900);
@@ -1194,9 +1237,9 @@ pref("privacy.window.maxInnerWidth", 1600);
 
 pref("privacy.resistFingerprinting.target_video_res", 1080); // [DEFAULT for Nightly]
 
-/// Spoof locale to English by default
+/// Prompt to spoof locale to en-US
 
-pref("privacy.spoof_english", 2);
+pref("privacy.spoof_english", 0); // [DEFAULT]
 
 /// Enable light mode by default
 // This matches with RFP...
@@ -2081,6 +2124,10 @@ pref("browser.phoenix.desktop.common.status", "005");
 pref("extensions.langpacks.signatures.required", true, locked); // [DEFAULT]
 pref("xpinstall.whitelist.required", true, locked); // [DEFAULT]
 
+// Enable panel for our own extension recommendations...
+
+pref("extensions.getAddons.showPane", true); // [DEFAULT]
+
 pref("browser.phoenix.desktop.common.status", "006");
 
 // 007 ATTACK SURFACE REDUCTION
@@ -2142,6 +2189,9 @@ pref("browser.phoenix.desktop.common.status", "successfully applied :D", locked)
 // This config manually enables various protections from ETP/Strict
 // Useful for ex. Android & Thunderbird, where ETP Strict either isn't supported or doesn't cover the same protections.
 
+pref("extensions.webcompat.enable_shims", true); // [HIDDEN]
+pref("extensions.webcompat.perform_injections", true); // [HIDDEN]
+pref("extensions.webcompat.perform_ua_overrides", true); // [HIDDEN]
 pref("network.cookie.cookieBehavior", 5);
 pref("network.cookie.cookieBehavior.optInPartitioning", true);
 pref("network.cookie.cookieBehavior.optInPartitioning.pbmode", true);
@@ -2194,12 +2244,17 @@ pref("webgl.disabled", true);
 pref("browser.phoenix.extended.core.status", "001");
 
 // 002 WEBRTC
+// This will likely break WebRTC...
 
-/// Never leak IP addresses, even in trusted scenarios
-// This *will* break WebRTC
-
+/// Force a single candidate for ICE generation
 pref("media.peerconnection.ice.default_address_only", true);
+
+/// Forcefully exclude local IP addresses, even in trusted scenarios
 pref("media.peerconnection.ice.no_host", true);
+
+/// Only use TURN servers/relays, no p2p...
+// https://gitlab.torproject.org/tpo/applications/mullvad-browser/-/issues/40#note_2884663
+pref("media.peerconnection.ice.relay_only", true);
 
 pref("browser.phoenix.extended.core.status", "002");
 
@@ -2261,7 +2316,7 @@ pref("browser.phoenix.extended.desktop.common.status", "successfully applied :D"
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.01.27.1", locked);
+pref("mail.dove.version", "2025.01.30.1", locked);
 
 pref("mail.dove.status", "000");
 
@@ -2336,7 +2391,7 @@ pref("mail.imap.use_disk_cache2", false);
 
 /// Set website permissions to be session only
 
-pref("permissions.memory_only", true);
+pref("permissions.memory_only", true); // [HIDDEN]
 
 /// Fully disable browsing history
 
@@ -2360,6 +2415,12 @@ pref("purple.logging.log_ims", false);
 /// Do not leak info in chat notifications by default
 
 pref("mail.chat.notification_info", 2);
+
+/// Do not leak info in email alerts/notifications by default
+
+pref("mail.biff.alert.show_preview", false);
+pref("mail.biff.alert.show_sender", false);
+pref("mail.biff.alert.show_subject", false);
 
 pref("mail.dove.status", "003");
 
@@ -2393,11 +2454,13 @@ pref("mail.dove.status", "004");
 
 /// Always show full email addresses
 
+pref("mail.addressDisplayFormat", 0); // [DEFAULT, HIDDEN] Sets preferred address display format to "Full name and email address"
 pref("mail.showCondensedAddresses", false);
 
 /// Always show email information & headers
 
 pref("mail.show_headers", 2);
+pref("mailnews.display.date_senders_timezone", true); // Display timezone of sender
 pref("mailnews.headers.showMessageId", true);
 pref("mailnews.headers.showOrganization", true);
 pref("mailnews.headers.showReferences", true);
@@ -2425,9 +2488,14 @@ pref("purple.conversations.im.send_read", false); // [CHAT]
 
 pref("purple.conversations.im.send_typing", false);
 
-/// Disable reporting chat idle status
+/// Disable reporting chat idle status...
 
 pref("messenger.status.reportIdle", false);
+
+/// Disable reporting chat status as 'away' when idle...
+// Defense in depth
+
+pref("messenger.status.awayWhenIdle", false);
 
 /// Prevent sending user agent with emails, as it is unnecessary, not even defined in spec, & leaks information
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1114475
@@ -2451,6 +2519,16 @@ pref("mail.suppress_content_language", true);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1603359
 
 pref("mail.sanitize_date_header", true);
+
+/// Prevent local IP address leakage via EHLO/HELO...
+// https://blog.plee.me/2014/11/mozilla-thunderbird-changing-the-ehlo-helo-value-in-the-received-header-for-outgoing-mail/
+
+pref("mail.smtpserver.default.hello_argument", "[127.0.0.1]"); // [HIDDEN]
+
+/// Prevent leaking display names of contacts in address fields...
+// https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
+
+pref("extensions.cardbook.useOnlyEmail", true);
 
 pref("mail.dove.status", "006");
 
@@ -2508,18 +2586,21 @@ pref("mail.dove.status", "007");
 pref("mailnews.message_display.disable_remote_image", true, locked); // [DEFAULT]
 
 /// Disable Geolocation
+// https://browserleaks.com/geo
 
 pref("browser.geolocation.warning.infoURL", "");
-pref("geo.enabled", false);
+pref("geo.enabled", true); // [DEFAULT] - Disabling the API is fingerprintable. Thunderbird doesn't support geolocation anyways, so it's unnecessary, especially with these other prefs...
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
 pref("geo.provider.use_geoclue", false);
+pref("permissions.default.geo", 0); // [HIDDEN - DEFAULT] - Setting to 2 can be fingerprintable, and Thunderbird doesn't support these prompts at all anyways...
 
 /// Harden FPP
 // As explained here: https://codeberg.org/celenity/Phoenix/issues/46
 // We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which causes all kinds of breakage and weird behavior (ex. on the ATO...)
+// We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 
-pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CanvasExtractionBeforeUserInputIsBlocked,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
+pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
 
 /// Reset Phoenix's FPP overrides + disable Mozilla's remote overrides
 // These are meant for browsers and may have undesired privacy implications for our use case...
@@ -2531,11 +2612,6 @@ pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
 
 pref("network.http.referer.XOriginPolicy", 2, sticky);
 
-/// Prevent leaking sensitive information from the Cardbook extension
-// https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
-
-pref("extensions.cardbook.useOnlyEmail", true);
-
 /// Disable macOS Spotlight & Windows file indexing email by default
 
 pref("mail.spotlight.enable", false); // [DEFAULT]
@@ -2543,6 +2619,22 @@ pref("mail.spotlight.firstRunDone", true);
 pref("mail.winsearch.enable", false); // [DEFAULT]
 pref("mail.winsearch.firstRunDone", true);
 pref("searchintegration.enable", false);
+
+/// Disable automatic collection of email addresses for Thunderbird's Address Book...
+
+pref("mail.collect_email_address_outgoing", false);
+
+/// Alert users if they have not addressed a BCC (Blind Carbon Copy) warning
+
+pref("mail.compose.warn_public_recipients.aggressive", true);
+
+/// Explicitly disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo...
+// https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
+
+pref("chat.prpls.prpl-facebook.disable", true); // [DEFAULT]
+pref("chat.prpls.prpl-gtalk.disable", true); // [DEFAULT]
+pref("chat.prpls.prpl-twitter.disable", true); // [DEFAULT]
+pref("chat.prpls.prpl-yahoo.disable", true); // [DEFAULT]
 
 pref("mail.dove.status", "008");
 
@@ -2580,6 +2672,13 @@ pref("browser.download.manager.focusWhenStarting", true);
 pref("browser.download.manager.showAlertOnComplete", true);
 pref("browser.download.manager.showWhenStarting", true);
 
+/// Limit classes that can process incoming data
+// Enables a blocklist to avoid HTML, inline images, and other unknown content types
+// https://searchfox.org/comm-central/source/mailnews/mailnews.js#728
+
+pref("mailnews.display.disallow_mime_handlers", 3);
+pref("rss.display.disallow_mime_handlers", 3);
+
 pref("mail.dove.status", "009");
 
 // 010 MISC.
@@ -2591,18 +2690,39 @@ pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
 
-/// By default, load summary of RSS feeds instead of the full webpage & prevent loading additional webpage content
+/// Prefer viewing emails in plaintext by default
+
+pref("mailnews.display.prefer_plaintext", true);
+
+/// Prefer viewing RSS feeds in plaintext by default
+
+pref("rss.display.prefer_plaintext", true);
+
+/// Load summary of RSS feeds instead of the full webpage by default
+
+pref("rss.show.summary", 1);
+
+/// Open RSS webpages in your web browser instead of Thunderbird...
+// https://support.mozilla.org/kb/how-subscribe-news-feeds-and-blogs
+
+pref("rss.show.content-base", 3);
+
+/// Prevent selection of RSS messages from automatically loading the web page...
+// https://support.mozilla.org/kb/how-subscribe-news-feeds-and-blogs
 
 pref("rss.message.loadWebPageOnSelect", 0);
-pref("rss.show.summary", 1);
 
 /// Do not allow calendar to extract data from emails by default
 
 pref("calendar.extract.service.enabled", false); // [DEFAULT]
 
 /// Disable Web Notifications
+// https://permission.site/
+// Disabling the Web Notifications API and/or blocking the prompts by default can be fingerprintable
+// Thunderbird doesn't support them anyways, so best to leave alone
 
-pref("dom.webnotifications.enabled", false);
+pref("dom.webnotifications.enabled", true); // [DEFAULT]
+pref("permissions.default.desktop-notification", 0); // [HIDDEN - DEFAULT]
 
 /// Kill Gecko Media Plugins
 
@@ -2619,6 +2739,10 @@ pref("extensions.strictCompatibility", false, locked);
 // Necessary since it isn't 'recommended' like it is on Firefox...
 
 pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true);
+
+/// Block DKIM Verifier from accessing quarantined domains...
+
+pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false);
 
 /// Disable SVG
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
@@ -2641,6 +2765,10 @@ pref("dom.disable_window_status_change", true); // [DEFAULT]
 // Also no UI toggle for it :/
 
 pref("signon.rememberSignons", true); // [DEFAULT]
+
+/// Add our own extension recommendations...
+pref("extensions.getAddons.discovery.api_url", "https://dove.celenity.dev/extensions/recommendations.json"); // https://searchfox.org/mozilla-central/source/testing/profiles/common/user.js
+pref("extensions.recommendations.privacyPolicyUrl", "https://dove.celenity.dev/privacy#extension-recommendations");
 
 pref("mail.dove.status", "010");
 
@@ -2764,10 +2892,19 @@ pref("mail.SpellCheckBeforeSend", true);
 /// Enable dark theme for the message pane
 
 pref("mail.dark-reader.enabled", true);
+pref("mail.dark-reader.show-toggle", true); // [HIDDEN] Enables the UI toggle https://searchfox.org/comm-central/source/mail/base/content/msgHdrView.js#2787
 
 /// By default, when saving a message to a file, use underscores instead of spaces in the file name...
 
 pref("mail.save_msg_filename_underscores_for_space", true);
+
+/// Show progress when saving/sending a message...
+
+pref("mailnews.show_send_progress", true); // [DEFAULT]
+
+/// Allow reporting malicious add-ons/themes to Mozilla
+
+pref("extensions.abuseReport.enabled", true);
 
 pref("mail.dove.status", "012");
 
