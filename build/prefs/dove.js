@@ -372,6 +372,10 @@ pref("mail.identity.default.compose_html", false);
 
 pref("mailnews.display.prefer_plaintext", true);
 
+/// Prefer viewing RSS feeds in plaintext by default
+
+pref("rss.display.prefer_plaintext", true);
+
 /// Load summary of RSS feeds instead of the full webpage by default
 
 pref("rss.show.summary", 1);
