@@ -285,8 +285,9 @@ pref("permissions.default.geo", 0); // [HIDDEN - DEFAULT] - Setting to 2 can be 
 /// Harden FPP
 // As explained here: https://codeberg.org/celenity/Phoenix/issues/46
 // We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which causes all kinds of breakage and weird behavior (ex. on the ATO...)
+// We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 
-pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CanvasExtractionBeforeUserInputIsBlocked,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
+pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
 
 /// Reset Phoenix's FPP overrides + disable Mozilla's remote overrides
 // These are meant for browsers and may have undesired privacy implications for our use case...
