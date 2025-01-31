@@ -78,7 +78,7 @@ pref("mail.imap.use_disk_cache2", false);
 
 /// Set website permissions to be session only
 
-pref("permissions.memory_only", true);
+pref("permissions.memory_only", true); // [HIDDEN]
 
 /// Fully disable browsing history
 
