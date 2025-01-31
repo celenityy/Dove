@@ -318,6 +318,18 @@
                 "Value": 0,
                 "Status": "default"
             },
+            "mail.biff.alert.show_preview": {
+                "Value": false,
+                "Status": "default"
+            },
+            "mail.biff.alert.show_sender": {
+                "Value": false,
+                "Status": "default"
+            },
+            "mail.biff.alert.show_subject": {
+                "Value": false,
+                "Status": "default"
+            },
             "mail.chat.enabled": {
                 "Value": false,
                 "Status": "default"

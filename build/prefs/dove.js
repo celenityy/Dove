@@ -103,6 +103,12 @@ pref("purple.logging.log_ims", false);
 
 pref("mail.chat.notification_info", 2);
 
+/// Do not leak info in email alerts/notifications by default
+
+pref("mail.biff.alert.show_preview", false);
+pref("mail.biff.alert.show_sender", false);
+pref("mail.biff.alert.show_subject", false);
+
 pref("mail.dove.status", "003");
 
 // 004 GENERAL NETWORK HARDENING
