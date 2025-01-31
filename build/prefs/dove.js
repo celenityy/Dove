@@ -404,8 +404,12 @@ pref("rss.message.loadWebPageOnSelect", 0);
 pref("calendar.extract.service.enabled", false); // [DEFAULT]
 
 /// Disable Web Notifications
+// https://permission.site/
+// Disabling the Web Notifications API and/or blocking the prompts by default can be fingerprintable
+// Thunderbird doesn't support them anyways, so best to leave alone
 
-pref("dom.webnotifications.enabled", false);
+pref("dom.webnotifications.enabled", true); // [DEFAULT]
+pref("permissions.default.desktop-notification", 0); // [HIDDEN - DEFAULT]
 
 /// Kill Gecko Media Plugins
 

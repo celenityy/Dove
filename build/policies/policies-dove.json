@@ -155,7 +155,7 @@
                 "Status": "default"
             },
             "dom.webnotifications.enabled": {
-                "Value": false,
+                "Value": true,
                 "Status": "default"
             },
             "extensions.cardbook.useOnlyEmail": {
