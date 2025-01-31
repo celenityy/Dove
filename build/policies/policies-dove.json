@@ -158,6 +158,10 @@
                 "Value": true,
                 "Status": "default"
             },
+            "extensions.abuseReport.enabled": {
+                "Value": true,
+                "Status": "default"
+            },
             "extensions.cardbook.useOnlyEmail": {
                 "Value": true,
                 "Status": "default"

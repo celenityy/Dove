@@ -589,6 +589,10 @@ pref("mail.save_msg_filename_underscores_for_space", true);
 
 pref("mailnews.show_send_progress", true); // [DEFAULT]
 
+/// Allow reporting malicious add-ons/themes to Mozilla
+
+pref("extensions.abuseReport.enabled", true);
+
 pref("mail.dove.status", "012");
 
 // 013 DO NOT TOUCH
