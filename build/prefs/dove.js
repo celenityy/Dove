@@ -355,6 +355,7 @@ pref("browser.download.manager.showWhenStarting", true);
 // https://searchfox.org/comm-central/source/mailnews/mailnews.js#728
 
 pref("mailnews.display.disallow_mime_handlers", 3);
+pref("rss.display.disallow_mime_handlers", 3);
 
 pref("mail.dove.status", "009");
 
