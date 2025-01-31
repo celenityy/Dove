@@ -298,6 +298,14 @@
                 "Value": true,
                 "Status": "default"
             },
+            "extensions.webcompat.perform_injections": {
+                "Value": true,
+                "Status": "default"
+            },
+            "extensions.webcompat.perform_ua_overrides": {
+                "Value": true,
+                "Status": "default"
+            },
             "geo.enabled": {
                 "Value": false,
                 "Status": "default"
