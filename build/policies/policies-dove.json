@@ -307,7 +307,7 @@
                 "Status": "default"
             },
             "geo.enabled": {
-                "Value": false,
+                "Value": true,
                 "Status": "default"
             },
             "geo.provider.ms-windows-location": {

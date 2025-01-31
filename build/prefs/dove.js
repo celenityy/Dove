@@ -273,12 +273,14 @@ pref("mail.dove.status", "007");
 pref("mailnews.message_display.disable_remote_image", true, locked); // [DEFAULT]
 
 /// Disable Geolocation
+// https://browserleaks.com/geo
 
 pref("browser.geolocation.warning.infoURL", "");
-pref("geo.enabled", false);
+pref("geo.enabled", true); // [DEFAULT] - Disabling the API is fingerprintable. Thunderbird doesn't support geolocation anyways, so it's unnecessary, especially with these other prefs...
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
 pref("geo.provider.use_geoclue", false);
+pref("permissions.default.geo", 0); // [HIDDEN - DEFAULT] - Setting to 2 can be fingerprintable, and Thunderbird doesn't support these prompts at all anyways...
 
 /// Harden FPP
 // As explained here: https://codeberg.org/celenity/Phoenix/issues/46
