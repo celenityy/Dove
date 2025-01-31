@@ -420,6 +420,10 @@ pref("extensions.strictCompatibility", false, locked);
 
 pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true);
 
+/// Block DKIM Verifier from accessing quarantined domains...
+
+pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false);
+
 /// Disable SVG
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
 
