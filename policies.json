@@ -4,8 +4,8 @@
       "Extensions": {
         "uBlock0@raymondhill.net": {
           "adminSettings": {
-            "assetsBootstrapLocation": "https://phoenix.celenity.dev/uBlock/assets.json",
-            "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true\nno-scripting: * true\nno-scripting: addons.thunderbird.net false\nno-scripting: duckduckgo.com false\nno-scripting: search.brave.com false\nno-scripting: login.microsoftonline.com false\nno-scripting: login.live.com false\nno-scripting: okta.com false\nno-scripting: accounts.google.com false\nno-scripting: www.google.com false\nno-scripting: login.aol.com false\nno-scripting: login.yahoo.net false\nno-scripting: browserleaks.com false\nno-scripting: deviceinfo.me false\nno-scripting: permission.site false\nno-scripting: abrahamjuliot.github.io false"
+            "assetsBootstrapLocation": "https://codeberg.org/celenity/Phoenix/raw/commit/08d147ee865c1d740540e8ec83c758d7a4df3e8b/uBlock/assets.json",
+            "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true\nno-scripting: * true\nno-scripting: addons.thunderbird.net false\nno-scripting: duckduckgo.com false\nno-scripting: search.brave.com false\nno-scripting: login.microsoftonline.com false\nno-scripting: login.live.com false\nno-scripting: okta.com false\nno-scripting: accounts.google.com false\nno-scripting: www.google.com false\nno-scripting: login.aol.com false\nno-scripting: login.yahoo.net false\nno-scripting: browserleaks.com false\nno-scripting: deviceinfo.me false\nno-scripting: permission.site false\nno-scripting: abrahamjuliot.github.io false\nno-scripting: arkenfox.github.io false"
           },
           "advancedSettings": [
             [
@@ -649,8 +649,16 @@
         "Value": false,
         "Status": "default"
       },
+      "browser.policies.loglevel": {
+        "Value": "error",
+        "Status": "default"
+      },
       "browser.preferences.experimental": {
         "Value": true,
+        "Status": "default"
+      },
+      "browser.preferences.experimental.hidden": {
+        "Value": false,
         "Status": "default"
       },
       "browser.preferences.moreFromMozilla": {
@@ -1497,6 +1505,10 @@
         "Value": false,
         "Status": "locked"
       },
+      "extensions.quarantinedDomains.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
       "extensions.quarantineIgnoredByUser.{b86e4813-687a-43e6-ab65-0bde4ab75758}": {
         "Value": true,
         "Status": "default"
@@ -1621,6 +1633,18 @@
         "Value": false,
         "Status": "default"
       },
+      "extensions.webcompat.enable_shims": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.webcompat.perform_injections": {
+        "Value": true,
+        "Status": "default"
+      },
+      "extensions.webcompat.perform_ua_overrides": {
+        "Value": true,
+        "Status": "default"
+      },
       "extensions.webcompat.smartblockEmbeds.enabled": {
         "Value": true,
         "Status": "default"
@@ -1670,6 +1694,14 @@
         "Status": "default"
       },
       "gfx.font_rendering.opentype_svg.enabled": {
+        "Value": false,
+        "Status": "default"
+      },
+      "geo.provider.ms-windows-location": {
+        "Value": false,
+        "Status": "default"
+      },
+      "geo.provider.network.logging.enabled": {
         "Value": false,
         "Status": "default"
       },
@@ -1897,6 +1929,26 @@
         "Value": true,
         "Status": "default"
       },
+      "network.cookie.cookieBehavior": {
+        "Value": 5,
+        "Status": "default"
+      },
+      "network.cookie.cookieBehavior.optInPartitioning": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.cookie.cookieBehavior.optInPartitioning.pbmode": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.cookie.cookieBehavior.pbmode": {
+        "Value": 5,
+        "Status": "default"
+      },
+      "network.cookie.cookieBehavior.trackerCookieBlocking": {
+        "Value": true,
+        "Status": "default"
+      },
       "network.cookie.sameSite.laxByDefault": {
         "Value": true,
         "Status": "default"
@@ -2015,6 +2067,22 @@
       },
       "network.http.referer.defaultPolicy.trackers.pbmode": {
         "Value": 1,
+        "Status": "default"
+      },
+      "network.http.referer.disallowCrossSiteRelaxingDefault": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.http.referer.disallowCrossSiteRelaxingDefault.pbmode": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.http.referer.disallowCrossSiteRelaxingDefault.pbmode.top_navigation": {
+        "Value": true,
+        "Status": "default"
+      },
+      "network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation": {
+        "Value": true,
         "Status": "default"
       },
       "network.http.referer.XOriginTrimmingPolicy": {
@@ -2235,6 +2303,10 @@
       },
       "security.tls.enable_0rtt_data": {
         "Value": false,
+        "Status": "default"
+      },
+      "security.tls.hello_downgrade_check": {
+        "Value": true,
         "Status": "default"
       },
       "security.tls.version.enable-deprecated": {
@@ -2489,24 +2561,8 @@
         "Value": false,
         "Status": "locked"
       },
-      "extensions.webcompat.enable_shims": {
-        "Value": true,
-        "Status": "default"
-      },
-      "extensions.webcompat.perform_injections": {
-        "Value": true,
-        "Status": "default"
-      },
-      "extensions.webcompat.perform_ua_overrides": {
-        "Value": true,
-        "Status": "default"
-      },
       "geo.enabled": {
         "Value": true,
-        "Status": "default"
-      },
-      "geo.provider.ms-windows-location": {
-        "Value": false,
         "Status": "default"
       },
       "geo.provider.network.url": {
@@ -2881,43 +2937,7 @@
         "Value": true,
         "Status": "default"
       },
-      "network.cookie.cookieBehavior": {
-        "Value": 5,
-        "Status": "default"
-      },
-      "network.cookie.cookieBehavior.optInPartitioning": {
-        "Value": true,
-        "Status": "default"
-      },
-      "network.cookie.cookieBehavior.optInPartitioning.pbmode": {
-        "Value": true,
-        "Status": "default"
-      },
-      "network.cookie.cookieBehavior.pbmode": {
-        "Value": 5,
-        "Status": "default"
-      },
-      "network.cookie.cookieBehavior.trackerCookieBlocking": {
-        "Value": true,
-        "Status": "default"
-      },
       "network.cookie.noPersistentStorage": {
-        "Value": true,
-        "Status": "default"
-      },
-      "network.http.referer.disallowCrossSiteRelaxingDefault": {
-        "Value": true,
-        "Status": "default"
-      },
-      "network.http.referer.disallowCrossSiteRelaxingDefault.pbmode": {
-        "Value": true,
-        "Status": "default"
-      },
-      "network.http.referer.disallowCrossSiteRelaxingDefault.pbmode.top_navigation": {
-        "Value": true,
-        "Status": "default"
-      },
-      "network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation": {
         "Value": true,
         "Status": "default"
       },
@@ -4033,6 +4053,8 @@
       }
     },
     "Cookies": {
+      "Behavior": "reject-tracker-and-partition-foreign",
+      "BehaviorPrivateBrowsing": "reject-tracker-and-partition-foreign",
       "Block": [
         "http://google-analytics.com/",
         "https://google-analytics.com/",
