@@ -130,6 +130,14 @@
                 "Value": true,
                 "Status": "default"
             },
+            "browser.EULA.override": {
+                "Value": true,
+                "Status": "default"
+            },
+            "browser.rights.override": {
+                "Value": true,
+                "Status": "default"
+            },
             "calendar.extract.service.enabled": {
                 "Value": false,
                 "Status": "default"

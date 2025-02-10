@@ -28,8 +28,11 @@ pref("mail.shell.checkDefaultClient", false);
 
 pref("pdfjs.firstRun", false);
 
-/// Skip Onboarding
+/// Skip onboarding
+// https://searchfox.org/comm-central/source/suite/components/nsSuiteGlue.js#965
 
+pref("browser.EULA.override", true);
+pref("browser.rights.override", true);
 pref("mail.rights.override", true);
 pref("mailnews.start_page_override.mstone", "ignore");
 
