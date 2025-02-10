@@ -362,6 +362,11 @@ pref("browser.download.manager.focusWhenStarting", true);
 pref("browser.download.manager.showAlertOnComplete", true);
 pref("browser.download.manager.showWhenStarting", true);
 
+/// Show a progress dialog upon download
+// https://searchfox.org/comm-central/source/suite/app/profile/suite-prefs.js#708
+
+pref("browser.download.manager.behavior", 1); // [HIDDEN]
+
 /// Limit classes that can process incoming data
 // Enables a blocklist to avoid HTML, inline images, and other unknown content types
 // https://searchfox.org/comm-central/source/mailnews/mailnews.js#728
