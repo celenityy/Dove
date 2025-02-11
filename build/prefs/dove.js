@@ -607,6 +607,12 @@ pref("mailnews.show_send_progress", true); // [DEFAULT]
 
 pref("extensions.abuseReport.enabled", true);
 
+/// Allow inspecting/debugging local tabs
+// Extremely useful for Thunderbird, as it gives us a URL bar...
+// Can be accessed via `Tools` -> `Developer Tools` -> `Debug Add-ons` (`about:debugging`), simply choose `Inspect` next to any tab of your choice and profit...
+
+pref("devtools.aboutdebugging.local-tab-debugging", true);
+
 pref("mail.dove.status", "012");
 
 // 013 DO NOT TOUCH
