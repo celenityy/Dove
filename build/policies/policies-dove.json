@@ -119,10 +119,6 @@
                 "Value": true,
                 "Status": "default"
             },
-            "dom.webnotifications.enabled": {
-                "Value": true,
-                "Status": "default"
-            },
             "extensions.abuseReport.enabled": {
                 "Value": true,
                 "Status": "default"
@@ -262,10 +258,6 @@
             "extensions.strictCompatibility": {
                 "Value": false,
                 "Status": "locked"
-            },
-            "geo.enabled": {
-                "Value": true,
-                "Status": "default"
             },
             "geo.provider.ms-windows-location": {
                 "Value": false,
