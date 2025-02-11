@@ -20,11 +20,11 @@ pref("mail.dove.status", "001");
 pref("mail.provider.enabled", false);
 pref("mail.provider.suppress_dialog_on_startup", true); // [HIDDEN]
 
-/// Never check default mail client
+/// Never check if Thunderbird is the default mail client
 
 pref("mail.shell.checkDefaultClient", false);
 
-/// Never check default PDF viewer
+/// Never check if Thunderbird is the default PDF viewer
 
 pref("pdfjs.firstRun", false);
 
@@ -462,8 +462,14 @@ pref("dom.disable_window_status_change", true); // [DEFAULT]
 pref("signon.rememberSignons", true); // [DEFAULT]
 
 /// Add our own extension recommendations...
+
 pref("extensions.getAddons.discovery.api_url", "https://dove.celenity.dev/extensions/recommendations.json"); // https://searchfox.org/mozilla-central/source/testing/profiles/common/user.js
 pref("extensions.recommendations.privacyPolicyUrl", "https://dove.celenity.dev/privacy#extension-recommendations");
+
+/// Don't warn on `mailto:`...
+// Override from Phoenix
+
+pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT, HIDDEN]
 
 pref("mail.dove.status", "010");
 
