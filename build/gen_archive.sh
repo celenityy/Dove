@@ -8,4 +8,4 @@
 
 rm archives/dove.zip
 
-zip -R archives/dove.zip 'etc/*' 'etc/profile.d/*' 'dove.cfg' 'policies.json' 'prefs/*' 'COPYING' 'README.md' -x 'build/*' '.code-workspace' '.domains' '.DS_Store' '.git*' 'gitlab-ci.yml' '_redirects'
+zip -R archives/dove.zip 'dove.cfg' 'etc/*' 'etc/profile.d/*' 'policies.json' 'prefs/*' 'COPYING' 'README.md' -x 'build/*' '.code-workspace' '.domains' '.DS_Store' '.git*' 'gitlab-ci.yml' '_redirects'
