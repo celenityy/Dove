@@ -1,15 +1,19 @@
 {
 	"folders": [
 		{
+			"name": "Dove",
 			"path": "."
 		},
 		{
+			"name": "Dove.wiki",
 			"path": "../Dove.wiki"
 		},
 		{
-			"path": "../Dove-Policies-Debian"
+			"name": "Dove-Debian",
+			"path": "../Dove-Debian"
 		},
 		{
+			"name": "thunderbird",
 			"path": "../../../../usr/lib64/thunderbird"
 		}
 	],
