@@ -221,10 +221,6 @@
         "Value": true,
         "Status": "default"
       },
-      "browser.privatebrowsing.vpnpromourl": {
-        "Value": "",
-        "Status": "locked"
-      },
       "browser.region.network.scan": {
         "Value": false,
         "Status": "default"
@@ -458,7 +454,7 @@
         "Status": "default"
       },
       "browser.translations.alwaysTranslateLanguages": {
-        "Value": "bg,ca,cs,da,de,el,en,es,et,fi,fr,hr,hu,id,it,lv,lt,nl,pl,pt,ro,ru,sk,sl,sr,sv,tr,uk,vi",
+        "Value": "bg,ca,cs,da,de,el,en,es,et,fi,fr,hr,hu,id,it,ja,ko,lv,lt,nl,pl,pt,ro,ru,sk,sl,sr,sv,tr,uk,vi,zh-Hans",
         "Status": "default"
       },
       "browser.translations.automaticallyPopup": {
@@ -1050,7 +1046,7 @@
         "Status": "default"
       },
       "media.wmf.media-engine.enabled": {
-        "Value": 3,
+        "Value": 0,
         "Status": "default"
       },
       "network.auth.non-web-content-triggered-resources-http-auth-allow": {
@@ -2149,9 +2145,61 @@
       "Default": "DuckDuckGo",
       "PreventInstalls": false,
       "Remove": [
-        "Google",
+        "1&1 Suche",
+        "Allegro",
+        "Amazon.ca",
+        "亚马逊",
+        "Amazon.co.jp",
+        "Amazon.co.uk",
+        "Amazon.com",
+        "Amazon.com.au",
+        "Amazon.de",
+        "Amazon.es",
+        "Amazon.fr",
+        "Amazon.in",
+        "Amazon.it",
+        "Amazon.nl",
+        "Amazon.se",
+        "百度",
         "Bing",
-        "Amazon.com"
+        "Ceneje.si",
+        "Cốc Cốc",
+        "다음",
+        "eBay",
+        "EUdict Eng->Cro",
+        "GMX - Búsqueda web",
+        "GMX - Recherche web",
+        "GMX Search",
+        "GMX Shopping",
+        "GMX Suche",
+        "Google",
+        "Gule sider",
+        "LEO Eng-Deu",
+        "พจนานุกรม ลองดู",
+        "mail.com",
+        "Поиск Mail.Ru",
+        "Mapy.cz",
+        "MercadoLibre Argentina",
+        "MercadoLibre Chile",
+        "MercadoLibre Mexico",
+        "MercadoLivre",
+        "네이버",
+        "Odpiralni Časi",
+        "Pazaruvaj",
+        "Priberam",
+        "Prisjakt",
+        "楽天市場",
+        "Readmoo 讀墨電子書",
+        "Salidzini.lv",
+        "Seznam",
+        "Tyda.se",
+        "Vatera.hu",
+        "WEB.DE Suche",
+        "Wolne Lektury",
+        "Yahoo! JAPAN",
+        "Yahoo!オークション",
+        "Yandex",
+        "Яндекс"
       ],
       "Add": [
         {
