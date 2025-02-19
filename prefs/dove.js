@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.02.14.1", locked);
+pref("browser.phoenix.version", "2025.02.18.1", locked);
 
 // 000 ABOUT:CONFIG
 
@@ -841,6 +841,7 @@ pref("browser.phoenix.core.status", "014");
 pref("pdfjs.enableScripting", false);
 
 /// Disable XFA
+// https://learn.microsoft.com/deployedge/microsoft-edge-policies#viewxfapdfiniemodeallowedorigins
 // https://insert-script.blogspot.com/2019/01/adobe-reader-pdf-callback-via-xslt.html
 // https://www.sentinelone.com/blog/malicious-pdfs-revealing-techniques-behind-attacks/
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=xfa
@@ -1396,6 +1397,14 @@ pref("dom.origin-trials.coep-credentialless.state", 1); // https://searchfox.org
 
 pref("browser.tabs.remote.enforceRemoteTypeRestrictions", true); // [DEFAULT - Nightly Desktop]
 
+/// Disable automatic updates for OpenSearch engines
+// Doesn't appear to impact Mozilla's built-in search engines
+// Also has privacy implications (extra unsolicited connections to third parties...)
+// https://firefox-source-docs.mozilla.org/toolkit/search/Preferences.html#hidden
+// https://developer.mozilla.org/docs/Web/XML/Guides/OpenSearch#supporting_automatic_updates_for_opensearch_plugins
+
+pref("browser.search.update", false); // [DEFAULT - Android]
+
 pref("browser.phoenix.core.status", "020");
 
 // 021 BLOCK COOKIE BANNERS
@@ -1406,7 +1415,6 @@ pref("cookiebanners.service.mode", 1);
 pref("cookiebanners.service.mode.privateBrowsing", 1); // [DEFAULT - Nightly Android]
 pref("cookiebanners.service.enableGlobalRules", true); // [DEFAULT]
 pref("cookiebanners.service.enableGlobalRules.subFrames", true); // [DEFAULT]
-pref("cookiebanners.ui.desktop.enabled", true);
 
 pref("browser.phoenix.core.status", "021");
 
@@ -1667,13 +1675,13 @@ pref("security.enterprise_roots.enabled", false, locked);
 
 pref("browser.phoenix.desktop.common.status", "003");
 
-// 004 GEOLOCATION
+// 004 GEOLOCATION [NO-OSX]
 
-/// Configure OS Geolocation providers
+/// Configure OS Geolocation providers [NO-OSX]
 
-pref("geo.provider.ms-windows-location", false); // Disable Microsoft Location Services for Windows users
+pref("geo.provider.ms-windows-location", false); // Disable Microsoft Location Services for Windows users [NO-OSX]
 
-pref("browser.phoenix.desktop.common.status", "004");
+pref("browser.phoenix.desktop.common.status", "004"); // [NO-OSX]
 
 // 005 DISK AVOIDANCE
 
@@ -1686,9 +1694,9 @@ pref("privacy.cpd.cache", true); // [DEFAULT]
 
 pref("privacy.sanitize.timeSpan", 0);
 
-/// Prevent automatically starting Firefox & restoring session after reboot on Windows
+/// Prevent automatically starting Firefox & restoring session after reboot on Windows [NO-OSX]
 
-pref("toolkit.winRegisterApplicationRestart", false);
+pref("toolkit.winRegisterApplicationRestart", false); // [NO-OSX]
 
 pref("browser.phoenix.desktop.common.status", "005");
 
@@ -1707,9 +1715,9 @@ pref("browser.phoenix.desktop.common.status", "006");
 
 // 007 MISC. PRIVACY
 
-/// [WINDOWS] Ensure we never save clipboard history/contents to the cloud...
+/// [WINDOWS] Ensure we never save clipboard history/contents to the cloud... [NO-OSX]
 
-pref("clipboard.copyPrivateDataToClipboardCloudOrHistory", false); // [DEFAULT]
+pref("clipboard.copyPrivateDataToClipboardCloudOrHistory", false); // [DEFAULT] [NO-OSX]
 
 /// Disable Firefox Sync by default
 // When signing in to Firefox Sync, this controls the items (checkboxes) that are set to sync (under about:preferences#sync).
@@ -1745,19 +1753,19 @@ pref("browser.phoenix.desktop.common.status", "008");
 
 // 009 MISC. SECURITY
 
-/// [WINDOWS] Disable Win32k System Calls
-// https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#15638
-// https://security.googleblog.com/2016/10/disclosing-vulnerabilities-to-protect.html
-// https://docs.google.com/document/d/1gJDlk-9xkh6_8M_awrczWCaUuyr0Zd2TKjNBCiPO_G4/edit
+/// [WINDOWS] Disable Win32k System Calls [NO-OSX]
+// https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#15638 [NO-OSX]
+// https://security.googleblog.com/2016/10/disclosing-vulnerabilities-to-protect.html [NO-OSX]
+// https://docs.google.com/document/d/1gJDlk-9xkh6_8M_awrczWCaUuyr0Zd2TKjNBCiPO_G4/edit [NO-OSX]
 
-pref("security.sandbox.content.win32k-disable", true); // [DEFAULT]
-pref("security.sandbox.gmp.win32k-disable", true);
-pref("security.sandbox.socket.win32k-disable", true); // [DEFAULT]
+pref("security.sandbox.content.win32k-disable", true); // [DEFAULT] [NO-OSX]
+pref("security.sandbox.gmp.win32k-disable", true); // [NO-OSX]
+pref("security.sandbox.socket.win32k-disable", true); // [DEFAULT] [NO-OSX]
 
-/// Disable GNOME Integration
-// https://searchfox.org/mozilla-central/source/browser/components/shell/nsGNOMEShellService.cpp
+/// Disable GNOME Integration [NO-OSX]
+// https://searchfox.org/mozilla-central/source/browser/components/shell/nsGNOMEShellService.cpp [NO-OSX]
 
-pref("browser.gnome-search-provider.enabled", false); // [HIDDEN]
+pref("browser.gnome-search-provider.enabled", false); // [HIDDEN] [NO-OSX]
 
 /// If a remote AutoConfig is being used, block it from gaining privileged browser access...
 // https://www.mozilla.org/firefox/62.0/releasenotes/
@@ -1768,29 +1776,29 @@ pref("browser.phoenix.desktop.common.status", "009");
 
 // 010 MEDIA
 
-/// Always sandbox GMP on GNU/Linux
-// https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml
+/// Always sandbox GMP on GNU/Linux [NO-OSX]
+// https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml [NO-OSX]
 
-pref("media.gmp.insecure.allow", false); // [DEFAULT]
+pref("media.gmp.insecure.allow", false); // [DEFAULT] [NO-OSX]
 
 /// Remove DRM toggle in `about:preferences#general`
 
 pref("browser.eme.ui.enabled", false);
 
-/// Disable Microsoft PlayReady DRM
+/// Disable Microsoft PlayReady DRM [NO-OSX]
 
-pref("media.eme.playready.enabled", false);
+pref("media.eme.playready.enabled", false); // [NO-OSX]
 
-/// Explicitly disable Windows Media Foundation Clearkey DRM
+/// Explicitly disable Windows Media Foundation Clearkey DRM [NO-OSX]
 
-pref("media.eme.wmf.clearkey.enabled", false); // [DEFAULT]
+pref("media.eme.wmf.clearkey.enabled", false); // [DEFAULT] [NO-OSX]
 
-/// Disable Windows Media Foundation Media Engine 
-// By default, it's enabled for protected content (DRM)
-// Enabling it for standard content appears to cause video playback issues (ex. on YouTube)
-// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk
+/// Disable Windows Media Foundation Media Engine [NO-OSX]
+// By default, it's enabled for protected content (DRM) [NO-OSX]
+// Enabling it for standard content appears to cause video playback issues (ex. on YouTube) [NO-OSX]
+// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [NO-OSX]
 
-pref("media.wmf.media-engine.enabled", 0);
+pref("media.wmf.media-engine.enabled", 0); // [NO-OSX]
 
 /// Enable click to play UI for certain CSS skins by default...
 // https://github.com/black7375/Firefox-UI-Fix/blob/master/css/leptonContent.css#L223
@@ -1834,7 +1842,7 @@ pref("browser.phoenix.desktop.common.status", "013");
 // 014 PERFORMANCE
 // A lot of these taken from https://github.com/yokoffing/Betterfox/blob/main/Fastfox.js
 
-pref("media.ffmpeg.vaapi.enabled", true); // Enable VA-API by default
+pref("media.ffmpeg.vaapi.enabled", true); // Enable VA-API by default [NO-OSX]
 pref("network.http.max-connections", 1800); // [Default = 900]
 
 /// Disables certain UI animations
@@ -2015,7 +2023,7 @@ pref("browser.phoenix.extended.desktop.common.status", "successfully applied :D"
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.02.14.1", locked);
+pref("mail.dove.version", "2025.02.18.1", locked);
 
 pref("mail.dove.status", "000");
 
@@ -2624,12 +2632,12 @@ pref("mailnews.oauth.usePrivateBrowser", false, locked); // Breaks uBlock Origin
 
 pref("mail.dove.status", "013");
 
-// 014 Enable support for custom/specialized configs...
+// 014 Enable support for custom/specialized configs... // [NO-OSX]
 
-pref("general.config.filename", "dove.cfg");
-pref("general.config.vendor", "dove");
-pref("general.config.obscure_value", 0);
+pref("general.config.filename", "dove.cfg"); // [NO-OSX]
+pref("general.config.vendor", "dove"); // [NO-OSX]
+pref("general.config.obscure_value", 0); // [NO-OSX]
 
-pref("mail.dove.status", "014");
+pref("mail.dove.status", "014"); // [NO-OSX]
 
 pref("mail.dove.status", "successfully applied :D", locked);
