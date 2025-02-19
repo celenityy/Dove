@@ -71,11 +71,6 @@
         },
         "OfferToSaveLoginsDefault": true,
         "Preferences": {
-            "browser.download.manager.behavior": {
-                "Value": 1,
-                "Status": "default",
-                "Type": "number"
-            },
             "browser.download.manager.focusWhenStarting": {
                 "Value": true,
                 "Status": "default",
