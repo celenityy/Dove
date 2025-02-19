@@ -73,591 +73,743 @@
         "Preferences": {
             "browser.download.manager.behavior": {
                 "Value": 1,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "browser.download.manager.focusWhenStarting": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "browser.download.manager.showAlertOnComplete": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "browser.download.manager.showWhenStarting": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "browser.EULA.override": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
+            },
+            "browser.privatebrowsing.autostart": {
+                "Value": false,
+                "Status": "locked",
+                "Type": "boolean"
             },
             "browser.rights.override": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "calendar.extract.service.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "chat.prpls.prpl-facebook.disable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "chat.prpls.prpl-gtalk.disable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "chat.prpls.prpl-twitter.disable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "chat.prpls.prpl-yahoo.disable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "dom.disable_window_status_change": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.abuseReport.enabled": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.cardbook.useOnlyEmail": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.arh.read": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.arh.replaceAddonResult": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.debug": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.display.favicon.show": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.display.keySecure": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.dkim.enable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.dns.nameserver": {
                 "Value": "9.9.9.9",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "extensions.dkim_verifier.error.algorithm.rsa.weakKeyLength.treatAs": {
                 "Value": 1,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.error.algorithm.sign.rsa-sha1.treatAs": {
                 "Value": 1,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.error.detailedReasons": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.error.illformed_i.treatAs": {
                 "Value": 1,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.error.illformed_s.treatAs": {
                 "Value": 1,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.error.policy.key_insecure.treatAs": {
                 "Value": 1,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.key.storing": {
                 "Value": 2,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.policy.DMARC.shouldBeSigned.enable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.policy.DMARC.shouldBeSigned.neededPolicy": {
                 "Value": "none",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "extensions.dkim_verifier.policy.dkim.unsignedHeadersWarning.mode": {
                 "Value": 30,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.policy.signRules.autoAddRule.enable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.policy.signRules.autoAddRule.for": {
                 "Value": 0,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.policy.signRules.autoAddRule.onlyIfFromAddressInSDID": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.policy.signRules.checkDefaultRules": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.policy.signRules.enable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.policy.signRules.error.wrong_sdid.asWarning": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.policy.signRules.sdid.allowSubDomains": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.saveResult": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.dkim_verifier.showDKIMFromTooltip": {
                 "Value": 50,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.dkim_verifier.showDKIMHeader": {
                 "Value": 50,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "extensions.getAddons.discovery.api_url": {
                 "Value": "https://dove.celenity.dev/extensions/recommendations.json",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "extensions.getAddons.search.browseURL": {
                 "Value": "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "extensions.quarantineIgnoredByUser.dkim_verifier@pl": {
                 "Value": false,
-                "Status": "locked"
+                "Status": "locked",
+                "Type": "boolean"
             },
             "extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "extensions.recommendations.privacyPolicyUrl": {
                 "Value": "https://dove.celenity.dev/privacy#extension-recommendations",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "extensions.strictCompatibility": {
                 "Value": false,
-                "Status": "locked"
+                "Status": "locked",
+                "Type": "boolean"
             },
             "geo.provider.ms-windows-location": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "geo.provider.network.url": {
                 "Value": "",
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "geo.provider.use_corelocation": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "geo.provider.use_geoclue": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.addressDisplayFormat": {
                 "Value": 0,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.biff.alert.show_preview": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.biff.alert.show_sender": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.biff.alert.show_subject": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.chat.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.chat.notification_info": {
                 "Value": 2,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.cloud_files.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.collect_email_address_outgoing": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.compose.add_link_preview": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.compose.warn_public_recipients.aggressive": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.dark-reader.enabled": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.dark-reader.show-toggle": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.default_send_format": {
                 "Value": 1,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.e2ee.auto_enable": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.e2ee.auto_disable": {
                 "Value": false,
-                "Status": "locked"
+                "Status": "locked",
+                "Type": "boolean"
             },
             "mail.e2ee.notify_on_auto_disable": {
                 "Value": true,
-                "Status": "locked"
+                "Status": "locked",
+                "Type": "boolean"
             },
             "mail.external_protocol_requires_permission": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.html_compose": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.html_sanitize.drop_conditional_css": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.identity.default.compose_html": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.identity.default.sign_mail": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.imap.use_disk_cache2": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.mdn.report.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.mdn.report.not_in_to_cc": {
                 "Value": 0,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.mdn.report.outside_domain": {
                 "Value": 0,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.mdn.report.other": {
                 "Value": 0,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.openpgp.allow_external_gnupg": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.openpgp.remind_encryption_possible": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.phishing.detection.disallow_form_actions": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.phishing.detection.enabled": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.phishing.detection.ipaddresses": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.phishing.detection.mismatched_hosts": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.provider.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.provider.suppress_dialog_on_startup": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.rights.override": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.sanitize_date_header": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.save_msg_filename_underscores_for_space": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.server.default.mdn_not_in_to_cc": {
                 "Value": 0,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.server.default.mdn_other": {
                 "Value": 0,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.server.default.mdn_outside_domain": {
                 "Value": 0,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.server.default.mdn_report_enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.shell.checkDefaultClient": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.show_headers": {
                 "Value": 2,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mail.showCondensedAddresses": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.smime.accept_insecure_sha1_message_signatures": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.smime.remind_encryption_possible": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.smtpserver.default.hello_argument": {
                 "Value": "[127.0.0.1]",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "mail.spellcheck.inline": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.SpellCheckBeforeSend": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.spotlight.enable": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.spotlight.firstRunDone": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.suppress_content_language": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.winsearch.enable": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.winsearch.firstRunDone": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.auto_config.fetchFromISP.sendEmailAddress": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.auto_config.fetchFromISP.sslOnly": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.auto_config.guess.requireGoodCert": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.auto_config.guess.sslOnly": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.display.date_senders_timezone": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.display.disallow_mime_handlers": {
                 "Value": 3,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mailnews.display.html_as": {
                 "Value": 3,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mailnews.display.prefer_plaintext": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.downloadToTempFile": {
                 "Value": false,
-                "Status": "locked"
+                "Status": "locked",
+                "Type": "boolean"
             },
             "mailnews.headers.sendUserAgent": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.headers.showMessageId": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.headers.showOrganization": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.headers.showReferences": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.headers.showSender": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.headers.showUserAgent": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.headers.useMinimalUserAgent": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.message_display.disable_remote_image": {
                 "Value": true,
-                "Status": "locked"
+                "Status": "locked",
+                "Type": "boolean"
             },
             "mailnews.oauth.usePrivateBrowser": {
                 "Value": false,
-                "Status": "default"
+                "Status": "locked",
+                "Type": "boolean"
             },
             "mailnews.reply_header_authorwroteondate": {
                 "Value": "#1 wrote on #2 #3:",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "mailnews.reply_header_authorwrotesingle": {
                 "Value": "#1 wrote:",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "mailnews.reply_header_ondateauthorwrote": {
                 "Value": "On #2 #3, #1 wrote:",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "mailnews.reply_header_type": {
                 "Value": 1,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "mailnews.show_send_progress": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.start_page.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mailnews.start_page.override_url": {
                 "Value": "",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "mailnews.start_page.url": {
                 "Value": "about:config",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "mailnews.start_page_override.mstone": {
                 "Value": "ignore",
-                "Status": "default"
+                "Status": "default",
+                "Type": "string"
             },
             "media.autoplay.blocking_policy": {
                 "Value": 2,
-                "Status": "default"
+                "Status": "default",
+                "Type": "number"
             },
             "media.gmp-gmpopenh264.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "media.gmp-gmpopenh264.provider.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "media.gmp-gmpopenh264.visible": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "media.gmp-provider.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "media.peerconnection.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "media.peerconnection.ice.default_address_only": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "media.peerconnection.ice.no_host": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "media.peerconnection.ice.relay_only": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "network.cookie.noPersistentStorage": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "network.http.referer.XOriginPolicy": {
                 "Value": 2,
-                "Status": "user"
+                "Status": "user",
+                "Type": "number"
             },
             "pdfjs.firstRun": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "places.history.enabled": {
                 "Value": false,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "signon.rememberSignons": {
                 "Value": true,
-                "Status": "default"
+                "Status": "default",
+                "Type": "boolean"
             },
             "mail.dove.policies.status": {
                 "Value": "successfully applied :D",
-                "Status": "locked"
+                "Status": "locked",
+                "Type": "string"
             }
         },
         "SearchEngines": {
