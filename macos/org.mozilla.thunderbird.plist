@@ -2651,15 +2651,6 @@ no-scripting: www.google.com false</string>
 			<key>Value</key>
 			<false/>
 		</dict>
-		<key>browser.download.manager.behavior</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
-		</dict>
 		<key>browser.download.manager.focusWhenStarting</key>
 		<dict>
 			<key>Status</key>
@@ -3938,24 +3929,6 @@ no-scripting: www.google.com false</string>
 			<key>Value</key>
 			<string>9.9.9.9</string>
 		</dict>
-		<key>extensions.dkim_verifier.error.algorithm.rsa.weakKeyLength.treatAs</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
-		</dict>
-		<key>extensions.dkim_verifier.error.algorithm.sign.rsa-sha1.treatAs</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
-		</dict>
 		<key>extensions.dkim_verifier.error.detailedReasons</key>
 		<dict>
 			<key>Status</key>
@@ -3964,33 +3937,6 @@ no-scripting: www.google.com false</string>
 			<string>boolean</string>
 			<key>Value</key>
 			<true/>
-		</dict>
-		<key>extensions.dkim_verifier.error.illformed_i.treatAs</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
-		</dict>
-		<key>extensions.dkim_verifier.error.illformed_s.treatAs</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
-		</dict>
-		<key>extensions.dkim_verifier.error.policy.key_insecure.treatAs</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
 		</dict>
 		<key>extensions.dkim_verifier.key.storing</key>
 		<dict>
@@ -4036,15 +3982,6 @@ no-scripting: www.google.com false</string>
 			<string>boolean</string>
 			<key>Value</key>
 			<true/>
-		</dict>
-		<key>extensions.dkim_verifier.policy.signRules.autoAddRule.for</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>0</integer>
 		</dict>
 		<key>extensions.dkim_verifier.policy.signRules.autoAddRule.onlyIfFromAddressInSDID</key>
 		<dict>
@@ -4846,15 +4783,6 @@ no-scripting: www.google.com false</string>
 			<string>boolean</string>
 			<key>Value</key>
 			<true/>
-		</dict>
-		<key>mail.addressDisplayFormat</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>0</integer>
 		</dict>
 		<key>mail.biff.alert.show_preview</key>
 		<dict>
@@ -5936,15 +5864,6 @@ no-scripting: www.google.com false</string>
 			<key>Value</key>
 			<false/>
 		</dict>
-		<key>media.wmf.media-engine.enabled</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>0</integer>
-		</dict>
 		<key>network.IDN_show_punycode</key>
 		<dict>
 			<key>Status</key>
@@ -6360,7 +6279,7 @@ no-scripting: www.google.com false</string>
 		<key>network.http.referer.XOriginPolicy</key>
 		<dict>
 			<key>Status</key>
-			<string>user</string>
+			<string>default</string>
 			<key>Type</key>
 			<string>number</string>
 			<key>Value</key>
@@ -7023,15 +6942,6 @@ no-scripting: www.google.com false</string>
 			<key>Value</key>
 			<true/>
 		</dict>
-		<key>ui.hideCursorWhileTyping</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
-		</dict>
 		<key>ui.key.menuAccessKeyFocuses</key>
 		<dict>
 			<key>Status</key>
@@ -7040,60 +6950,6 @@ no-scripting: www.google.com false</string>
 			<string>boolean</string>
 			<key>Value</key>
 			<false/>
-		</dict>
-		<key>ui.panelAnimations</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>0</integer>
-		</dict>
-		<key>ui.prefersReducedMotion</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
-		</dict>
-		<key>ui.prefersReducedTransparency</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>0</integer>
-		</dict>
-		<key>ui.scrollToClick</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>1</integer>
-		</dict>
-		<key>ui.swipeAnimationEnabled</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>0</integer>
-		</dict>
-		<key>ui.useAccessibilityTheme</key>
-		<dict>
-			<key>Status</key>
-			<string>default</string>
-			<key>Type</key>
-			<string>number</string>
-			<key>Value</key>
-			<integer>0</integer>
 		</dict>
 		<key>widget.non-native-theme.use-theme-accent</key>
 		<dict>
