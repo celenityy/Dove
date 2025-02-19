@@ -181,35 +181,10 @@
                 "Status": "default",
                 "Type": "string"
             },
-            "extensions.dkim_verifier.error.algorithm.rsa.weakKeyLength.treatAs": {
-                "Value": 1,
-                "Status": "default",
-                "Type": "number"
-            },
-            "extensions.dkim_verifier.error.algorithm.sign.rsa-sha1.treatAs": {
-                "Value": 1,
-                "Status": "default",
-                "Type": "number"
-            },
             "extensions.dkim_verifier.error.detailedReasons": {
                 "Value": true,
                 "Status": "default",
                 "Type": "boolean"
-            },
-            "extensions.dkim_verifier.error.illformed_i.treatAs": {
-                "Value": 1,
-                "Status": "default",
-                "Type": "number"
-            },
-            "extensions.dkim_verifier.error.illformed_s.treatAs": {
-                "Value": 1,
-                "Status": "default",
-                "Type": "number"
-            },
-            "extensions.dkim_verifier.error.policy.key_insecure.treatAs": {
-                "Value": 1,
-                "Status": "default",
-                "Type": "number"
             },
             "extensions.dkim_verifier.key.storing": {
                 "Value": 2,
@@ -235,11 +210,6 @@
                 "Value": true,
                 "Status": "default",
                 "Type": "boolean"
-            },
-            "extensions.dkim_verifier.policy.signRules.autoAddRule.for": {
-                "Value": 0,
-                "Status": "default",
-                "Type": "number"
             },
             "extensions.dkim_verifier.policy.signRules.autoAddRule.onlyIfFromAddressInSDID": {
                 "Value": true,
@@ -330,11 +300,6 @@
                 "Value": false,
                 "Status": "default",
                 "Type": "boolean"
-            },
-            "mail.addressDisplayFormat": {
-                "Value": 0,
-                "Status": "default",
-                "Type": "number"
             },
             "mail.biff.alert.show_preview": {
                 "Value": false,
@@ -788,7 +753,7 @@
             },
             "network.http.referer.XOriginPolicy": {
                 "Value": 2,
-                "Status": "user",
+                "Status": "default",
                 "Type": "number"
             },
             "pdfjs.firstRun": {
