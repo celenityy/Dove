@@ -1,5 +1,4 @@
-#! /usr/bin/env bash
-
+#!/bin/zsh
 
 ## Functions
 echo_red_text() {
@@ -18,13 +17,59 @@ error_fn() {
 	exit 1
 }
 
+## Downloaded files save in /tmp
+cd /tmp
+
+## Download and run the uninstall script
+uninstall_dove() {
+	wget -nv $1
+	echo
+	echo
+	bash $2
+}
+
+## Scripts are here
+URL="https://codeberg.org/celenity/Dove/raw/branch/pages/uninstaller_scripts/macos"
+
+## Scripts file
+SCRIPT=("dove-uninstall-system.sh"
+		"dove-uninstall-user.sh")
+
+echo_green_text "Welcome to the Dove Uninstaller for macOS!"
+echo_red_text "Sorry to see you go :("
+echo_red_text "Before proceeding: You MUST grant your Terminal the 'App Management' permission by navigating to 'System Settings' -> 'Privacy & Security' -> 'App Management'"
+echo_red_text "You are strongly recommended to revoke the 'App Management' permission once you are done."
+echo_green_text "If you are unable/unwilling to grant your Terminal this permission, you can remove the files manually as laid out here: https://dove.celenity.dev#manual-installation."
+/bin/sleep 5
+open /System/Applications/'System Settings'.app
+/bin/sleep 5
+echo_red_text "Press enter to continue."
+read
 
 ## Uninstall Dove
-echo_green_text "Uninstalling dove if installed..."
+echo_green_text "Unloading dev.celenity.dove.apply.plist..."
+sudo /bin/launchctl unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.apply.plist..."
+sudo /bin/rm -f /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+echo
+
+echo_green_text "Removing the /Library/celenity/Dove directory..."
+sudo /bin/rm -rf /Library/celenity/Dove || error_fn
+echo
+
+echo_green_text "Removing org.mozilla.thunderbird.plist..."
+sudo /bin/rm -f /Library/Preferences/org.mozilla.thunderbird.plist || error_fn
+echo
+sudo /bin/rm -f ~/Library/Preferences/org.mozilla.thunderbird.plist || error_fn
+echo
+
+echo_green_text "Uninstalling dove..."
 brew uninstall dove || error_fn
 echo
 
-echo_green_text "Uninstalling dove-user if installed..."
+echo_green_text "Uninstalling legacy dove-user if installed..."
 brew uninstall dove-user || error_fn
 echo
 
@@ -47,4 +92,21 @@ case ${RESULT} in
 			;;
 esac
 
-echo_green_text "Thanks for giving Dove a shot. Sorry to see you go :(. Please leave feedback on how we can improve! https://dove.celenity.dev/issues"
+echo -e ""
+echo_green_text "Where is your installation of Thunderbird located?";
+echo_green_text "Your options are:";
+echo_red_text "1. system - /Applications/Thunderbird.app";
+echo_green_text "2. user - ~/Applications/Thunderbird.app";
+read -p 'Please enter your selection: ' LOCATION
+case ${LOCATION} in
+	"system" | "System" | "SYSTEM" | 1)
+        TARGET_SCRIPT="${SCRIPT[0]}"
+		;;
+
+	"user" | "User" | "USER" | 2)
+		TARGET_SCRIPT="${SCRIPT[1]}"
+		;;
+esac
+
+## Download and run choosen uninstall script
+uninstall_dove "${URL}"/"${TARGET_SCRIPT}" "${TARGET_SCRIPT}"

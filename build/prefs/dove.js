@@ -624,12 +624,12 @@ pref("mailnews.oauth.usePrivateBrowser", false, locked); // Breaks uBlock Origin
 
 pref("mail.dove.status", "013");
 
-// 014 Enable support for custom/specialized configs...
+// 014 Enable support for custom/specialized configs... // [NO-OSX]
 
-pref("general.config.filename", "dove.cfg");
-pref("general.config.vendor", "dove");
-pref("general.config.obscure_value", 0);
+pref("general.config.filename", "dove.cfg"); // [NO-OSX]
+pref("general.config.vendor", "dove"); // [NO-OSX]
+pref("general.config.obscure_value", 0); // [NO-OSX]
 
-pref("mail.dove.status", "014");
+pref("mail.dove.status", "014"); // [NO-OSX]
 
 pref("mail.dove.status", "successfully applied :D", locked);

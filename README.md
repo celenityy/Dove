@@ -60,17 +60,23 @@ Dove currently provides official support for:
 * **Ubuntu (& derivatives...)**
 
 > [!IMPORTANT]
-> ⚠️ **macOS users must have [Homebrew](https://brew.sh/) installed, and must grant Terminal the `App Management` Permission.**
+> ⚠️ **macOS users must have [Homebrew](https://brew.sh/) installed.**
 
 > [!IMPORTANT]
 > ⚠️ **Flatpak & Snap packages of Thunderbird are currently not supported.**
 
 Other platforms have unfortunately proven difficult to support, though progress **is** being made. Contributions are always welcome and appreciated.
 
-**If your platform is supported, simply run the following command in your terminal to install Dove:**
+**If your platform is supported *(with the exception of macOS)*, simply run the following command in your terminal to install Dove:**
 
 ```sh
-bash -c "$(curl -fsSL https://dove.celenity.dev/install.sh)"
+sudo bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/install.sh 2>/dev/null)"
+```
+
+**macOS** users should instead run the following command to install Dove:
+
+```sh
+bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/installer_scripts/macos_install.sh 2>/dev/null)"
 ```
 
 **If you would like to use Dove on an unsupported platform, see [📛Manual Installation](#manual-installation).**
@@ -84,7 +90,13 @@ If Dove isn't right for you - no worries!
 **Simply run the following command in your terminal to uninstall Dove:**
 
 ```sh
-bash -c "$(curl -fsSL https://dove.celenity.dev/uninstall.sh)"
+sudo bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/uninstall.sh 2>/dev/null)"
+```
+
+**macOS** users should instead run the following command to uninstall Dove:
+
+```sh
+bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/uninstaller_scripts/macos_uninstall.sh 2>/dev/null)"
 ```
 
 Please [leave us feedback](https://dove.celenity.dev/issues) on the way out, so we can improve for the future!

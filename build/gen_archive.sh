@@ -9,3 +9,5 @@
 rm archives/dove.zip
 
 zip -R archives/dove.zip 'dove.cfg' 'etc/*' 'etc/profile.d/*' 'policies.json' 'prefs/*' 'COPYING' 'README.md' -x 'build/*' '.code-workspace' '.domains' '.DS_Store' '.git*' 'gitlab-ci.yml' '_redirects'
+
+zip -R archives/dove-osx.zip 'macos/dove.cfg' 'macos/org.mozilla.thunderbird.plist' 'COPYING' 'README.md' -x 'build/*' '.code-workspace' '.domains' '.DS_Store' '.git*' 'gitlab-ci.yml' '_redirects'
