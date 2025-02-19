@@ -23,7 +23,7 @@ install_dove() {
 }
 
 ## Scripts are here
-URL="https://dove.celenity.dev/installer_scripts"
+URL="https://codeberg.org/celenity/Dove/raw/branch/pages/installer_scripts"
 
 ## Scripts file
 SCRIPT=("arch_install_paru.sh"

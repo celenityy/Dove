@@ -19,9 +19,26 @@ error_fn() {
 }
 
 
-## Uninstall Phoenix
-echo_green_text "Removing Dove package..."
-	sudo apt remove dove
+## Uninstall Dove
+echo -e ""
+echo_green_text "Is Thunderbird installed as a standard package, or as a Flatpak?";
+echo_green_text "Your options are:";
+echo_red_text "1. Standard package";
+echo_green_text "2. Flatpak (System)";
+read -p 'Please enter your selection: ' LOCATION
+case ${LOCATION} in
+	"standard" | "Standard" | "STANDARD" | 1)
+        echo_green_text "Removing Dove package..."
+		sudo apt remove dove || error_fn
+		echo
+		;;
+
+	"flatpak" | "Flatpak" | "FLATPAK" | 2)
+		echo_green_text "Removing Dove-flatpak package..."
+		sudo apt remove dove-flatpak || error_fn
+		echo
+		;;
+esac
 
 echo -e "\033[32mWould you also like to remove celenity's OBS Repo? [Y/n] \033[0m"
 read RESULT

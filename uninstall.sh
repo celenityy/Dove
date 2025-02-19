@@ -23,7 +23,7 @@ uninstall_dove() {
 }
 
 ## Scripts are here
-URL="https://dove.celenity.dev/uninstaller_scripts"
+URL="https://codeberg.org/celenity/Dove/raw/branch/pages/uninstaller_scripts"
 
 ## Scripts file
 SCRIPT=("arch_uninstall_paru.sh"

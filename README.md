@@ -56,6 +56,7 @@ Dove currently provides official support for:
 * **Arch Linux**
 * **Debian (& derivatives...)**
 * **Fedora Linux** *(39-41)*
+* **Flatpak** *(System)*
 * **macOS**
 * **Ubuntu (& derivatives...)**
 
@@ -63,7 +64,7 @@ Dove currently provides official support for:
 > ⚠️ **macOS users must have [Homebrew](https://brew.sh/) installed.**
 
 > [!IMPORTANT]
-> ⚠️ **Flatpak & Snap packages of Thunderbird are currently not supported.**
+> ⚠️ **Flatpak *(User)* & Snap packages of Thunderbird are currently not supported.**
 
 Other platforms have unfortunately proven difficult to support, though progress **is** being made. Contributions are always welcome and appreciated.
 
