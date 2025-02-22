@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.02.18.1", locked);
+pref("browser.phoenix.version", "2025.02.21.1", locked);
 
 // 000 ABOUT:CONFIG
 
@@ -28,7 +28,7 @@ pref("general.aboutConfig.enable", true, locked); // [DEFAULT on Desktop]
 
 pref("general.warnOnAboutConfig", false);
 
-pref("browser.phoenix.core.status", "000");
+pref("browser.phoenix.status.core", "000");
 
 // 001 DATA COLLECTION
 
@@ -161,7 +161,7 @@ pref("extensions.recommendations.privacyPolicyUrl", "");
 pref("toolkit.crashreporter.infoURL", "");
 pref("toolkit.datacollection.infoURL", "");
 
-pref("browser.phoenix.core.status", "001");
+pref("browser.phoenix.status.core", "001");
 
 // 002 MOZILLA CRAP™
 
@@ -209,7 +209,7 @@ pref("extensions.webcompat-reporter.newIssueEndpoint", "");
 
 pref("signon.firefoxRelay.manage_url", "https://relay.firefox.com/accounts/profile/");
 
-pref("browser.phoenix.core.status", "002");
+pref("browser.phoenix.status.core", "002");
 
 // 003 Search & URL Bar
 
@@ -227,7 +227,7 @@ pref("browser.search.separatePrivateDefault", false);
 
 pref("network.IDN_show_punycode", true);
 
-pref("browser.phoenix.core.status", "003");
+pref("browser.phoenix.status.core", "003");
 
 // 004 Implicit Connections
 
@@ -278,7 +278,7 @@ pref("middlemouse.paste", false);
 pref("browser.tabs.searchclipboardfor.middleclick", false);
 pref("middlemouse.contentLoadURL", false); // [DEFAULT]
 
-pref("browser.phoenix.core.status", "004");
+pref("browser.phoenix.status.core", "004");
 
 // 005 HTTP(S) - Mixed Content & General Network Hardening
 
@@ -400,7 +400,7 @@ pref("network.proxy.failover_direct", false);
 pref("network.proxy.socks_remote_dns", true);
 pref("network.proxy.socks5_remote_dns", true); // [DEFAULT]
 
-pref("browser.phoenix.core.status", "005");
+pref("browser.phoenix.status.core", "005");
 
 // 006 DNS
 
@@ -464,7 +464,7 @@ pref("network.trr.strict_native_fallback", true); // https://searchfox.org/mozil
 
 pref("network.dns.preferIPv6", true);
 
-pref("browser.phoenix.core.status", "006");
+pref("browser.phoenix.status.core", "006");
 
 // 007 CERTIFICATES
 
@@ -512,7 +512,7 @@ pref("security.pki.certificate_transparency.mode", 2); // [DEFAULT - Nightly Des
 pref("security.pki.certificate_transparency.disable_for_hosts", ""); // [DEFAULT]
 pref("security.pki.certificate_transparency.disable_for_spki_hashes", ""); // [DEFAULT]
 
-pref("browser.phoenix.core.status", "007");
+pref("browser.phoenix.status.core", "007");
 
 // 008 DOWNLOADS
 
@@ -534,7 +534,7 @@ pref("dom.block_download_insecure", true); // [DEFAULT]
 
 pref("browser.download.loglevel", "Error"); // [DEFAULT, HIDDEN - Android/Thunderbird]
 
-pref("browser.phoenix.core.status", "008");
+pref("browser.phoenix.status.core", "008");
 
 // 009 SAFE BROWSING
 
@@ -611,7 +611,7 @@ pref("browser.safebrowsing.reportPhishURL", "https://safebrowsing.google.com/saf
 pref("browser.safebrowsing.provider.google.reportURL", "https://transparencyreport.google.com/safe-browsing/search?url=");
 pref("browser.safebrowsing.provider.google4.reportURL", "https://transparencyreport.google.com/safe-browsing/search?url=");
 
-pref("browser.phoenix.core.status", "009");
+pref("browser.phoenix.status.core", "009");
 
 // 010 GEOLOCATION
 
@@ -638,7 +638,7 @@ pref("geo.provider.network.logging.enabled", false); // [DEFAULT - HIDDEN]
 
 pref("geo.provider.network.url", "https://api.beacondb.net/v1/geolocate");
 
-pref("browser.phoenix.core.status", "010");
+pref("browser.phoenix.status.core", "010");
 
 // 011 AI
 // https://support.mozilla.org/kb/ai-chatbot
@@ -652,7 +652,7 @@ pref("browser.ml.enable", false); // [DEFAULT - non-Nightly] - "Experimental Mac
 
 pref("extensions.formautofill.ml.experiment.enabled", false); // [HIDDEN - Thunderbird]
 
-pref("browser.phoenix.core.status", "011");
+pref("browser.phoenix.status.core", "011");
 
 // 012 WEBRTC
 
@@ -687,7 +687,7 @@ pref("privacy.webrtc.sharedTabWarning", true); // [HIDDEN - Android/Thunderbird]
 
 pref("media.peerconnection.mtransport_process", true); // [DEFAULT, HIDDEN - Android/Thunderbird]
 
-pref("browser.phoenix.core.status", "012");
+pref("browser.phoenix.status.core", "012");
 
 // 013 DISK AVOIDANCE
 
@@ -749,7 +749,7 @@ pref("permissions.memory_only", false); // [HIDDEN - DEFAULT]
 
 pref("browser.download.manager.addToRecentDocs", false);
 
-pref("browser.phoenix.core.status", "013");
+pref("browser.phoenix.status.core", "013");
 
 // 014 EXTENSIONS
 
@@ -832,7 +832,7 @@ pref("extensions.quarantineIgnoredByUser.ads@mozac.org", false, locked); // Mozi
 pref("extensions.quarantineIgnoredByUser.cookies@mozac.org", false, locked); // Mozilla Android Components - Search Telemetry...
 pref("extensions.quarantineIgnoredByUser.wikipedia@search.mozilla.org", false, locked); // Wikipedia (en) - search engine...
 
-pref("browser.phoenix.core.status", "014");
+pref("browser.phoenix.status.core", "014");
 
 // 015 PDF.js
 
@@ -862,7 +862,7 @@ pref("browser.download.open_pdf_attachments_inline", true); // [DEFAULT - Androi
 
 pref("pdfjs.sidebarViewOnLoad", 2);
 
-pref("browser.phoenix.core.status", "015");
+pref("browser.phoenix.status.core", "015");
 
 // 016 MISC. PRIVACY
 
@@ -1017,6 +1017,7 @@ pref("beacon.enabled", false);
 pref("network.http.network_error_logging.enabled", false); // [DEFAULT, HIDDEN - Thunderbird]
 
 /// Trim cross-origin referers (Like Safari)
+// https://wiki.mozilla.org/Security/Referrer
 
 pref("network.http.referer.XOriginTrimmingPolicy", 2);
 
@@ -1055,7 +1056,7 @@ pref("extensions.webcompat.smartblockEmbeds.enabled", true); // [DEFAULT - Night
 
 pref("network.cookie.CHIPS.enabled", true); // [DEFAULT - Nightly]
 
-pref("browser.phoenix.core.status", "016");
+pref("browser.phoenix.status.core", "016");
 
 // 017 FINGERPRINTING PROTECTION
 
@@ -1097,7 +1098,7 @@ pref("widget.non-native-theme.use-theme-accent", false); // [DEFAULT - non-Thund
 
 pref("javascript.options.use_fdlibm_for_sin_cos_tan", true); // [DEFAULT - non-Android/Windows/Thunderbird]
 
-pref("browser.phoenix.core.status", "017");
+pref("browser.phoenix.status.core", "017");
 
 // 018 PASSWORDS & AUTHENTICATION
 
@@ -1171,7 +1172,7 @@ pref("network.negotiate-auth.trusted-uris", ""); // [DEFAULT]
 
 pref("intl.allow-insecure-text-input", false); // [DEFAULT, HIDDEN - non-Nightly]
 
-pref("browser.phoenix.core.status", "018");
+pref("browser.phoenix.status.core", "018");
 
 // 019 ATTACK SURFACE REDUCTION
 
@@ -1192,11 +1193,6 @@ pref("javascript.options.wasm_baselinejit", false); // WASM Baseline Compiler
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1599226
 
 pref("javascript.options.jit_trustedprincipals", false); // [DEFAULT]
-
-/// If WASM (WebAssembly) is disabled, also disable it for extensions
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1576254
-
-pref("javascript.options.wasm_trustedprincipals", false);
 
 /// Disable ASM.JS (More JIT)
 // https://rh0dev.github.io/blog/2017/the-return-of-the-jit/
@@ -1225,7 +1221,7 @@ pref("gfx.font_rendering.opentype_svg.enabled", false);
 pref("dom.postMessage.sharedArrayBuffer.bypassCOOP_COEP.insecure.enabled", false); // [DEFAULT]
 pref("dom.postMessage.sharedArrayBuffer.withCOOP_COEP", false);
 
-pref("browser.phoenix.core.status", "019");
+pref("browser.phoenix.status.core", "019");
 
 // 020 MISC. SECURITY
 
@@ -1405,7 +1401,7 @@ pref("browser.tabs.remote.enforceRemoteTypeRestrictions", true); // [DEFAULT - N
 
 pref("browser.search.update", false); // [DEFAULT - Android]
 
-pref("browser.phoenix.core.status", "020");
+pref("browser.phoenix.status.core", "020");
 
 // 021 BLOCK COOKIE BANNERS
 
@@ -1416,7 +1412,7 @@ pref("cookiebanners.service.mode.privateBrowsing", 1); // [DEFAULT - Nightly And
 pref("cookiebanners.service.enableGlobalRules", true); // [DEFAULT]
 pref("cookiebanners.service.enableGlobalRules.subFrames", true); // [DEFAULT]
 
-pref("browser.phoenix.core.status", "021");
+pref("browser.phoenix.status.core", "021");
 
 // 022 MEDIA
 
@@ -1448,7 +1444,7 @@ pref("media.gmp-widevinecdm.visible", false);
 pref("media.gmp-widevinecdm-l1.enabled", false); // [DEFAULT (Except for Nightly) - HIDDEN]
 pref("media.gmp-widevinecdm-l1.visible", false); // [DEFAULT (Except for Nightly) - HIDDEN]
 
-pref("browser.phoenix.core.status", "022");
+pref("browser.phoenix.status.core", "022");
 
 // 023 UPDATES
 
@@ -1469,7 +1465,7 @@ pref("media.gmp-manager.updateEnabled", true); // [DEFAULT, HIDDEN]
 
 pref("extensions.update.notifyUser", true); // [HIDDEN]
 
-pref("browser.phoenix.core.status", "023");
+pref("browser.phoenix.status.core", "023");
 
 // 024 DEBUGGING
 
@@ -1490,7 +1486,7 @@ pref("devtools.debugger.prompt-connection", true, locked); // [DEFAULT - non-Nig
 
 pref("reader.errors.includeURLs", false); // [DEFAULT - Android/Thunderbird]
 
-pref("browser.phoenix.core.status", "024");
+pref("browser.phoenix.status.core", "024");
 
 /// 025 MISC.
 
@@ -1532,7 +1528,7 @@ pref("dom.disable_window_move_resize", true); // [DEFAULT - Android]
 
 pref("media.webspeech.synth.dont_notify_on_error", true); // [HIDDEN]
 
-pref("browser.phoenix.core.status", "025");
+pref("browser.phoenix.status.core", "025");
 
 // 026 PERFORMANCE
 // A lot of these taken from https://github.com/yokoffing/Betterfox/blob/main/Fastfox.js
@@ -1553,6 +1549,7 @@ pref("layout.css.report_errors", false); // [DEFAULT - Android] https://searchfo
 pref("media.cache_readahead_limit", 7200);
 pref("media.cache_resume_threshold", 3600);
 pref("media.memory_cache_max_size", 65536); // [Default = 8192]
+pref("media.webrtc.hw.h264.enabled", true); // [DEFAULT - Android] Enables H264 hardware decoding, helps with performance + nice for folks who disable GMP/OpenH264, also enabled by LibreWolf https://bugzilla.mozilla.org/show_bug.cgi?id=1717679
 pref("network.dnsCacheEntries", 1000); // [Default = 800 - Nightly Desktop, 400 - Non-Nightly Desktop]
 pref("network.dnsCacheExpiration", 3600); // [Default = 60]
 pref("network.dnsCacheExpirationGracePeriod", 240); // [Default = 60]
@@ -1560,7 +1557,7 @@ pref("network.http.max-persistent-connections-per-proxy", 48); // [Default = 20 
 pref("network.http.max-persistent-connections-per-server", 10); // [Default = 6]
 pref("network.http.max-urgent-start-excessive-connections-per-host", 5); // [Default = 3]
 
-pref("browser.phoenix.core.status", "026");
+pref("browser.phoenix.status.core", "026");
 
 // 027 SCROLLING
 
@@ -1569,7 +1566,7 @@ pref("apz.overscroll.enabled", true); // [DEFAULT - non-Thunderbird]
 pref("general.autoScroll", true); // [DEFAULT - non-Unix (excluding macOS)/Thunderbird, HIDDEN - Android]
 pref("general.smoothScroll", true); // [DEFAULT - non-Thunderbird]
 
-pref("browser.phoenix.core.status", "027");
+pref("browser.phoenix.status.core", "027");
 
 // 028 Personal Touch 💜
 
@@ -1591,19 +1588,9 @@ pref("ui.key.menuAccessKeyFocuses", false); // [DEFAULT - non-Windows/Linux] Pre
 pref("view_source.syntax_highlight", true); // [DEFAULT - non-Thunderbird]
 pref("view_source.wrap_long_lines", true); // [DEFAULT - Android]
 
-pref("browser.phoenix.core.status", "028");
+pref("browser.phoenix.status.core", "028");
 
-// 029 Specialized/Custom configs
-
-/// Configure the behavior of remote autoconfig files (if active)
-
-pref("autoadmin.failover_to_cached", true);
-pref("autoadmin.offline_failover", true);
-pref("autoadmin.refresh_interval", 60);
-
-pref("browser.phoenix.core.status", "029");
-
-pref("browser.phoenix.core.status", "successfully applied :D", locked);
+pref("browser.phoenix.status.core", "successfully applied :D", locked);
 
 
 //
@@ -1636,7 +1623,7 @@ pref("browser.crashReports.unsubmittedCheck.enabled", false, locked); // [DEFAUL
 pref("browser.urlbar.quicksuggest.dataCollection.enabled", false, locked); // [DEFAULT]
 pref("browser.urlbar.quicksuggest.onboardingDialogChoice", "reject_2", locked); // [HIDDEN] https://searchfox.org/mozilla-central/source/browser/components/urlbar/docs/firefox-suggest-telemetry.rst https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/docs/data/environment.rst https://searchfox.org/mozilla-central/source/browser/components/urlbar/tests/quicksuggest/browser/browser_quicksuggest_onboardingDialog.js
 
-pref("browser.phoenix.desktop.common.status", "001");
+pref("browser.phoenix.status.desktop.common", "001");
 
 // 002 MOZILLA CRAP™
 
@@ -1650,7 +1637,7 @@ pref("extensions.ui.lastCategory", "addons://list/extension"); // [HIDDEN] Ensur
 pref("permissions.manager.defaultsUrl", "", locked);
 pref("services.sync.addons.trustedSourceHostnames", "");
 
-pref("browser.phoenix.desktop.common.status", "002");
+pref("browser.phoenix.status.desktop.common", "002");
 
 // 003 CERTIFICATES
 
@@ -1673,7 +1660,7 @@ pref("security.cert_pinning.enforcement_level", 2, locked);
 pref("security.certerrors.mitm.auto_enable_enterprise_roots", false, locked);
 pref("security.enterprise_roots.enabled", false, locked);
 
-pref("browser.phoenix.desktop.common.status", "003");
+pref("browser.phoenix.status.desktop.common", "003");
 
 // 004 GEOLOCATION [NO-OSX]
 
@@ -1681,7 +1668,7 @@ pref("browser.phoenix.desktop.common.status", "003");
 
 pref("geo.provider.ms-windows-location", false); // Disable Microsoft Location Services for Windows users [NO-OSX]
 
-pref("browser.phoenix.desktop.common.status", "004"); // [NO-OSX]
+pref("browser.phoenix.status.desktop.common", "004"); // [NO-OSX]
 
 // 005 DISK AVOIDANCE
 
@@ -1698,7 +1685,7 @@ pref("privacy.sanitize.timeSpan", 0);
 
 pref("toolkit.winRegisterApplicationRestart", false); // [NO-OSX]
 
-pref("browser.phoenix.desktop.common.status", "005");
+pref("browser.phoenix.status.desktop.common", "005");
 
 // 006 EXTENSIONS
 
@@ -1711,7 +1698,7 @@ pref("xpinstall.whitelist.required", true, locked); // [DEFAULT]
 
 pref("extensions.getAddons.showPane", true); // [DEFAULT]
 
-pref("browser.phoenix.desktop.common.status", "006");
+pref("browser.phoenix.status.desktop.common", "006");
 
 // 007 MISC. PRIVACY
 
@@ -1740,7 +1727,7 @@ pref("services.sync.sendVersionInfo", false);
 
 pref("autoadmin.append_emailaddr", false, locked); // [HIDDEN]
 
-pref("browser.phoenix.desktop.common.status", "007");
+pref("browser.phoenix.status.desktop.common", "007");
 
 // 008 ATTACK SURFACE REDUCTION
 
@@ -1749,7 +1736,7 @@ pref("browser.phoenix.desktop.common.status", "007");
 
 pref("permissions.default.xr", 2); // [HIDDEN on Thunderbird]
 
-pref("browser.phoenix.desktop.common.status", "008");
+pref("browser.phoenix.status.desktop.common", "008");
 
 // 009 MISC. SECURITY
 
@@ -1772,7 +1759,7 @@ pref("browser.gnome-search-provider.enabled", false); // [HIDDEN] [NO-OSX]
 
 pref("general.config.sandbox_enabled", true, locked);
 
-pref("browser.phoenix.desktop.common.status", "009");
+pref("browser.phoenix.status.desktop.common", "009");
 
 // 010 MEDIA
 
@@ -1806,7 +1793,7 @@ pref("media.wmf.media-engine.enabled", 0); // [NO-OSX]
 
 pref("userContent.player.click_to_play", true); // [HIDDEN] 
 
-pref("browser.phoenix.desktop.common.status", "010");
+pref("browser.phoenix.status.desktop.common", "010");
 
 // 011 UPDATES
 
@@ -1816,7 +1803,7 @@ pref("app.update.badgeWaitTime", 0); // Immediately show badge on hamburger menu
 pref("app.update.notifyDuringDownload", true); // Ensure that users are notified when an update is downloaded
 pref("app.update.promptWaitTime", 3600); // Decrease time between update prompts, default is very generous...
 
-pref("browser.phoenix.desktop.common.status", "011");
+pref("browser.phoenix.status.desktop.common", "011");
 
 // 012 DEBUGGING
 
@@ -1824,7 +1811,7 @@ pref("browser.phoenix.desktop.common.status", "011");
 
 pref("devtools.inspector.remote", false, locked); // [DEFAULT]
 
-pref("browser.phoenix.desktop.common.status", "012");
+pref("browser.phoenix.status.desktop.common", "012");
 
 // 013 MISC.
 
@@ -1837,7 +1824,7 @@ pref("privacy.userContext.enabled", true);
 
 pref("devtools.aboutdebugging.showHiddenAddons", true, locked);
 
-pref("browser.phoenix.desktop.common.status", "013");
+pref("browser.phoenix.status.desktop.common", "013");
 
 // 014 PERFORMANCE
 // A lot of these taken from https://github.com/yokoffing/Betterfox/blob/main/Fastfox.js
@@ -1853,7 +1840,7 @@ pref("ui.panelAnimations", 0); // [HIDDEN]
 pref("ui.prefersReducedMotion", 1); // [HIDDEN] 
 pref("ui.swipeAnimationEnabled", 0); // [HIDDEN]
 
-pref("browser.phoenix.desktop.common.status", "014");
+pref("browser.phoenix.status.desktop.common", "014");
 
 // 015 Personal Touch 💜
 
@@ -1896,9 +1883,19 @@ pref("ui.prefersReducedTransparency", 0); // [DEFAULT, HIDDEN]
 pref("ui.scrollToClick", 1); // [HIDDEN]
 pref("ui.useAccessibilityTheme", 0); // [DEFAULT, HIDDEN]
 
-pref("browser.phoenix.desktop.common.status", "015");
+pref("browser.phoenix.status.desktop.common", "015");
 
-pref("browser.phoenix.desktop.common.status", "successfully applied :D", locked);
+// 016 Specialized/Custom configs
+
+/// Configure the behavior of remote autoconfig files (if active)
+
+pref("autoadmin.failover_to_cached", true);
+pref("autoadmin.offline_failover", true);
+pref("autoadmin.refresh_interval", 60);
+
+pref("browser.phoenix.status.desktop.common", "016");
+
+pref("browser.phoenix.status.desktop.common", "successfully applied :D", locked);
 
 //
 
@@ -1924,7 +1921,7 @@ pref("browser.phoenix.desktop.common.status", "successfully applied :D", locked)
 
 pref("webgl.disabled", true);
 
-pref("browser.phoenix.extended.core.status", "001");
+pref("browser.phoenix.status.extended", "001");
 
 // 002 WEBRTC
 // This will likely break WebRTC...
@@ -1939,7 +1936,7 @@ pref("media.peerconnection.ice.no_host", true);
 // https://gitlab.torproject.org/tpo/applications/mullvad-browser/-/issues/40#note_2884663
 pref("media.peerconnection.ice.relay_only", true);
 
-pref("browser.phoenix.extended.core.status", "002");
+pref("browser.phoenix.status.extended", "002");
 
 // 003 MISC. PRIVACY
 
@@ -1952,10 +1949,11 @@ pref("privacy.restrict3rdpartystorage.heuristic.redirect", false); // [DEFAULT -
 pref("privacy.restrict3rdpartystorage.heuristic.window_open", false); // [DEFAULT - Android]
 
 /// Only send cross-origin referers if hosts match
+// https://wiki.mozilla.org/Security/Referrer
 
 pref("network.http.referer.XOriginPolicy", 2);
 
-pref("browser.phoenix.extended.core.status", "003");
+pref("browser.phoenix.status.extended", "003");
 
 // 004 ATTACK SURFACE REDUCTION
 
@@ -1964,7 +1962,7 @@ pref("browser.phoenix.extended.core.status", "003");
 
 pref("javascript.options.wasm", false);
 
-pref("browser.phoenix.extended.core.status", "004");
+pref("browser.phoenix.status.extended", "004");
 
 // 005 MISC.
 
@@ -1977,9 +1975,9 @@ pref("browser.meta_refresh_when_inactive.disabled", true); // [DEFAULT - Android
 
 pref("media.autoplay.blocking_policy", 2); // [Default = 0]
 
-pref("browser.phoenix.extended.core.status", "005");
+pref("browser.phoenix.status.extended", "005");
 
-pref("browser.phoenix.extended.core.status", "successfully applied :D", locked);
+pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 //
 
@@ -2004,7 +2002,7 @@ pref("browser.phoenix.extended.core.status", "successfully applied :D", locked);
 
 pref("privacy.resistFingerprinting.letterboxing", true);
 
-pref("browser.phoenix.extended.desktop.common.status", "successfully applied :D", locked);
+pref("browser.phoenix.status.extended.desktop.common", "successfully applied :D", locked);
 
 //
 // The Phoenix shall be followed by a Dove: one of great strength and great beauty, to help carry out its conquest.
@@ -2023,7 +2021,7 @@ pref("browser.phoenix.extended.desktop.common.status", "successfully applied :D"
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.02.18.2", locked);
+pref("mail.dove.version", "2025.02.21.1", locked);
 
 pref("mail.dove.status", "000");
 
