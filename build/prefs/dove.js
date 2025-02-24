@@ -83,6 +83,13 @@ pref("app.releaseNotesURL.aboutDialog", "https://live.thunderbird.net/%APP%/rele
 pref("app.releaseNotesURL.prompt", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
 pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%");
 
+/// Kill Gecko Media Plugins
+
+pref("media.gmp-gmpopenh264.enabled", false);
+pref("media.gmp-gmpopenh264.provider.enabled", false);
+pref("media.gmp-gmpopenh264.visible", false);
+pref("media.gmp-provider.enabled", false);
+
 /// Disable Firefox Translations
 // The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings, meaning it's useless :/
 
@@ -392,6 +399,23 @@ pref("browser.download.manager.behavior", 1); // [HIDDEN]
 pref("mailnews.display.disallow_mime_handlers", 3);
 pref("rss.display.disallow_mime_handlers", 3);
 
+/// Disable SVG
+// https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
+
+pref("svg.disabled", true);
+
+/// Disable WebRTC
+// We already take care of privacy concerns here; this is for attack surface reduction...
+// https://x.com/GrapheneOS/status/1728921946396725618
+
+pref("media.peerconnection.enabled", false);
+
+/// If WASM (WebAssembly) is disabled (which we do by default), also disable it for extensions
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1576254
+// Note: This breaks Firefox Translations - but that's currently broken on Thunderbird anyways, so we don't need to worry about it
+
+pref("javascript.options.wasm_trustedprincipals", false);
+
 pref("mail.dove.status", "009");
 
 // 010 MISC.
@@ -429,13 +453,6 @@ pref("rss.message.loadWebPageOnSelect", 0);
 
 pref("calendar.extract.service.enabled", false); // [DEFAULT]
 
-/// Kill Gecko Media Plugins
-
-pref("media.gmp-gmpopenh264.enabled", false);
-pref("media.gmp-gmpopenh264.provider.enabled", false);
-pref("media.gmp-gmpopenh264.visible", false);
-pref("media.gmp-provider.enabled", false);
-
 /// Always allow installing "incompatible" add-ons - REQUIRED FOR UBLOCK ORIGIN
 
 pref("extensions.strictCompatibility", false, locked);
@@ -448,17 +465,6 @@ pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true);
 /// Block DKIM Verifier from accessing quarantined domains...
 
 pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false);
-
-/// Disable SVG
-// https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
-
-pref("svg.disabled", true);
-
-/// Disable WebRTC
-// We already take care of privacy concerns here; this is for attack surface reduction...
-// https://x.com/GrapheneOS/status/1728921946396725618
-
-pref("media.peerconnection.enabled", false);
 
 /// Prevent status bar spoofing
 // https://searchfox.org/comm-central/source/mail/app/profile/all-thunderbird.js#542
