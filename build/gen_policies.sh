@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 jq -s '.[0] * .[1]' "$phoenix_dir/build/policies/policies-core.json" "$phoenix_dir/build/policies/blocklist-spec.json" > build/policies/temp1.json
 

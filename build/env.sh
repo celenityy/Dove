@@ -1,7 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Where Phoenix is located
-export phoenix_dir=~/Projects/Phoenix
+if [ -z ${phoenix_dir+x} ]; then 
+    # default value if unset
+    export phoenix_dir=~/Projects/Phoenix
+fi
 
 # Version of Dove you'd like to build
 export dove_version=2025.02.23.1

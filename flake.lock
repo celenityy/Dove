@@ -1,0 +1,44 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1740126099,
+        "narHash": "sha256-ozoOtE2hGsqh4XkTJFsrTkNxkRgShxpQxDynaPZUGxk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "32fb99ba93fea2798be0e997ea331dd78167f814",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "phoenix": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740203053,
+        "narHash": "sha256-whT48V15MUHFgr8VWsIkjy7ADKp8IMcda9VO3ENLQAU=",
+        "ref": "refs/heads/pages",
+        "rev": "be7b02ffc0cd49a936da6f3a18a4427ed25d51ec",
+        "revCount": 965,
+        "type": "git",
+        "url": "https://codeberg.org/celenity/Phoenix"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/celenity/Phoenix"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "phoenix": "phoenix"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

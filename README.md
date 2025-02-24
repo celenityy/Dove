@@ -56,6 +56,7 @@ Dove currently provides official support for:
 * **Arch Linux**
 * **Debian (& derivatives...)**
 * **Fedora Linux** *(39-41)*
+* **NixOS**
 * **Flatpak** *(System)*
 * **macOS**
 * **Ubuntu (& derivatives...)**
@@ -68,7 +69,7 @@ Dove currently provides official support for:
 
 Other platforms have unfortunately proven difficult to support, though progress **is** being made. Contributions are always welcome and appreciated.
 
-**If your platform is supported *(with the exception of macOS)*, simply run the following command in your terminal to install Dove:**
+**If your platform is supported *(with the exception of NixOS and macOS)*, simply run the following command in your terminal to install Dove:**
 
 ```sh
 sudo bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/install.sh 2>/dev/null)"
@@ -80,7 +81,44 @@ sudo bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/ins
 bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/installer_scripts/macos_install.sh 2>/dev/null)"
 ```
 
-**If you would like to use Dove on an unsupported platform, see [📛Manual Installation](#manual-installation).**
+## NixOS
+
+NixOS is supported for [flake-based configurations](https://wiki.nixos.org/wiki/Flakes#Using_nix_flakes_with_NixOS):
+1. Add Dove and Phoenix repositories to your flake inputs (Dove is based on Phoenix configs).
+1. Add `dove` as one of the arguments to your output function.
+1. Add the Dove NixOS Module to your configuration.
+```nix
+{
+  inputs = {
+    # Note that this assumes you have a flake-input called nixpkgs,
+    # which is often the case. If you've named it something else,
+    # you'll need to change the `nixpkgs` below.
+    dove = {
+      url = "git+https://codeberg.org/celenity/Dove";
+      inputs.nixpkgs.follows = "nixpkgs";
+	  inputs.phoenix.follows = "phoenix";
+    };
+	phoenix = {
+      url = "git+https://codeberg.org/celenity/Phoenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+  # Add the `dove` argument to your output function, as below:
+  outputs = {nixpkgs, dove, ...}: {
+	# The configuration here is an example; it will look slightly different
+	# based on your machine name and architecture.
+    nixosConfigurations.your-box = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        # This is the important part -- add this line to your module list!
+        dove.nixosModules.default
+      ];
+	};
+  };
+}
+```
+
+## **If you would like to use Dove on an unsupported platform, see [📛Manual Installation](#manual-installation).**
 
 ___
 
