@@ -323,6 +323,15 @@ pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColor
 pref("privacy.fingerprintingProtection.granularOverrides", ""); // [DEFAULT]
 pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
 
+/// Freeze user agent to protect against fingerprinting
+// As explained above, we can't use the standard RFP/FPP 'HttpUserAgent' & 'NavigatorUserAgent` targets, as Thunderbird lies and pretends to be Firefox, which causes breakage and unexpected issues
+// Until Thunderbird fixes this upstream, we'll spoof it ourselves
+// This matches what Firefox's RFP/FPP targets use (only difference being we switch out Firefox for Thunderbird)
+// We'll keep platform always spoofed to Windows - since we block JS by default, can be useful (and I can't see this causing weird issues like we see on Firefox...)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1950775
+
+pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Thunderbird/128.0");
+
 /// Strip referers, but allow toggling per session, since they may be needed on rare occasions.
 
 pref("network.http.referer.XOriginPolicy", 2, sticky);
