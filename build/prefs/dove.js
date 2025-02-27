@@ -351,6 +351,10 @@ pref("chat.prpls.prpl-gtalk.disable", true); // [DEFAULT]
 pref("chat.prpls.prpl-twitter.disable", true); // [DEFAULT]
 pref("chat.prpls.prpl-yahoo.disable", true); // [DEFAULT]
 
+/// Prompt users on launch before going online
+
+pref("offline.startup_state", 1);
+
 pref("mail.dove.status", "008");
 
 // 009 MISC. SECURITY
