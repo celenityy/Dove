@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 python3 build/convert.py prefs/dove.js build/configs/dove-spec.cfg
 
