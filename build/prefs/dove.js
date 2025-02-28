@@ -83,11 +83,8 @@ pref("app.releaseNotesURL.aboutDialog", "https://live.thunderbird.net/%APP%/rele
 pref("app.releaseNotesURL.prompt", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
 pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%");
 
-/// Kill Gecko Media Plugins
+/// Disable Gecko Media Plugins
 
-pref("media.gmp-gmpopenh264.enabled", false);
-pref("media.gmp-gmpopenh264.provider.enabled", false);
-pref("media.gmp-gmpopenh264.visible", false);
 pref("media.gmp-provider.enabled", false);
 
 /// Disable Firefox Translations
