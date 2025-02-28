@@ -353,6 +353,10 @@ pref("chat.prpls.prpl-yahoo.disable", true); // [DEFAULT]
 
 pref("offline.startup_state", 1);
 
+/// Remove default Google Groups link
+
+pref("mailnews.messageid_browser.url", "");
+
 pref("mail.dove.status", "008");
 
 // 009 MISC. SECURITY
