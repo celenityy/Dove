@@ -436,6 +436,20 @@ pref("media.ffmpeg.vaapi.enabled", false); // [DEFAULT]
 pref("media.rdd-ffmpeg.enabled", false);
 pref("media.utility-ffmpeg.enabled", false);
 
+/// Disable insecure NTLMv1
+// Fedora's Thunderbird package overrides this to `true`... :/
+// https://www.janbambas.cz/ntlm-v1-and-firefox/
+// https://bugzilla.mozilla.org/show_bug.cgi?id=828183
+// https://bugzilla.redhat.com/show_bug.cgi?id=1110291
+
+pref("network.negotiate-auth.allow-insecure-ntlm-v1", false); // [DEFAULT, HIDDEN]
+
+/// Ensure we're using mozilla::pkix certificate verification
+// Fedora's Thunderbird package overrides this to `false`... :/
+// https://wiki.mozilla.org/SecurityEngineering/mozpkix-testing
+
+pref("security.use_mozillapkix_verification", true); // [DEFAULT, HIDDEN]
+
 pref("mail.dove.status", "009");
 
 // 010 MISC.
