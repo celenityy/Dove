@@ -4,7 +4,7 @@
       "Extensions": {
         "uBlock0@raymondhill.net": {
           "adminSettings": {
-            "assetsBootstrapLocation": "https://codeberg.org/celenity/Phoenix/raw/commit/ccaf778427b3f8c8b02e99f9bfc565adc7ed0633/uBlock/assets.json",
+            "assetsBootstrapLocation": "https://codeberg.org/celenity/Phoenix/raw/branch/pages/uBlock/assets.json",
             "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true\nno-scripting: * true\nno-scripting: abrahamjuliot.github.io false\nno-scripting: accounts.google.com false\nno-scripting: addons.thunderbird.net false\nno-scripting: arkenfox.github.io false\nno-scripting: browserleaks.com false\nno-scripting: deviceinfo.me false\nno-scripting: earthlng.github.io false\nno-scripting: login.aol.com false\nno-scripting: login.live.com false\nno-scripting: login.microsoftonline.com false\nno-scripting: login.yahoo.net false\nno-scripting: okta.com false\nno-scripting: permission.site false\nno-scripting: www.google.com false"
           },
           "advancedSettings": [
@@ -169,6 +169,10 @@
     },
     "SSLVersionMin": "tls1.2",
     "ExtensionSettings": {
+      "dynamic-probe-telemetry-extension@mozilla.com": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "Mozilla 'Dynamic Probe Telemetry' https://github.com/mozilla-extensions/dynamic-probe-telemetry-extension"
+      },
       "bravesearch@celenity.dev": {
         "installation_mode": "blocked",
         "blocked_install_message": "Deprecated"
@@ -1059,10 +1063,34 @@
           "https://github.com/gorhill/uBlock/releases",
           "https://github.com/gorhill/uBlock/releases/*",
           "https://github.com/gorhill/uBlock/releases*",
+          "https://github.com/mozilla-extensions/aboutsync/releases",
+          "https://github.com/mozilla-extensions/aboutsync/releases/*",
+          "https://github.com/mozilla-extensions/aboutsync/releases*",
+          "https://github.com/mozilla-extensions/fingerprinting-protection-debugger/releases",
+          "https://github.com/mozilla-extensions/fingerprinting-protection-debugger/releases/*",
+          "https://github.com/mozilla-extensions/fingerprinting-protection-debugger/releases*",
+          "https://github.com/mozilla-extensions/nimbus-devtools/releases",
+          "https://github.com/mozilla-extensions/nimbus-devtools/releases/*",
+          "https://github.com/mozilla-extensions/nimbus-devtools/releases*",
+          "https://github.com/mozilla-extensions/normandy-devtools/releases",
+          "https://github.com/mozilla-extensions/normandy-devtools/releases/*",
+          "https://github.com/mozilla-extensions/normandy-devtools/releases*",
+          "https://github.com/mozilla-extensions/remote-settings-devtools/releases",
+          "https://github.com/mozilla-extensions/remote-settings-devtools/releases/*",
+          "https://github.com/mozilla-extensions/remote-settings-devtools/releases*",
+          "https://github.com/mozilla-extensions/searchengine-devtools/releases",
+          "https://github.com/mozilla-extensions/searchengine-devtools/releases/*",
+          "https://github.com/mozilla-extensions/searchengine-devtools/releases*",
+          "https://objects.githubusercontent.com/github-production-release-asset-2e65be/134775419/*",
+          "https://objects.githubusercontent.com/github-production-release-asset-2e65be/232824822/*",
           "https://objects.githubusercontent.com/github-production-release-asset-2e65be/26682105/*",
           "https://objects.githubusercontent.com/github-production-release-asset-2e65be/33263118/*",
           "https://objects.githubusercontent.com/github-production-release-asset-2e65be/404295988/*",
           "https://objects.githubusercontent.com/github-production-release-asset-2e65be/46041549/*",
+          "https://objects.githubusercontent.com/github-production-release-asset-2e65be/54078039/*",
+          "https://objects.githubusercontent.com/github-production-release-asset-2e65be/671874733/*",
+          "https://objects.githubusercontent.com/github-production-release-asset-2e65be/811220552/*",
+          "https://objects.githubusercontent.com/github-production-release-asset-2e65be/81214532/*",
           "https://objects.githubusercontent.com/github-production-release-asset-2e65be/873923787/*",
           "https://releases.mozilla.org/pub/labs/*",
           "https://releases.mozilla.org/pub/system-addons/*",
