@@ -83,10 +83,6 @@ pref("app.releaseNotesURL.aboutDialog", "https://live.thunderbird.net/%APP%/rele
 pref("app.releaseNotesURL.prompt", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
 pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%");
 
-/// Disable Gecko Media Plugins
-
-pref("media.gmp-provider.enabled", false);
-
 /// Disable Firefox Translations
 // The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings, meaning it's useless :/
 
@@ -426,6 +422,19 @@ pref("media.peerconnection.enabled", false);
 // Note: This breaks Firefox Translations - but that's currently broken on Thunderbird anyways, so we don't need to worry about it
 
 pref("javascript.options.wasm_trustedprincipals", false);
+
+/// Disable Gecko Media Plugins
+
+pref("media.gmp-provider.enabled", false);
+
+/// Disable FFmpeg
+// https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ffmpeg
+
+pref("media.ffmpeg.enabled", false);
+pref("media.ffmpeg.encoder.enabled", false); // [DEFAULT]
+pref("media.ffmpeg.vaapi.enabled", false); // [DEFAULT]
+pref("media.rdd-ffmpeg.enabled", false);
+pref("media.utility-ffmpeg.enabled", false);
 
 pref("mail.dove.status", "009");
 
