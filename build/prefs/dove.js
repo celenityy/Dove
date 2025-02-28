@@ -325,10 +325,6 @@ pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
 
 pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Thunderbird/128.0"); // [HIDDEN]
 
-/// Strip referers, but allow toggling per session, since they may be needed on rare occasions.
-
-pref("network.http.referer.XOriginPolicy", 2, sticky);
-
 /// Disable macOS Spotlight & Windows file indexing email by default
 
 pref("mail.spotlight.enable", false); // [DEFAULT]
