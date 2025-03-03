@@ -1342,8 +1342,8 @@
     "js": {
         "content": "filters",
         "group": "multipurpose",
-        "parent": "🛡️ Block JavaScript",
-        "title": "🛡️ Block JavaScript",
+        "parent": "🛡️ Block JS",
+        "title": "🛡️ Block JS",
         "tags": "privacy security",
         "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/block-js.txt",
         "supportURL": "https://dove.celenity.dev/issues",
@@ -1352,8 +1352,8 @@
     "js-unbreak": {
         "content": "filters",
         "group": "multipurpose",
-        "parent": "🛡️ Block JavaScript",
-        "title": "🛡️ Block JavaScript - Unbreak",
+        "parent": "🛡️ Block JS",
+        "title": "🛡️ Block JS - Unbreak",
         "tags": "privacy security",
         "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/unbreak-js.txt",
         "supportURL": "https://dove.celenity.dev/issues",
@@ -1362,9 +1362,9 @@
     "js-testing-unbreak": {
         "content": "filters",
         "group": "multipurpose",
-        "parent": "🛡️ Block JavaScript",
+        "parent": "🛡️ Block JS",
         "off": true,
-        "title": "🛡️ Block JavaScript - Unbreak (Testing)",
+        "title": "🛡️ Block JS - Unbreak (Testing)",
         "tags": "privacy security",
         "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/unbreak-js-testing.txt",
         "supportURL": "https://dove.celenity.dev/issues",
