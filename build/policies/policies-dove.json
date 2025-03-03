@@ -4,7 +4,7 @@
             "Extensions": {
                 "uBlock0@raymondhill.net": {
                     "adminSettings": {
-                        "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true\nno-scripting: * true\nno-scripting: abrahamjuliot.github.io false\nno-scripting: accounts.google.com false\nno-scripting: arkenfox.github.io false\nno-scripting: browserleaks.com false\nno-scripting: deviceinfo.me false\nno-scripting: earthlng.github.io false\nno-scripting: login.aol.com false\nno-scripting: login.live.com false\nno-scripting: login.microsoftonline.com false\nno-scripting: login.yahoo.net false\nno-scripting: okta.com false\nno-scripting: permission.site false\nno-scripting: www.google.com false"
+                        "assetsBootstrapLocation": "https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/assets.json"
                     }
                 }
             }
