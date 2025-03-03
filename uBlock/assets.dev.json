@@ -1345,7 +1345,7 @@
         "parent": "🛡️ Block JavaScript",
         "title": "🛡️ Block JavaScript",
         "tags": "privacy security",
-        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/block-js.txt",
+        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/dev/uBlock/block-js.txt",
         "supportURL": "https://dove.celenity.dev/issues",
         "instructionURL": "https://dove.celenity.dev"
     },
@@ -1355,7 +1355,7 @@
         "parent": "🛡️ Block JavaScript",
         "title": "🛡️ Block JavaScript - Unbreak",
         "tags": "privacy security",
-        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/unbreak-js.txt",
+        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/dev/uBlock/unbreak-js.txt",
         "supportURL": "https://dove.celenity.dev/issues",
         "instructionURL": "https://dove.celenity.dev"
     },
@@ -1366,7 +1366,7 @@
         "off": true,
         "title": "🛡️ Block JavaScript - Unbreak (Testing)",
         "tags": "privacy security",
-        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/unbreak-js-testing.txt",
+        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/dev/uBlock/unbreak-js-testing.txt",
         "supportURL": "https://dove.celenity.dev/issues",
         "instructionURL": "https://dove.celenity.dev"
     }
