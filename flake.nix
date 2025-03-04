@@ -56,6 +56,8 @@
                   }
                 ];
                 environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/prefs/dove.js";
+                programs.thunderbird.policies =
+                  (builtins.fromJSON (builtins.readFile "${pkgs.dove}/policies.json")).policies;
                 nixpkgs.overlays = [
                   self.overlays.default
                   (
