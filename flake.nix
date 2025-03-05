@@ -35,15 +35,12 @@
                 // {
                   default = true;
                 };
-              package = lib.mkOption {
-                type = lib.types.package;
-                default = self.packages.${pkgs.system}.dove;
-                description = "The Dove package to use.";
-                defaultText = lib.literalExpression "dove";
-              };
               thunderbirdPackages = lib.mkOption {
-                type = lib.types.listOf lib.types.string;
-                default = [ "thunderbird" ];
+                type = lib.types.listOf lib.types.str;
+                default = [
+                  "thunderbird"
+                  "thunderbird-latest"
+                ];
                 description = "The name of Thunderbird packages of current pkgs to patch with dove config and policy.";
               };
             };
@@ -58,20 +55,15 @@
                     message = "Dove module has not been ported to nix-darwin yet. Contributions welcomed.";
                   }
                 ];
-                environment.etc."thunderbird/defaults/pref/dove.js".source = "${cfg.package}/prefs/dove.js";
+                environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/prefs/dove.js";
+                programs.thunderbird.policies =
+                  (builtins.fromJSON (builtins.readFile "${pkgs.dove}/policies.json")).policies;
                 nixpkgs.overlays = [
+                  self.overlays.default
                   (
-                    self: super:
+                    final: prev:
                     builtins.listToAttrs (
-                      map (
-                        p:
-                        lib.nameValuePair p (
-                          super.${p}.override {
-                            extraPoliciesFiles = [ "${cfg.package}/policies.json" ];
-                            extraPrefsFiles = [ "${cfg.package}/dove.cfg" ];
-                          }
-                        )
-                      ) cfg.thunderbirdPackages
+                      map (p: lib.nameValuePair p (final.withDove prev.${p})) cfg.thunderbirdPackages
                     )
                   )
                 ];
@@ -79,55 +71,77 @@
           };
       };
 
-      packages = forAllSystems (system: rec {
-        default = dove;
-        dove = nixpkgs.legacyPackages.${system}.callPackage (
-          {
-            stdenvNoCC,
-            python3,
-            jq,
-            zip,
-            ...
-          }:
-          stdenvNoCC.mkDerivation {
-            name = "dove";
-            src = ./.;
-            nativeBuildInputs = [
-              python3
-              jq
-              zip
-            ];
-            buildPhase = ''
-              runHook preBuild
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
+        in
+        rec {
+          default = dove;
+          inherit (pkgs) dove;
+          thunderbird = pkgs.withDove pkgs.thunderbird;
+          thunderbird-latest = pkgs.withDove pkgs.thunderbird-latest;
+        }
+      );
 
-              export phoenix_dir=${phoenix}
-              patchShebangs ./build/*.sh
-              ./build/build.sh
+      overlays = {
+        default = final: prev: {
+          dove = final.callPackage (
+            {
+              stdenvNoCC,
+              python3,
+              jq,
+              zip,
+              ...
+            }:
+            stdenvNoCC.mkDerivation {
+              name = "dove";
+              src = ./.;
+              nativeBuildInputs = [
+                python3
+                jq
+                zip
+              ];
+              buildPhase = ''
+                runHook preBuild
 
-              runHook postBuild
-            '';
-            installPhase = ''
-              runHook preInstall
+                export phoenix_dir=${phoenix}
+                patchShebangs ./build/*.sh
+                ./build/build.sh
+                sed -i '/general.config.filename/d' prefs/dove.js
 
-              mkdir $out
-              ${
-                if stdenvNoCC.isDarwin then
-                  ''
-                    cp $src/macos/* $out/
-                  ''
-                else
-                  ''
-                    cp -r $src/policies.json $src/dove.cfg $src/prefs $out/
-                  ''
-              }
-              install -Dm644 $src/README.md $out/share/doc/dove/README.md
-              install -Dm644 $src/COPYING $out/share/doc/dove/COPYING
+                runHook postBuild
+              '';
+              installPhase = ''
+                runHook preInstall
 
-              runHook postInstall
-            '';
-          }
-        ) { };
-      });
+                mkdir $out
+                ${
+                  if stdenvNoCC.isDarwin then
+                    ''
+                      cp macos/* $out/
+                    ''
+                  else
+                    ''
+                      cp -r policies.json dove.cfg prefs $out/
+                    ''
+                }
+                install -Dm644 README.md $out/share/doc/dove/README.md
+                install -Dm644 COPYING $out/share/doc/dove/COPYING
+
+                runHook postInstall
+              '';
+            }
+          ) { };
+
+          withDove =
+            thunderbirdPackage:
+            thunderbirdPackage.override {
+              extraPoliciesFiles = [ "${final.dove}/policies.json" ];
+              extraPrefsFiles = [ "${final.dove}/dove.cfg" ];
+            };
+        };
+      };
 
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
     };
