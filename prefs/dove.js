@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.02.28.1", locked);
+pref("browser.phoenix.version", "2025.03.05.1", locked);
 
 // 000 ABOUT:CONFIG
 
@@ -297,9 +297,9 @@ pref("dom.security.https_first", true);
 pref("dom.security.https_first_for_custom_ports", true); // [DEFAULT, DEFENSE IN DEPTH]
 pref("dom.security.https_first_pbm", true); // [DEFAULT]
 pref("dom.security.https_first_schemeless", true);
-pref("dom.security.https_only_mode", true, locked);
+pref("dom.security.https_only_mode", true);
 pref("dom.security.https_only_mode.upgrade_local", true);
-pref("dom.security.https_only_mode_pbm", true, locked);
+pref("dom.security.https_only_mode_pbm", true);
 pref("security.mixed_content.block_active_content", true);
 pref("security.mixed_content.block_display_content", true);
 pref("security.mixed_content.block_object_subrequest", true);
@@ -322,7 +322,11 @@ pref("dom.security.https_only_mode_error_page_user_suggestions", true);
 pref("security.insecure_connection_text.enabled", true);
 pref("security.insecure_connection_text.pbmode.enabled", true);
 pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
-pref("security.warn_submit_secure_to_insecure", true); // [DEFAULT] Warn when submitting a form from HTTP to HTTPS
+
+/// Always warn when submitting a form from HTTP to HTTPS, even on local IP addresses
+
+pref("security.insecure_field_warning.ignore_local_ip_address", false);
+pref("security.warn_submit_secure_to_insecure", true); // [DEFAULT]
 
 /// Show detailed information on insecure warning pages
 
@@ -734,9 +738,17 @@ pref("privacy.clearOnShutdown.cache", true);
 pref("privacy.clearOnShutdown.downloads", true); // [HIDDEN - Android/Thunderbird]
 pref("privacy.clearOnShutdown.history", true); // [HIDDEN - Android/Thunderbird]
 pref("privacy.clearOnShutdown.sessions", true); // [HIDDEN - Android/Thunderbird]
-pref("privacy.clearOnShutdown_v2.cache", true);
+pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", true); // [DEFAULT, HIDDEN - Android/Thunderbird]
+pref("privacy.clearOnShutdown_v2.cache", true); // [DEFAULT]
+pref("privacy.clearOnShutdown_v2.downloads", true); // [HIDDEN]
+pref("privacy.clearOnShutdown_v2.formdata", true); // [HIDDEN - Android/Thunderbird]
 pref("privacy.clearOnShutdown_v2.historyFormDataAndDownloads", true); // [HIDDEN - Android/Thunderbird]
 pref("privacy.sanitize.sanitizeOnShutdown", true);
+
+/// Ensure we're not clearing passwords & site settings by default
+
+pref("privacy.clearOnShutdown.siteSettings", false); // [DEFAULT, HIDDEN - Android/Thunderbird]
+pref("privacy.clearOnShutdown_v2.siteSettings", false); // [DEFAULT, HIDDEN - Android/Thunderbird]
 
 /// Prevent logging blocked domains in about:protections
 
@@ -837,32 +849,11 @@ pref("extensions.quarantineIgnoredByUser.{b86e4813-687a-43e6-ab65-0bde4ab75758}"
 
 pref("extensions.quarantineIgnoredByUser.{d19a89b9-76c1-4a61-bcd4-49e8de916403}", true);
 
-/// Block our search 'extensions' from accessing quarantined domains...
-
-pref("extensions.quarantineIgnoredByUser.ddg@celenity.dev", false, locked); // DuckDuckGo
-pref("extensions.quarantineIgnoredByUser.duckduckgo-html@celenity.dev", false, locked); // DuckDuckGo HTML
-pref("extensions.quarantineIgnoredByUser.duckduckgo-lite@celenity.dev", false, locked); // DuckDuckGo Lite
-pref("extensions.quarantineIgnoredByUser.ecosia@celenity.dev", false, locked); // Ecosia
-pref("extensions.quarantineIgnoredByUser.mojeek@celenity.dev", false, locked); // Mojeek
-pref("extensions.quarantineIgnoredByUser.no-search@celenity.dev", false, locked); // No Search
-pref("extensions.quarantineIgnoredByUser.qwant@celenity.dev", false, locked); // Qwant
-pref("extensions.quarantineIgnoredByUser.qwant-junior@celenity.dev", false, locked); // Qwant Junior
-pref("extensions.quarantineIgnoredByUser.startpage@celenity.dev", false, locked); // Startpage
-pref("extensions.quarantineIgnoredByUser.swisscows@celenity.dev", false, locked); // Startpage
-
-/// We can also include our deprecated search 'extensions' for defense in depth...
-
-pref("extensions.quarantineIgnoredByUser.bravesearch@celenity.dev", false, locked); // Brave Search
-pref("extensions.quarantineIgnoredByUser.kagi@celenity.dev", false, locked); // Kagi
-pref("extensions.quarantineIgnoredByUser.kagi-html@celenity.dev", false, locked); // Kagi HTML
-pref("extensions.quarantineIgnoredByUser.leta-brave@celenity.dev", false, locked); // Mullvad Leta (Brave)
-pref("extensions.quarantineIgnoredByUser.leta-google@celenity.dev", false, locked); // Mullvad Leta (Google)
-pref("extensions.quarantineIgnoredByUser.metager@celenity.dev", false, locked); // MetaGer
-
 /// Block certain Mozilla extensions from accessing quarantined domains...
 
 pref("extensions.quarantineIgnoredByUser.ads@mozac.org", false, locked); // Mozilla Android Components - Ads Telemetry...
 pref("extensions.quarantineIgnoredByUser.cookies@mozac.org", false, locked); // Mozilla Android Components - Search Telemetry...
+pref("extensions.quarantineIgnoredByUser.ddg@search.mozilla.org", false, locked); // DuckDuckGo - search engine...
 pref("extensions.quarantineIgnoredByUser.wikipedia@search.mozilla.org", false, locked); // Wikipedia (en) - search engine...
 
 pref("browser.phoenix.status.core", "014");
@@ -910,7 +901,7 @@ pref("browser.contentblocking.category", "strict", locked); // [HIDDEN]
 // Manually specifying these is also useful for cases like Android: where all protections aren't enabled with ETP Strict, and on Thunderbird: where ETP Strict doesn't exist at all...
 // We're also configuring the 'CookieBehavior' & 'EnableTrackingProtection' policies on desktop.
 
-// Enable TCP/dFPI
+/// Enable TCP/dFPI
 // https://support.mozilla.org/kb/introducing-total-cookie-protection-standard-mode
 // https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml#2828
 
@@ -919,7 +910,7 @@ pref("network.cookie.cookieBehavior.optInPartitioning", true);
 pref("network.cookie.cookieBehavior.optInPartitioning.pbmode", true);
 pref("network.cookie.cookieBehavior.pbmode", 5);
 
-// Enable State Partitioning
+/// Enable State Partitioning
 
 pref("privacy.partition.always_partition_third_party_non_cookie_storage", true);
 pref("privacy.partition.always_partition_third_party_non_cookie_storage.exempt_sessionstorage", false);
@@ -929,7 +920,7 @@ pref("privacy.partition.network_state.ocsp_cache", true);
 pref("privacy.partition.network_state.ocsp_cache.pbmode", true);
 pref("privacy.partition.serviceWorkers", true);
 
-// Ignore less restricted referer policies (than the default)
+/// Ignore less restricted referer policies (than the default)
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#12979
 
 pref("network.http.referer.disallowCrossSiteRelaxingDefault", true); // for cross-site requests
@@ -953,14 +944,14 @@ pref("privacy.trackingprotection.annotate_channels", true);
 pref("privacy.trackingprotection.enabled", true);
 pref("privacy.trackingprotection.pbmode.enabled", true);
 
-// Block known tracking resources using the `strict` (Level 2) list
+/// Block known tracking resources using the `strict` (Level 2) list
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#15192
 // https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml#2804
 
 pref("privacy.annotate_channels.strict_list.enabled", true);
 pref("privacy.annotate_channels.strict_list.pbmode.enabled", true);
 
-// Block known third-party tracking cookies
+/// Block known third-party tracking cookies
 
 pref("network.cookie.cookieBehavior.trackerCookieBlocking", true);
 pref("privacy.socialtracking.block_cookies.enabled", true);
@@ -982,28 +973,28 @@ pref("privacy.trackingprotection.fingerprinting.enabled", true);
 
 pref("privacy.trackingprotection.socialtracking.enabled", true);
 
-// Enable Bounce Tracking Protection
+/// Enable Bounce Tracking Protection
 // https://support.mozilla.org/kb/enhanced-tracking-protection-firefox-desktop#w_bounce-tracking-protection
 // https://searchfox.org/mozilla-central/source/toolkit/components/antitracking/bouncetrackingprotection/nsIBounceTrackingProtection.idl#11
 
 pref("privacy.bounceTrackingProtection.enabled", true); // [HIDDEN - non-Thunderbird]
 pref("privacy.bounceTrackingProtection.mode", 1); // [HIDDEN - Thunderbird]
 
-// Enable Suspected Fingerprinters Protection
+/// Enable Suspected Fingerprinters Protection
 // https://support.mozilla.org/kb/firefox-protection-against-fingerprinting#w_suspected-fingerprinters
 
 pref("privacy.fingerprintingProtection", true);
 pref("privacy.fingerprintingProtection.pbmode", true);
 pref("privacy.reduceTimerPrecision", true); // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#15353
 
-// Enable Query Parameter Stripping
+/// Enable Query Parameter Stripping
 // https://firefox-source-docs.mozilla.org/toolkit/components/antitracking/anti-tracking/query-stripping/index.html
 
 pref("privacy.query_stripping.enabled", true);
 pref("privacy.query_stripping.enabled.pbmode", true);
 pref("privacy.query_stripping.redirect", true);
 
-// Enable SmartBlock & UA overrides/injections
+/// Enable SmartBlock & UA overrides/injections
 // Also typically covered by ETP/Strict
 
 pref("extensions.webcompat.enable_shims", true); // [HIDDEN]
@@ -1409,13 +1400,6 @@ pref("dom.security.sanitizer.enabled", true);
 
 pref("dom.security.setHTML.enabled", true);
 
-/// Enable Trusted Types (Like Chromium)
-// https://w3c.github.io/trusted-types/dist/spec/
-// https://developer.mozilla.org/docs/Web/API/Trusted_Types_API
-// https://www.theregister.com/2023/12/21/mozilla_decides_trusted_types_is/
-
-pref("dom.security.trusted_types.enabled", true);
-
 /// Prevent marking JIT code pages as both writable and executable, only one or the other...
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#8714
 // Might cause issues in certain specific set-ups
@@ -1740,9 +1724,32 @@ pref("browser.phoenix.status.desktop.common", "004"); // [NO-OSX]
 // 005 DISK AVOIDANCE
 
 /// Sanitization
-// Clears cache on sanitization dialog by default
+// Checks the boxes for clearing browsing data when navigating to `about:preferences#privacy` -> `Cookies and Site Data` -> `Manage Data...`
 
+pref("privacy.clearHistory.browsingHistoryAndDownloads", true); // [DEFAULT, HIDDEN - Thunderbird]
+pref("privacy.clearHistory.cache", true); // [DEFAULT, HIDDEN - Thunderbird]
+pref("privacy.clearHistory.formdata", true); // [HIDDEN - Thunderbird]
+pref("privacy.clearHistory.historyFormDataAndDownloads", true); // [DEFAULT, HIDDEN - Thunderbird]
+pref("privacy.clearSiteData.browsingHistoryAndDownloads", true); // [HIDDEN - Thunderbird]
+pref("privacy.clearSiteData.cache", true); // [DEFAULT, HIDDEN - Thunderbird]
+pref("privacy.clearSiteData.formdata", true); // [HIDDEN - Thunderbird]
+pref("privacy.clearSiteData.historyFormDataAndDownloads", true); // [HIDDEN - Thunderbird]
 pref("privacy.cpd.cache", true); // [DEFAULT]
+pref("privacy.cpd.downloads", true); // [DEFAULT, HIDDEN - Thunderbird]
+pref("privacy.cpd.formdata", true); // [DEFAULT, HIDDEN - Thunderbird]
+pref("privacy.cpd.history", true); // [DEFAULT]
+pref("privacy.cpd.sessions", true); // [DEFAULT, HIDDEN - Thunderbird]
+
+// Except for cookies... (as this ignores `Allow` exceptions)
+
+pref("privacy.clearHistory.cookiesAndStorage", false);
+pref("privacy.clearSiteData.cookiesAndStorage", false);
+pref("privacy.cpd.cookies", false);
+pref("privacy.cpd.offlineApps", false); // [DEFAULT, HIDDEN - Thunderbird]
+
+// and passwords...
+
+pref("privacy.cpd.passwords", false); // [DEFAULT, HIDDEN - Thunderbird]
 
 /// Set time range when manually clearing data to "everything" by default
 
@@ -2087,7 +2094,7 @@ pref("browser.phoenix.status.extended.desktop.common", "successfully applied :D"
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.02.28.1", locked);
+pref("mail.dove.version", "2025.03.05.1", locked);
 
 pref("mail.dove.status", "000");
 
@@ -2595,114 +2602,7 @@ pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT, HIDDE
 
 pref("mail.dove.status", "010");
 
-// 011 Configure DKIM Verifier...
-// https://codeberg.org/celenity/Dove/issues/6
-// https://github.com/lieser/dkim_verifier/issues/267
-// https://github.com/lieser/dkim_verifier/issues/268
-// https://github.com/lieser/dkim_verifier/wiki/Options
-// https://github.com/lieser/dkim_verifier/blob/master/modules/preferences.mjs.js
-// https://github.com/lieser/dkim_verifier/blob/master/_locales/en_US/messages.json
-
-/// Verify DKIM Signatures...
-
-pref("extensions.dkim_verifier.dkim.enable", true); // [DEFAULT]
-
-/// By default, store DKIM keys + results for later comparison
-
-pref("extensions.dkim_verifier.key.storing", 2);
-pref("extensions.dkim_verifier.saveResult", true);
-
-/// Enable reading the Authentication-Results header, but don't replace the extension's results...
-// This allows us to look at both the header and the client-side results of DKIM Verifier for comparison/extra verification
-
-pref("extensions.dkim_verifier.arh.read", true);
-pref("extensions.dkim_verifier.arh.replaceAddonResult", false);
-
-/// Warn on ill-formed AUID tags
-
-pref("extensions.dkim_verifier.error.illformed_i.treatAs", 1); // [DEFAULT]
-
-/// Warn on ill-formed selector tags
-
-pref("extensions.dkim_verifier.error.illformed_s.treatAs", 1); // [DEFAULT]
-
-/// Warn on DKIM keys not secured by DNSSEC
-
-pref("extensions.dkim_verifier.error.policy.key_insecure.treatAs", 1);
-
-/// Warn on the RSA-SHA1 algorithm
-
-pref("extensions.dkim_verifier.error.algorithm.sign.rsa-sha1.treatAs", 1); // [DEFAULT]
-
-/// Warn on weak RSA keys
-
-pref("extensions.dkim_verifier.error.algorithm.rsa.weakKeyLength.treatAs", 1);
-
-/// Show detailed error reasons...
-
-pref("extensions.dkim_verifier.error.detailedReasons", true);
-
-/// Switch the default DNS server from Google to Quad9...
-
-pref("extensions.dkim_verifier.dns.nameserver", "9.9.9.9");
-
-/// Check if emails should be signed
-// https://github.com/lieser/dkim_verifier/wiki/Sign-rules
-
-pref("extensions.dkim_verifier.policy.signRules.enable", true);
-
-/// Use the default signing rules by default...
-
-pref("extensions.dkim_verifier.policy.signRules.checkDefaultRules", true); // [DEFAULT]
-
-/// Automatically add rules based on viewed DKIM-signed emails, but only if the from address is in the SDID
-
-pref("extensions.dkim_verifier.policy.signRules.autoAddRule.enable", true);
-pref("extensions.dkim_verifier.policy.signRules.autoAddRule.for", 0); // [DEFAULT]
-pref("extensions.dkim_verifier.policy.signRules.autoAddRule.onlyIfFromAddressInSDID", true); // [DEFAULT]
-
-/// For signing rules, ensure the domain/subdomain in the SSID matches
-
-pref("extensions.dkim_verifier.policy.signRules.sdid.allowSubDomains", false);
-
-/// Treat wrong SSIDs as errors instead of warnings...
-
-pref("extensions.dkim_verifier.policy.signRules.error.wrong_sdid.asWarning", false); // [DEFAULT]
-
-/// Check DMARC entries to help determine whether an email should be signed
-// https://github.com/lieser/dkim_verifier/wiki/Options#use-dmarc-to-heuristically-determine-if-an-e-mail-should-be-signed
-
-pref("extensions.dkim_verifier.policy.DMARC.shouldBeSigned.enable", true);
-pref("extensions.dkim_verifier.policy.DMARC.shouldBeSigned.neededPolicy", "none"); // [DEFAULT]
-
-/// IF a header should be signed (as defined by the criteria above), enforce signing of *all* relevant headers
-
-pref("extensions.dkim_verifier.policy.dkim.unsignedHeadersWarning.mode", 30);
-
-/// Always show the DKIM header & tooltip when a message is viewed...
-
-pref("extensions.dkim_verifier.showDKIMFromTooltip", 50);
-pref("extensions.dkim_verifier.showDKIMHeader", 50);
-
-/// Enable showing favicons of known signing domains before the 'From' address by default
-/// Works via BIMI & DKIM Verifier's own internal database
-// https://github.com/lieser/dkim_verifier/wiki/Display-Options#show-the-favicon-of-known-signing-domains-before-the-from-address
-// https://wikipedia.org/wiki/Brand_Indicators_for_Message_Identification
-
-pref("extensions.dkim_verifier.display.favicon.show", true); // [DEFAULT]
-
-/// Indicate when a DKIM key is successfully validated by DNSSEC...
-// https://github.com/lieser/dkim_verifier/wiki/Options#indicate-successful-dnssec-validation-with-a-lock-after-the-sdid
-
-pref("extensions.dkim_verifier.display.keySecure", true); // [DEFAULT]
-
-/// Ensure debugging is disabled by default...
-
-pref("extensions.dkim_verifier.debug", false); // [DEFAULT]
-
-pref("mail.dove.status", "011");
-
-// 012 Personal Touch 💜
+// 011 Personal Touch 💜
 
 /// Things that are nice to have™
 // Not directly privacy & security related
@@ -2735,21 +2635,21 @@ pref("extensions.abuseReport.enabled", true);
 
 pref("devtools.aboutdebugging.local-tab-debugging", true);
 
-pref("mail.dove.status", "012");
+pref("mail.dove.status", "011");
 
-// 013 DO NOT TOUCH
+// 012 DO NOT TOUCH
 
 pref("browser.privatebrowsing.autostart", false, locked); // Breaks uBlock Origin & all other extensions... also unnecessary since we always sanitize data anyways
 pref("mailnews.oauth.usePrivateBrowser", false, locked); // Breaks uBlock Origin & all other extensions... also unnecessary since we always sanitize data anyways
 
-pref("mail.dove.status", "013");
+pref("mail.dove.status", "012");
 
-// 014 Enable support for custom/specialized configs... // [NO-OSX]
+// 013 Enable support for custom/specialized configs... // [NO-OSX]
 
 pref("general.config.filename", "dove.cfg"); // [NO-OSX]
 pref("general.config.vendor", "dove"); // [NO-OSX]
 pref("general.config.obscure_value", 0); // [NO-OSX]
 
-pref("mail.dove.status", "014"); // [NO-OSX]
+pref("mail.dove.status", "013"); // [NO-OSX]
 
 pref("mail.dove.status", "successfully applied :D", locked);
