@@ -6,33 +6,6 @@
 	<dict>
 		<key>Extensions</key>
 		<dict>
-			<key>dkim_verifier@pl</key>
-			<dict>
-				<key>dns.nameserver</key>
-				<string>9.9.9.9</string>
-				<key>error.algorithm.rsa.weakKeyLength.treatAs</key>
-				<integer>1</integer>
-				<key>error.algorithm.sign.rsa-sha1.treatAs</key>
-				<integer>1</integer>
-				<key>error.illformed_i.treatAs</key>
-				<integer>1</integer>
-				<key>error.illformed_s.treatAs</key>
-				<integer>1</integer>
-				<key>error.policy.key_insecure.treatAs</key>
-				<integer>1</integer>
-				<key>key.storing</key>
-				<integer>2</integer>
-				<key>policy.DMARC.shouldBeSigned.neededPolicy</key>
-				<string>none</string>
-				<key>policy.dkim.unsignedHeadersWarning.mode</key>
-				<integer>30</integer>
-				<key>policy.signRules.autoAddRule.for</key>
-				<integer>0</integer>
-				<key>showDKIMFromTooltip</key>
-				<integer>50</integer>
-				<key>showDKIMHeader</key>
-				<integer>50</integer>
-			</dict>
 			<key>uBlock0@raymondhill.net</key>
 			<dict>
 				<key>adminSettings</key>

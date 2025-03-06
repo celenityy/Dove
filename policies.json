@@ -34,20 +34,6 @@
           "adminSettings": {
             "assetsBootstrapLocation": "https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/assets.json"
           }
-        },
-        "dkim_verifier@pl": {
-          "dns.nameserver": "9.9.9.9",
-          "error.algorithm.rsa.weakKeyLength.treatAs": 1,
-          "error.algorithm.sign.rsa-sha1.treatAs": 1,
-          "error.illformed_i.treatAs": 1,
-          "error.illformed_s.treatAs": 1,
-          "error.policy.key_insecure.treatAs": 1,
-          "key.storing": 2,
-          "policy.dkim.unsignedHeadersWarning.mode": 30,
-          "policy.DMARC.shouldBeSigned.neededPolicy": "none",
-          "policy.signRules.autoAddRule.for": 0,
-          "showDKIMFromTooltip": 50,
-          "showDKIMHeader": 50
         }
       }
     },
