@@ -2601,114 +2601,7 @@ pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT, HIDDE
 
 pref("mail.dove.status", "010");
 
-// 011 Configure DKIM Verifier...
-// https://codeberg.org/celenity/Dove/issues/6
-// https://github.com/lieser/dkim_verifier/issues/267
-// https://github.com/lieser/dkim_verifier/issues/268
-// https://github.com/lieser/dkim_verifier/wiki/Options
-// https://github.com/lieser/dkim_verifier/blob/master/modules/preferences.mjs.js
-// https://github.com/lieser/dkim_verifier/blob/master/_locales/en_US/messages.json
-
-/// Verify DKIM Signatures...
-
-pref("extensions.dkim_verifier.dkim.enable", true); // [DEFAULT]
-
-/// By default, store DKIM keys + results for later comparison
-
-pref("extensions.dkim_verifier.key.storing", 2);
-pref("extensions.dkim_verifier.saveResult", true);
-
-/// Enable reading the Authentication-Results header, but don't replace the extension's results...
-// This allows us to look at both the header and the client-side results of DKIM Verifier for comparison/extra verification
-
-pref("extensions.dkim_verifier.arh.read", true);
-pref("extensions.dkim_verifier.arh.replaceAddonResult", false);
-
-/// Warn on ill-formed AUID tags
-
-pref("extensions.dkim_verifier.error.illformed_i.treatAs", 1); // [DEFAULT]
-
-/// Warn on ill-formed selector tags
-
-pref("extensions.dkim_verifier.error.illformed_s.treatAs", 1); // [DEFAULT]
-
-/// Warn on DKIM keys not secured by DNSSEC
-
-pref("extensions.dkim_verifier.error.policy.key_insecure.treatAs", 1);
-
-/// Warn on the RSA-SHA1 algorithm
-
-pref("extensions.dkim_verifier.error.algorithm.sign.rsa-sha1.treatAs", 1); // [DEFAULT]
-
-/// Warn on weak RSA keys
-
-pref("extensions.dkim_verifier.error.algorithm.rsa.weakKeyLength.treatAs", 1);
-
-/// Show detailed error reasons...
-
-pref("extensions.dkim_verifier.error.detailedReasons", true);
-
-/// Switch the default DNS server from Google to Quad9...
-
-pref("extensions.dkim_verifier.dns.nameserver", "9.9.9.9");
-
-/// Check if emails should be signed
-// https://github.com/lieser/dkim_verifier/wiki/Sign-rules
-
-pref("extensions.dkim_verifier.policy.signRules.enable", true);
-
-/// Use the default signing rules by default...
-
-pref("extensions.dkim_verifier.policy.signRules.checkDefaultRules", true); // [DEFAULT]
-
-/// Automatically add rules based on viewed DKIM-signed emails, but only if the from address is in the SDID
-
-pref("extensions.dkim_verifier.policy.signRules.autoAddRule.enable", true);
-pref("extensions.dkim_verifier.policy.signRules.autoAddRule.for", 0); // [DEFAULT]
-pref("extensions.dkim_verifier.policy.signRules.autoAddRule.onlyIfFromAddressInSDID", true); // [DEFAULT]
-
-/// For signing rules, ensure the domain/subdomain in the SSID matches
-
-pref("extensions.dkim_verifier.policy.signRules.sdid.allowSubDomains", false);
-
-/// Treat wrong SSIDs as errors instead of warnings...
-
-pref("extensions.dkim_verifier.policy.signRules.error.wrong_sdid.asWarning", false); // [DEFAULT]
-
-/// Check DMARC entries to help determine whether an email should be signed
-// https://github.com/lieser/dkim_verifier/wiki/Options#use-dmarc-to-heuristically-determine-if-an-e-mail-should-be-signed
-
-pref("extensions.dkim_verifier.policy.DMARC.shouldBeSigned.enable", true);
-pref("extensions.dkim_verifier.policy.DMARC.shouldBeSigned.neededPolicy", "none"); // [DEFAULT]
-
-/// IF a header should be signed (as defined by the criteria above), enforce signing of *all* relevant headers
-
-pref("extensions.dkim_verifier.policy.dkim.unsignedHeadersWarning.mode", 30);
-
-/// Always show the DKIM header & tooltip when a message is viewed...
-
-pref("extensions.dkim_verifier.showDKIMFromTooltip", 50);
-pref("extensions.dkim_verifier.showDKIMHeader", 50);
-
-/// Enable showing favicons of known signing domains before the 'From' address by default
-/// Works via BIMI & DKIM Verifier's own internal database
-// https://github.com/lieser/dkim_verifier/wiki/Display-Options#show-the-favicon-of-known-signing-domains-before-the-from-address
-// https://wikipedia.org/wiki/Brand_Indicators_for_Message_Identification
-
-pref("extensions.dkim_verifier.display.favicon.show", true); // [DEFAULT]
-
-/// Indicate when a DKIM key is successfully validated by DNSSEC...
-// https://github.com/lieser/dkim_verifier/wiki/Options#indicate-successful-dnssec-validation-with-a-lock-after-the-sdid
-
-pref("extensions.dkim_verifier.display.keySecure", true); // [DEFAULT]
-
-/// Ensure debugging is disabled by default...
-
-pref("extensions.dkim_verifier.debug", false); // [DEFAULT]
-
-pref("mail.dove.status", "011");
-
-// 012 Personal Touch 💜
+// 011 Personal Touch 💜
 
 /// Things that are nice to have™
 // Not directly privacy & security related
@@ -2741,21 +2634,21 @@ pref("extensions.abuseReport.enabled", true);
 
 pref("devtools.aboutdebugging.local-tab-debugging", true);
 
-pref("mail.dove.status", "012");
+pref("mail.dove.status", "011");
 
-// 013 DO NOT TOUCH
+// 012 DO NOT TOUCH
 
 pref("browser.privatebrowsing.autostart", false, locked); // Breaks uBlock Origin & all other extensions... also unnecessary since we always sanitize data anyways
 pref("mailnews.oauth.usePrivateBrowser", false, locked); // Breaks uBlock Origin & all other extensions... also unnecessary since we always sanitize data anyways
 
-pref("mail.dove.status", "013");
+pref("mail.dove.status", "012");
 
-// 014 Enable support for custom/specialized configs... // [NO-OSX]
+// 013 Enable support for custom/specialized configs... // [NO-OSX]
 
 pref("general.config.filename", "dove.cfg"); // [NO-OSX]
 pref("general.config.vendor", "dove"); // [NO-OSX]
 pref("general.config.obscure_value", 0); // [NO-OSX]
 
-pref("mail.dove.status", "014"); // [NO-OSX]
+pref("mail.dove.status", "013"); // [NO-OSX]
 
 pref("mail.dove.status", "successfully applied :D", locked);
