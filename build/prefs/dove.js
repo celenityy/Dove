@@ -111,10 +111,9 @@ pref("places.history.enabled", false);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1675829
 
 pref("network.cookie.noPersistentStorage", true);
-pref("privacy.clearHistory.cookiesAndStorage", true);
 pref("privacy.clearOnShutdown.cookies", true);
+pref("privacy.clearOnShutdown.offlineApps", true); // [HIDDEN]
 pref("privacy.clearOnShutdown_v2.cookiesAndStorage", true);
-pref("privacy.clearSiteData.cookiesAndStorage", true);
 
 /// Disable logging chat history
 // https://stackoverflow.com/questions/32155137/how-to-disable-chat-history-in-mozilla-thunderbird
