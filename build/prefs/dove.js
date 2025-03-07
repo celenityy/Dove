@@ -68,10 +68,6 @@ pref("app.donation.eoy.version.viewed", 99, locked);
 
 pref("mail.cloud_files.enabled", false);
 
-/// Disable "Chat" functionality
-
-pref("mail.chat.enabled", false);
-
 /// Kill Add-on "Discovery" Recommendations
 
 pref("extensions.getAddons.recommended.url", "");
