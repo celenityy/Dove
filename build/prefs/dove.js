@@ -570,6 +570,10 @@ pref("devtools.aboutdebugging.local-tab-debugging", true);
 
 pref("messenger.options.messagesStyle.theme", "bubbles");
 
+/// Do not automatically convert emoticons to emojis...
+
+pref("mail.display_glyph", false);
+
 pref("mail.dove.status", "011");
 
 // 012 DO NOT TOUCH
