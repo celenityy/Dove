@@ -1,4 +1,9 @@
 # Dove
+<p align="center">
+    <img src="assets/dove.png"
+        alt="Dove"
+        height="200">
+</p>
 
 **Dove is a suite of configurations & advanced modifications for Mozilla Thunderbird, designed to put the user first - with a focus on privacy, security, freedom, functionality, & usability.**
 
@@ -265,6 +270,15 @@ ___
 Huge thank you to the following projects & individuals for making Dove possible. Please show them support!
 
 **Also see Phoenix's Attribution page [here](https://phoenix.celenity.dev#attribution)**.
+
+- **[Seyed Mohamad Amin Modaresi](https://codeberg.org/gnu1)**
+	- Suggested Dove's icon, created the install & uninstall scripts, helped with maintenance/packaging, assisted with README formatting, provided general advice & support, and responsible for various other significant contributions to the project.
+
+- **[Kore](https://github.com/bikass/kora)**
+	- 🪪 [bikass](https://github.com/bikass)
+	- ⚖️ [GPL-3.0](https://github.com/bikass/kora/blob/9cdedbcd55114eae05440573606c5783aff4be26/LICENSE)
+    - 💸 [Donate](https://ko-fi.com/tarmakofi)
+	- Designed Dove's icon
 
 - **[thunderbird-user.js](https://github.com/HorlogeSkynet/thunderbird-user.js)**
     - 🪪 [Samuel FORESTIER](https://github.com/HorlogeSkynet) + [Daniel Nathan Gray](https://github.com/dngray)
