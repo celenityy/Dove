@@ -412,12 +412,6 @@ pref("svg.disabled", true);
 
 pref("media.peerconnection.enabled", false);
 
-/// If WASM (WebAssembly) is disabled (which we do by default), also disable it for extensions
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1576254
-// Note: This breaks Firefox Translations - but that's currently broken on Thunderbird anyways, so we don't need to worry about it
-
-pref("javascript.options.wasm_trustedprincipals", false);
-
 /// Disable Gecko Media Plugins
 
 pref("media.gmp-provider.enabled", false);
