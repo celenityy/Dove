@@ -566,6 +566,10 @@ pref("extensions.abuseReport.enabled", true);
 
 pref("devtools.aboutdebugging.local-tab-debugging", true);
 
+/// Enable the 'Bubbles' theme for Chat by default
+
+pref("messenger.options.messagesStyle.theme", "bubbles");
+
 pref("mail.dove.status", "011");
 
 // 012 DO NOT TOUCH
