@@ -281,6 +281,27 @@ pref("mail.openpgp.allow_external_gnupg", true);
 
 pref("temp.openpgp.warnDeprecatedGnuPG", true); // [DEFAULT]
 
+/// Enable support for Off-the-record messaging (OTR)
+// https://wikipedia.org/wiki/Off-the-Record_Messaging
+// https://wiki.mozilla.org/Thunderbird:OTR
+// https://searchfox.org/comm-central/source/mail/locales/en-US/messenger/otr/am-im-otr.ftl
+
+pref("chat.otr.enable", true); // [DEFAULT]
+
+/// Always remind users to verify unverified contacts
+// https://searchfox.org/comm-central/source/mail/locales/en-US/messenger/otr/am-im-otr.ftl
+
+pref("chat.otr.default.verifyNudge", true); // [DEFAULT]
+
+/// Require E2EE for chat conversations by default
+// https://searchfox.org/comm-central/source/mail/locales/en-US/messenger/otr/am-im-otr.ftl
+
+pref("chat.otr.default.requireEncryption", true);
+
+/// Disable logging E2EE messages by default
+
+pref("chat.otr.default.allowMsgLog", false);
+
 pref("mail.dove.status", "007");
 
 // 008 MISC. PRIVACY
