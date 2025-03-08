@@ -87,10 +87,10 @@ Thunderbird Packman:
 yay -S dove-arch
 ```
 
-Thunderbird Flatpack:
+Thunderbird Flatpak:
 
 ```
-yay -S dove-flatpack
+yay -S dove-flatpak
 ```
 </details>
 
@@ -109,10 +109,10 @@ Thunderbird DEB:
 sudo apt install dove
 ```
 
-Thunderbird Flatpack:
+Thunderbird Flatpak:
 
 ```
-sudo apt install dove-flatpack
+sudo apt install dove-flatpak
 ```
 </details>
 
@@ -130,10 +130,10 @@ Thunderbird RPM:
 sudo dnf install dove
 ```
 
-Thunderbird Flatpack:
+Thunderbird Flatpak:
 
 ```
-sudo dnf install dove-flatpack
+sudo dnf install dove-flatpak
 ```
 </details>
 
@@ -200,10 +200,10 @@ Thunderbird Packman:
 yay -Rcns dove-arch
 ```
 
-Thunderbird Flatpack:
+Thunderbird Flatpak:
 
 ```
-yay -Rcns dove-flatpack
+yay -Rcns dove-flatpak
 ```
 </details>
 
@@ -215,10 +215,10 @@ Thunderbird DEB:
 sudo apt remove dove
 ```
 
-Thunderbird Flatpack:
+Thunderbird Flatpak:
 
 ```
-sudo apt remove dove-flatpack
+sudo apt remove dove-flatpak
 ```
 
 You can remove Celenity's OBS Repo if you want:
@@ -237,10 +237,10 @@ Thunderbird RPM:
 sudo dnf remove dove
 ```
 
-Thunderbird Flatpack:
+Thunderbird Flatpak:
 
 ```
-sudo dnf remove install dove-flatpack
+sudo dnf remove install dove-flatpak
 ```
 
 You can remove Celenity's COPR Repo if you want:
