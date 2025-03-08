@@ -76,17 +76,75 @@ Other platforms have unfortunately proven difficult to support, though progress 
 
 **If your platform is supported *(with the exception of NixOS and macOS)*, simply run the following command in your terminal to install Dove:**
 
-```sh
-sudo bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/install.sh 2>/dev/null)"
+**<details><summary>Arch</summary>**
+
+> [!NOTE]
+> You can use paru instead of yay with the same options
+
+Thunderbird Packman:
+
+```
+yay -S dove-arch
 ```
 
-**macOS** users should instead run the following command to install Dove:
+Thunderbird Flatpack:
 
-```sh
-bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/installer_scripts/macos_install.sh 2>/dev/null)"
+```
+yay -S dove-flatpack
+```
+</details>
+
+**<details><summary>Debian & Ubutnu & derivatives...</summary>**
+
+ For installing and updating packages add Celenity's OBS Repo:
+ ```
+ echo 'deb http://download.opensuse.org/repositories/home:/celenity/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/home:celenity.list
+ curl -fsSL https://download.opensuse.org/repositories/home:celenity/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_celenity.gpg > /dev/null
+ sudo apt update
+ ```
+
+Thunderbird DEB:
+
+```
+sudo apt install dove
 ```
 
-## NixOS
+Thunderbird Flatpack:
+
+```
+sudo apt install dove-flatpack
+```
+</details>
+
+**<details><summary>Fedora</summary>**
+
+ For installing and updating packages add Celenity's COPR Repo:
+ ```
+ sudo dnf copr enable celenity/copr
+ sudo dnf update --refresh
+ ```
+
+Thunderbird RPM:
+
+```
+sudo dnf install dove
+```
+
+Thunderbird Flatpack:
+
+```
+sudo dnf install dove-flatpack
+```
+</details>
+
+**<details><summary>macOS</summary>**
+
+**Add dove tap ?**
+
+**Install dove for Thunderbird DMG ?**
+</details>
+
+**<details><summary>NixOS</summary>**
 
 NixOS is supported for [flake-based configurations](https://wiki.nixos.org/wiki/Flakes#Using_nix_flakes_with_NixOS):
 1. Add Dove and Phoenix repositories to your flake inputs (Dove is based on Phoenix configs).
@@ -122,6 +180,8 @@ NixOS is supported for [flake-based configurations](https://wiki.nixos.org/wiki/
   };
 }
 ```
+</details>
+
 
 ## **If you would like to use Dove on an unsupported platform, see [📛Manual Installation](#manual-installation).**
 
@@ -129,19 +189,79 @@ ___
 
 # 👋Uninstall
 
-If Dove isn't right for you - no worries!
+**<details><summary>Arch</summary>**
 
-**Simply run the following command in your terminal to uninstall Dove:**
+> [!NOTE]
+> You can use paru instead of yay with the same options
 
-```sh
-sudo bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/uninstall.sh 2>/dev/null)"
+Thunderbird Packman:
+
+```
+yay -Rcns dove-arch
 ```
 
-**macOS** users should instead run the following command to uninstall Dove:
+Thunderbird Flatpack:
 
-```sh
-bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/uninstaller_scripts/macos_uninstall.sh 2>/dev/null)"
 ```
+yay -Rcns dove-flatpack
+```
+</details>
+
+**<details><summary>Debian & Ubutnu & derivatives</summary>**
+
+Thunderbird DEB:
+
+```
+sudo apt remove dove
+```
+
+Thunderbird Flatpack:
+
+```
+sudo apt remove dove-flatpack
+```
+
+You can remove Celenity's OBS Repo if you want:
+```
+sudo rm /etc/apt/sources.list.d/home:celenity.list
+sudo rm /etc/apt/trusted.gpg.d/home_celenity.gpg
+sudo apt update
+```
+</details>
+
+**<details><summary>Fedora</summary>**
+
+Thunderbird RPM:
+
+```
+sudo dnf remove dove
+```
+
+Thunderbird Flatpack:
+
+```
+sudo dnf remove install dove-flatpack
+```
+
+You can remove Celenity's COPR Repo if you want:
+```
+sudo dnf copr remove celenity/copr
+sudo dnf update --refresh
+```
+</details>
+
+**<details><summary>macOS</summary>**
+
+**Remove phoenix ?**
+
+**Remove brew tap ?**
+</details>
+
+**<details><summary>NixOS</summary>**
+
+**?**
+
+</details>
 
 Please [leave us feedback](https://dove.celenity.dev/issues) on the way out, so we can improve for the future!
 
