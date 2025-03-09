@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-python3 build/convert.py prefs/dove.js build/configs/dove-spec.cfg
+python3 build/convert.py prefs/dove.js configs/dove.cfg
 
-awk '!/NO-OSX/' build/configs/dove-spec.cfg > macos/dove.cfg
+awk '!/NO-OSX/' configs/dove.cfg > macos/dove.cfg
