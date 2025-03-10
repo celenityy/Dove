@@ -269,6 +269,8 @@ Run the following uninstall script in your terminal of choice:
 bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/uninstaller_scripts/macos_uninstall.sh 2>/dev/null)"
 ```
 
+</details>
+
 **<details><summary>NixOS</summary>**
 
 **?**
