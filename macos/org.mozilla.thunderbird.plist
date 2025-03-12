@@ -613,7 +613,7 @@
 			<key>installation_mode</key>
 			<string>normal_installed</string>
 			<key>private_browsing</key>
-			<false/>
+			<true/>
 			<key>temporarily_allow_weak_signatures</key>
 			<false/>
 			<key>updates_disabled</key>

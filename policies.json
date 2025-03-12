@@ -1084,7 +1084,7 @@
       "dkim_verifier@pl": {
         "installation_mode": "normal_installed",
         "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
-        "private_browsing": false,
+        "private_browsing": true,
         "temporarily_allow_weak_signatures": false,
         "updates_disabled": false
       },
