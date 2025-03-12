@@ -82,7 +82,6 @@ pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/%L
 /// Disable Firefox Translations
 // The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings, meaning it's useless :/
 
-pref("browser.translations.alwaysTranslateLanguages", ""); // [DEFAULT]
 pref("browser.translations.automaticallyPopup", false);
 pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
