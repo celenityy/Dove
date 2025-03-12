@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.03.05.1", locked);
+pref("browser.phoenix.version", "2025.03.12.1", locked);
 
 // 000 ABOUT:CONFIG
 
@@ -1080,6 +1080,11 @@ pref("extensions.webcompat.smartblockEmbeds.enabled", true); // [DEFAULT - Night
 
 pref("network.cookie.CHIPS.enabled", true); // [DEFAULT - Nightly]
 
+/// Exclude third party trackers from TCP/dFPI storage access heuristics
+// https://developer.mozilla.org/docs/Web/Privacy/State_Partitioning#storage_access_heuristics
+
+pref("privacy.restrict3rdpartystorage.heuristic.exclude_third_party_trackers", true); // [DEFAULT - Nightly]
+
 pref("browser.phoenix.status.core", "016");
 
 // 017 FINGERPRINTING PROTECTION
@@ -1622,7 +1627,6 @@ pref("browser.phoenix.status.core", "027");
 /// Things that are  nice to have™
 // Not directly privacy & security related
 
-pref("browser.translations.alwaysTranslateLanguages", "bg,ca,cs,da,de,el,en,es,et,fi,fr,hr,hu,id,it,ja,ko,lv,lt,nl,pl,pt,ro,ru,sk,sl,sr,sv,tr,uk,vi,zh-Hans");
 pref("browser.translations.automaticallyPopup", true); // [DEFAULT]
 pref("browser.translations.enable", true); // [DEFAULT - non-Thunderbird]
 pref("browser.translations.select.enable", true); // [DEFAULT - non-Android/Thunderbird]
@@ -2094,7 +2098,7 @@ pref("browser.phoenix.status.extended.desktop.common", "successfully applied :D"
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.03.05.1", locked);
+pref("mail.dove.version", "2025.03.12.1", locked);
 
 pref("mail.dove.status", "000");
 
@@ -2147,10 +2151,6 @@ pref("app.donation.eoy.version.viewed", 99, locked);
 
 pref("mail.cloud_files.enabled", false);
 
-/// Disable "Chat" functionality
-
-pref("mail.chat.enabled", false);
-
 /// Kill Add-on "Discovery" Recommendations
 
 pref("extensions.getAddons.recommended.url", "");
@@ -2165,7 +2165,6 @@ pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/%L
 /// Disable Firefox Translations
 // The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings, meaning it's useless :/
 
-pref("browser.translations.alwaysTranslateLanguages", ""); // [DEFAULT]
 pref("browser.translations.automaticallyPopup", false);
 pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
@@ -2364,6 +2363,27 @@ pref("mail.openpgp.allow_external_gnupg", true);
 
 pref("temp.openpgp.warnDeprecatedGnuPG", true); // [DEFAULT]
 
+/// Enable support for Off-the-record messaging (OTR)
+// https://wikipedia.org/wiki/Off-the-Record_Messaging
+// https://wiki.mozilla.org/Thunderbird:OTR
+// https://searchfox.org/comm-central/source/mail/locales/en-US/messenger/otr/am-im-otr.ftl
+
+pref("chat.otr.enable", true); // [DEFAULT]
+
+/// Always remind users to verify unverified contacts
+// https://searchfox.org/comm-central/source/mail/locales/en-US/messenger/otr/am-im-otr.ftl
+
+pref("chat.otr.default.verifyNudge", true); // [DEFAULT]
+
+/// Require E2EE for chat conversations by default
+// https://searchfox.org/comm-central/source/mail/locales/en-US/messenger/otr/am-im-otr.ftl
+
+pref("chat.otr.default.requireEncryption", true);
+
+/// Disable logging E2EE messages by default
+
+pref("chat.otr.default.allowMsgLog", false);
+
 pref("mail.dove.status", "007");
 
 // 008 MISC. PRIVACY
@@ -2494,12 +2514,6 @@ pref("svg.disabled", true);
 // https://x.com/GrapheneOS/status/1728921946396725618
 
 pref("media.peerconnection.enabled", false);
-
-/// If WASM (WebAssembly) is disabled (which we do by default), also disable it for extensions
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1576254
-// Note: This breaks Firefox Translations - but that's currently broken on Thunderbird anyways, so we don't need to worry about it
-
-pref("javascript.options.wasm_trustedprincipals", false);
 
 /// Disable Gecko Media Plugins
 
@@ -2633,6 +2647,14 @@ pref("extensions.abuseReport.enabled", true);
 // Can be accessed via `Tools` -> `Developer Tools` -> `Debug Add-ons` (`about:debugging`), simply choose `Inspect` next to any tab of your choice and profit...
 
 pref("devtools.aboutdebugging.local-tab-debugging", true);
+
+/// Enable the 'Bubbles' theme for Chat by default
+
+pref("messenger.options.messagesStyle.theme", "bubbles");
+
+/// Do not automatically convert emoticons to emojis...
+
+pref("mail.display_glyph", false);
 
 pref("mail.dove.status", "011");
 

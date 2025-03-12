@@ -8,12 +8,26 @@
 		<dict>
 			<key>dkim_verifier@pl</key>
 			<dict>
+				<key>arh.read</key>
+				<true/>
+				<key>arh.replaceAddonResult</key>
+				<false/>
+				<key>debug</key>
+				<false/>
+				<key>display.favicon.show</key>
+				<true/>
+				<key>display.keySecure</key>
+				<true/>
+				<key>dkim.enable</key>
+				<true/>
 				<key>dns.nameserver</key>
 				<string>9.9.9.9</string>
 				<key>error.algorithm.rsa.weakKeyLength.treatAs</key>
 				<integer>1</integer>
 				<key>error.algorithm.sign.rsa-sha1.treatAs</key>
 				<integer>1</integer>
+				<key>error.detailedReasons</key>
+				<true/>
 				<key>error.illformed_i.treatAs</key>
 				<integer>1</integer>
 				<key>error.illformed_s.treatAs</key>
@@ -22,12 +36,28 @@
 				<integer>1</integer>
 				<key>key.storing</key>
 				<integer>2</integer>
+				<key>policy.DMARC.shouldBeSigned.enable</key>
+				<true/>
 				<key>policy.DMARC.shouldBeSigned.neededPolicy</key>
 				<string>none</string>
 				<key>policy.dkim.unsignedHeadersWarning.mode</key>
 				<integer>30</integer>
+				<key>policy.signRules.autoAddRule.enable</key>
+				<true/>
 				<key>policy.signRules.autoAddRule.for</key>
 				<integer>0</integer>
+				<key>policy.signRules.autoAddRule.onlyIfFromAddressInSDID</key>
+				<true/>
+				<key>policy.signRules.checkDefaultRules</key>
+				<true/>
+				<key>policy.signRules.enable</key>
+				<true/>
+				<key>policy.signRules.error.wrong_sdid.asWarning</key>
+				<false/>
+				<key>policy.signRules.sdid.allowSubDomains</key>
+				<false/>
+				<key>saveResult</key>
+				<true/>
 				<key>showDKIMFromTooltip</key>
 				<integer>50</integer>
 				<key>showDKIMHeader</key>
@@ -40,36 +70,6 @@
 					<key>assetsBootstrapLocation</key>
 					<string>https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/assets.json</string>
 				</dict>
-				<key>advancedSettings</key>
-				<array>
-					<array>
-						<string>autoCommentFilterTemplate</string>
-						<string>{{url}}</string>
-					</array>
-					<array>
-						<string>filterAuthorMode</string>
-						<string>true</string>
-					</array>
-					<array>
-						<string>updateAssetBypassBrowserCache</string>
-						<string>true</string>
-					</array>
-				</array>
-				<key>userSettings</key>
-				<array>
-					<array>
-						<string>advancedUserEnabled</string>
-						<string>true</string>
-					</array>
-					<array>
-						<string>dynamicFilteringEnabled</string>
-						<string>true</string>
-					</array>
-					<array>
-						<string>firewallPaneMinimized</string>
-						<string>false</string>
-					</array>
-				</array>
 			</dict>
 		</dict>
 	</dict>
@@ -686,6 +686,13 @@
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in EUdict Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/eudict/manifest.json</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
+		</dict>
+		<key>extension@ciuvo.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>'Picky' https://addons.mozilla.org/firefox/addon/ciuvo/ - Tracks users, poor privacy practices...</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
