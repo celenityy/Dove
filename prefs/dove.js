@@ -2185,7 +2185,13 @@ pref("permissions.memory_only", true); // [HIDDEN]
 
 pref("places.history.enabled", false);
 
+/// Enable Private Browsing mode
+
+pref("browser.privatebrowsing.autostart", true);
+pref("mailnews.oauth.usePrivateBrowser", true);
+
 /// Sanitize data on exit...
+// These are mostly just for defense in depth/useful if users disable Private Browsing mode above
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1675829
 
 pref("network.cookie.noPersistentStorage", true);
@@ -2658,19 +2664,12 @@ pref("mail.display_glyph", false);
 
 pref("mail.dove.status", "011");
 
-// 012 DO NOT TOUCH
-
-pref("browser.privatebrowsing.autostart", false, locked); // Breaks uBlock Origin & all other extensions... also unnecessary since we always sanitize data anyways
-pref("mailnews.oauth.usePrivateBrowser", false, locked); // Breaks uBlock Origin & all other extensions... also unnecessary since we always sanitize data anyways
-
-pref("mail.dove.status", "012");
-
-// 013 Enable support for custom/specialized configs... // [NO-OSX]
+// 012 Enable support for custom/specialized configs... // [NO-OSX]
 
 pref("general.config.filename", "dove.cfg"); // [NO-OSX]
 pref("general.config.vendor", "dove"); // [NO-OSX]
 pref("general.config.obscure_value", 0); // [NO-OSX]
 
-pref("mail.dove.status", "013"); // [NO-OSX]
+pref("mail.dove.status", "012"); // [NO-OSX]
 
 pref("mail.dove.status", "successfully applied :D", locked);
