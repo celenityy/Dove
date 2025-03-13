@@ -109,7 +109,7 @@
             },
             "dkim_verifier@pl": {
                 "installation_mode": "normal_installed",
-                "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
+                "install_url": "https://github.com/lieser/dkim_verifier/releases/download/v6.0.1/dkim_verifier-6.0.1.xpi",
                 "private_browsing": true,
                 "temporarily_allow_weak_signatures": false,
                 "updates_disabled": false
