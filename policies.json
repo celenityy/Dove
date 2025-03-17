@@ -1039,6 +1039,9 @@
           "https://github.com/gorhill/uBlock/releases",
           "https://github.com/gorhill/uBlock/releases/*",
           "https://github.com/gorhill/uBlock/releases*",
+          "https://github.com/lieser/dkim_verifier/releases",
+          "https://github.com/lieser/dkim_verifier/releases/*",
+          "https://github.com/lieser/dkim_verifier/releases*",
           "https://github.com/mozilla-extensions/aboutsync/releases",
           "https://github.com/mozilla-extensions/aboutsync/releases/*",
           "https://github.com/mozilla-extensions/aboutsync/releases*",
@@ -1057,6 +1060,7 @@
           "https://github.com/mozilla-extensions/searchengine-devtools/releases",
           "https://github.com/mozilla-extensions/searchengine-devtools/releases/*",
           "https://github.com/mozilla-extensions/searchengine-devtools/releases*",
+          "https://objects.githubusercontent.com/github-production-release-asset-2e65be/10036400/*",
           "https://objects.githubusercontent.com/github-production-release-asset-2e65be/134775419/*",
           "https://objects.githubusercontent.com/github-production-release-asset-2e65be/232824822/*",
           "https://objects.githubusercontent.com/github-production-release-asset-2e65be/26682105/*",
@@ -1090,7 +1094,7 @@
       },
       "uBlock0@raymondhill.net": {
         "installation_mode": "normal_installed",
-        "install_url": "https://github.com/gorhill/uBlock/releases/download/1.62.0/uBlock0_1.62.0.thunderbird.xpi",
+        "install_url": "https://github.com/gorhill/uBlock/releases/download/1.63.0/uBlock0_1.63.0.thunderbird.xpi",
         "private_browsing": true,
         "temporarily_allow_weak_signatures": false,
         "updates_disabled": false

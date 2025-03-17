@@ -923,9 +923,9 @@ pref("privacy.partition.serviceWorkers", true);
 /// Ignore less restricted referer policies (than the default)
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#12979
 
-pref("network.http.referer.disallowCrossSiteRelaxingDefault", true); // for cross-site requests
-pref("network.http.referer.disallowCrossSiteRelaxingDefault.pbmode", true); // for cross-site requests in Private Browsing
-pref("network.http.referer.disallowCrossSiteRelaxingDefault.pbmode.top_navigation", true); // for top navigations in Private Browsing
+pref("network.http.referer.disallowCrossSiteRelaxingDefault", true); // [DEFAULT] - for cross-site requests
+pref("network.http.referer.disallowCrossSiteRelaxingDefault.pbmode", true); // [DEFAULT] - for cross-site requests in Private Browsing
+pref("network.http.referer.disallowCrossSiteRelaxingDefault.pbmode.top_navigation", true); // [DEFAULT] - for top navigations in Private Browsing
 pref("network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation", true); // for top navigations
 
 /// Block known tracking resources
@@ -2098,7 +2098,7 @@ pref("browser.phoenix.status.extended.desktop.common", "successfully applied :D"
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.03.12.1", locked);
+pref("mail.dove.version", "2025.03.17.1", locked);
 
 pref("mail.dove.status", "000");
 

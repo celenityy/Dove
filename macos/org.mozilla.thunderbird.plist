@@ -169,6 +169,9 @@
 				<string>https://github.com/gorhill/uBlock/releases</string>
 				<string>https://github.com/gorhill/uBlock/releases/*</string>
 				<string>https://github.com/gorhill/uBlock/releases*</string>
+				<string>https://github.com/lieser/dkim_verifier/releases</string>
+				<string>https://github.com/lieser/dkim_verifier/releases/*</string>
+				<string>https://github.com/lieser/dkim_verifier/releases*</string>
 				<string>https://github.com/mozilla-extensions/aboutsync/releases</string>
 				<string>https://github.com/mozilla-extensions/aboutsync/releases/*</string>
 				<string>https://github.com/mozilla-extensions/aboutsync/releases*</string>
@@ -187,6 +190,7 @@
 				<string>https://github.com/mozilla-extensions/searchengine-devtools/releases</string>
 				<string>https://github.com/mozilla-extensions/searchengine-devtools/releases/*</string>
 				<string>https://github.com/mozilla-extensions/searchengine-devtools/releases*</string>
+				<string>https://objects.githubusercontent.com/github-production-release-asset-2e65be/10036400/*</string>
 				<string>https://objects.githubusercontent.com/github-production-release-asset-2e65be/134775419/*</string>
 				<string>https://objects.githubusercontent.com/github-production-release-asset-2e65be/232824822/*</string>
 				<string>https://objects.githubusercontent.com/github-production-release-asset-2e65be/26682105/*</string>
@@ -1210,7 +1214,7 @@
 		<key>uBlock0@raymondhill.net</key>
 		<dict>
 			<key>install_url</key>
-			<string>https://github.com/gorhill/uBlock/releases/download/1.62.0/uBlock0_1.62.0.thunderbird.xpi</string>
+			<string>https://github.com/gorhill/uBlock/releases/download/1.63.0/uBlock0_1.63.0.thunderbird.xpi</string>
 			<key>installation_mode</key>
 			<string>normal_installed</string>
 			<key>private_browsing</key>
