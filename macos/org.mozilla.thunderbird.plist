@@ -613,7 +613,7 @@
 		<key>dkim_verifier@pl</key>
 		<dict>
 			<key>install_url</key>
-			<string>https://github.com/lieser/dkim_verifier/releases/download/v6.0.1/dkim_verifier-6.0.1.xpi</string>
+			<string>https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi</string>
 			<key>installation_mode</key>
 			<string>normal_installed</string>
 			<key>private_browsing</key>
