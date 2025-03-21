@@ -544,7 +544,7 @@ pref("mail.dove.status", "016");
 
 /*** 017 SPECIALIZED/CUSTOM CONFIGS [NO-OSX] ***/
 
-/// Enable support for custom/specialized configs... // [NO-OSX]
+/// Enable support for custom/specialized configs... [NO-OSX]
 pref("general.config.filename", "dove.cfg"); // [NO-OSX]
 pref("general.config.vendor", "dove"); // [NO-OSX]
 pref("general.config.obscure_value", 0); // [NO-OSX]
