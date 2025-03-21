@@ -76,7 +76,7 @@ Other platforms have unfortunately proven difficult to support, though progress 
 > [!NOTE]
 > You can use **`paru`** instead of **`yay`** with the same options.
 
-Thunderbird *(Standard)*:
+Thunderbird *(Pacman)*:
 
 ```sh
 yay -S dove-arch
@@ -96,11 +96,11 @@ yay -S dove-flatpak
 
  ```sh
  echo 'deb https://download.opensuse.org/repositories/home:/celenity/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/home:celenity.list
- curl -fsSL https://download.opensuse.org/repositories/home:celenity/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_celenity.gpg > /dev/null
+ wget -O- https://download.opensuse.org/repositories/home:celenity/Debian_12/Release.key 2>/dev/null | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_celenity.gpg > /dev/null
  sudo apt update
  ```
 
-Thunderbird *(Standard)*:
+Thunderbird *(DEB)*:
 
 ```sh
 sudo apt install dove
@@ -123,7 +123,7 @@ sudo apt install dove-flatpak
  sudo dnf makecache
  ```
 
-Thunderbird *(Standard)*:
+Thunderbird *(RPM)*:
 
 ```sh
 sudo dnf install dove
@@ -200,7 +200,7 @@ ___
 > [!NOTE]
 > You can use **`paru`** instead of **`yay`** with the same options.
 
-Thunderbird *(Standard)*:
+Thunderbird *(Pacman)*:
 
 ```sh
 yay -Rcns dove-arch
@@ -216,7 +216,7 @@ yay -Rcns dove-flatpak
 
 **<details><summary>Debian/Ubuntu & derivatives</summary>**
 
-Thunderbird *(Standard)*:
+Thunderbird *(DEB)*:
 
 ```sh
 sudo apt remove dove
@@ -240,7 +240,7 @@ sudo apt update
 
 **<details><summary>Fedora</summary>**
 
-Thunderbird *(Standard)*:
+Thunderbird *(RPM)*:
 
 ```sh
 sudo dnf remove dove
