@@ -79,7 +79,7 @@ Other platforms have unfortunately proven difficult to support, though progress 
 Thunderbird *(Pacman)*:
 
 ```sh
-yay -S dove-arch
+yay -S dove
 ```
 
 Thunderbird *(System Flatpak)*:
