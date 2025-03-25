@@ -1094,7 +1094,7 @@
       },
       "uBlock0@raymondhill.net": {
         "installation_mode": "normal_installed",
-        "install_url": "https://github.com/gorhill/uBlock/releases/download/1.63.0/uBlock0_1.63.0.thunderbird.xpi",
+        "install_url": "https://github.com/gorhill/uBlock/releases/download/1.63.2/uBlock0_1.63.2.thunderbird.xpi",
         "private_browsing": true,
         "temporarily_allow_weak_signatures": false,
         "updates_disabled": false
