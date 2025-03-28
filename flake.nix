@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     phoenix = {
-      url = "git+https://codeberg.org/celenity/Phoenix";
+      url = "git+https://gitlab.com/celenityy/Phoenix";
       flake = false;
     };
   };
