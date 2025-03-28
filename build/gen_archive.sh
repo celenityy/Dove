@@ -6,8 +6,16 @@
 
 # Script should be ran from inside the directory where you store Dove, not directly from the 'archives' or `build` folder...
 
-rm archives/dove.zip
+echo_green_text() {
+	echo -e "\033[32m$1\033[0m"
+}
 
-zip -R archives/dove.zip 'dove.cfg' 'etc/*' 'etc/profile.d/*' 'policies.json' 'prefs/*' 'COPYING' 'README.md' -x 'build/*' '.code-workspace' '.domains' '.DS_Store' '.git*' 'gitlab-ci.yml' '_redirects'
+rm archives/dove.zip archives/dove-osx.zip
 
-zip -R archives/dove-osx.zip 'macos/dove.cfg' 'macos/org.mozilla.thunderbird.plist' 'COPYING' 'README.md' -x 'build/*' 'windows/*' '.code-workspace' '.domains' '.DS_Store' '.git*' 'gitlab-ci.yml' '_redirects'
+echo_green_text "Creating archives/dove.zip..."
+
+zip -r -FS archives/dove.zip * -x 'archives/*' 'assets/*' 'build/*' 'configs/*' 'extensions/*' 'flake.*' 'installer_scripts/*' 'macos/*' 'uBlock/*' 'uninstaller_scripts/*' 'windows/*' '*.code-workspace' '.domains' '.DS_Store' '.git*' '_redirects'
+
+echo_green_text "Creating archives/dove-osx.zip..."
+
+zip -r -FS archives/dove-osx.zip * -x 'archives/*' 'assets/*' 'build/*' 'configs/*' 'dove.cfg' 'etc/*' 'extensions/*' 'flake.*' 'installer_scripts/*' 'macos/defaults/*' 'macos/dove-bootstrap.cfg' 'macos/Library/*' 'macos/migration/*' 'prefs/*' 'policies.json' 'uBlock/*' 'uninstaller_scripts/*' 'windows/*' '*.code-workspace' '.domains' '.DS_Store' '.git*' '_redirects'
