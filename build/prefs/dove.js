@@ -458,7 +458,7 @@ pref("mail.dove.status", "014");
 
 /// Add our own extension recommendations
 // https://searchfox.org/mozilla-central/source/testing/profiles/common/user.js
-pref("extensions.getAddons.discovery.api_url", "https://dove.celenity.dev/extensions/recommendations.json");
+pref("extensions.getAddons.discovery.api_url", "https://gitlab.com/celenityy/Dove/-/raw/pages/extensions/recommendations.json");
 pref("extensions.recommendations.privacyPolicyUrl", "https://dove.celenity.dev/privacy#extension-recommendations");
 
 /// Allow running uBlock Origin on restricted/quarantined domains

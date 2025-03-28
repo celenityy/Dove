@@ -29,7 +29,7 @@ initialize_dove() {
 }
 
 ## Scripts are here
-URL="https://codeberg.org/celenity/Dove/raw/branch/pages/installer_scripts/macos"
+URL="https://gitlab.com/celenityy/Dove/-/raw/pages/installer_scripts/macos"
 
 ## Scripts file
 SCRIPT=("dove-initialize-system.sh"
@@ -47,7 +47,7 @@ read
 
 ## Install Dove
 echo_green_text "Adding celenity's Tap to Homebrew..."
-brew tap celenity/tap https://codeberg.org/celenity/tap || error_fn
+brew tap celenity/tap https://gitlab.com/celenityy/tap || error_fn
 echo
 
 echo_green_text "Updating Homebrew cache..."
@@ -59,7 +59,7 @@ brew install dove || error_fn
 echo
 
 echo_green_text "Downloading dove-apply.sh..."
-wget -nv https://codeberg.org/celenity/Dove/raw/branch/pages/macos/Library/celenity/Dove/dove-apply.sh || error_fn
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply.sh || error_fn
 echo
 
 echo_green_text "Changing permissions of dove-apply.sh to 744..."
@@ -79,7 +79,7 @@ sudo /bin/cp dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
 echo
 
 echo_green_text "Downloading dev.celenity.dove.apply.plist..."
-wget -nv https://codeberg.org/celenity/Dove/raw/branch/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
@@ -95,11 +95,11 @@ sudo /bin/launchctl load -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist
 echo
 
 echo_green_text "Downloading dove-bootstrap.js..."
-wget -nv https://codeberg.org/celenity/Dove/raw/branch/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
 echo
 
 echo_green_text "Downloading dove-bootstrap.cfg..."
-wget -nv https://codeberg.org/celenity/Dove/raw/branch/pages/macos/dove-bootstrap.cfg || error_fn
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/dove-bootstrap.cfg || error_fn
 echo
 
 echo -e ""

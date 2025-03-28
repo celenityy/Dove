@@ -25,7 +25,7 @@
                     ]
                 },
                 "guid": "dkim_verifier@pl",
-                "icon_url": "https://dove.celenity.dev/extensions/recommendations/icons/dkim-verifier.svg",
+                "icon_url": "https://gitlab.com/celenityy/Dove/-/raw/fd10b5745c7b3d64d104157da4a550a0117f14bd/extensions/recommendations/icons/dkim-verifier.svg",
                 "name": "DKIM Verifier - ⚖️ MIT",
                 "slug": "dkim-verifier",
                 "type": "extension",
@@ -53,12 +53,12 @@
                             "is_mozilla_signed_extension": true,
                             "platform": "all",
                             "status": "public",
-                            "url": "https://github.com/gorhill/uBlock/releases/download/1.62.0/uBlock0_1.62.0.thunderbird.xpi"
+                            "url": "https://github.com/gorhill/uBlock/releases/download/1.63.2/uBlock0_1.63.2.thunderbird.xpi"
                         }
                     ]
                 },
                 "guid": "uBlock0@raymondhill.net",
-                "icon_url": "https://dove.celenity.dev/extensions/recommendations/icons/ublock-origin.svg",
+                "icon_url": "https://gitlab.com/celenityy/Dove/-/raw/fd10b5745c7b3d64d104157da4a550a0117f14bd/extensions/recommendations/icons/ublock-origin.svg",
                 "name": "uBlock Origin - ⚖️ GPL-3.0-only",
                 "slug": "ublock-origin",
                 "type": "extension",

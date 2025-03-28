@@ -145,7 +145,7 @@ sudo dnf install dove-flatpak
 Run the following installation script in your terminal of choice:
 
 ```sh
-bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/installer_scripts/macos_install.sh 2>/dev/null)"
+bash -c "$(wget -O- https://gitlab.com/celenityy/Dove/-/raw/pages/installer_scripts/macos_install.sh 2>/dev/null)"
 ```
 
 </details>
@@ -163,12 +163,12 @@ NixOS is supported for [flake-based configurations](https://wiki.nixos.org/wiki/
     # which is often the case. If you've named it something else,
     # you'll need to change the `nixpkgs` below.
     dove = {
-      url = "git+https://codeberg.org/celenity/Dove";
+      url = "git+https://gitlab.com/celenityy/Dove";
       inputs.nixpkgs.follows = "nixpkgs";
 	  inputs.phoenix.follows = "phoenix";
     };
 	phoenix = {
-      url = "git+https://codeberg.org/celenity/Phoenix";
+      url = "git+https://gitlab.com/celenityy/Phoenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -266,7 +266,7 @@ sudo dnf makecache
 Run the following uninstall script in your terminal of choice:
 
 ```sh
-bash -c "$(wget -O- https://codeberg.org/celenity/Dove/raw/branch/pages/uninstaller_scripts/macos_uninstall.sh 2>/dev/null)"
+bash -c "$(wget -O- https://gitlab.com/celenityy/Dove/-/raw/pages/uninstaller_scripts/macos_uninstall.sh 2>/dev/null)"
 ```
 
 </details>
@@ -290,22 +290,22 @@ By default, Dove is installed & updated via your operating system's package mana
 
 However, if this is not desirable for you & your situation, or you would simply like to use Dove on an unsupported operating system, you can manually install Dove with the following steps:
 
-**1:** Download `dove.cfg` file from [here](https://dove.celenity.dev/dove.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
+**1:** Download `dove.cfg` file from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/dove.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
 
 ```sh
-wget https://dove.celenity.dev/dove.cfg
+wget https://gitlab.com/celenityy/Dove/-/raw/pages/dove.cfg
 ```
 
-**2:** Download `dove.js` from [here](https://dove.celenity.dev/defaults/pref/dove.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
+**2:** Download `dove.js` from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/defaults/pref/dove.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
 
 ```sh
-wget https://dove.celenity.dev/defaults/pref/dove.js
+wget https://gitlab.com/celenityy/Dove/-/raw/pages/defaults/pref/dove.js
 ```
 
-**3:** Download `policies.json` from [here](https://dove.celenity.dev/policies.json). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
+**3:** Download `policies.json` from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/policies.json). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
 
 ```sh
-wget https://dove.celenity.dev/policies.json
+wget https://gitlab.com/celenityy/Dove/-/raw/pages/policies.json
 ```
 
 **4:** Locate your Thunderbird installation directory. This will vary depending on your platform, you can generally find it by navigating to `Help` (Located on top bar) -> `Troubleshooting information` & checking the directory next to `Application Binary`. For example, on Fedora Linux, I see `/usr/lib64/thunderbird/thunderbird` next to `Application Binary`. This means our installation directory is `/usr/lib64/thunderbird`.

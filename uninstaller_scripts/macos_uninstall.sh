@@ -29,7 +29,7 @@ uninstall_dove() {
 }
 
 ## Scripts are here
-URL="https://codeberg.org/celenity/Dove/raw/branch/pages/uninstaller_scripts/macos"
+URL="https://gitlab.com/celenityy/Dove/-/raw/pages/uninstaller_scripts/macos"
 
 ## Scripts file
 SCRIPT=("dove-uninstall-system.sh"

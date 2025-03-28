@@ -2,7 +2,7 @@
     "assets.json": {
         "content": "internal",
         "updateAfter": 1,
-        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/dev/uBlock/assets.dev.json"
+        "contentURL": "https://gitlab.com/celenityy/Dove/-/raw/dev/uBlock/assets.dev.json"
     },
     "public_suffix_list.dat": {
         "content": "internal",
@@ -1278,7 +1278,7 @@
         "group": "default",
         "parent": "🛡️ Block JS",
         "title": "🛡️ Block JS",
-        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/dev/uBlock/block-js.txt",
+        "contentURL": "https://gitlab.com/celenityy/Dove/-/raw/dev/uBlock/block-js.txt",
         "supportURL": "https://dove.celenity.dev/issues",
         "instructionURL": "https://dove.celenity.dev"
     },
@@ -1287,7 +1287,7 @@
         "group": "default",
         "parent": "🛡️ Block JS",
         "title": "🛡️ Block JS - Unbreak",
-        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/dev/uBlock/unbreak-js.txt",
+        "contentURL": "https://gitlab.com/celenityy/Dove/-/raw/dev/uBlock/unbreak-js.txt",
         "supportURL": "https://dove.celenity.dev/issues",
         "instructionURL": "https://dove.celenity.dev"
     },
@@ -1297,7 +1297,7 @@
         "parent": "🛡️ Block JS",
         "off": true,
         "title": "🛡️ Block JS - Unbreak (Testing)",
-        "contentURL": "https://codeberg.org/celenity/Dove/raw/branch/dev/uBlock/unbreak-js-testing.txt",
+        "contentURL": "https://gitlab.com/celenityy/Dove/-/raw/dev/uBlock/unbreak-js-testing.txt",
         "supportURL": "https://dove.celenity.dev/issues",
         "instructionURL": "https://dove.celenity.dev"
     }
