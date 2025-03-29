@@ -31,11 +31,12 @@ pref("mail.dove.version", "2025.03.25.1", locked);
 010: UI
 011: ATTACK SURFACE REDUCTION
 012: PASSWORDS & AUTHENTICATION
-013: MISC. PRIVACY
-014: MISC. SECURITY
-015: MISC.
-016: Personal Touch 💜
-017: SPECIALIZED/CUSTOM CONFIGS
+013: MISC. PRIVACY + SECURITY
+014: MISC. PRIVACY
+015: MISC. SECURITY
+016: MISC.
+017: Personal Touch 💜
+018: SPECIALIZED/CUSTOM CONFIGS
 
 */
 
@@ -374,7 +375,18 @@ pref("signon.rememberSignons", true); // [DEFAULT]
 
 pref("mail.dove.status", "012");
 
-/*** 013 MISC. PRIVACY ***/
+/*** 013 MISC. PRIVACY + SECURITY ***/
+
+/// Disable WebGL
+// PRIVACY: Fingerprinting concerns
+// SECURITY: Attack Surface Reduction
+// https://blog.browserscan.net/docs/webgl-fingerprinting
+// https://security.stackexchange.com/questions/13799/is-webgl-a-security-concern
+pref("webgl.disabled", true);
+
+pref("mail.dove.status", "013");
+
+/*** 014 MISC. PRIVACY ***/
 
 /// Disable automatic collection of email addresses for Thunderbird's Address Book
 pref("mail.collect_email_address_outgoing", false);
@@ -409,9 +421,9 @@ pref("mailnews.messageid_browser.url", "");
 /// Warn users if they have not addressed a BCC (Blind Carbon Copy) warning
 pref("mail.compose.warn_public_recipients.aggressive", true);
 
-pref("mail.dove.status", "013");
+pref("mail.dove.status", "014");
 
-/*** 014 MISC. SECURITY ***/
+/*** 015 MISC. SECURITY ***/
 
 /// Always warn users before launching other apps
 pref("mail.external_protocol_requires_permission", true); // [HIDDEN]
@@ -452,9 +464,9 @@ pref("mail.html_sanitize.drop_conditional_css", true); // [DEFAULT]
 pref("mailnews.display.html_as", 3);
 pref("rss.display.html_as", 3);
 
-pref("mail.dove.status", "014");
+pref("mail.dove.status", "015");
 
-/*** 015 MISC. ***/
+/*** 016 MISC. ***/
 
 /// Add our own extension recommendations
 // https://searchfox.org/mozilla-central/source/testing/profiles/common/user.js
@@ -505,9 +517,9 @@ pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
 
-pref("mail.dove.status", "015");
+pref("mail.dove.status", "016");
 
-/*** 016 Personal Touch 💜 ***/
+/*** 017 Personal Touch 💜 ***/
 
 /// Things that are nice to have™
 // Not directly privacy & security related
@@ -540,15 +552,15 @@ pref("mailnews.show_send_progress", true); // [DEFAULT]
 /// Use underscores instead of spaces in file names when saving messages by default
 pref("mail.save_msg_filename_underscores_for_space", true);
 
-pref("mail.dove.status", "016");
+pref("mail.dove.status", "017");
 
-/*** 017 SPECIALIZED/CUSTOM CONFIGS [NO-OSX] ***/
+/*** 018 SPECIALIZED/CUSTOM CONFIGS [NO-OSX] ***/
 
 /// Enable support for custom/specialized configs... [NO-OSX]
 pref("general.config.filename", "dove.cfg"); // [NO-OSX]
 pref("general.config.vendor", "dove"); // [NO-OSX]
 pref("general.config.obscure_value", 0); // [NO-OSX]
 
-pref("mail.dove.status", "017"); // [NO-OSX]
+pref("mail.dove.status", "018"); // [NO-OSX]
 
 pref("mail.dove.status", "successfully applied :D", locked);
