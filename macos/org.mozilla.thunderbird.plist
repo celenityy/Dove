@@ -68,7 +68,7 @@
 				<key>adminSettings</key>
 				<dict>
 					<key>assetsBootstrapLocation</key>
-					<string>https://codeberg.org/celenity/Dove/raw/branch/pages/uBlock/assets.json</string>
+					<string>https://gitlab.com/celenityy/Dove/-/raw/pages/uBlock/assets.json</string>
 				</dict>
 			</dict>
 		</dict>
