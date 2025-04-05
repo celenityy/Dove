@@ -36,7 +36,7 @@ At the end of the day, above all else:
 **Dove is designed from the ground up to always put the user first.**
 
 > [!IMPORTANT]
->**⚠️ All users MUST read the Wiki [here](https://dove.celenity.dev/wiki) before proceeding. The [Important](https://dove.celenity.dev/important) pages is of extra importance!!**
+>**⚠️ All users MUST read the Wiki [here](https://dove.celenity.dev/wiki) before proceeding. The [Important](https://codeberg.org/celenity/Dove/wiki/Important.md) pages is of extra importance!!**
 
 ___
 
