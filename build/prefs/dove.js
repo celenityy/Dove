@@ -31,12 +31,13 @@ pref("mail.dove.version", "2025.04.02.1", locked);
 010: UI
 011: ATTACK SURFACE REDUCTION
 012: PASSWORDS & AUTHENTICATION
-013: MISC. PRIVACY + SECURITY
-014: MISC. PRIVACY
-015: MISC. SECURITY
-016: MISC.
-017: Personal Touch 💜
-018: SPECIALIZED/CUSTOM CONFIGS
+013: EXTENSIONS
+014: MISC. PRIVACY + SECURITY
+015: MISC. PRIVACY
+016: MISC. SECURITY
+017: MISC.
+018: Personal Touch 💜
+019: SPECIALIZED/CUSTOM CONFIGS
 
 */
 
@@ -141,10 +142,6 @@ pref("purple.conversations.im.send_read", false); // [CHAT]
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1114475
 pref("mailnews.headers.sendUserAgent", false);
 pref("mailnews.headers.useMinimalUserAgent", true); // [DEFAULT, DEFENSE IN DEPTH]
-
-/// Prevent leaking display names of contacts in address fields with emails
-// https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
-pref("extensions.cardbook.useOnlyEmail", true);
 
 /// Prevent leaking local IP addresses with emails via EHLO/HELO
 // https://blog.plee.me/2014/11/mozilla-thunderbird-changing-the-ehlo-helo-value-in-the-received-header-for-outgoing-mail/
@@ -375,7 +372,36 @@ pref("signon.rememberSignons", true); // [DEFAULT]
 
 pref("mail.dove.status", "012");
 
-/*** 013 MISC. PRIVACY + SECURITY ***/
+/*** 013 EXTENSIONS ***/
+
+/// Add our own extension recommendations
+// https://searchfox.org/mozilla-central/source/testing/profiles/common/user.js
+pref("extensions.getAddons.discovery.api_url", "https://gitlab.com/celenityy/Dove/-/raw/pages/extensions/recommendations.json");
+pref("extensions.recommendations.privacyPolicyUrl", "https://dove.celenity.dev/privacy#extension-recommendations");
+
+/// Allow reporting malicious add-ons/themes to Mozilla
+pref("extensions.abuseReport.enabled", true);
+
+/// Allow running uBlock Origin on restricted/quarantined domains
+// Necessary since uBlock Origin isn't 'recommended' like it is on Firefox...
+// https://support.mozilla.org/kb/quarantined-domains
+pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true); // [HIDDEN]
+
+/// Always allow installing "incompatible" add-ons
+// REQUIRED FOR UBLOCK ORIGIN
+pref("extensions.strictCompatibility", false, locked); // [DEFAULT] [HIDDEN]
+
+/// Block DKIM Verifier from accessing restricted/quarantined domains
+// https://support.mozilla.org/kb/quarantined-domains
+pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false);
+
+/// Prevent leaking display names of contacts in address fields with emails [CARDBOOK]
+// https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
+pref("extensions.cardbook.useOnlyEmail", true);
+
+pref("mail.dove.status", "013");
+
+/*** 014 MISC. PRIVACY + SECURITY ***/
 
 /// Disable WebGL
 // PRIVACY: Fingerprinting concerns
@@ -384,9 +410,9 @@ pref("mail.dove.status", "012");
 // https://security.stackexchange.com/questions/13799/is-webgl-a-security-concern
 pref("webgl.disabled", true);
 
-pref("mail.dove.status", "013");
+pref("mail.dove.status", "014");
 
-/*** 014 MISC. PRIVACY ***/
+/*** 015 MISC. PRIVACY ***/
 
 /// Disable automatic collection of email addresses for Thunderbird's Address Book
 pref("mail.collect_email_address_outgoing", false);
@@ -421,9 +447,9 @@ pref("mailnews.messageid_browser.url", "");
 /// Warn users if they have not addressed a BCC (Blind Carbon Copy) warning
 pref("mail.compose.warn_public_recipients.aggressive", true);
 
-pref("mail.dove.status", "014");
+pref("mail.dove.status", "015");
 
-/*** 015 MISC. SECURITY ***/
+/*** 016 MISC. SECURITY ***/
 
 /// Always warn users before launching other apps
 pref("mail.external_protocol_requires_permission", true); // [HIDDEN]
@@ -464,27 +490,9 @@ pref("mail.html_sanitize.drop_conditional_css", true); // [DEFAULT]
 pref("mailnews.display.html_as", 3);
 pref("rss.display.html_as", 3);
 
-pref("mail.dove.status", "015");
+pref("mail.dove.status", "016");
 
-/*** 016 MISC. ***/
-
-/// Add our own extension recommendations
-// https://searchfox.org/mozilla-central/source/testing/profiles/common/user.js
-pref("extensions.getAddons.discovery.api_url", "https://gitlab.com/celenityy/Dove/-/raw/pages/extensions/recommendations.json");
-pref("extensions.recommendations.privacyPolicyUrl", "https://dove.celenity.dev/privacy#extension-recommendations");
-
-/// Allow running uBlock Origin on restricted/quarantined domains
-// Necessary since uBlock Origin isn't 'recommended' like it is on Firefox...
-// https://support.mozilla.org/kb/quarantined-domains
-pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true); // [HIDDEN]
-
-/// Always allow installing "incompatible" add-ons
-// REQUIRED FOR UBLOCK ORIGIN
-pref("extensions.strictCompatibility", false, locked); // [DEFAULT] [HIDDEN]
-
-/// Block DKIM Verifier from accessing restricted/quarantined domains
-// https://support.mozilla.org/kb/quarantined-domains
-pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false);
+/*** 017 MISC. ***/
 
 /// Disable `mailto:` warning...
 // Override from Phoenix
@@ -517,9 +525,9 @@ pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
 
-pref("mail.dove.status", "016");
+pref("mail.dove.status", "017");
 
-/*** 017 Personal Touch 💜 ***/
+/*** 018 Personal Touch 💜 ***/
 
 /// Things that are nice to have™
 // Not directly privacy & security related
@@ -528,9 +536,6 @@ pref("mail.dove.status", "016");
 // Extremely useful for Thunderbird, as it gives us a URL bar...
 // Can be accessed via `Tools` -> `Developer Tools` -> `Debug Add-ons` (`about:debugging`), simply choose `Inspect` next to any tab of your choice and profit...
 pref("devtools.aboutdebugging.local-tab-debugging", true);
-
-/// Allow reporting malicious add-ons/themes to Mozilla
-pref("extensions.abuseReport.enabled", true);
 
 /// Enable the 'Bubbles' chat theme by default [CHAT]
 pref("messenger.options.messagesStyle.theme", "bubbles"); // [CHAT]
@@ -552,15 +557,15 @@ pref("mailnews.show_send_progress", true); // [DEFAULT]
 /// Use underscores instead of spaces in file names when saving messages by default
 pref("mail.save_msg_filename_underscores_for_space", true);
 
-pref("mail.dove.status", "017");
+pref("mail.dove.status", "018");
 
-/*** 018 SPECIALIZED/CUSTOM CONFIGS [NO-OSX] ***/
+/*** 019 SPECIALIZED/CUSTOM CONFIGS [NO-OSX] ***/
 
 /// Enable support for custom/specialized configs... [NO-OSX]
 pref("general.config.filename", "dove.cfg"); // [NO-OSX]
 pref("general.config.vendor", "dove"); // [NO-OSX]
 pref("general.config.obscure_value", 0); // [NO-OSX]
 
-pref("mail.dove.status", "018"); // [NO-OSX]
+pref("mail.dove.status", "019"); // [NO-OSX]
 
 pref("mail.dove.status", "successfully applied :D", locked);
