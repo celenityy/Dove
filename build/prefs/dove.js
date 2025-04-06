@@ -395,6 +395,12 @@ pref("extensions.strictCompatibility", false, locked); // [DEFAULT] [HIDDEN]
 // https://support.mozilla.org/kb/quarantined-domains
 pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false);
 
+/// Enable installation of add-ons by default
+// Note that this does NOT apply to `Recommended` extensions (collecitons) found at `Settings` -> `Advanced` -> `Extensions`.
+// Unfortunately doesn't have a prompt when disabled like Desktop :(
+// Setting here to expose via the `about:config`...
+pref("xpinstall.enabled", true); // [DEFAULT] [HIDDEN]
+
 /// Prevent leaking display names of contacts in address fields with emails [CARDBOOK]
 // https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
 pref("extensions.cardbook.useOnlyEmail", true);
