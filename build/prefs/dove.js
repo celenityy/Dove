@@ -374,11 +374,6 @@ pref("mail.dove.status", "012");
 
 /*** 013 EXTENSIONS ***/
 
-/// Add our own extension recommendations
-// https://searchfox.org/mozilla-central/source/testing/profiles/common/user.js
-pref("extensions.getAddons.discovery.api_url", "https://gitlab.com/celenityy/Dove/-/raw/pages/extensions/recommendations.json");
-pref("extensions.recommendations.privacyPolicyUrl", "https://dove.celenity.dev/privacy#extension-recommendations");
-
 /// Allow reporting malicious add-ons/themes to Mozilla
 pref("extensions.abuseReport.enabled", true);
 
