@@ -296,10 +296,10 @@ However, if this is not desirable for you & your situation, or you would simply 
 wget https://gitlab.com/celenityy/Dove/-/raw/pages/dove.cfg
 ```
 
-**2:** Download `dove.js` from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/defaults/pref/dove.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
+**2:** Download `dove.js` from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/prefs/dove.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
 
 ```sh
-wget https://gitlab.com/celenityy/Dove/-/raw/pages/defaults/pref/dove.js
+wget https://gitlab.com/celenityy/Dove/-/raw/pages/prefs/dove.js
 ```
 
 **3:** Download `policies.json` from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/policies.json). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
