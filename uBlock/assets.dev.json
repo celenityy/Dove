@@ -995,13 +995,6 @@
         "supportURL": "https://badblock.celenity.dev/issues",
         "instructionURL": "https://badblock.celenity.dev#ethical-whitelist"
     },
-    "fmhyplus": {
-        "content": "filters",
-        "group": "malware",
-        "title": "FMHY Unsafe sites filterlist - Plus",
-        "contentURL": "https://raw.githubusercontent.com/fmhy/FMHYFilterlist/main/filterlist.txt",
-        "supportURL": "https://github.com/fmhy/FMHYFilterlist/issues"
-    },
     "multilight": {
         "content": "filters",
         "group": "multipurpose",
