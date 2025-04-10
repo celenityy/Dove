@@ -396,9 +396,10 @@ pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true); // [HI
 // REQUIRED FOR UBLOCK ORIGIN
 pref("extensions.strictCompatibility", false, locked); // [DEFAULT] [HIDDEN]
 
-/// Block DKIM Verifier from accessing restricted/quarantined domains
+/// Block Cardbook (if installed) & DKIM Verifier from accessing restricted/quarantined domains
 // https://support.mozilla.org/kb/quarantined-domains
-pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false);
+pref("extensions.quarantineIgnoredByUser.cardbook@vigneau.philippe", false); // [DEFAULT]
+pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 
 /// Enable installation of add-ons by default
 // Note that this does NOT apply to `Recommended` extensions (collecitons) found at `Settings` -> `Advanced` -> `Extensions`.
