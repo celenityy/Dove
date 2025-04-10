@@ -569,6 +569,9 @@ pref("mail.SpellCheckBeforeSend", true);
 /// Prevent automatically converting emoticons to emojis
 pref("mail.display_glyph", false);
 
+/// Prevent hiding the tab bar when only one tab is open
+pref("mail.tabs.autoHide", false);
+
 /// Show progress when saving/sending a message
 pref("mailnews.show_send_progress", true); // [DEFAULT]
 
