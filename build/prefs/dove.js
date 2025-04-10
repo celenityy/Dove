@@ -396,6 +396,11 @@ pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true); // [HI
 // REQUIRED FOR UBLOCK ORIGIN
 pref("extensions.strictCompatibility", false, locked); // [DEFAULT] [HIDDEN]
 
+/// Allow unprivileged extensions to use experimental APIs
+// Required for ex. CardBook, also used by DKIM Verifier
+// https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
+pref("extensions.experiments.enabled", true); // [DEFAULT]
+
 /// Block Cardbook (if installed) & DKIM Verifier from accessing restricted/quarantined domains
 // https://support.mozilla.org/kb/quarantined-domains
 pref("extensions.quarantineIgnoredByUser.cardbook@vigneau.philippe", false); // [DEFAULT]

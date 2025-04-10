@@ -110,6 +110,10 @@
                 ],
                 "temporarily_allow_weak_signatures": false
             },
+            "cardbook@vigneau.philippe": {
+      	        "private_browsing": true,
+                "temporarily_allow_weak_signatures": false
+            },
             "dkim_verifier@pl": {
                 "installation_mode": "normal_installed",
                 "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
