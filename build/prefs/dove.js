@@ -74,6 +74,13 @@ pref("browser.translations.automaticallyPopup", false);
 pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
 
+/// Disable 'In-App Messaging'
+// https://searchfox.org/comm-central/source/mail/components/inappnotifications/docs/index.md
+pref("mail.inappnotifications.blog_enabled", false, locked); // [NIGHTLY] Surveys
+pref("mail.inappnotifications.donation_enabled", false, locked); // [NIGHTLY] Donation prompts/fundraisers
+pref("mail.inappnotifications.enabled", false); // [DEFAULT - non-Nightly]
+pref("mail.inappnotifications.message_enabled", false); // [NIGHTLY] Updates
+
 /// Disable onboarding
 // https://searchfox.org/comm-central/source/suite/components/nsSuiteGlue.js#965
 pref("browser.EULA.override", true);
@@ -90,6 +97,9 @@ pref("extensions.getAddons.recommended.url", "");
 pref("mailnews.start_page.enabled", false);
 pref("mailnews.start_page.override_url", "");
 pref("mailnews.start_page.url", "about:config");
+
+/// Disable Surveys
+pref("app.survey.version.viewed", 99, locked); // [HIDDEN]
 
 /// Prevent checking if Thunderbird is the default mail client
 pref("mail.shell.checkDefaultClient", false);
