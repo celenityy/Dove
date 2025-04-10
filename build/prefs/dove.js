@@ -543,6 +543,10 @@ pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
 
+/// Use a blank new tab page
+// This likely isn't used anywhere, but Thunderbird does seem to pull in this component and this setting appears in the `about:config`, so we can set it anyways
+pref("browser.newtabpage.enabled", false);
+
 pref("mail.dove.status", "017");
 
 /*** 018 Personal Touch 💜 ***/
