@@ -41,92 +41,27 @@
         "ExtensionSettings": {
             "*": {
                 "blocked_install_message": "I am Iron Man.",
-                "install_sources": [
-                    "https://addons.thunderbird.net/*",
-                    "https://archive.mozilla.org/pub/labs/*",
-                    "https://archive.mozilla.org/pub/system-addons/*",
-                    "https://archive.mozilla.org/pub/thunderbird/*",
-                    "https://ftp.mozilla.org/pub/labs/*",
-                    "https://ftp.mozilla.org/pub/system-addons/*",
-                    "https://ftp.mozilla.org/pub/thunderbird/*",
-                    "https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass_paywalls_clean-latest.xpi&inline=false",
-                    "https://github.com/anticensority/runet-censorship-bypass/releases",
-                    "https://github.com/anticensority/runet-censorship-bypass/releases/*",
-                    "https://github.com/anticensority/runet-censorship-bypass/releases*",
-                    "https://github.com/darkreader/darkreader/releases",
-                    "https://github.com/darkreader/darkreader/releases/*",
-                    "https://github.com/darkreader/darkreader/releases*",
-                    "https://github.com/FastForwardTeam/FastForward/releases",
-                    "https://github.com/FastForwardTeam/FastForward/releases/*",
-                    "https://github.com/FastForwardTeam/FastForward/releases*",
-                    "https://github.com/fmhy/FMHY-SafeGuard/releases",
-                    "https://github.com/fmhy/FMHY-SafeGuard/releases/*",
-                    "https://github.com/fmhy/FMHY-SafeGuard/releases*",
-                    "https://github.com/gorhill/uBlock/releases",
-                    "https://github.com/gorhill/uBlock/releases/*",
-                    "https://github.com/gorhill/uBlock/releases*",
-                    "https://github.com/lieser/dkim_verifier/releases",
-                    "https://github.com/lieser/dkim_verifier/releases/*",
-                    "https://github.com/lieser/dkim_verifier/releases*",
-                    "https://github.com/mozilla-extensions/aboutsync/releases",
-                    "https://github.com/mozilla-extensions/aboutsync/releases/*",
-                    "https://github.com/mozilla-extensions/aboutsync/releases*",
-                    "https://github.com/mozilla-extensions/fingerprinting-protection-debugger/releases",
-                    "https://github.com/mozilla-extensions/fingerprinting-protection-debugger/releases/*",
-                    "https://github.com/mozilla-extensions/fingerprinting-protection-debugger/releases*",
-                    "https://github.com/mozilla-extensions/nimbus-devtools/releases",
-                    "https://github.com/mozilla-extensions/nimbus-devtools/releases/*",
-                    "https://github.com/mozilla-extensions/nimbus-devtools/releases*",
-                    "https://github.com/mozilla-extensions/normandy-devtools/releases",
-                    "https://github.com/mozilla-extensions/normandy-devtools/releases/*",
-                    "https://github.com/mozilla-extensions/normandy-devtools/releases*",
-                    "https://github.com/mozilla-extensions/remote-settings-devtools/releases",
-                    "https://github.com/mozilla-extensions/remote-settings-devtools/releases/*",
-                    "https://github.com/mozilla-extensions/remote-settings-devtools/releases*",
-                    "https://github.com/mozilla-extensions/searchengine-devtools/releases",
-                    "https://github.com/mozilla-extensions/searchengine-devtools/releases/*",
-                    "https://github.com/mozilla-extensions/searchengine-devtools/releases*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/10036400/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/134775419/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/232824822/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/26682105/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/33263118/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/404295988/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/46041549/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/54078039/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/671874733/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/811220552/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/81214532/*",
-                    "https://objects.githubusercontent.com/github-production-release-asset-2e65be/873923787/*",
-                    "https://releases.mozilla.org/pub/labs/*",
-                    "https://releases.mozilla.org/pub/system-addons/*",
-                    "https://releases.mozilla.org/pub/thunderbird/*"
-                ],
                 "allowed_types": [
                     "extension",
                     "theme",
                     "dictionary",
                     "locale"
-                ],
-                "updates_disabled": false,
-                "temporarily_allow_weak_signatures": false
+                ]
+            },
+            "cardbook@vigneau.philippe": {
+      	        "private_browsing": true
             },
             "dkim_verifier@pl": {
                 "installation_mode": "normal_installed",
                 "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
-                "private_browsing": true,
-                "temporarily_allow_weak_signatures": false,
-                "updates_disabled": false
+                "private_browsing": true
             },
             "uBlock0@raymondhill.net": {
                 "installation_mode": "normal_installed",
                 "install_url": "https://github.com/gorhill/uBlock/releases/download/1.63.2/uBlock0_1.63.2.thunderbird.xpi",
-                "private_browsing": true,
-                "temporarily_allow_weak_signatures": false,
-                "updates_disabled": false
+                "private_browsing": true
             }
         },
-        "OfferToSaveLoginsDefault": true,
         "SearchEngines": {
             "Add": [
                 {
