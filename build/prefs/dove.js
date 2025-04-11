@@ -87,7 +87,7 @@ pref("mail.inappnotifications.message_enabled", false); // [NIGHTLY] Updates
 pref("browser.EULA.override", true);
 pref("browser.rights.override", true);
 pref("mail.rights.override", true);
-pref("mailnews.start_page_override.mstone", "ignore");
+pref("mailnews.start_page_override.mstone", "ignore", locked);
 
 /// Disable recommendations
 pref("extensions.getAddons.recommended.url", "");
