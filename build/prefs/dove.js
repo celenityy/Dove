@@ -32,12 +32,13 @@ pref("mail.dove.version", "2025.04.02.1", locked);
 011: ATTACK SURFACE REDUCTION
 012: PASSWORDS & AUTHENTICATION
 013: EXTENSIONS
-014: MISC. PRIVACY + SECURITY
-015: MISC. PRIVACY
-016: MISC. SECURITY
-017: MISC.
-018: Personal Touch 💜
-019: SPECIALIZED/CUSTOM CONFIGS
+014: CARDBOOK
+015: MISC. PRIVACY + SECURITY
+016: MISC. PRIVACY
+017: MISC. SECURITY
+018: MISC.
+019: Personal Touch 💜
+020: SPECIALIZED/CUSTOM CONFIGS
 
 */
 
@@ -412,13 +413,35 @@ pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 // Setting here to expose via the `about:config`...
 pref("xpinstall.enabled", true); // [DEFAULT] [HIDDEN]
 
-/// Prevent leaking display names of contacts in address fields with emails [CARDBOOK]
-// https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
-pref("extensions.cardbook.useOnlyEmail", true);
-
 pref("mail.dove.status", "013");
 
-/*** 014 MISC. PRIVACY + SECURITY ***/
+/*** 014 CARDBOOK ***/
+
+/// Configure CardBook (if installed)
+pref("extensions.cardbook.optionsMigrated", false); // [HIDDEN]
+
+/// Display list, public key, technical, & vCard tabs by default
+pref("extensions.cardbook.keyTabView", true); // [HIDDEN] Public Keys
+pref("extensions.cardbook.listTabView", true); // [DEFAULT] [HIDDEN] Lists
+pref("extensions.cardbook.technicalTabView", true); // [HIDDEN] Technical
+pref("extensions.cardbook.vcardTabView", true); // [HIDDEN] vCard
+
+/// Encrypt locally cached cards
+pref("extensions.cardbook.localDataEncryption", true); // [HIDDEN]
+
+/// Prevent leaking display names of contacts in address fields with emails
+// https://github.com/HorlogeSkynet/thunderbird-user.js/blob/master/user.js#L1231
+pref("extensions.cardbook.useOnlyEmail", true); // [HIDDEN]
+
+/// Use OpenStreetMap instead of Bing/Google Maps for `Show on Map` functionality
+pref("extensions.cardbook.localizeEngine", "OpenStreetMap"); // [DEFAULT] [HIDDEN]
+
+/// Warn when attempting to email contacts without an email address
+pref("extensions.cardbook.warnEmptyEmails", true); // [DEFAULT] [HIDDEN]
+
+pref("mail.dove.status", "014");
+
+/*** 015 MISC. PRIVACY + SECURITY ***/
 
 /// Disable WebGL
 // PRIVACY: Fingerprinting concerns
@@ -427,9 +450,9 @@ pref("mail.dove.status", "013");
 // https://security.stackexchange.com/questions/13799/is-webgl-a-security-concern
 pref("webgl.disabled", true);
 
-pref("mail.dove.status", "014");
+pref("mail.dove.status", "015");
 
-/*** 015 MISC. PRIVACY ***/
+/*** 016 MISC. PRIVACY ***/
 
 /// Add rules for Cookie Banner Reduction
 // Firefox typically just downloads these for remote settings - but Thunderbird's instance unfortunately doesn't offer them, so it just fails and never retrieves the rules
@@ -470,9 +493,9 @@ pref("mailnews.messageid_browser.url", "");
 /// Warn users if they have not addressed a BCC (Blind Carbon Copy) warning
 pref("mail.compose.warn_public_recipients.aggressive", true);
 
-pref("mail.dove.status", "015");
+pref("mail.dove.status", "016");
 
-/*** 016 MISC. SECURITY ***/
+/*** 017 MISC. SECURITY ***/
 
 /// Always warn users before launching other apps
 pref("mail.external_protocol_requires_permission", true); // [HIDDEN]
@@ -513,9 +536,9 @@ pref("mail.html_sanitize.drop_conditional_css", true); // [DEFAULT]
 pref("mailnews.display.html_as", 3);
 pref("rss.display.html_as", 3);
 
-pref("mail.dove.status", "016");
+pref("mail.dove.status", "017");
 
-/*** 017 MISC. ***/
+/*** 018 MISC. ***/
 
 /// Disable `mailto:` warning...
 // Override from Phoenix
@@ -552,9 +575,9 @@ pref("mail.identity.default.compose_html", false);
 // This likely isn't used anywhere, but Thunderbird does seem to pull in this component and this setting appears in the `about:config`, so we can set it anyways
 pref("browser.newtabpage.enabled", false);
 
-pref("mail.dove.status", "017");
+pref("mail.dove.status", "018");
 
-/*** 018 Personal Touch 💜 ***/
+/*** 019 Personal Touch 💜 ***/
 
 /// Things that are nice to have™
 // Not directly privacy & security related
@@ -587,15 +610,15 @@ pref("mailnews.show_send_progress", true); // [DEFAULT]
 /// Use underscores instead of spaces in file names when saving messages by default
 pref("mail.save_msg_filename_underscores_for_space", true);
 
-pref("mail.dove.status", "018");
+pref("mail.dove.status", "019");
 
-/*** 019 SPECIALIZED/CUSTOM CONFIGS [NO-OSX] ***/
+/*** 020 SPECIALIZED/CUSTOM CONFIGS [NO-OSX] ***/
 
 /// Enable support for custom/specialized configs... [NO-OSX]
 pref("general.config.filename", "dove.cfg"); // [NO-OSX]
 pref("general.config.vendor", "dove"); // [NO-OSX]
 pref("general.config.obscure_value", 0); // [NO-OSX]
 
-pref("mail.dove.status", "019"); // [NO-OSX]
+pref("mail.dove.status", "020"); // [NO-OSX]
 
 pref("mail.dove.status", "successfully applied :D", locked);
