@@ -598,6 +598,9 @@ pref("mail.dark-reader.show-toggle", true); // [HIDDEN] UI toggle - https://sear
 pref("mail.spellcheck.inline", true); // [DEFAULT]
 pref("mail.SpellCheckBeforeSend", true);
 
+/// Hide Title Bar by default
+pref("mail.tabs.drawInTitlebar", true); // [DEFAULT]
+
 /// Prevent automatically converting emoticons to emojis
 pref("mail.display_glyph", false);
 
