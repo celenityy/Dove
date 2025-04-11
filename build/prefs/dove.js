@@ -210,6 +210,10 @@ pref("places.history.enabled", false);
 /// Disable disk caching
 pref("mail.imap.use_disk_cache2", false);
 
+/// Disable favicons
+pref("browser.chrome.favicons", false);
+pref("browser.chrome.site_icons", false);
+
 /// Disable logging chat history [CHAT]
 // https://stackoverflow.com/questions/32155137/how-to-disable-chat-history-in-mozilla-thunderbird
 pref("purple.logging.log_chats", false); // [CHAT]
