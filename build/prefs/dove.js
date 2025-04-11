@@ -75,7 +75,7 @@ pref("browser.translations.automaticallyPopup", false);
 pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
 
-/// Disable 'In-App Messaging'
+/// Disable 'In-App Notifications'
 // https://searchfox.org/comm-central/source/mail/components/inappnotifications/docs/index.md
 pref("mail.inappnotifications.blog_enabled", false, locked); // [NIGHTLY] Surveys
 pref("mail.inappnotifications.donation_enabled", false, locked); // [NIGHTLY] Donation prompts/fundraisers
