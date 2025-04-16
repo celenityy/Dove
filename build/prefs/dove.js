@@ -470,9 +470,11 @@ pref("mail.collect_email_address_outgoing", false);
 /// Disable Geolocation
 // https://browserleaks.com/geo
 pref("browser.geolocation.warning.infoURL", "");
+pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
 pref("geo.provider.use_geoclue", false);
+pref("network.wifi.scanning_period", 0);
 
 /// Disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo [CHAT]
 // https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
