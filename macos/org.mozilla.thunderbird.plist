@@ -1697,11 +1697,11 @@
 	</dict>
 	<key>Proxy</key>
 	<dict>
+		<key>Mode</key>
+		<string>none</string>
 		<key>UseProxyForDNS</key>
 		<true/>
 	</dict>
-	<key>SSLVersionMin</key>
-	<string>tls1.2</string>
 	<key>SearchEngines</key>
 	<dict>
 		<key>Add</key>

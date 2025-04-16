@@ -16,7 +16,7 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.04.11.1", locked);
+pref("mail.dove.version", "2025.04.15.1", locked);
 
 /* INDEX 
 

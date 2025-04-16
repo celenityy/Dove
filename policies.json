@@ -16,6 +16,7 @@
     },
     "EnterprisePoliciesEnabled": true,
     "Proxy": {
+      "Mode": "none",
       "UseProxyForDNS": true
     },
     "SearchEngines": {
@@ -143,7 +144,6 @@
         }
       ]
     },
-    "SSLVersionMin": "tls1.2",
     "ExtensionSettings": {
       "{0a3ee209-ab68-4b84-a9ef-eb0ee686dd8d}": {
         "installation_mode": "blocked",
