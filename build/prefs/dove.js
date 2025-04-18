@@ -15,7 +15,7 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.04.11.1", locked);
+pref("mail.dove.version", "2025.04.15.1", locked);
 
 /* INDEX 
 
@@ -75,7 +75,7 @@ pref("browser.translations.automaticallyPopup", false);
 pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
 
-/// Disable 'In-App Messaging'
+/// Disable 'In-App Notifications'
 // https://searchfox.org/comm-central/source/mail/components/inappnotifications/docs/index.md
 pref("mail.inappnotifications.blog_enabled", false, locked); // [NIGHTLY] Surveys
 pref("mail.inappnotifications.donation_enabled", false, locked); // [NIGHTLY] Donation prompts/fundraisers
@@ -470,9 +470,11 @@ pref("mail.collect_email_address_outgoing", false);
 /// Disable Geolocation
 // https://browserleaks.com/geo
 pref("browser.geolocation.warning.infoURL", "");
+pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
 pref("geo.provider.use_geoclue", false);
+pref("network.wifi.scanning_period", 0);
 
 /// Disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo [CHAT]
 // https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
