@@ -56,6 +56,30 @@ echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
 echo_green_text "Removing the /Library/celenity/Dove directory..."
 sudo /bin/rm -rf /Library/celenity/Dove || error_fn
 echo
