@@ -15,7 +15,7 @@
 # Environment variables for GNU/Linux distros that further harden Thunderbird for Dove
 # Also impacts other Mozilla software (like Firefox)
 
-# Disable Crash Reporting
+# Disable Mozilla's Crash Reporter
 ## https://firefox-source-docs.mozilla.org/toolkit/crashreporter/crashreporter/index.html#user-specified-environment-variables
 export MOZ_CRASHREPORTER=;
 export MOZ_CRASHREPORTER_DISABLE=1;
