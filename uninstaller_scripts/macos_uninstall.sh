@@ -93,10 +93,6 @@ echo_green_text "Uninstalling dove..."
 brew uninstall dove || error_fn
 echo
 
-echo_green_text "Uninstalling legacy dove-user if installed..."
-brew uninstall dove-user || error_fn
-echo
-
 read -p  $'\e[32mWould you also like to remove celenity''s Homebrew Tap? [Y/n] \e[0m' RESULT
 echo
 
