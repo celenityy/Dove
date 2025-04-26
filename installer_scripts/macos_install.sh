@@ -22,10 +22,10 @@ cd /tmp
 
 ## Download and run initialization script
 initialize_dove() {
-	wget -nv $1
+	curl --cert-status -O -sSL $1
 	echo
 	echo
-	bash $2
+	/bin/zsh $2
 }
 
 ## Scripts are here
@@ -41,7 +41,7 @@ echo_green_text "PLEASE SELECT 'Quit & Re-open' WHEN PROMPTED, AND RE-RUN THIS S
 echo_red_text "This is ONLY required for initial installation, and you are strongly recommended to revoke the 'App Management' permission once you are done."
 echo_green_text "If you are unable/unwilling to grant your Terminal this permission, you can follow the instructions here to copy the files manually: https://dove.celenity.dev#manual-installation."
 /bin/sleep 5
-open /System/Applications/'System Settings'.app
+/usr/bin/open /System/Applications/'System Settings'.app
 /bin/sleep 5
 echo_red_text "Press enter to continue."
 read
@@ -60,7 +60,7 @@ brew install dove || error_fn
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist to 644..."
@@ -76,7 +76,7 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist to 644..."
@@ -92,7 +92,7 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist to 644..."
@@ -108,11 +108,11 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 echo
 
 echo_green_text "Downloading dove-bootstrap.js..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
+curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
 echo
 
 echo_green_text "Downloading dove-bootstrap.cfg..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/dove-bootstrap.cfg || error_fn
+curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/dove-bootstrap.cfg || error_fn
 echo
 
 echo_green_text "Creating /Library/celenity/Dove directory..."
@@ -132,7 +132,7 @@ read -p 'Please enter your selection: ' LOCATION
 case ${LOCATION} in
 	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
         echo_green_text "Downloading dove-apply.sh..."
-		wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply.sh || error_fn
+		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply.sh || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dove-apply.sh to 744..."
@@ -144,7 +144,7 @@ case ${LOCATION} in
 		echo
 
 		echo_green_text "Downloading dev.celenity.dove.apply.plist..."
-		wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
@@ -162,7 +162,7 @@ case ${LOCATION} in
 
 	"intel" | "Intel" | "INTEL" | 2)
 		echo_green_text "Downloading dove-apply-intel.sh..."
-		wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply-intel.sh || error_fn
+		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply-intel.sh || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dove-apply-intel.sh to 744..."
@@ -174,7 +174,7 @@ case ${LOCATION} in
 		echo
 
 		echo_green_text "Downloading dev.celenity.dove.apply.intel.plist..."
-		wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dev.celenity.dove.apply.intel.plist to 644..."
