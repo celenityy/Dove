@@ -58,12 +58,60 @@ echo_green_text "Installing dove package..."
 brew install dove || error_fn
 echo
 
-echo_green_text "Downloading dove-apply.sh..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply.sh || error_fn
+echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
-echo_green_text "Changing permissions of dove-apply.sh to 744..."
-sudo /bin/chmod -v 744 dove-apply.sh || error_fn
+echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist to 644..."
+sudo /bin/chmod -v 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Copying dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+sudo /bin/cp dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+/bin/launchctl load /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist to 644..."
+sudo /bin/chmod -v 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Copying dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+sudo /bin/cp dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+/bin/launchctl load /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist to 644..."
+sudo /bin/chmod -v 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Copying dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+sudo /bin/cp dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+/bin/launchctl load /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Downloading dove-bootstrap.js..."
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
+echo
+
+echo_green_text "Downloading dove-bootstrap.cfg..."
+wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/dove-bootstrap.cfg || error_fn
 echo
 
 echo_green_text "Creating /Library/celenity/Dove directory..."
@@ -74,33 +122,73 @@ echo_green_text "Changing permissions of Library/celenity/Dove to 744..."
 sudo /bin/chmod -v 744 /Library/celenity/Dove || error_fn
 echo
 
-echo_green_text "Copying dove-apply.sh to /Library/celenity/Dove/dove-apply.sh..."
-sudo /bin/cp dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
-echo
+echo -e ""
+echo_green_text "Are you using an Apple Silicon (M-series chip) or Intel device?";
+echo_green_text "Your options are:";
+echo_red_text "1. Silicon";
+echo_green_text "2. Intel";
+read -p 'Please enter your selection: ' LOCATION
+case ${LOCATION} in
+	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
+        echo_green_text "Downloading dove-apply.sh..."
+		wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply.sh || error_fn
+		echo
 
-echo_green_text "Downloading dev.celenity.dove.apply.plist..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
-echo
+		echo_green_text "Changing permissions of dove-apply.sh to 744..."
+		sudo /bin/chmod -v 744 dove-apply.sh || error_fn
+		echo
 
-echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
-sudo /bin/chmod -v 644 dev.celenity.dove.apply.plist || error_fn
-echo
+		echo_green_text "Copying dove-apply.sh to /Library/celenity/Dove/dove-apply.sh..."
+		sudo /bin/cp dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
+		echo
 
-echo_green_text "Copying dev.celenity.dove.apply.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.plist..."
-sudo /bin/cp dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
-echo
+		echo_green_text "Downloading dev.celenity.dove.apply.plist..."
+		wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		echo
 
-echo_green_text "Loading dev.celenity.dove.apply.plist..."
-sudo /bin/launchctl load -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
-echo
+		echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
+		sudo /bin/chmod -v 644 dev.celenity.dove.apply.plist || error_fn
+		echo
 
-echo_green_text "Downloading dove-bootstrap.js..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
-echo
+		echo_green_text "Copying dev.celenity.dove.apply.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.plist..."
+		sudo /bin/cp dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		echo
 
-echo_green_text "Downloading dove-bootstrap.cfg..."
-wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/dove-bootstrap.cfg || error_fn
-echo
+		echo_green_text "Loading dev.celenity.dove.apply.plist..."
+		sudo /bin/launchctl load -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		echo
+		;;
+
+	"intel" | "Intel" | "INTEL" | 2)
+		echo_green_text "Downloading dove-apply-intel.sh..."
+		wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply-intel.sh || error_fn
+		echo
+
+		echo_green_text "Changing permissions of dove-apply-intel.sh to 744..."
+		sudo /bin/chmod -v 744 dove-apply-intel.sh || error_fn
+		echo
+
+		echo_green_text "Copying dove-apply-intel.sh to /Library/celenity/Dove/dove-apply-intel.sh..."
+		sudo /bin/cp dove-apply-intel.sh /Library/celenity/Dove/dove-apply-intel.sh || error_fn
+		echo
+
+		echo_green_text "Downloading dev.celenity.dove.apply.intel.plist..."
+		wget -nv https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		echo
+
+		echo_green_text "Changing permissions of dev.celenity.dove.apply.intel.plist to 644..."
+		sudo /bin/chmod -v 644 dev.celenity.dove.apply.intel.plist || error_fn
+		echo
+
+		echo_green_text "Copying dev.celenity.dove.apply.intel.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist..."
+		sudo /bin/cp dev.celenity.dove.apply.intel.plist /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		echo
+
+		echo_green_text "Loading dev.celenity.dove.apply.intel.plist..."
+		sudo /bin/launchctl load -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		echo
+		;;
+esac
 
 echo -e ""
 echo_green_text "Where is your installation of Thunderbird located?";
