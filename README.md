@@ -146,7 +146,7 @@ sudo dnf install dove-flatpak
 Run the following installation script in your terminal of choice:
 
 ```sh
-bash -c "$(wget -O- https://gitlab.com/celenityy/Dove/-/raw/pages/installer_scripts/macos_install.sh 2>/dev/null)"
+/bin/bash -c "$(wget -O- https://gitlab.com/celenityy/Dove/-/raw/pages/installer_scripts/macos_install.sh 2>/dev/null)"
 ```
 
 </details>
@@ -267,7 +267,7 @@ sudo dnf makecache
 Run the following uninstall script in your terminal of choice:
 
 ```sh
-bash -c "$(wget -O- https://gitlab.com/celenityy/Dove/-/raw/pages/uninstaller_scripts/macos_uninstall.sh 2>/dev/null)"
+/bin/bash -c "$(wget -O- https://gitlab.com/celenityy/Dove/-/raw/pages/uninstaller_scripts/macos_uninstall.sh 2>/dev/null)"
 ```
 
 </details>
