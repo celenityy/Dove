@@ -20,21 +20,6 @@ error_fn() {
 ## Downloaded files save in /tmp
 cd /tmp
 
-## Download and run initialization script
-initialize_dove() {
-	curl --cert-status -O -sSL $1
-	echo
-	echo
-	/bin/zsh $2
-}
-
-## Scripts are here
-URL="https://gitlab.com/celenityy/Dove/-/raw/pages/installer_scripts/macos"
-
-## Scripts file
-SCRIPT=("dove-initialize-system.sh"
-		"dove-initialize-user.sh")
-
 echo_green_text "Welcome to the Dove installer for macOS!"
 echo_red_text "Before proceeding: You MUST grant your Terminal the 'App Management' permission by navigating to 'System Settings' -> 'Privacy & Security' -> 'App Management'"
 echo_green_text "PLEASE SELECT 'Quit & Re-open' WHEN PROMPTED, AND RE-RUN THIS SCRIPT..."
@@ -60,7 +45,7 @@ brew install dove || error_fn
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist to 644..."
@@ -76,7 +61,7 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist to 644..."
@@ -92,7 +77,7 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist to 644..."
@@ -108,11 +93,11 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 echo
 
 echo_green_text "Downloading dove-bootstrap.js..."
-curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
 echo
 
-echo_green_text "Downloading dove-bootstrap.cfg..."
-curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/dove-bootstrap.cfg || error_fn
+echo_green_text "Changing permissions of dove-bootstrap.js to 644..."
+/bin/chmod -v 644 dove-bootstrap.js || error_fn
 echo
 
 echo_green_text "Creating /Library/celenity/Dove directory..."
@@ -128,8 +113,8 @@ echo_green_text "Are you using an Apple Silicon (M-series chip) or Intel device?
 echo_green_text "Your options are:";
 echo_red_text "1. Silicon";
 echo_green_text "2. Intel";
-read -p 'Please enter your selection: ' LOCATION
-case ${LOCATION} in
+read "DEVICETYPE?Please enter your selection: "
+case ${DEVICETYPE} in
 	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
         echo_green_text "Downloading dove-apply.sh..."
 		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply.sh || error_fn
@@ -157,6 +142,10 @@ case ${LOCATION} in
 
 		echo_green_text "Loading dev.celenity.dove.apply.plist..."
 		sudo /bin/launchctl load -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		echo
+
+		echo_green_text "Downloading dove-bootstrap.cfg..."
+		curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/dove-bootstrap.cfg || error_fn
 		echo
 		;;
 
@@ -188,24 +177,74 @@ case ${LOCATION} in
 		echo_green_text "Loading dev.celenity.dove.apply.intel.plist..."
 		sudo /bin/launchctl load -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
 		echo
+
+		echo_green_text "Downloading dove-bootstrap.cfg..."
+		curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/intel/dove-bootstrap.cfg || error_fn
+		echo
 		;;
 esac
+
+echo_green_text "Changing permissions of dove-bootstrap.cfg to 644..."
+sudo /bin/chmod -v 644 dove-bootstrap.cfg || error_fn
+echo
 
 echo -e ""
 echo_green_text "Where is your installation of Thunderbird located?";
 echo_green_text "Your options are:";
 echo_red_text "1. system - /Applications/Thunderbird.app";
-echo_green_text "2. user - ~/Applications/Thunderbird.app";
-read -p 'Please enter your selection: ' LOCATION
+echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
+read "LOCATION?Please enter your selection: "
 case ${LOCATION} in
 	"system" | "System" | "SYSTEM" | 1)
-        TARGET_SCRIPT="${SCRIPT[0]}"
+        ## Ensure Thunderbird isn't quarantined so we don't break it...
+		# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+		sudo /usr/bin/xattr -v -r -d com.apple.quarantine /Applications/Thunderbird.app
+
+		echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+		sudo /bin/mkdir -v -p /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+		echo
+
+		echo_green_text "Copying dove-bootstrap.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js..."
+		sudo /bin/cp dove-bootstrap.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js || error_fn
+		echo
+
+		echo_green_text "Copying dove-bootstrap.cfg to /Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg.."
+		sudo /bin/cp dove-bootstrap.cfg /Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg || error_fn
+		echo
 		;;
 
 	"user" | "User" | "USER" | 2)
-		TARGET_SCRIPT="${SCRIPT[1]}"
+		## Ensure Thunderbird isn't quarantined so we don't break it...
+		# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+		/usr/bin/xattr -v -r -d com.apple.quarantine "${HOME}/Applications/Thunderbird.app"
+
+		echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+		/bin/mkdir -v -p "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
+		echo
+
+		echo_green_text "Copying dove-bootstrap.js to ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js..."
+		/bin/cp dove-bootstrap.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js" || error_fn
+		echo
+
+		echo_green_text "Copying dove-bootstrap.cfg to ${HOME}/Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg.."
+		/bin/cp dove-bootstrap.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg" || error_fn
+		echo
 		;;
 esac
 
-## Download and run choosen initializion script
-initialize_dove "${URL}"/"${TARGET_SCRIPT}" "${TARGET_SCRIPT}"
+echo_red_text "You must now revoke the 'App Management' permission from your Terminal by navigating to 'System Settings' -> 'Privacy & Security' -> 'App Management'"
+echo_green_text "PLEASE SELECT "Later" WHEN IT ASKS YOU TO QUIT AND RE-OPEN YOUR TERMINAL..."
+/bin/sleep 5
+/usr/bin/open /System/Applications/'System Settings'.app
+/bin/sleep 5
+echo_green_text "Press enter to continue once you are finished."
+read
+
+echo_green_text "All done. Congratulations, you've successfully installed Dove.\nEnjoy :)\n"
+
+echo_red_text "Your system will now reboot to finalize your installation."
+/bin/sleep 5
+echo_green_text "Press enter to continue."
+read
+
+sudo /sbin/reboot

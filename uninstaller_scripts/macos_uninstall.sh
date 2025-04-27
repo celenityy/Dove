@@ -20,21 +20,6 @@ error_fn() {
 ## Downloaded files save in /tmp
 cd /tmp
 
-## Download and run the uninstall script
-uninstall_dove() {
-	curl --cert-status -O -sSL $1
-	echo
-	echo
-	/bin/zsh $2
-}
-
-## Scripts are here
-URL="https://gitlab.com/celenityy/Dove/-/raw/pages/uninstaller_scripts/macos"
-
-## Scripts file
-SCRIPT=("dove-uninstall-system.sh"
-		"dove-uninstall-user.sh")
-
 echo_green_text "Welcome to the Dove Uninstaller for macOS!"
 echo_red_text "Sorry to see you go :("
 echo_red_text "Before proceeding: You MUST grant your Terminal the 'App Management' permission by navigating to 'System Settings' -> 'Privacy & Security' -> 'App Management'"
@@ -78,16 +63,15 @@ echo
 echo_green_text "Removing org.mozilla.thunderbird.plist..."
 sudo /bin/rm -f /Library/Preferences/org.mozilla.thunderbird.plist || error_fn
 echo
-sudo /bin/rm -f ~/Library/Preferences/org.mozilla.thunderbird.plist || error_fn
+sudo /bin/rm -f "${HOME}/Library/Preferences/org.mozilla.thunderbird.plist" || error_fn
 echo
 
 echo_green_text "Uninstalling dove..."
 brew uninstall dove || error_fn
 echo
 
-read -p  $'\e[32mWould you also like to remove celenity''s Homebrew Tap? [Y/n]' RESULT
+read "RESULT?Would you also like to remove celenity's Homebrew Tap? [Y/n] "
 echo
-
 case ${RESULT} in
 
 		"y" | "yes" | "YES" | "Y")
@@ -109,8 +93,8 @@ echo_green_text "Are you using an Apple Silicon (M-series chip) or Intel device?
 echo_green_text "Your options are:";
 echo_red_text "1. Silicon";
 echo_green_text "2. Intel";
-read -p 'Please enter your selection: ' LOCATION
-case ${LOCATION} in
+read "DEVICETYPE?Please enter your selection: "
+case ${DEVICETYPE} in
 	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
         echo_green_text "Unloading dev.celenity.dove.apply.plist..."
 		sudo /bin/launchctl unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
@@ -136,17 +120,44 @@ echo -e ""
 echo_green_text "Where is your installation of Thunderbird located?";
 echo_green_text "Your options are:";
 echo_red_text "1. system - /Applications/Thunderbird.app";
-echo_green_text "2. user - ~/Applications/Thunderbird.app";
-read -p 'Please enter your selection: ' LOCATION
+echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
+read "LOCATION?Please enter your selection: "
 case ${LOCATION} in
 	"system" | "System" | "SYSTEM" | 1)
-        TARGET_SCRIPT="${SCRIPT[0]}"
+        echo_green_text "Removing dove-bootstrap.js..."
+        sudo /bin/rm -f /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js || error_fn
+        echo
+
+        echo_green_text "Removing dove-bootstrap.cfg..."
+        sudo /bin/rm -f /Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg || error_fn
+        echo
 		;;
 
 	"user" | "User" | "USER" | 2)
-		TARGET_SCRIPT="${SCRIPT[1]}"
+		echo_green_text "Removing dove-bootstrap.js..."
+        /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js" || error_fn
+        echo
+
+        echo_green_text "Removing dove-bootstrap.cfg..."
+        /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg" || error_fn
+        echo
 		;;
 esac
 
-## Download and run choosen uninstall script
-uninstall_dove "${URL}"/"${TARGET_SCRIPT}" "${TARGET_SCRIPT}"
+echo_red_text "You must now revoke the 'App Management' permission from your Terminal by navigating to 'System Settings' -> 'Privacy & Security' -> 'App Management'"
+echo_green_text "PLEASE SELECT 'Later' WHEN IT ASKS YOU TO QUIT AND RE-OPEN YOUR TERMINAL..."
+/bin/sleep 5
+/usr/bin/open /System/Applications/'System Settings'.app
+/bin/sleep 5
+echo_green_text "Press enter to continue once you are finished."
+read
+
+echo_green_text "Thanks for giving Dove a shot. Sorry to see you go :(." 
+echo_green_text "Please leave feedback on how we can improve! https://dove.celenity.dev/issues"
+
+echo_red_text "Your system will now reboot to finalize your uninstallation."
+/bin/sleep 5
+echo_green_text "Press enter to continue."
+read
+
+sudo /sbin/reboot
