@@ -127,6 +127,9 @@ case ${DEVICETYPE} in
 		echo_green_text "Copying dove-apply.sh to /Library/celenity/Dove/dove-apply.sh..."
 		sudo /bin/cp dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
 		echo
+		echo_green_text "Copying dove-apply.sh to /Library/celenity/Dove/dove-apply.sh..."
+		sudo /bin/cp dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
+		echo
 
 		echo_green_text "Downloading dev.celenity.dove.apply.plist..."
 		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
@@ -135,7 +138,13 @@ case ${DEVICETYPE} in
 		echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
 		sudo /bin/chmod -v 644 dev.celenity.dove.apply.plist || error_fn
 		echo
+		echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
+		sudo /bin/chmod -v 644 dev.celenity.dove.apply.plist || error_fn
+		echo
 
+		echo_green_text "Copying dev.celenity.dove.apply.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.plist..."
+		sudo /bin/cp dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		echo
 		echo_green_text "Copying dev.celenity.dove.apply.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.plist..."
 		sudo /bin/cp dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
 		echo
