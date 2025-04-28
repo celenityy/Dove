@@ -7,4 +7,4 @@ if [ -z ${phoenix_dir+x} ]; then
 fi
 
 # Version of Dove you'd like to build
-export dove_version=2025.04.15.1
+export dove_version=2025.04.27.1
