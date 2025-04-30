@@ -939,7 +939,7 @@
         "content": "filters",
         "group": "default",
         "title": "Beacon API Stub",
-        "contentURL": "https://gitlab.com/celenityy/Phoenix/-/raw/pages/uBlock/beacon.txt",
+        "contentURL": "https://gitlab.com/celenityy/Phoenix/-/raw/02cbe890a7a50b5d03526d0b53fd29a39d872404/uBlock/beacon.txt",
         "supportURL": "https://phoenix.celenity.dev/issues"
     },
     "bpc-filters": {
@@ -1139,7 +1139,7 @@
         "group": "default",
         "parent": "🛡️ Block JS",
         "title": "🛡️ Block JS",
-        "contentURL": "https://gitlab.com/celenityy/Dove/-/raw/pages/uBlock/block-js.txt",
+        "contentURL": "https://gitlab.com/celenityy/Dove/-/raw/11f1a967ac9bac2c932b2839abd36e7e80333684/uBlock/block-js.txt",
         "supportURL": "https://dove.celenity.dev/issues",
         "instructionURL": "https://dove.celenity.dev"
     },
