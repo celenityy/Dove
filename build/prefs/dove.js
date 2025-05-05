@@ -553,6 +553,14 @@ pref("mail.dove.status", "017");
 // Override from Phoenix
 pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT] [HIDDEN]
 
+/// Disable support for web applications manifests
+// Ex. used for PWAs (& PWA inspection on desktop)
+// Unnecessary for our use case
+// https://developer.mozilla.org/docs/Web/Progressive_web_apps/Manifest
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1603673
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
+pref("dom.manifest.enabled", false);
+
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
 
