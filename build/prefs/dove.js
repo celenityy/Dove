@@ -356,6 +356,10 @@ pref("mail.dove.status", "010");
 
 /*** 011 ATTACK SURFACE REDUCTION ***/
 
+/// Disable Android Debugging
+pref("devtools.remote.adb.extensionID", "");
+pref("devtools.remote.adb.extensionURL", "");
+
 /// Disable FFmpeg
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ffmpeg
 pref("media.ffmpeg.enabled", false);
