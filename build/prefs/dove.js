@@ -620,6 +620,12 @@ pref("messenger.options.messagesStyle.theme", "bubbles"); // [CHAT]
 pref("mail.dark-reader.enabled", true);
 pref("mail.dark-reader.show-toggle", true); // [HIDDEN] UI toggle - https://searchfox.org/comm-central/source/mail/base/content/msgHdrView.js#2787
 
+/// Enable the global indexer (Gloda) by default
+// We still disable OS indexing/integration above, this is just for Thunderbird itself.
+// This is required for searching emails - which is a critical feature for an email client IMO...
+// This is typically the default, but some (ex. RedHat/Fedora) override it.
+pref("mailnews.database.global.indexer.enabled", true); // [DEFAULT]
+
 /// Enable inline spellcheck when composing messages + check before sending by default
 pref("mail.spellcheck.inline", true); // [DEFAULT]
 pref("mail.SpellCheckBeforeSend", true);
