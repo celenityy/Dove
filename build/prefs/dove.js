@@ -319,6 +319,10 @@ pref("mail.dove.status", "008");
 /// Disable link previews
 pref("mail.compose.add_link_preview", false);
 
+/// Disable network connectivity status monitoring
+// (Ex. used for automatically switching between offline & online mode)
+pref("offline.autoDetect", false);
+
 /// Improve list of built-in DoH resolvers
 pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 - Real-time Malware Protection"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) - Hardened Real-time Malware Protection"},{"url":"https://dns0.eu","name":"DNS0 - Real-time Malware Protection"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) - Ad/Tracking/Limited Malware Protection"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard (Public) - Ad/Tracking Protection"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad - Unfiltered"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia - Unfiltered"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS (Public) - Unfiltered"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Public) - Unfiltered"},{"url":"https://kids.dns0.eu","name":"DNS0 - Kids"},{"url":"https://family.dns.mullvad.net/dns-query","name":"Mullvad (Family)"},{"url":"https://family.adguard-dns.com/dns-query","name":"AdGuard (Public) - Family Protection"},{"url":"https://extended.dns.mullvad.net/dns-query","name":"Mullvad (Extended) - Ad/Tracking/Limited Malware/Social Media Protection"},{"url":"https://all.dns.mullvad.net/dns-query","name":"Mullvad (All) - Ad/Tracking/Limited Malware/Social Media/Adult/Gambling Protection"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare - Malware Protection"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare - Unfiltered (Stricter privacy policy)"},{"url":"https://family.cloudflare-dns.com/dns-query","name":"Cloudflare - Adult Content/Malware Protection"}]'); // [HIDDEN]
 
