@@ -106,11 +106,11 @@ pref("mail.shell.checkDefaultClient", false);
 /// Prevent checking if Thunderbird is the default PDF viewer
 pref("pdfjs.firstRun", false);
 
-/// Remove tracking parameters from Mozilla URLs
-pref("app.releaseNotesURL", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("app.releaseNotesURL.aboutDialog", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("app.releaseNotesURL.prompt", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%");
+/// Remove tracking parameters from Mozilla URLs + prevent exposing locale
+pref("app.releaseNotesURL", "https://www.thunderbird.net/thunderbird/releases");
+pref("app.releaseNotesURL.aboutDialog", "https://www.thunderbird.net/thunderbird/releases");
+pref("app.releaseNotesURL.prompt", "https://www.thunderbird.net/thunderbird/releases");
+pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/search/?q=%TERMS%");
 
 pref("mail.dove.status", "002");
 
