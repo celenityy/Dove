@@ -374,6 +374,14 @@ pref("browser.translations.select.enable", false); // [DEFAULT]
 // https://wiki.mozilla.org/GeckoMediaPlugins
 pref("media.gmp-provider.enabled", false);
 
+/// Disable Narrator
+// Broken on Thunderbird
+pref("narrate.enabled", false);
+
+/// Disable Reader Mode
+// Broken on Thunderbird
+pref("reader.parse-on-load.enabled", false);
+
 /// Disable SVG
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
 pref("svg.disabled", true);
