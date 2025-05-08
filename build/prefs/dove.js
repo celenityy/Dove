@@ -69,12 +69,6 @@ pref("mail.provider.suppress_dialog_on_startup", true); // [HIDDEN]
 // https://support.mozilla.org/kb/filelink-large-attachments
 pref("mail.cloud_files.enabled", false);
 
-/// Disable Firefox Translations
-// The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings, meaning it's useless :/
-pref("browser.translations.automaticallyPopup", false);
-pref("browser.translations.enable", false); // [DEFAULT]
-pref("browser.translations.select.enable", false); // [DEFAULT]
-
 /// Disable 'In-App Notifications'
 // https://searchfox.org/comm-central/source/mail/components/inappnotifications/docs/index.md
 pref("mail.inappnotifications.blog_enabled", false, locked); // [NIGHTLY] Surveys
@@ -369,6 +363,12 @@ pref("media.ffmpeg.encoder.enabled", false); // [DEFAULT]
 pref("media.ffmpeg.vaapi.enabled", false); // [DEFAULT]
 pref("media.rdd-ffmpeg.enabled", false);
 pref("media.utility-ffmpeg.enabled", false);
+
+/// Disable Firefox Translations
+// The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings,so it's useless :/
+pref("browser.translations.automaticallyPopup", false);
+pref("browser.translations.enable", false); // [DEFAULT]
+pref("browser.translations.select.enable", false); // [DEFAULT]
 
 /// Disable Gecko Media Plugins
 // https://wiki.mozilla.org/GeckoMediaPlugins
