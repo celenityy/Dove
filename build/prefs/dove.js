@@ -17,6 +17,10 @@
 
 pref("mail.dove.version", "2025.04.27.1", locked);
 
+/// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
+// This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.04.27.1 💜", locked);
+
 /* INDEX 
 
 001: DATA COLLECTION
