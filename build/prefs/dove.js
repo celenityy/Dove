@@ -399,11 +399,6 @@ pref("mail.dove.status", "012");
 /// Allow reporting malicious add-ons/themes to Mozilla
 pref("extensions.abuseReport.enabled", true);
 
-/// Allow running uBlock Origin on restricted/quarantined domains
-// Necessary since uBlock Origin isn't 'recommended' like it is on Firefox...
-// https://support.mozilla.org/kb/quarantined-domains
-pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true); // [HIDDEN]
-
 /// Always allow installing "incompatible" add-ons
 // REQUIRED FOR UBLOCK ORIGIN
 pref("extensions.strictCompatibility", false, locked); // [DEFAULT] [HIDDEN]
