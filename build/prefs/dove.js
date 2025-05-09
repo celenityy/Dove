@@ -58,6 +58,9 @@ pref("mail.dove.status", "001");
 
 /*** 002 MOZILLA CRAP™ ***/
 
+/// Clear unnecessary/undesired Mozilla URLs
+pref("mail.pgpmime.addon_url", ""); // Contains a dead link to Enigmail - a now dead extension that used to provide E2EE for Thunderbird (before it was built-in like it is nowadays...) - Likely not used anywhere
+
 /// Disable Donation Prompts
 // Please still donate to Thunderbird if you appreciate it! ;)
 // https://www.thunderbird.net/?form=support
@@ -88,7 +91,13 @@ pref("mail.rights.override", true);
 pref("mailnews.start_page_override.mstone", "ignore", locked);
 
 /// Disable recommendations
-pref("extensions.getAddons.recommended.url", "");
+pref("extensions.getAddons.recommended.url", "", locked);
+
+/// Disable the Remote Settings Firefox Relay Allowlist Collection
+// Unnecessary for our use case
+// https://searchfox.org/mozilla-central/source/toolkit/components/satchel/integrations/FirefoxRelay.sys.mjs
+// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-allowlist/changeset?_expected=0
+pref("signon.firefoxRelay.allowListRemoteSettingsCollection", ""); // [HIDDEN]
 
 /// Disable Start Page by default & switch the URL to the about:config
 // This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
@@ -106,11 +115,23 @@ pref("mail.shell.checkDefaultClient", false);
 /// Prevent checking if Thunderbird is the default PDF viewer
 pref("pdfjs.firstRun", false);
 
-/// Remove tracking parameters from Mozilla URLs + prevent exposing locale
-pref("app.releaseNotesURL", "https://www.thunderbird.net/thunderbird/releases");
-pref("app.releaseNotesURL.aboutDialog", "https://www.thunderbird.net/thunderbird/releases");
-pref("app.releaseNotesURL.prompt", "https://www.thunderbird.net/thunderbird/releases");
+/// Remove tracking parameters from Mozilla URLs + prevent exposing locale & unnecessary information
+// For info on the extension update (`extensions.update.`) URL parameters, see https://devdoc.net/web/developer.mozilla.org/en-US/docs/Install_Manifests.html & https://mozilla-balrog.readthedocs.io/en/latest/database.html
+pref("app.releaseNotesURL", "https://www.thunderbird.net/releases", locked);
+pref("app.releaseNotesURL.aboutDialog", "https://www.thunderbird.net/releases", locked);
+pref("app.releaseNotesURL.prompt", "https://www.thunderbird.net/releases", locked);
+pref("app.vendorURL", "https://www.thunderbird.net/", locked);
+pref("browser.dictionaries.download.url", "https://addons.thunderbird.net/language-tools/");
+pref("extensions.getAddons.compatOverides.url", "https://services.addons.thunderbird.net/api/v4/addons/compat-override/?guid=%IDS%"); // Also updates to the newer v4 API (default is still v3...) - https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions - though I doubt this URL is used anywhere
+pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%"); // Also updates to the newer v4 API (default is still v3...) - https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.link.url", "https://addons.thunderbird.net/");
 pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/search/?q=%TERMS%");
+pref("extensions.getAddons.search.url", "https://services.addons.thunderbird.net/api/%API_VERSION%/search/%TERMS%/all/%MAX_RESULTS%/");
+pref("extensions.update.background.url", "https://versioncheck-bg.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), 'current' app/browser version (currentAppVersion), and compatibility mode (compatMode)
+pref("extensions.update.url", "https://versioncheck.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), 'current' app/browser version (currentAppVersion), and compatibility mode (compatMode)
+pref("mail.cloud_files.learn_more_url", "https://support.mozilla.org/kb/filelink-large-attachments");
+pref("mail.ignore_thread.learn_more_url", "https://support.mozilla.org/kb/ignore-threads");
+pref("spellchecker.dictionaries.download.url", "https://addons.thunderbird.net/language-tools/");
 
 pref("mail.dove.status", "002");
 
@@ -487,7 +508,6 @@ pref("mail.collect_email_address_outgoing", false);
 
 /// Disable Geolocation
 // https://browserleaks.com/geo
-pref("browser.geolocation.warning.infoURL", "");
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
@@ -602,6 +622,11 @@ pref("dom.disable_window_status_change", true); // [DEFAULT]
 pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
+
+/// Update AMO API
+// Default is still v3, which has been deprecated for quite some time...
+// https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.langpacks.url", "https://services.addons.thunderbird.net/api/v4/addons/language-tools/?app=thunderbird&type=language&appversion=%VERSION%");
 
 /// Use a blank new tab page
 // This likely isn't used anywhere, but Thunderbird does seem to pull in this component and this setting appears in the `about:config`, so we can set it anyways
