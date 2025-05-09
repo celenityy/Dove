@@ -115,6 +115,11 @@ pref("mail.shell.checkDefaultClient", false);
 /// Prevent checking if Thunderbird is the default PDF viewer
 pref("pdfjs.firstRun", false);
 
+/// Remove Mozilla partner/search parameter
+// https://searchfox.org/comm-central/source/mozilla/toolkit/components/search/AppProvidedSearchEngine.sys.mjs
+// https://searchfox.org/comm-central/source/mail/branding/include/release-prefs.js
+pref("browser.search.param.ms-pc", "", locked);
+
 /// Remove tracking parameters from Mozilla URLs + prevent exposing locale & unnecessary information
 // For info on the extension update (`extensions.update.`) URL parameters, see https://devdoc.net/web/developer.mozilla.org/en-US/docs/Install_Manifests.html & https://mozilla-balrog.readthedocs.io/en/latest/database.html
 pref("app.releaseNotesURL", "https://www.thunderbird.net/releases", locked);
