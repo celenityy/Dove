@@ -493,6 +493,15 @@ pref("mail.dove.status", "014");
 // https://security.stackexchange.com/questions/13799/is-webgl-a-security-concern
 pref("webgl.disabled", true);
 
+/// Switch Remote Settings to use Firefox's server instead of Thunderbird's
+// NOTE: This will ONLY work if you set the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable to `1` (If `MOZ_REMOTE_SETTINGS_DEVTOOLS` isn't set, Thunderbird will just continue to use its default server)
+// Thunderbird's Remote Settings instance has little to no use, hasn't been updated since ~2022, etc...
+// Using Firefox's server instead of Thunderbird's allows us to download and take advantage of add-on blocklists, certificate intermediates, certificate revocations, CRLite, tracking protection lists, etc... and doesn't appear to cause issues or undesired behavior.
+// For testing: https://github.com/mozilla-extensions/remote-settings-devtools
+pref("security.content.signature.root_hash", "C8:A8:0E:9A:FA:EF:4E:21:9B:6F:B5:D7:A7:1D:0F:10:12:23:BA:C5:00:1A:C2:8F:9B:0D:43:DC:59:A1:06:DB");
+pref("services.settings.default_bucket", "main");
+pref("services.settings.server", "https://firefox.settings.services.mozilla.com/v1", locked);
+
 pref("mail.dove.status", "015");
 
 /*** 016 MISC. PRIVACY ***/
