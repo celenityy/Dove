@@ -404,10 +404,6 @@ pref("browser.translations.automaticallyPopup", false);
 pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
 
-/// Disable Gecko Media Plugins
-// https://wiki.mozilla.org/GeckoMediaPlugins
-pref("media.gmp-provider.enabled", false);
-
 /// Disable Narrator
 // Broken on Thunderbird
 pref("narrate.enabled", false);
