@@ -220,10 +220,9 @@ pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv
 pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-JSLocale,-NavigatorUserAgent");
 pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); // [ESR] [DEFAULT] (This is the equivalent of the `+CanvasExtractionBeforeUserInputIsBlocked` target)
 
-/// Reset Phoenix's FPP overrides + disable Mozilla's remote overrides
+/// Reset Phoenix's FPP overrides
 // These are meant for browsers and may have undesired privacy implications for our use case...
 pref("privacy.fingerprintingProtection.granularOverrides", ""); // [DEFAULT]
-pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
 
 pref("mail.dove.status", "005");
 
