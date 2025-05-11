@@ -390,6 +390,10 @@ pref("mail.dove.status", "010");
 pref("devtools.remote.adb.extensionID", "");
 pref("devtools.remote.adb.extensionURL", "");
 
+/// Disable DRM/EME
+pref("media.eme.encrypted-media-encryption-scheme.enabled", false);
+pref("media.eme.hdcp-policy-check.enabled", false);
+
 /// Disable FFmpeg
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ffmpeg
 pref("media.ffmpeg.enabled", false);
@@ -420,6 +424,17 @@ pref("svg.disabled", true);
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=webrtc
 // https://x.com/GrapheneOS/status/1728921946396725618
 pref("media.peerconnection.enabled", false);
+
+/// Disable Windows Media Foundation Media Engine [NO-OSX]
+// By default, it's enabled for protected content (DRM) [NO-OSX]
+// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [NO-OSX]
+pref("media.wmf.media-engine.enabled", 0); // [NO-OSX]
+
+/// Require permission for websites to use EME
+// Defense in depth
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1620102
+// https://searchfox.org/mozilla-central/source/dom/media/eme/MediaKeySystemAccessPermissionRequest.h
+pref("media.eme.require-app-approval", true); // [DEFAULT]
 
 pref("mail.dove.status", "011");
 
