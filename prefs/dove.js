@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.04.27.1", locked);
+pref("browser.phoenix.version", "2025.05.11.1", locked);
 
 /* INDEX 
 
@@ -61,6 +61,10 @@ pref("general.warnOnAboutConfig", false);
 /// Ensure that about:config is always enabled
 pref("general.aboutConfig.enable", true, locked); // [DEFAULT on Desktop]
 
+/// Ensure our policies aren't overriden...
+// https://searchfox.org/mozilla-central/source/toolkit/components/enterprisepolicies/EnterprisePoliciesParent.sys.mjs
+pref("toolkit.policies.perUserDir", false, locked); // [DEFAULT] [HIDDEN]
+
 pref("browser.phoenix.status.core", "000");
 
 /*** 001 DATA COLLECTION ***/
@@ -74,7 +78,12 @@ pref("browser.phoenix.status.core", "000");
 // Ex. We use DuckDuckGo as our default search engine, so we'll nclude their analytics domains
 // On IronFox, we link to our GitLab releases via the `What's New` alert, so we'll also cover their analytics domains, etc...
 // But generally we'll want to keep this limited in favor of ex. uBlock Origin & other mechanisms.
-pref("network.dns.localDomains", "250analytics.com,a.omappapi.com,ads.allizom.org,ads.mozilla.org,ads.nonprod.webservices.mozgcp.net,ads.prod.webservices.mozgcp.net,analytics.getpocket.com,analytics.google.com,analytics.withgoogle.com,anf1.fuzzing.mozilla.org,anonymco.com,asan-nightly-frontend-elb-1348905149.us-east-2.elb.amazonaws.com,braze.com,contile.services.mozilla.com,contile-images.services.mozilla.com,classify-client.nonprod.webservices.mozgcp.net,classify-client.prod.webservices.mozgcp.net,crash-reports.allizom.org,crash-reports.mozilla.com,crash-reports-xpsp2.mozilla.com,crash-stacks.mozilla.com,crash-stats.allizom.org,crash-stats.mozilla.com,crash-stats.mozilla.org,dap.services.mozilla.com,dap.nonprod.webservices.mozgcp.net,dap.prod.webservices.mozgcp.net,dap-09-3.api.divviup.org,discovery.addons.allizom.org,discovery.addons.mozilla.org,discovery.addons-dev.allizom.org,divviup.org,download-stats.mozilla.org,download-stats.r53-2.services.mozilla.com,experimenter.services.mozilla.com,experimenter.nonprod.webservices.mozgcp.net,experimenter.prod.webservices.mozgcp.net,fhr.data.mozilla.com,fhr.r53-2.services.mozilla.com,firefox-android-home-recommendations.getpocket.com,fuzzing.mozilla.org,google-analytics.com,google-analytics-cn.com,googleanalytics.com,googlesyndication.com,googlesyndication-cn.com,googletagmanager.com,googletagmanager-cn.com,googletagservices.com,googletagservices-cn.com,improving.duckduckgo.com,incoming.telemetry.mozilla.org,incoming.thunderbird.net,incoming-telemetry.thunderbird.net,location.services.mozilla.com,locprod2-elb-us-west-2.prod.mozaws.net,merino.nonprod.cloudops.mozgcp.net,merino.prod.cloudops.mozgcp.net,merino.services.mozilla.com,metrics-content.duckduckgo.com,mozilla-ohttp.fastly-edge.com,new-sentry.gitlab.net,nonprod.classify-client.nonprod.webservices.mozgcp.net,normandy.cdn.mozilla.net,normandy.nonprod.cloudops.mozgcp.net,normandy.prod.cloudops.mozgcp.net,normandy-cdn.services.mozilla.com,ohttp-gateway.prod.webservices.mozgcp.net,omappapi.com,pagead2.googlesyndication.com,pipeline-incoming-prod-elb-149169523.us-west-2.elb.amazonaws.com,prod.classify-client.prod.webservices.mozgcp.net,prod.experimenter.prod.webservices.mozgcp.net,prod.ohttp-gateway.prod.webservices.mozgcp.net,sdk.iad-05.braze.com,sentry.gitlab.net,sentry.io,sentry.nonprod.cloudops.mozgcp.net,sentry.prod.cloudops.mozgcp.net,sitereview.zscaler.com,snippets.allizom.org,snippets.cdn.mozilla.net,snippets.mozilla.com,snippets-prod.frankfurt.moz.works,snippets-prod.moz.works,snippets-prod.oregon-b.moz.works,snippets-stage.moz.works,snippets-stage.oregon-b.moz.works,snowplow.trx.gitlab.net,snowplowalb-1011729428.us-east-1.elb.amazonaws.com,snowplowprd.trx.gitlab.net,snowplowprdnlb-1490493263.us-east-2.elb.amazonaws.com,socorro.nonprod.webservices.mozgcp.net,socorro.prod.webservices.mozgcp.net,socorro-collector.services.mozilla.com,socorro-webapp-allizom.stage.mozaws.net,socorro-webapp.services.mozilla.com,spocs.getpocket.com,spocs.getpocket.dev,spocs.mozilla.net,ssl.google-analytics.com,ssl-google-analytics.l.google.com,start.fedoraproject.org,start.thunderbird.net,start.ubuntu.com,start-stage.thunderbird.net,symbolication.services.mozilla.com,symbols.mozilla.org,tagmanager.google.com,talkback.mozilla.org,talkback-public.mozilla.org,talkback-reports.mozilla.org,telemetry-coverage.mozilla.org,telemetry-coverage.r53-2.services.mozilla.com,telemetry-incoming.r53-2.services.mozilla.com,telemetry-prod-1054754349.us-east-1.elb.amazonaws.com,updates.thunderbird.net,updates-stage.thunderbird.net,use-application-dns.net,vf.startpage.com,www.250analytics.com,www.anonymco.com,www.google-analytics.com,www.google-analytics-cn.com,www.googleanalytics.com,www.googlesyndication.com,www.googlesyndication-cn.com,www.googletagmanager.com,www.googletagmanager-cn.com,www.googletagservices.com,www.googletagservices-cn.com,www.sentry.io,www-google-analytics.l.google.com,www-googletagmanager.l.google.com");
+pref("network.dns.localDomains", "250analytics.com,a.omappapi.com,ads.allizom.org,ads.mozilla.org,ads.nonprod.webservices.mozgcp.net,ads.prod.webservices.mozgcp.net,analytics.getpocket.com,analytics.google.com,analytics.withgoogle.com,anf1.fuzzing.mozilla.org,anonymco.com,api.divviup.org,asan-nightly-frontend-elb-1348905149.us-east-2.elb.amazonaws.com,braze.com,contile.services.mozilla.com,contile-images.services.mozilla.com,classify-client.nonprod.webservices.mozgcp.net,classify-client.prod.webservices.mozgcp.net,classify-client.services.mozilla.com,crash-reports.allizom.org,crash-reports.mozilla.com,crash-reports-xpsp2.mozilla.com,crash-stacks.mozilla.com,crash-stats.allizom.org,crash-stats.mozilla.com,crash-stats.mozilla.org,dap.services.mozilla.com,dap.nonprod.webservices.mozgcp.net,dap.prod.webservices.mozgcp.net,dap-09-3.api.divviup.org,data.mozilla.com,data-ingestion.prod.dataops.mozgcp.net,dataops.mozgcp.net,dataservices.mozgcp.net,discovery.addons.allizom.org,discovery.addons.mozilla.org,discovery.addons-dev.allizom.org,divviup.org,download-stats.mozilla.org,download-stats.r53-2.services.mozilla.com,experimenter.services.mozilla.com,experimenter.nonprod.webservices.mozgcp.net,experimenter.prod.webservices.mozgcp.net,fhr.data.mozilla.com,fhr.r53-2.services.mozilla.com,firefox-android-home-recommendations.getpocket.com,fuzzing.mozilla.org,google-analytics.com,google-analytics-cn.com,googleanalytics.com,googlesyndication.com,googlesyndication-cn.com,googletagmanager.com,googletagmanager-cn.com,googletagservices.com,googletagservices-cn.com,improving.duckduckgo.com,incoming.telemetry.mozilla.org,incoming.thunderbird.net,incoming-telemetry.thunderbird.net,ingestion-edge.prod.dataops.mozgcp.net,location.services.mozilla.com,locprod1-elb-eu-west-1.prod.mozaws.net,locprod2-elb-us-west-2.prod.mozaws.net,merino.nonprod.cloudops.mozgcp.net,merino.prod.cloudops.mozgcp.net,merino.services.mozilla.com,metrics-content.duckduckgo.com,mozilla-ohttp.fastly-edge.com,new-sentry.gitlab.net,nonprod.classify-client.nonprod.webservices.mozgcp.net,normandy.cdn.mozilla.net,normandy.nonprod.cloudops.mozgcp.net,normandy.prod.cloudops.mozgcp.net,normandy-cdn.services.mozilla.com,ohttp-gateway.prod.webservices.mozgcp.net,omappapi.com,pagead2.googlesyndication.com,pipeline-incoming-prod-elb-149169523.us-west-2.elb.amazonaws.com,prod.ads.prod.webservices.mozgcp.net,prod.classify-client.prod.webservices.mozgcp.net,prod.dap.prod.webservices.mozgcp.net,prod.data-ingestion.prod.dataops.mozgcp.net,prod.dataops.mozgcp.net,prod.experimenter.prod.webservices.mozgcp.net,prod.ingestion-edge.prod.dataops.mozgcp.net,prod.ohttp-gateway.prod.webservices.mozgcp.net,prod.sentry.prod.cloudops.mozgcp.net,prod-classifyclient.normandy.prod.cloudops.mozgcp.net,sdk.iad-05.braze.com,search.r53-2.services.mozilla.com,search.services.mozilla.com,self-repair.mozilla.org,self-repair.r53-2.services.mozilla.com,sentry.gitlab.net,sentry.io,sentry.nonprod.cloudops.mozgcp.net,sentry.prod.cloudops.mozgcp.net,sentry.prod.mozaws.net,sitereview.zscaler.com,snippets.allizom.org,snippets.cdn.mozilla.net,snippets.mozilla.com,snippets-prod.frankfurt.moz.works,snippets-prod.moz.works,snippets-prod.oregon-b.moz.works,snippets-stage.moz.works,snippets-stage.oregon-b.moz.works,snowplow.trx.gitlab.net,snowplowalb-1011729428.us-east-1.elb.amazonaws.com,snowplowprd.trx.gitlab.net,snowplowprdnlb-1490493263.us-east-2.elb.amazonaws.com,socorro.nonprod.webservices.mozgcp.net,socorro.prod.webservices.mozgcp.net,socorro-collector.services.mozilla.com,socorro-webapp-allizom.stage.mozaws.net,socorro-webapp.services.mozilla.com,spocs.getpocket.com,spocs.getpocket.dev,spocs.mozilla.net,ssl.google-analytics.com,ssl-google-analytics.l.google.com,stage.sentry.nonprod.cloudops.mozgcp.net,start.fedoraproject.org,start.thunderbird.net,start.ubuntu.com,start-stage.thunderbird.net,survey.mozilla.com,tagmanager.google.com,talkback.mozilla.org,talkback-public.mozilla.org,talkback-reports.mozilla.org,telemetry-coverage.mozilla.org,telemetry-coverage.r53-2.services.mozilla.com,telemetry-experiment.cdn.mozilla.net,telemetry-incoming.r53-2.services.mozilla.com,telemetry-incoming-a.r53-2.services.mozilla.com,telemetry-incoming-b.r53-2.services.mozilla.com,telemetry-prod-1054754349.us-east-1.elb.amazonaws.com,tiles-cdn.prod.ads.prod.webservices.mozgcp.net,updates.thunderbird.net,updates-stage.thunderbird.net,use-application-dns.net,vf.startpage.com,widgets.getpocket.com,www.250analytics.com,www.anonymco.com,www.google-analytics.com,www.google-analytics-cn.com,www.googleanalytics.com,www.googlesyndication.com,www.googlesyndication-cn.com,www.googletagmanager.com,www.googletagmanager-cn.com,www.googletagservices.com,www.googletagservices-cn.com,www.sentry.io,www-google-analytics.l.google.com,www-googletagmanager.l.google.com");
+
+/// Disable Browser Usage Telemetry metrics
+// https://searchfox.org/mozilla-central/source/browser/docs/BrowserUsageTelemetry.rst
+// https://searchfox.org/mozilla-central/source/toolkit/content/widgets/tabbox.js
+pref("browser.engagement.ctrlTab.has-used", true, locked); // [HIDDEN - Android/Thunderbird]
 
 /// Disable Coverage
 // https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/
@@ -92,7 +101,7 @@ pref("toolkit.telemetry.coverage.opt-out", true, locked); // [HIDDEN]
 // https://firefox-source-docs.mozilla.org/tools/sanitizer/asan_nightly.html
 // https://github.com/choller/firefox-asan-reporter
 pref("asanreporter.apiurl", "", locked);
-pref("asanreporter.clientid", "", locked);
+pref("asanreporter.clientid", "unknown", locked);
 pref("asanreporter.loglevel", 70);
 pref("breakpad.reportURL", "", locked);
 pref("browser.crashReports.crashPull", false, locked); // [DEFAULT] Do not request crash reports for background processes from users https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/crash-reports-ondemand/changeset?_expected=0
@@ -105,15 +114,16 @@ pref("toolkit.crashreporter.include_context_heap", false, locked);
 // https://mozilla.github.io/policy-templates/#firefoxsuggest
 // https://searchfox.org/mozilla-central/source/testing/geckodriver/src/prefs.rs
 // https://wiki.mozilla.org/QA/Telemetry
-// https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html 
+// https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html
+// https://searchfox.org/mozilla-release/source/toolkit/components/glean/xpcom/FOG.cpp
+// https://searchfox.org/mozilla-release/source/toolkit/components/telemetry/app/TelemetryUtils.sys.mjs
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml
 // https://searchfox.org/mozilla-central/source/testing/profiles/perf/user.js
-pref("browser.places.interactions.enabled", false, locked); // Disable interaction measurements https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js
 pref("browser.safebrowsing.features.emailtracking.datacollection.update", false, locked); // [HIDDEN] https://searchfox.org/mozilla-central/source/toolkit/components/url-classifier/SafeBrowsing.sys.mjs
-pref("browser.urlbar.quicksuggest.dataCollection.enabled", false, locked); // [DEFAULT] [HIDDEN - Android/Thunderbird]
 pref("captchadetection.actor.enabled", false, locked); // Disable CAPTCHA Detection Pings https://searchfox.org/mozilla-central/source/toolkit/components/captchadetection
 pref("captchadetection.loglevel", "Off");
 pref("datareporting.dau.cachedUsageProfileID", "beefbeef-beef-beef-beef-beeefbeefbee", locked); // [HIDDEN] https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/app/ClientID.sys.mjs#44
+pref("datareporting.dau.cachedUsageProfileGroupID", "b0bacafe-b0ba-cafe-b0ba-cafeb0bacafe", locked); // [HIDDEN] https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/app/ClientID.sys.mjs#44
 pref("datareporting.healthreport.uploadEnabled", false, locked); // [DEFAULT - Android]
 pref("datareporting.policy.dataSubmissionEnabled", false, locked);
 pref("datareporting.policy.dataSubmissionPolicyBypassNotification", true, locked);
@@ -130,12 +140,15 @@ pref("telemetry.fog.test.activity_limit", -1, locked); // Disable activity-based
 pref("telemetry.fog.test.inactivity_limit", -1, locked); // Disable inactivity-based ping submission - ex. https://mozilla.github.io/glean/book/user/pings/baseline.html#scheduling
 pref("telemetry.fog.init_on_shutdown", false, locked); // Prevent Glean from initializing on shutdown https://searchfox.org/mozilla-central/source/toolkit/components/glean/docs/dev/preferences.md#49
 pref("telemetry.fog.test.localhost_port", 70000, locked); // Force telemetry pings to be sent to localhost instead of Mozilla's servers, if they're somehow enabled... (port just has to be higher than 0, I chose 70000 as its invalid) - https://searchfox.org/mozilla-central/source/toolkit/components/glean/docs/dev/preferences.md#15
+pref("telemetry.glean.internal.finalInactive", false, locked); // [DEFAULT] [HIDDEN] Disable early shutdown pings https://searchfox.org/mozilla-central/source/toolkit/components/glean/xpcom/FOG.cpp
+pref("telemetry.glean.internal.maxPingsPerMinute", 0, locked); // [HIDDEN] Prevent Glean from sending pings https://searchfox.org/mozilla-central/source/toolkit/components/glean/xpcom/FOG.cpp
 pref("telemetry.number_of_site_origin.min_interval", 999999999, locked);
 pref("toolkit.content-background-hang-monitor.disabled", true, locked); // BHR https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#16720
 pref("toolkit.telemetry.archive.enabled", false, locked); // [HIDDEN - Android]
 pref("toolkit.telemetry.bhrPing.enabled", false, locked); // [HIDDEN - Android]
 pref("toolkit.telemetry.cachedClientID", "c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0", locked); // [HIDDEN]
 pref("toolkit.telemetry.cachedProfileGroupID", "decafdec-afde-cafd-ecaf-decafdecafde", locked); // [HIDDEN]
+pref("toolkit.telemetry.collectInterval", 999999999, locked); // [HIDDEN]
 pref("toolkit.telemetry.dap.helper.hpke", "", locked);
 pref("toolkit.telemetry.dap.helper.url", "", locked);
 pref("toolkit.telemetry.dap.leader.hpke", "", locked);
@@ -152,23 +165,32 @@ pref("toolkit.telemetry.eventping.maximumFrequency", 999999999, locked); // [HID
 pref("toolkit.telemetry.eventping.minimumFrequency", 999999999, locked); // [HIDDEN] Disable `event` pings
 pref("toolkit.telemetry.firstShutdownPing.enabled", false, locked); // [HIDDEN - Android]
 pref("toolkit.telemetry.healthping.enabled", false, locked); // [HIDDEN]
+pref("toolkit.telemetry.eventping.maximumFrequency", 999999999, locked); // [HIDDEN]
+pref("toolkit.telemetry.eventping.minimumFrequency", 999999999, locked); // [HIDDEN]
 pref("toolkit.telemetry.initDelay", 999999999, locked); // [HIDDEN] Prevent the Telemetry component from initializing
 pref("toolkit.telemetry.log.dump", false); // [HIDDEN] [DEFAULT] - To expose via the `about:config`
 pref("toolkit.telemetry.log.level", "Fatal"); // [HIDDEN] [Default: Warn]
+pref("toolkit.telemetry.minSubsessionLength", 999999999, locked); // [HIDDEN]
+pref("toolkit.telemetry.newProfilePing.delay", 999999999, locked); // [HIDDEN]
 pref("toolkit.telemetry.newProfilePing.enabled", false, locked); // [HIDDEN - Android]
+pref("toolkit.telemetry.overrideUpdateChannel", "release", locked); // [HIDDEN] [DEFENSE IN DEPTH] Always report channel as `release`, regardless of actual value https://docs.telemetry.mozilla.org/concepts/channels/channel_normalization
 pref("toolkit.telemetry.previousBuildID", "", locked); // [HIDDEN]
 pref("toolkit.telemetry.reportingpolicy.firstRun", false, locked); // [HIDDEN]
+pref("toolkit.telemetry.scheduler.idleTickInterval", 999999999, locked); // [HIDDEN]
+pref("toolkit.telemetry.scheduler.tickInterval", 999999999, locked); // [HIDDEN]
 pref("toolkit.telemetry.send.overrideOfficialCheck", false, locked); // [HIDDEN] [DEFAULT] Never send pings on unofficial builds - https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html
 pref("toolkit.telemetry.server", "data;", locked);
 pref("toolkit.telemetry.server_owner", "", locked);
 pref("toolkit.telemetry.shutdownPingSender.backgroundtask.enabled", false, locked); // [HIDDEN - Android/Thunderbird] [DEFAULT - desktop Firefox]
 pref("toolkit.telemetry.shutdownPingSender.enabled", false, locked); // [HIDDEN - Android]
 pref("toolkit.telemetry.shutdownPingSender.enabledFirstSession", false, locked); // [HIDDEN - Android] [DEFAULT]
+pref("toolkit.telemetry.testing.disableFuzzingDelay", false, locked); // [DEFAULT] [HIDDEN] [DEFENSE IN DEPTH] Always delay sending pings between 0-1 AM
 pref("toolkit.telemetry.testing.overridePreRelease", false, locked); // [HIDDEN] [DEFAULT] Never record extended/prelease data on release channels - https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html
 pref("toolkit.telemetry.testing.overrideProductsCheck", false, locked); // [DEFAULT] Limit probes to only what is supported on the current product - https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html
 pref("toolkit.telemetry.testing.suppressPingsender", true, locked); // [HIDDEN]
 pref("toolkit.telemetry.translations.logLevel", "Off");
 pref("toolkit.telemetry.unified", false, locked); // [DEFAULT - Android]
+pref("toolkit.telemetry.untrustedModulesPing.frequency", 999999999, locked); // [HIDDEN]
 pref("toolkit.telemetry.updatePing.enabled", false, locked); // [HIDDEN - Android]
 pref("toolkit.telemetry.user_characteristics_ping.current_version", 0, locked); // [DEFAULT]
 pref("toolkit.telemetry.user_characteristics_ping.last_version_sent", 0, locked); // [DEFAULT]
@@ -195,17 +217,26 @@ pref("dom.origin-trials.enabled", false, locked);
 pref("security.xfocsp.errorReporting.automatic", false, locked); // [DEFAULT]
 pref("security.xfocsp.errorReporting.enabled", false, locked);
 
-/// Remove unnecessary links
-pref("datareporting.healthreport.infoURL", ""); // [HIDDEN - Android]
-pref("extensions.recommendations.privacyPolicyUrl", "");
-pref("toolkit.crashreporter.infoURL", "");
-pref("toolkit.datacollection.infoURL", "");
+/// Prevent automatically uploading profiler data (from `about:logging`) to Mozilla
+pref("toolkit.aboutLogging.uploadProfileToCloud", false); // [DEFAULT - non-Android]
+
+/// Remove partner attribution
+// These are *only* used for telemetry, and could potentially be used for fingerprinting
+pref("app.distributor", "", locked); // [DEFAULT] [HIDDEN]
+pref("app.distributor.channel", "", locked); // [DEFAULT] [HIDDEN]
+pref("mozilla.partner.id", "", locked); // [DEFAULT] [HIDDEN]
 
 pref("browser.phoenix.status.core", "001");
 
 /*** 002 MOZILLA CRAP™ ***/
 
-// These also provide Attack Surface Reduction
+// Some of these also provide Attack Surface Reduction
+
+/// Clear unnecessary/undesired Mozilla URLs
+pref("datareporting.healthreport.infoURL", ""); // [HIDDEN - Android]
+pref("extensions.recommendations.privacyPolicyUrl", "");
+pref("toolkit.crashreporter.infoURL", "");
+pref("toolkit.datacollection.infoURL", "");
 
 /// Disable add-on/feature recommendations
 // https://support.mozilla.org/kb/recommendations-firefox
@@ -222,11 +253,33 @@ pref("extensions.recommendations.themeRecommendationUrl", "", locked);
 pref("extensions.ui.lastCategory", "addons://list/extension"); // [HIDDEN] Ensure default view of `about:addons` is always local/installed extensions
 pref("extensions.webservice.discoverURL", "", locked); // [HIDDEN - non-Thunderbird]
 
-/// Disable DoH Rollout/heuristics
+/// Disable DoH Rollout/heuristics/steering
+// This helps ensure Firefox doesn't override our/the user's DoH settings...
+// https://searchfox.org/mozilla-central/source/toolkit/components/doh/DoHConfig.sys.mjs
+// https://searchfox.org/mozilla-central/source/toolkit/components/doh/DoHController.sys.mjs
+// https://searchfox.org/mozilla-central/source/toolkit/components/doh/DoHHeuristics.sys.mjs
+// https://searchfox.org/mozilla-central/source/netwerk/docs/dns/dns-over-https-trr.md
+pref("doh-rollout._testing", true, locked); // [HIDDEN]
 pref("doh-rollout.disable-heuristics", true, locked); // [HIDDEN]
+pref("doh-rollout.doneFirstRun", true, locked); // [HIDDEN]
+pref("doh-rollout.doorhanger-decision", "UIDisabled", locked); // [HIDDEN]
 pref("doh-rollout.enabled", false, locked); // [HIDDEN]
+pref("doh-rollout.mode", 5, locked); // [HIDDEN]
+pref("doh-rollout.provider-steering.enabled", false, locked); // [HIDDEN]
+pref("doh-rollout.provider-steering.provider-list", "", locked); // [HIDDEN]
+pref("doh-rollout.self-enabled", false, locked); // [HIDDEN]
 pref("doh-rollout.skipHeuristicsCheck", true, locked); // [HIDDEN]
+pref("doh-rollout.trr-selection.enabled", false, locked); // [HIDDEN]
+pref("doh-rollout.trr-selection.provider-list", "", locked); // [HIDDEN]
 pref("doh-rollout.uri", "", locked); // [HIDDEN]
+
+/// Disable 'Essential Domains Fallback'
+// My concern here is the fact that this is fetched from Remote Settings - this could potentially be used to bypass our internal domain blocklist above + the firewall of users if they themselves choose to block specific domains for whatever reason
+// I don't have a problem with this being a local dump though, as I can understand the usefulness of this (and being local would mitigate my concerns here) - but I'm not comfortable with the remote part
+// This is currently unused anyways...
+// https://searchfox.org/mozilla-central/source/netwerk/base/EssentialDomainsRemoteSettings.sys.mjs
+// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/moz-essential-domain-fallbacks/changeset?_expected=0
+pref("network.essential_domains_fallback", false); // [DEFAULT]
 
 /// Disable Fakespot
 pref("toolkit.shopping.ohttpConfigURL", "");
@@ -247,6 +300,15 @@ pref("extensions.webapi.testing.http", false); // [DEFAULT] Disables mozAddonMan
 // https://support.mozilla.org/kb/privacy-preserving-attribution
 pref("dom.origin-trials.private-attribution.state", 2, locked); // [DEFAULT]
 pref("dom.private-attribution.submission.enabled", false, locked); // [DEFAULT]
+
+/// Disable Remote Permissions
+// This currently only allows overriding behavior for HTTPS-First (and only makes an exception for a testing domain...)
+// We enforce HTTPS-Only Mode anyways, so this isn't relevant to us - and regardless, I don't think there should be remote/default overrides for a feature like this (or permissions in general...), best left up to the user.
+// https://searchfox.org/mozilla-central/source/extensions/permissions/docs/remote.rst
+// https://searchfox.org/mozilla-central/source/extensions/permissions/RemotePermissionService.sys.mjs
+// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/remote-permissions/changeset?_expected=0
+// https://support.mozilla.org/kb/https-first
+pref("permissions.manager.remote.enabled", false);
 
 /// Disable Remote Settings 'Preview' Buckets
 // Nice to expose via about:config
@@ -270,13 +332,19 @@ pref("dom.ipc.processCount.privilegedmozilla", 0, locked);
 pref("extensions.webextensions.restrictedDomains", "");
 pref("svg.context-properties.content.allowed-domains", "", locked); // [DEFAULT - Android/Thunderbird]
 
-/// Remove tracking parameters from Mozilla URLs
+/// Remove tracking parameters from Mozilla URLs + prevent exposing locale & unnecessary information
+pref("app.support.baseURL", "https://support.mozilla.org/kb/");
 pref("browser.backup.template.fallback-download.aurora", "https://www.mozilla.org/firefox/channel/desktop/#developer");
 pref("browser.backup.template.fallback-download.beta", "https://www.mozilla.org/firefox/channel/desktop/#beta");
 pref("browser.backup.template.fallback-download.esr", "https://www.mozilla.org/firefox/enterprise/#download");
 pref("browser.backup.template.fallback-download.nightly", "https://www.mozilla.org/firefox/channel/desktop/#nightly");
 pref("browser.backup.template.fallback-download.release", "https://www.mozilla.org/firefox/download/thanks/?s=direct");
+pref("extensions.abuseReport.amoFormURL", "https://addons.mozilla.org/feedback/addon/%addonID%/");
+pref("extensions.blocklist.addonItemURL", "https://addons.mozilla.org/blocked-addon/%addonID%/%addonVersion%/");
+pref("signon.firefoxRelay.learn_more_url", "https://support.mozilla.org/kb/relay-integration#w_frequently-asked-questions");
 pref("signon.firefoxRelay.manage_url", "https://relay.firefox.com/accounts/profile/");
+pref("signon.firefoxRelay.privacy_policy_url", "https://www.mozilla.org/privacy/subscription-services/");
+pref("signon.firefoxRelay.terms_of_service_url", "https://www.mozilla.org/about/legal/terms/subscription-services/");
 
 /// Skip Mozilla's `Privacy Notice` & `Terms of Use`
 // https://github.com/mozilla/policy-templates/pull/1212
@@ -297,6 +365,11 @@ pref("browser.contentblocking.category", "strict", locked); // [HIDDEN]
 // So we need to also manually configure them. We still also use ETP Strict (not 'Custom') due to our enforcement of it, so we should be covered by Mozilla changes/updates for protections.
 // Manually specifying these is also useful for cases like Android: where all protections aren't enabled with ETP Strict, and on Thunderbird: where ETP Strict doesn't exist at all...
 // We're also configuring the 'CookieBehavior' & 'EnableTrackingProtection' policies on desktop.
+
+//// Block known consent managers (CMPs)
+pref("privacy.trackingprotection.consentmanager.annotate_channels", true); // [DEFAULT]
+pref("privacy.trackingprotection.consentmanager.skip.enabled", false); // [DEFAULT]
+pref("privacy.trackingprotection.consentmanager.skip.pbmode.enabled", false);
 
 //// Block known cryptominers
 pref("privacy.trackingprotection.cryptomining.enabled", true); // [DEFAULT - non-Thunderbird]
@@ -353,9 +426,10 @@ pref("privacy.query_stripping.redirect", true); // [DEFAULT]
 pref("extensions.webcompat.enable_shims", true); // [DEFAULT - non-Thunderbird] [HIDDEN]
 pref("extensions.webcompat.perform_injections", true); // [DEFAULT - non-Thunderbird] [HIDDEN]
 pref("extensions.webcompat.perform_ua_overrides", true); // [DEFAULT - non-Thunderbird] [HIDDEN]
-pref("extensions.webcompat.smartblockEmbeds.enabled", true); // [DEFAULT - Desktop, HIDDEN - Android/Thunderbird] - Enables Embeds/Placeholders to make certain resources click to load
+pref("extensions.webcompat.smartblockEmbeds.enabled", true); // [DEFAULT - Desktop] [HIDDEN - Android/Thunderbird] - Enables Embeds/Placeholders to make certain resources click to load
 
 //// Enable State Partitioning
+pref("network.fetch.cache_partition_cross_origin", true); // [DEFAULT] Cross origin fetch/XHR requests
 pref("privacy.partition.always_partition_third_party_non_cookie_storage", true); // [DEFAULT]
 pref("privacy.partition.always_partition_third_party_non_cookie_storage.exempt_sessionstorage", false); // [DEFAULT]
 pref("privacy.partition.bloburl_per_partition_key", true); // [DEFAULT]
@@ -385,6 +459,9 @@ pref("network.http.referer.disallowCrossSiteRelaxingDefault.pbmode", true); // [
 pref("network.http.referer.disallowCrossSiteRelaxingDefault.pbmode.top_navigation", true); // [DEFAULT] - for top navigations in Private Browsing
 pref("network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation", true); // for top navigations
 
+//// Lower the network priority of known trackers (if not blocked for whatever reason...)
+pref("privacy.trackingprotection.lower_network_priority", true);
+
 pref("browser.phoenix.status.core", "003");
 
 /*** 004 FINGERPRINTING PROTECTION ***/
@@ -392,6 +469,17 @@ pref("browser.phoenix.status.core", "003");
 /// Disable failIfMajorPerformanceCaveat in WebGL contexts
 // https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/18603
 pref("webgl.disable-fail-if-major-performance-caveat", true); // [DEFAULT]
+
+/// Disable Mozilla's remote fingerprinting protection overrides
+// Unnecessary/undesired for our use case...
+// Currently this is only used to disable canvas randomization for Google domains (to fix a certain display issue in Google Maps)
+// This unfortunately impacts all Google domains (can't just be limited to Maps), and due to the importance of the this fingerprinting protection (especially for Android), as well as Google's questionable privacy practices... I feel that this is best left up to the user.
+// I'd rather leave this on though, so I hope we can re-assess and re-enable this in the future.
+// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fingerprinting-protection-overrides/changeset?_expected=0
+pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
+
+/// Enable canvas randomization for the browser chrome
+pref("privacy.resistFingerprinting.randomization.canvas.disable_for_chrome", false); // [DEFAULT]
 
 /// Enable fdlibm for Math.sin, Math.cos, and Math.tan
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#8720
@@ -416,8 +504,13 @@ pref("browser.display.use_system_colors", false); // [DEFAULT - non-Windows]
 pref("privacy.spoof_english", 0); // [DEFAULT]
 
 /// Provide example templates to make it easier for users to set custom FPP overrides if needed
-pref("privacy.fingerprintingProtection.granularOverrides.0.example", '[{"firstPartyDomain":"example1.invalid","overrides":"+ProtectionIWantToEnableOnThisWebsite,-ProtectionIWantToDisableOnThisWebsite"},{"thirdPartyDomain":"example2.invalid","overrides":"+ThirdPartyDomainsAreSupportedTheSameWayToo"}]');
+pref("privacy.fingerprintingProtection.granularOverrides.0.example", '[{"firstPartyDomain":"example1.invalid","overrides":"+ProtectionIWantToEnableOnThisWebsite,-ProtectionIWantToDisableOnThisWebsite"},{"firstPartyDomain":"*","thirdPartyDomain":"example2.invalid","overrides":"+ThirdPartyDomainsAreSupportedToo"}]');
 pref("privacy.fingerprintingProtection.overrides.0.example", "+ProtectionIWantToEnableGlobally,-ProtectionIWantToDisableGlobally");
+
+/// Reset the fingerprinting randomization key daily (in addition to per-session/when the browser restarts)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1816064
+pref("privacy.resistFingerprinting.randomization.daily_reset.enabled", true);
+pref("privacy.resistFingerprinting.randomization.daily_reset.private.enabled", true);
 
 /// So people don't freak out when they see RFP isn't enabled...
 pref("privacy.resistFingerprinting.0.note", "RFP is disabled on purpose.");
@@ -432,6 +525,12 @@ pref("browser.phoenix.status.core", "004");
 // This is already Firefox's default - but it's hidden, so this exposes it to the `about:config`
 // https://searchfox.org/mozilla-central/source/extensions/permissions/PermissionManager.cpp#758
 pref("permissions.memory_only", false); // [HIDDEN] [DEFAULT]
+
+/// Clear cache on exit by default
+// We also disable disk cache entirely below...
+pref("privacy.clearOnShutdown.cache", true);
+pref("privacy.clearOnShutdown_v2.cache", true); // [DEFAULT - Desktop Firefox]
+pref("privacy.sanitize.sanitizeOnShutdown", true);
 
 /// Disable collection/generation of background thumbnails
 // https://searchfox.org/mozilla-central/source/toolkit/components/thumbnails/PageThumbs.sys.mjs#629
@@ -456,9 +555,6 @@ pref("browser.cache.disk_cache_ssl", false);
 /// Disable logging blocked domains to `about:protections`
 pref("browser.contentblocking.database.enabled", false); // [DEFAULT - Android/Thunderbird]
 
-/// Prevent adding downloads to "recent documents"...
-pref("browser.download.manager.addToRecentDocs", false);
-
 /// Prevent clearing passwords & site settings by default
 pref("privacy.clearOnShutdown.siteSettings", false); // [DEFAULT, HIDDEN - Android/Thunderbird]
 pref("privacy.clearOnShutdown_v2.siteSettings", false); // [DEFAULT, HIDDEN - Android/Thunderbird]
@@ -478,32 +574,22 @@ pref("browser.helperApps.deleteTempFileOnExit", true); // [DEFAULT - Thunderbird
 // https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js
 pref("browser.download.clearHistoryOnDelete", 2); // [HIDDEN - Android/Thunderbird]
 
-/// Sanitization
-// Clear browsing history, cache, download history, and sessions on exit by default
-pref("privacy.clearOnShutdown.cache", true);
-pref("privacy.clearOnShutdown.downloads", true); // [HIDDEN - Android/Thunderbird]
-pref("privacy.clearOnShutdown.history", true); // [HIDDEN - Android/Thunderbird]
-pref("privacy.clearOnShutdown.sessions", true); // [HIDDEN - Android/Thunderbird]
-pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", true); // [DEFAULT, HIDDEN - Android/Thunderbird]
-pref("privacy.clearOnShutdown_v2.cache", true); // [DEFAULT]
-pref("privacy.clearOnShutdown_v2.downloads", true); // [HIDDEN]
-pref("privacy.clearOnShutdown_v2.formdata", true); // [HIDDEN - Android/Thunderbird]
-pref("privacy.clearOnShutdown_v2.historyFormDataAndDownloads", true); // [HIDDEN - Android/Thunderbird]
-pref("privacy.sanitize.sanitizeOnShutdown", true);
-
 pref("browser.phoenix.status.core", "005");
 
 /*** 006 DOWNLOADS ***/
 
-// Block insecure downloads
+/// Block insecure downloads
 pref("dom.block_download_insecure", true); // [DEFAULT]
 
 /// Disable extra download logging by default
 // This lets us expose it in the about:config for Android/Thunderbird
 pref("browser.download.loglevel", "Error"); // [DEFAULT, HIDDEN - Android/Thunderbird]
 
-// Notify when downloading files
-pref("browser.download.alwaysOpenPanel", true); // [DEFAULT - Desktop, HIDDEN - Android/Thunderbird]
+/// Notify when downloading files
+pref("browser.download.alwaysOpenPanel", true); // [DEFAULT - Desktop] [HIDDEN - Android/Thunderbird]
+
+/// Prevent adding downloads to "recent documents"...
+pref("browser.download.manager.addToRecentDocs", false);
 
 /// Prompt before downloading files
 pref("browser.download.always_ask_before_handling_new_types", true);
@@ -512,6 +598,10 @@ pref("browser.download.useDownloadDir", false); // [DEFAULT - Thunderbird]
 pref("browser.phoenix.status.core", "006");
 
 /*** 007 HTTP(S) ***/
+
+/// Allow users to bypass invalid certificate errors by default
+// (To expose the preference via the `about:config`)
+pref("security.certerror.hideAddException", false); // [DEFAULT] [HIDDEN]
 
 /// Always preload intermediates
 // https://wiki.mozilla.org/Security/CryptoEngineering/Intermediate_Preloading
@@ -526,12 +616,23 @@ pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
 pref("security.insecure_field_warning.ignore_local_ip_address", false);
 pref("security.warn_submit_secure_to_insecure", true); // [DEFAULT]
 
+/// Disable the automatic import of OS client authentication certificates
+// (Ex. smart cards)
+// This prevents loading Mozilla's PKCS#11 module (which then loads these certificates from the OS store).
+// AFAICT this functionality is quite obscure, use is seemingly nonexistent outside of very specific environments (ex. enterprise/government).
+// Those who do actually use this functionality may also not want the browser to automatically import/expose these certificates, as they have many other uses.
+// These certificates can also still be imported in browser settings anyways, so those who do need to use this functionality still can that way.
+// So I no reason to leave this enabled by default - disabling it reduces attack surface and gives more control to users.
+// (For reference, Tor Browser also disables this)
+// https://blog.mozilla.org/security/2020/04/14/expanding-client-certificates-in-firefox-75/
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1637807
+pref("security.osclientcerts.autoload", false); // [DEFAULT - Thunderbird]
+
 /// Disable downgrades to insecure TLS 1.0/1.1
 pref("security.tls.insecure_fallback_hosts", ""); // [DEFAULT]
 pref("security.tls.version.enable-deprecated", false, locked); // [DEFAULT]
 
-/// Disable insecure ciphers
-// Like Chromium & Tor Browser
+/// Disable insecure ciphers (Like Chromium & Tor Browser)
 // https://gitlab.torproject.org/tpo/applications/mullvad-browser/-/issues/361#note_3089049
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1600437
 pref("security.ssl3.ecdhe_ecdsa_aes_128_sha", false); // [DEFAULT - Nightly] TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
@@ -552,8 +653,11 @@ pref("dom.security.https_only_mode_send_http_background_request", false);
 // Since this is something programs actively try to override, I don't see a safe way to support this, so we'll lock it.
 // We still allow users to manually import certificates into Firefox... 
 // So we can ensure users are aware of certificates they add and are making this decision consciously.
-// security.osclientcerts.autoload can be left alone - https://groups.google.com/a/mozilla.org/g/enterprise/c/XiW-ZidMaII
+pref("security.certerrors.mitm.auto_enable_enterprise_roots", false); // [DEFAULT - Android/Thunderbird] [HIDDEN - Android/Thunderbird]
 pref("security.enterprise_roots.enabled", false); // [DEFAULT - Android]
+
+//// Ensure HTTP/3 isn't disabled when/if third-party/OS-level root certificates are found
+pref("network.http.http3.disable_when_third_party_roots_found", false);
 
 /// Disable TLS 1.3 0-RTT
 // Not forward secret
@@ -572,6 +676,16 @@ pref("security.pki.certificate_transparency.disable_for_spki_hashes", ""); // [D
 pref("security.pki.crlite_mode", 2); // [DEFAULT on Nightly]
 pref("security.remote_settings.crlite_filters.enabled", true); // [DEFAULT - Nightly Desktop]
 
+/// Enable Delegated Credentials
+// https://wikipedia.org/wiki/Delegated_credential
+pref("security.tls.enable_delegated_credentials", true); // [DEFAULT]
+
+/// Enable MITM Detection
+// https://github.com/arkenfox/user.js/issues/740
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1529643
+pref("security.certerrors.mitm.priming.enabled", true); // [DEFAULT - non-Android/Thunderbird] [HIDDEN - Android/Thunderbird]
+pref("security.certerrors.mitm.priming.endpoint", "https://mitmdetection.services.mozilla.com/"); // [DEFAULT - non-Android/Thunderbird] [HIDDEN - Android/Thunderbird]
+
 /// Enable OCSP revocation checks + stapling
 // (https://wikipedia.org/wiki/Online_Certificate_Status_Protocol
 // https://blog.mozilla.org/security/2013/07/29/ocsp-stapling-in-firefox/
@@ -581,9 +695,10 @@ pref("security.ssl.enable_ocsp_must_staple", true); // [DEFAULT]
 pref("security.ssl.enable_ocsp_stapling", true); // [DEFAULT]
 
 /// Enable Post Quantum Key Agreement (Kyber)
-pref("media.webrtc.enable_pq_dtls", true); // [DEFAULT, HIDDEN - Thunderbird]
-pref("network.http.http3.enable_kyber", true);
-pref("security.tls.enable_kyber", true);
+pref("media.webrtc.enable_pq_dtls", true); // [DEFAULT]
+pref("network.http.http3.enable_kyber", true); // [DEFAULT - non-Android]
+pref("security.tls.client_hello.send_p256_keyshare", true); // [DEFAULT]
+pref("security.tls.enable_kyber", true); // [DEFAULT - non-Android]
 
 /// Enforce Strict Certificate Pinning
 // https://wiki.mozilla.org/SecurityEngineering/Public_Key_Pinning#How_to_use_pinning
@@ -594,6 +709,7 @@ pref("security.cert_pinning.enforcement_level", 2);
 pref("security.tls.hello_downgrade_check", true); // [DEFAULT]
 
 /// Enforce using HTTPS as much as possible
+pref("dom.securecontext.allowlist", ""); // [DEFAULT] [HIDDEN]
 pref("dom.security.https_first", true);
 pref("dom.security.https_first_for_custom_ports", true); // [DEFAULT] DEFENSE IN DEPTH
 pref("dom.security.https_first_for_local_addresses", true);
@@ -604,17 +720,24 @@ pref("dom.security.https_only_mode", true);
 pref("dom.security.https_only_mode.upgrade_local", true);
 pref("dom.security.https_only_mode_pbm", true);
 pref("security.mixed_content.block_active_content", true);
-pref("security.mixed_content.block_display_content", true);
+pref("security.mixed_content.block_display_content", false); // [DEFAULT] Unnecessary with the "security.mixed_content.upgrade_display_content" pref below - "security.mixed_content.upgrade_display_content" tries to upgrade mixed content by default and still blocks it if fails, this pref ("security.mixed_content.block_display_content") just blocks all mixed content entirely, causing unnecessary breakage for users. https://github.com/mozilla/policy-templates/issues/1141
 pref("security.mixed_content.block_object_subrequest", true);
 pref("security.mixed_content.upgrade_display_content", true);
 pref("security.mixed_content.upgrade_display_content.audio", true); // [DEFAULT]
 pref("security.mixed_content.upgrade_display_content.image", true); // [DEFAULT]
 pref("security.mixed_content.upgrade_display_content.video", true); // [DEFAULT]
 
+/// Ensure we use the HSTS preload list
+// https://searchfox.org/mozilla-central/source/remote/cdp/domains/parent/Security.sys.mjs
+pref("network.stricttransportsecurity.preloadlist", true); // [DEFAULT]
+
 /// Hard-fail OCSP revocation checks by default
 // Significant security improvement
 // https://github.com/arkenfox/user.js/issues/1576
 pref("security.OCSP.require", true);
+
+/// Only allow certificate error exceptions per-session
+pref("security.certerrors.permanentOverride", false); // [HIDDEN - Android/Thunderbird]
 
 /// Only load secure websockets from HTTPS pages
 pref("network.websocket.allowInsecureFromHTTPS", false); // [DEFAULT]
@@ -635,10 +758,10 @@ pref("browser.phoenix.status.core", "007");
 
 /*** 008 IMPLICIT CONNECTIONS ***/
 
-/// Disable Early Hints
+/// Disable Early Hints (Like Cromite)
+// https://github.com/uazo/cromite/blob/master/build/patches/Client-hints-overrides.patch
 // https://developer.mozilla.org/docs/Web/HTTP/Status/103
 // https://github.com/bashi/early-hints-explainer/blob/main/explainer.md
-// Ex. like Cromite https://github.com/uazo/cromite/blob/master/build/patches/Client-hints-overrides.patch
 pref("network.early-hints.enabled", false);
 pref("network.early-hints.over-http-v1-1.enabled", false);
 pref("network.early-hints.preconnect.enabled", false);
@@ -768,6 +891,9 @@ pref("network.proxy.type", 0);
 
 // Prevent bypasses/leakage
 
+/// Always start proxy extensions (if installed) as soon as possible, instead of waiting for the first browser window to open
+pref("extensions.webextensions.early_background_wakeup_on_request", true); // [DEFAULT - Android] [HIDDEN - non-Android]
+
 /// Disable automatic failover from the proxy (if configured) to direct connections when certain system requests fail
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1720221
 pref("network.proxy.failover_direct", false);
@@ -779,6 +905,12 @@ pref("network.gio.supported-protocols", ""); // [HIDDEN]
 /// Disable Uniform Naming Convention (UNC) file paths
 // https://bugzilla.mozilla.org/1413868
 pref("network.file.disable_unc_paths", true); // [HIDDEN]
+
+/// Disable Wi-Fi Tickler
+// Ex. disabled by the Proxy Bypass Protection build argument
+// https://searchfox.org/mozilla-central/source/netwerk/base/Tickler.h
+// https://searchfox.org/mozilla-central/source/netwerk/base/Tickler.cpp
+pref("network.tickle-wifi.enabled", false); // [DEFAULT - non-Android]
 
 /// Prevent bypassing the proxy (if configured) for system connections that include the `bypassProxy` flag
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1732792
@@ -831,14 +963,27 @@ pref("media.autoplay.default", 5);
 pref("media.clearkey.persistent-license.enabled", false); // [DEFAULT]
 pref("media.clearkey.test-key-systems.enabled", false); // [DEFAULT]
 pref("media.eme.enabled", false);
-pref("media.eme.encrypted-media-encryption-scheme.enabled", false);
-pref("media.eme.hdcp-policy-check.enabled", false);
-pref("media.eme.require-app-approval", true); // [DEFAULT (Android) - DEFENSE IN DEPTH]: Enforce locking DRM behind permission https://searchfox.org/mozilla-central/source/mobile/android/app/geckoview-prefs.js#304
-pref("media.eme.widevine.experiment.enabled", false); // [DEFAULT - HIDDEN] Widevine L1 https://searchfox.org/mozilla-central/source/dom/media/eme/MediaKeySystemAccess.cpp#141
-pref("media.gmp-widevinecdm.enabled", false);
-pref("media.gmp-widevinecdm.visible", false);
-pref("media.gmp-widevinecdm-l1.enabled", false); // [DEFAULT (Except for Nightly) - HIDDEN]
-pref("media.gmp-widevinecdm-l1.visible", false); // [DEFAULT (Except for Nightly) - HIDDEN]
+pref("media.eme.enabled.0.note", "DRM/EME is not recommended or supported.");
+pref("media.eme.enabled.1.note", "Enabling it WILL compromise your privacy/security.");
+pref("media.eme.enabled.2.note", "Proceed at your own caution.");
+pref("media.gmp-widevinecdm.enabled", false); // [HIDDEN - non-Firefox Desktop]
+pref("media.gmp-widevinecdm.visible", false); // [HIDDEN - non-Firefox Desktop]
+pref("media.gmp-widevinecdm-l1.enabled", false); // [DEFAULT - non-Nightly] [HIDDEN - non-Firefox Desktop]
+pref("media.gmp-widevinecdm-l1.visible", false); // [DEFAULT - non-Nightly] [HIDDEN - non-Firefox Desktop]
+
+/// Disable Gecko Media Plugins (GMP)
+// This is currently only used for DRM & OpenH264 (both of which we disable)
+// In general, I feel that these are unnecessary and best left to the operating system to support. They do also pose privacy & security concerns, so I don't see a reason to keep these enabled.
+// https://wiki.mozilla.org/GeckoMediaPlugins
+pref("media.gmp-provider.enabled", false);
+
+/// Disable GMP local sources
+// https://searchfox.org/mozilla-central/source/toolkit/modules/GMPUtils.sys.mjs
+pref("media.gmp-manager.allowLocalSources", false);
+
+/// Disable GMP logging by default (to expose via the `about:config`)
+pref("media.gmp.log.dump", false); // [DEFAULT] [HIDDEN]
+pref("media.gmp.log.level", 70); // [HIDDEN] Limits logging to fatal only
 
 /// Disable OpenH264 (in favor of hardware decoding)
 // Mozilla is currently shipping OpenH264 2.3.2, which is around ~2 years out of date... https://github.com/cisco/openh264/releases/tag/v2.3.1
@@ -1011,6 +1156,12 @@ pref("extensions.quarantineIgnoredByUser.{b86e4813-687a-43e6-ab65-0bde4ab75758}"
 /// Allow Mullvad's extension (if installed) to work on restricted/quarantined domains by default
 pref("extensions.quarantineIgnoredByUser.{d19a89b9-76c1-4a61-bcd4-49e8de916403}", true);
 
+/// Allow uBlock Origin (if installed) to work on restricted/quarantined domains by default
+// This isn't necessary ATM (since uBlock Origin is 'recommended' by Mozilla - so it can already access quarantined domains), but we can still set this anyways for redundancy/to ensure we're always covered if anything changes in the future
+// This is especially important for Thunderbird though - since uBlock Origin isn't 'recommended' there like it is on Firefox...
+// https://support.mozilla.org/kb/quarantined-domains
+pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true); // [HIDDEN]
+
 /// Always allow installing "incompatible" add-ons
 // Especially useful on Android & Thunderbird...
 pref("extensions.strictCompatibility", false); // [DEFAULT - non-Thunderbird]
@@ -1020,6 +1171,14 @@ pref("extensions.strictCompatibility", false); // [DEFAULT - non-Thunderbird]
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1880856
 // https://groups.google.com/g/tb-planning/c/p4MUTMNYBVo
 pref("extensions.webextensions.remote", true); // [DEFAULT]
+
+/// Disable add-on 'sideloading'
+// Only allows installing extensions from profile & application directories (Prevents extensions being installed from the system/via other software)
+// https://archive.is/DYjAM
+// https://github.com/arkenfox/user.js/blob/master/user.js#L612
+pref("extensions.autoDisableScopes", 15, locked); // [DEFAULT - non-Thunderbird] Defense in depth, ensures extensions installed via directories are disabled by default...
+pref("extensions.enabledScopes", 5); // [HIDDEN]
+pref("extensions.startupScanScopes", 0); // [DEFAULT - non-Thunderbird] [HIDDEN - Android]
 
 /// Disable automatic installation/enablement of third party extensions in Firefox's installation directory
 // https://support.mozilla.org/kb/deploying-firefox-with-extensions
@@ -1043,6 +1202,7 @@ pref("extensions.blocklist.enabled", true); // [DEFAULT]
 /// Enable restricted/quarantined domains by default
 // https://support.mozilla.org/kb/quarantined-domains
 pref("extensions.quarantinedDomains.enabled", true); // [DEFAULT]
+pref("extensions.quarantinedDomains.uiDisabled", false); // [DEFAULT] [HIDDEN]
 
 /// Harden CSP policy
 // Compared to Firefox's default, this:
@@ -1059,13 +1219,8 @@ pref("extensions.webextensions.default-content-security-policy.v3", "script-src 
 pref("extensions.install.requireBuiltInCerts", true); // [HIDDEN]
 pref("extensions.update.requireBuiltInCerts", true); // [HIDDEN]
 
-/// Only allow installing extensions from profile & application directories (Prevents extensions being installed from the system/via other software)
-// https://archive.is/DYjAM
-// https://github.com/arkenfox/user.js/blob/master/user.js#L612
-pref("extensions.autoDisableScopes", 15, locked); // [DEFAULT - non-Thunderbird] Defense in depth, ensures extensions installed via directories are disabled by default...
-pref("extensions.enabledScopes", 5); // [HIDDEN]
-
 /// Never allow installing extensions without first prompting the user
+pref("extensions.postDownloadThirdPartyPrompt", false, locked); // [HIDDEN - Android/Thunderbird] https://github.com/arkenfox/user.js/issues/1090
 pref("xpinstall.whitelist.add", "", locked); // [DEFAULT - non-Android] [HIDDEN - non-Android]
 pref("xpinstall.whitelist.required", true, locked); // [DEFAULT] This is the `Warn you when websites try to install add-ons` setting at `about:preferences#privacy`
 
@@ -1074,6 +1229,11 @@ pref("extensions.quarantineIgnoredByUser.ads@mozac.org", false, locked); // Mozi
 pref("extensions.quarantineIgnoredByUser.cookies@mozac.org", false, locked); // Mozilla Android Components - Search Telemetry...
 pref("extensions.quarantineIgnoredByUser.ddg@search.mozilla.org", false, locked); // DuckDuckGo - search engine...
 pref("extensions.quarantineIgnoredByUser.wikipedia@search.mozilla.org", false, locked); // Wikipedia (en) - search engine...
+
+/// Prevent extensions from using the Gecko Profiler
+// Includes certain Mozilla extensions by default
+// https://firefox-source-docs.mozilla.org/tools/profiler/index.html
+pref("extensions.geckoProfiler.acceptedExtensionIds", ""); // [DEFAULT - Android] [HIDDEN - Android]
 
 /// Prevent unprivileged extensions from accessing experimental APIs by default
 // https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
@@ -1106,7 +1266,7 @@ pref("geo.provider.network.logging.enabled", false); // [DEFAULT - HIDDEN]
 
 /// Disable Mozilla's GeoIP/Region Service
 // Prevents Firefox from monitoring the user's region/general location
-/// Note: Firefox will still use different regional search engines based on the browser/system locale (ex. tested with Wikipedia), but this prevents using geolocation
+// Note: Firefox will still use different regional search engines based on the browser/system locale (ex. tested with Wikipedia), but this prevents using geolocation
 // https://firefox-source-docs.mozilla.org/toolkit/modules/toolkit_modules/Region.html
 // https://searchfox.org/mozilla-central/source/toolkit/modules/Region.sys.mjs
 pref("browser.region.local-geocoding", false); // [DEFAULT] [HIDDEN]
@@ -1114,6 +1274,7 @@ pref("browser.region.network.scan", false); // [DEFAULT] [DEFENSE IN DEPTH] Disa
 pref("browser.region.network.url", "");
 pref("browser.region.update.enabled", false);
 pref("browser.search.region", "US"); // [HIDDEN]
+pref("doh-rollout.home-region", "US"); // [HIDDEN]
 
 /// Set BeaconDB as the default network Geolocation provider
 // Default is Google :/
@@ -1177,6 +1338,9 @@ pref("browser.safebrowsing.provider.google.advisoryName", "Google Safe Browsing 
 pref("browser.safebrowsing.provider.google.gethashURL", "");
 pref("browser.safebrowsing.provider.google.updateURL", "");
 
+/// Enable an additional plug-in blocklist from Mozilla
+pref("urlclassifier.blockedTable", "moztest-block-simple,mozplugin-block-digest256"); // [DEFAULT - Nightly]
+
 /// Enable Safe Browsing by default
 // This won't do anything if you don't have an API key from Google, though doesn't hurt...
 // Harmless from a privacy perspective due to the below changes, also effective at preventing real-time malicious domains and downloads.
@@ -1189,11 +1353,15 @@ pref("browser.safebrowsing.features.blockedURIs.update", true); // [DEFAULT, HID
 pref("browser.safebrowsing.features.downloads.update", true); // [DEFAULT, HIDDEN]
 pref("browser.safebrowsing.features.malware.update", true); // [DEFAULT, HIDDEN - non-Android]
 pref("browser.safebrowsing.features.phishing.update", true); // [DEFAULT, HIDDEN - non-Android] 
+pref("browser.safebrowsing.id", "navclient-auto-ffox"); // [DEFAULT - Official] Ensure we use Mozilla's ID
 pref("browser.safebrowsing.malware.enabled", true); // [DEFAULT]
 pref("browser.safebrowsing.phishing.enabled", true); // [DEFAULT]
 pref("browser.safebrowsing.update.enabled", true); // [DEFAULT, HIDDEN]
 pref("urlclassifier.downloadAllowTable", "goog-downloadwhite-proto"); // [DEFAULT - non-Android]
 pref("urlclassifier.downloadBlockTable", "goog-badbinurl-proto"); // [DEFAULT - non-Android]
+
+/// Ensure users can override Safe Browsing warnings by default
+pref("browser.safebrowsing.allowOverride", true); // [DEFAULT]
 
 /// Prevent sending metadata of downloaded files to Google
 // https://support.mozilla.org/kb/how-does-phishing-and-malware-protection-work#w_how-does-phishing-and-malware-protection-work-in-firefox
@@ -1211,9 +1379,6 @@ pref("browser.safebrowsing.provider.google4.dataSharingURL", "", locked);
 pref("browser.safebrowsing.provider.google4.gethashURL", "https://safebrowsing.ironfoxoss.org/v4/fullHashes:find?$ct=application/x-protobuf&key=%GOOGLE_SAFEBROWSING_API_KEY%&$httpMethod=POST");
 pref("browser.safebrowsing.provider.google4.updateURL", "https://safebrowsing.ironfoxoss.org/v4/threatListUpdates:fetch?$ct=application/x-protobuf&key=%GOOGLE_SAFEBROWSING_API_KEY%&$httpMethod=POST");
 
-/// Show advanced details on pages blocked by Safe Browsing by default
-pref("browser.xul.error_pages.show_safe_browsing_details_on_load", true); // [HIDDEN - Android/Thunderbird]
-
 /// Unclear whether these are actually used or not, but looks like Firefox has some kind of functionality to view a "report" from Safe Browsing about the safety, history, & general status of a site
 // By default, it unnecessarily redirects from ex. https://safebrowsing.google.com/safebrowsing/diagnostic?site=example.org to https://transparencyreport.google.com/safe-browsing/search?url=example.org
 // We can skip the redirect to improve performance
@@ -1230,6 +1395,9 @@ pref("devtools.debugger.prompt-connection", true, locked); // [DEFAULT - non-Nig
 /// Disable Remote Debugging + only allow enabling it per-session
 // https://firefox-source-docs.mozilla.org/devtools/backend/protocol.html
 pref("devtools.debugger.remote-enabled", false, sticky); // [DEFAULT - non-Thunderbird]
+
+/// Disable the Remote Debugging Web Socket
+pref("devtools.debugger.remote-websocket", false, locked); // [DEFAULT]
 
 /// Enforce local debugging only
 pref("devtools.debugger.force-local", true, locked); // [DEFAULT]
@@ -1264,6 +1432,16 @@ pref("accessibility.force_disabled", 1);
 // https://developer.mozilla.org/docs/Web/XML/Guides/OpenSearch#supporting_automatic_updates_for_opensearch_plugins
 pref("browser.search.update", false); // [DEFAULT - Android]
 
+/// Disable Battery API (Navigator.getBattery)
+// PRIVACY: Fingerprinting concerns, just plain creepy...
+// SECURITY: Attack Surface Reduction
+// NOTE: This only impacts chrome/certain privileged code; this is thankfully never exposed to websites
+// I'm still not convinced that there's a legitimate use/need for this functionality though...
+// https://developer.mozilla.org/docs/Web/API/Battery_Status_API
+// https://developer.mozilla.org/docs/Web/API/Navigator/getBattery
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1313580
+pref("dom.battery.enabled", false);
+
 /// Disable Beacon API (Navigator.sendBeacon)
 // PRIVACY: Used for analytics/tracking by design, see explanation below
 // SECURITY: Attack Surface Reduction
@@ -1280,6 +1458,16 @@ pref("browser.search.update", false); // [DEFAULT - Android]
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1454252
 pref("beacon.enabled", false);
 
+/// Disable Clipboard API
+// PRIVACY: Fingerprinting concerns, prevents monitoring users' clipboards without their consent
+// SECURITY: Prevents leaking sensitive information (ex. passwords), Attack Surface Reduction
+// NOTE: This only impacts extensions; this is thankfully never exposed to websites
+// I'm still not convinced extensions need or should have access to this data though (While there are currently other ways for extensions to access clipboard data, those are deprecated and will presumably not be around for much longer)
+// https://developer.mozilla.org/docs/Web/API/Clipboard
+pref("dom.events.asyncClipboard.clipboardItem", false);
+pref("dom.events.asyncClipboard.readText", false);
+pref("dom.events.testing.asyncClipboard", false, locked); // [DEFAULT]
+
 /// Disable Content Analysis SDK
 // PRIVACY: Used for monitoring users by design
 // SECURITY: Can be easily abused by bad actors, Attack Surface Reduction
@@ -1288,14 +1476,16 @@ pref("beacon.enabled", false);
 // https://github.com/chromium/content_analysis_sdk
 pref("browser.contentanalysis.default_result", 0, locked); // [DEFAULT]
 pref("browser.contentanalysis.enabled", false, locked); // [DEFAULT]
-pref("browser.contentanalysis.interception_point.clipboard.enabled", false, locked); // [HIDDEN - Thunderbird]
-pref("browser.contentanalysis.interception_point.drag_and_drop.enabled", false, locked); // [HIDDEN - Thunderbird]
-pref("browser.contentanalysis.interception_point.file_upload.enabled", false, locked); // [HIDDEN - Thunderbird]
-pref("browser.contentanalysis.interception_point.print.enabled", false, locked); // [HIDDEN - Thunderbird]
+pref("browser.contentanalysis.interception_point.clipboard.enabled", false, locked);
+pref("browser.contentanalysis.interception_point.drag_and_drop.enabled", false, locked);
+pref("browser.contentanalysis.interception_point.file_upload.enabled", false, locked);
+pref("browser.contentanalysis.interception_point.print.enabled", false, locked);
+pref("browser.contentanalysis.max_connections", 0, locked); // Sets maximum number of allowed connections to 0
 pref("browser.contentanalysis.show_blocked_result", true, locked); // [DEFAULT] - Always notify users when Content Analysis blocks access to something...
+pref("browser.contentanalysis.silent_notifications", false, locked); // [DEFAULT] If Content Analysis is enabled, ensure notifications aren't silenced so that users are fully aware
 
 /// Disable Reporting API
-// PRIVACY: Fingerprinting concerns, Used for analytics by design
+// PRIVACY: Fingerprinting concerns, used for analytics by design
 // SECURITY: Attack Surface Reduction
 // https://w3c.github.io/reporting/
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1492036
@@ -1341,10 +1531,18 @@ pref("browser.send_pings.require_same_host", true); // [DEFENSE IN DEPTH]
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml#12829
 pref("network.http.network_error_logging.enabled", false); // [DEFAULT, HIDDEN - Thunderbird]
 
+/// Disable online speech recognition
+// https://searchfox.org/mozilla-central/source/dom/media/webspeech/recognition/OnlineSpeechRecognitionService.cpp
+// https://searchfox.org/mozilla-central/source/dom/media/webspeech/recognition/SpeechRecognition.cpp
+pref("media.webspeech.service.endpoint", "data;"); // [HIDDEN]
+
+/// Disable referers when leaving .onion domains
+// NOTE: Please use TOR BROWSER for accessing .onion domains...
+pref("network.http.referer.hideOnionSource", true); // [DEFAULT]
+
 /// Disable storage access heuristics
 // https://developer.mozilla.org/docs/Web/Privacy/State_Partitioning#storage_access_heuristics
 pref("dom.storage_access.auto_grants", false); // Automatic storage access grants
-pref("dom.storage_access.max_concurrent_auto_grants", 1); // Automatic storage access grants
 pref("privacy.restrict3rdpartystorage.heuristic.navigation", false); // [DEFAULT - non-desktop Nightly] [HIDDEN - Android]
 pref("privacy.restrict3rdpartystorage.heuristic.opened_window_after_interaction", false);
 pref("privacy.restrict3rdpartystorage.heuristic.recently_visited", false);
@@ -1394,6 +1592,28 @@ pref("permissions.isolateBy.userContext", true);
 // (ex. https://searchfox.org/mozilla-central/source/toolkit/components/extensions/test/xpcshell/test_ext_contentscript_antitracking.js)
 pref("privacy.antitracking.isolateContentScriptResources", true); // [NIGHTLY]
 
+/// Limit CSP reporting
+// We block CSP reports with uBlock Origin by default (and disable them entirely on IronFox)
+// But we unfortunately can't disable them on standard Firefox (though I hope we can in the future... see Bugzilla issue linked below)
+// So this limits them to the minimum allowed
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1964249
+pref("security.csp.reporting.limit.count", 1); // [DEFAULT: 100]
+pref("security.csp.reporting.limit.timespan", 999999999); // [DEFAULT: 2]
+pref("security.csp.reporting.script-sample.max-length", 0); // [DEFAULT: 40]
+pref("security.csp.truncate_blocked_uri_for_frame_navigations", true); // [DEFAULT] Ensure we truncate  blocked-uris
+
+/// Limit maximum cookie lifetime to 6 months/180 days (Like Brave)
+// Firefox's default is currently 400 days (34560000)
+// https://github.com/brave/brave-browser/issues/3443
+// https://github.com/fmarier/brave-core/commit/4d222df50a8dfaaabb31e9f2c5070c4db5ba8fd5
+// For testing: https://setcookie.net/
+pref("network.cookie.maxageCap", 15552000);
+
+/// Prevent third parties from setting cookies unless the third party already has cookies as a first party (Like Safari)
+// https://webkit.org/tracking-prevention/#the-default-cookie-policy
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1587182
+pref("privacy.dynamic_firstparty.limitForeign", true);
+
 /// Restrict tracking referers
 pref("network.http.referer.defaultPolicy.trackers", 1);
 pref("network.http.referer.defaultPolicy.trackers.pbmode", 1);
@@ -1421,6 +1641,11 @@ pref("security.external_protocol_requires_permission", true); // [DEFAULT - non-
 /// Apply CSP to internal browser.xhtml
 pref("security.browser_xhtml_csp.enabled", true); // [DEFAULT]
 pref("security.browser_xhtml_csp.report-only", false);
+
+/// Do not block additional ports by default
+// This is just to expose the preferences via the `about:config`
+pref("network.security.ports.banned", ""); // [DEFAULT] [HIDDEN]
+pref("network.security.ports.banned.override", ""); // [DEFAULT] [HIDDEN]
 
 /// Disable Navigator Media Objects & getUserMedia Support in insecure contexts
 // https://developer.mozilla.org/docs/Web/API/Navigator/mediaDevices
@@ -1485,6 +1710,10 @@ pref("security.allow_parent_unrestricted_js_loads", false); // [DEFAULT - non-An
 pref("security.allow_unsafe_parent_loads", false); // [DEFAULT]
 pref("security.data_uri.block_toplevel_data_uri_navigations", true); // [DEFAULT]
 
+/// Ensure we block old/obsolete libavcodec libraries
+// https://searchfox.org/mozilla-central/source/testing/profiles/unittest-required/user.js
+pref("media.libavcodec.allow-obsolete", false); // [DEFAULT]
+
 /// Never expose shell access
 // https://www.stigviewer.com/stig/mozilla_firefox/2019-12-12/finding/V-15771
 pref("network.protocol-handler.external.shell", false, locked); // [DEFAULT]
@@ -1502,8 +1731,7 @@ pref("javascript.options.content_process_write_protect_code", true); // [DEFAULT
 // https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js#1035
 pref("browser.tabs.remote.enforceRemoteTypeRestrictions", true); // [DEFAULT - Nightly Desktop]
 
-/// Protect against CSRF Attacks
-// Like Chromium
+/// Protect against CSRF Attacks (Like Chromium)
 // https://groups.google.com/a/mozilla.org/g/dev-platform/c/6PZtLH7c6JQ
 // https://hacks.mozilla.org/2020/08/changes-to-samesite-cookie-behavior/
 // https://web.dev/articles/samesite-cookies-explained
@@ -1546,9 +1774,26 @@ pref("network.connectivity-service.enabled", false);
 pref("network.connectivity-service.IPv4.url", "");
 pref("network.connectivity-service.IPv6.url", "");
 
+/// Disable network connectivity status monitoring
+// (Ex. used for automatically switching between offline & online mode)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=620472
+pref("network.manage-offline-status", false);
+pref("network.offline-mirrors-connectivity", false); // [DEFAULT]
+
 /// Disable WebVTT Testing Events
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml
 pref("media.webvtt.testing.events", false); // [DEFAULT]
+
+/// Enable Firefox's newer 'Felt privacy' design for Certificate Errors
+pref("security.certerrors.felt-privacy-v1", true); // [HIDDEN - Android/Thunderbird]
+
+/// Enable the Remote Settings Firefox Relay Allowlist Collection by default to expose via the `about:config`
+// https://searchfox.org/mozilla-central/source/toolkit/components/satchel/integrations/FirefoxRelay.sys.mjs
+// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-allowlist/changeset?_expected=0
+pref("signon.firefoxRelay.allowListRemoteSettingsCollection", "fxrelay-allowlist"); // [DEFAULT] [HIDDEN]
+
+/// Enable more detailed property error messages
+pref("javascript.options.property_error_message_fix", true); // [DEFAULT - Nightly/Dev]
 
 /// Force pop-up windows to open in new tabs instead
 pref("browser.link.open_newwindow", 3); // [DEFAULT]
@@ -1558,17 +1803,42 @@ pref("browser.link.open_newwindow.restriction", 0); // [DEFAULT - Android/Thunde
 pref("dom.popup_allowed_events", "click dblclick");
 
 /// Prevent scripts from moving, resizing, and messing with windows
+pref("dom.allow_scripts_to_close_windows", false); // [DEFAULT]
 pref("dom.disable_window_flip", true); // [DEFAULT - non-Android]
 pref("dom.disable_window_move_resize", true); // [DEFAULT - Android]
 
 /// Prevent websites from automatically refreshing
 pref("browser.meta_refresh_when_inactive.disabled", true); // [DEFAULT - Android]
 
+/// Show an error page/details instead of a blank page for HTTP responses with certain error codes (ex. 4xx, 5xx, & Content-Length: 0)
+// ex. https://ozuma.sakura.ne.jp/httpstatus/400
+pref("browser.http.blank_page_with_error_response.enabled", false); // [DEFAULT - non-Android]
+
 pref("browser.phoenix.status.core", "025");
 
 /*** 026 PERFORMANCE ***/
 
 // A lot of these taken from https://github.com/yokoffing/Betterfox/blob/main/Fastfox.js
+
+/// Enable Advanced Vector Extensions (AVX)
+// https://wikipedia.org/wiki/Advanced_Vector_Extensions
+// https://www.supportyourtech.com/articles/how-to-enable-avx-support-in-windows-11-a-step-by-step-guide/
+pref("javascript.options.wasm_simd_avx", true);
+
+/// Enable Branch Hinting
+// https://github.com/WebAssembly/branch-hinting/blob/main/proposals/branch-hinting/Overview.md
+pref("javascript.options.wasm_branch_hinting", true); // [DEFAULT - Nightly]
+
+/// Enable SIMD
+// https://stackoverflow.blog/2020/07/08/improving-performance-with-simd-intrinsics-in-three-use-cases/
+pref("javascript.options.wasm_relaxed_simd", true); // [DEFAULT - Nightly]
+
+/// Enable the "fetchpriority" attribute
+// https://web.dev/articles/fetch-priority
+pref("network.fetchpriority.enabled", true); // [DEFAULT - non-ESR]
+
+/// Enable JS GC Parallel Marking
+pref("javascript.options.mem.gc_parallel_marking", true); // [DEFAULT - non-Android]
 
 pref("browser.cache.jsbc_compression_level", 3); // [Default = 0]
 pref("browser.sessionstore.interval", 60000);
@@ -1595,6 +1865,7 @@ pref("network.http.max-persistent-connections-per-server", 10); // [Default = 6]
 pref("network.http.max-urgent-start-excessive-connections-per-host", 5); // [Default = 3]
 pref("network.http.pacing.requests.enabled", false); // Disable pacing requests - https://codeberg.org/celenity/Phoenix/issues/84
 pref("network.ssl_tokens_cache_capacity", 10240); // [Default = 2048] Increase TLS token caching - https://codeberg.org/celenity/Phoenix/issues/84
+pref("webgl.msaa-samples", 4); // [DEFAULT]
 
 pref("browser.phoenix.status.core", "026");
 
@@ -1612,9 +1883,31 @@ pref("browser.phoenix.status.core", "027");
 /// Things that are  nice to have™
 // Not directly privacy & security related
 
+/// Allow Picture-in-Picture on all websites, even if they try to prevent it...
+pref("media.videocontrols.picture-in-picture.respect-disablePictureInPicture", false);
+
+/// Enable developer options for `about:profiling`
+pref("devtools.performance.aboutprofiling.has-developer-options", true);
+
+/// Enable IPv6
+// Important, nice to have
+pref("network.dns.disableIPv6", false); // [DEFAULT]
+
+/// Enable support for web applications manifests
+// Ex. required for PWAs (& PWA inspection on desktop)
+// https://developer.mozilla.org/docs/Web/Progressive_web_apps/Manifest
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1603673
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
+pref("dom.manifest.enabled", true); // [DEFAULT]
+
 /// Enable zoom on all websites, even if they try to block it...
 // This is the `Zoom on all websites` setting on Android
 pref("browser.ui.zoom.force-user-scalable", true);
+
+/// Set default URL to load when navigating to `moz://a`
+// Default is https://www.mozilla.org/about/manifesto/
+// https://searchfox.org/mozilla-central/source/toolkit/components/mozprotocol/MozProtocolHandler.sys.mjs
+pref("toolkit.mozprotocol.url", "about:mozilla"); // [HIDDEN]
 
 pref("browser.tabs.inTitlebar", 1); // Hide Title Bar by default
 pref("browser.translations.automaticallyPopup", true); // [DEFAULT]
@@ -1639,14 +1932,20 @@ pref("browser.phoenix.status.core", "028");
 /*** 029 UPDATES ***/
 
 /// Automatically update extensions by default
+// https://searchfox.org/mozilla-central/source/toolkit/mozapps/extensions/AddonManager.sys.mjs
 pref("extensions.systemAddon.update.enabled", true); // [DEFAULT]
-pref("extensions.update.autoUpdateDefault", true); // [DEFAULT, HIDDEN - ANDROID]
+pref("extensions.systemAddon.update.url", "https://aus5.mozilla.org/update/3/SystemAddons/%VERSION%/%BUILD_ID%/%BUILD_TARGET%/%LOCALE%/%CHANNEL%/%OS_VERSION%/%DISTRIBUTION%/%DISTRIBUTION_VERSION%/update.xml"); // [DEFAULT - non-Thunderbird] [HIDDEN - Thunderbird]
+pref("extensions.update.autoUpdateDefault", true); // [DEFAULT] [HIDDEN - ANDROID]
 pref("extensions.update.enabled", true); // [DEFAULT]
-pref("media.gmp-manager.updateEnabled", true); // [DEFAULT, HIDDEN]
+pref("media.gmp-manager.updateEnabled", true); // [DEFAULT] [HIDDEN]
 
 /// Check for extension/theme updates hourly
 // Default is once every 24 hours
 pref("extensions.update.interval", 3600);
+
+/// Disable insecure extension updates
+// https://searchfox.org/mozilla-central/source/toolkit/mozapps/extensions/AddonManager.sys.mjs
+pref("extensions.checkUpdateSecurity", true); // [DEFAULT] [HIDDEN]
 
 /// Notify users for extension updates by default
 // https://searchfox.org/mozilla-central/source/remote/shared/RecommendedPreferences.sys.mjs#253
@@ -1682,18 +1981,20 @@ pref("browser.phoenix.status.core", "successfully applied :D", locked);
 
 001: DATA COLLECTION
 002: MOZILLA CRAP™
-003: DISK AVOIDANCE
-004: HTTP(S)
-005: MEDIA
-006: ATTACK SURFACE REDUCTION
-007: GEOLOCATION
-008: DEBUGGING
-009: MISC. PRIVACY
-010: MISC. SECURITY
-011: PERFORMANCE
-012: Personal Touch 💜
-013: UPDATES
-014: SPECIALIZED/CUSTOM CONFIGS
+003: FINGERPRINTING PROTECTION
+004: DISK AVOIDANCE
+005: HTTP(S)
+006: MEDIA
+007: ATTACK SURFACE REDUCTION
+008: GEOLOCATION
+009: DEBUGGING
+010: MISC. PRIVACY
+011: MISC. SECURITY
+012: MISC.
+013: PERFORMANCE
+014: Personal Touch 💜
+015: UPDATES
+016: SPECIALIZED/CUSTOM CONFIGS
 
 */
 
@@ -1723,16 +2024,31 @@ pref("browser.phoenix.status.desktop.common", "001");
 
 /*** 002 MOZILLA CRAP™ ***/
 
+/// Clear unnecessary/undesired Mozilla URLs
+pref("app.feedback.baseURL", "");
+
 /// Remove special privileges from Mozilla domains
 pref("permissions.manager.defaultsUrl", "", locked);
 pref("services.sync.addons.trustedSourceHostnames", "");
 
 pref("browser.phoenix.status.desktop.common", "002");
 
-/*** 003 DISK AVOIDANCE ***/
+/*** 003 FINGERPRINTING PROTECTION ***/
 
-/// Sanitization
-// Checks the boxes for clearing browsing data when navigating to `about:preferences#privacy` -> `Cookies and Site Data` -> `Manage Data...`
+/// Harden FPP (for ESR users...)
+// https://searchfox.org/mozilla-central/source/toolkit/components/resistfingerprinting/RFPTargets.inc
+pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", false); // [ESR] (This is the equivalent of the `-CanvasExtractionBeforeUserInputIsBlocked` target)
+pref("privacy.resistFingerprinting.randomDataOnCanvasExtract", true); // [ESR] (This is the equivalent of the `+CanvasRandomization` target)
+
+/// Set target video resolution to 1080p
+// Default on ESR is still 480p...
+pref("privacy.resistFingerprinting.target_video_res", 1080); // [DEFAULT - non-ESR]
+
+pref("browser.phoenix.status.desktop.common", "003");
+
+/*** 004 DISK AVOIDANCE ***/
+
+/// Check the boxes for clearing browsing data when navigating to `about:preferences#privacy` -> `Cookies and Site Data` -> `Manage Data...` by default
 pref("privacy.clearHistory.browsingHistoryAndDownloads", true); // [DEFAULT, HIDDEN - Thunderbird]
 pref("privacy.clearHistory.cache", true); // [DEFAULT, HIDDEN - Thunderbird]
 pref("privacy.clearHistory.formdata", true); // [HIDDEN - Thunderbird]
@@ -1756,15 +2072,20 @@ pref("privacy.cpd.offlineApps", false); // [DEFAULT, HIDDEN - Thunderbird]
 //// and passwords...
 pref("privacy.cpd.passwords", false); // [DEFAULT, HIDDEN - Thunderbird]
 
+/// Clear browsing history, download history, and sessions on exit by default
+pref("privacy.clearOnShutdown.downloads", true); // [HIDDEN - Thunderbird]
+pref("privacy.clearOnShutdown.history", true); // [HIDDEN - Thunderbird]
+pref("privacy.clearOnShutdown.sessions", true); // [HIDDEN - Thunderbird]
+
 /// Prevent automatically starting Firefox & restoring session after reboot on Windows [NO-OSX]
 pref("toolkit.winRegisterApplicationRestart", false); // [HIDDEN - Thunderbird] [NO-OSX]
 
 /// Set default time range when manually clearing data to "everything"
 pref("privacy.sanitize.timeSpan", 0);
 
-pref("browser.phoenix.status.desktop.common", "003");
+pref("browser.phoenix.status.desktop.common", "004");
 
-/*** 004 HTTP(S) ***/
+/*** 005 HTTP(S) ***/
 
 /// Disable third-party/OS-level root certificates
 // I've been torn on how to handle this, but IMO the safest way forward is disabling this functionality in Firefox.
@@ -1779,13 +2100,9 @@ pref("browser.phoenix.status.desktop.common", "003");
 pref("security.certerrors.mitm.auto_enable_enterprise_roots", false, locked);
 pref("security.enterprise_roots.enabled", false, locked);
 
-/// Enforce Strict Certificate Pinning
-// https://wiki.mozilla.org/SecurityEngineering/Public_Key_Pinning#How_to_use_pinning
-pref("security.cert_pinning.enforcement_level", 2, locked);
+pref("browser.phoenix.status.desktop.common", "005");
 
-pref("browser.phoenix.status.desktop.common", "004");
-
-/*** 005 MEDIA ***/
+/*** 006 MEDIA ***/
 
 /// Sandbox GMP on GNU/Linux [NO-OSX]
 // https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml [NO-OSX]
@@ -1797,42 +2114,36 @@ pref("media.eme.playready.enabled", false); // [NO-OSX]
 /// Disable Windows Media Foundation Clearkey DRM [NO-OSX]
 pref("media.eme.wmf.clearkey.enabled", false); // [DEFAULT] [NO-OSX]
 
-/// Disable Windows Media Foundation Media Engine [NO-OSX]
-// By default, it's enabled for protected content (DRM) [NO-OSX]
-// Enabling it for standard content appears to cause video playback issues (ex. on YouTube) [NO-OSX]
-// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [NO-OSX]
-pref("media.wmf.media-engine.enabled", 0); // [NO-OSX]
-
 /// Enable click to play UI for certain CSS skins by default...
 // https://github.com/black7375/Firefox-UI-Fix/blob/master/css/leptonContent.css#L223
 // https://github.com/black7375/Firefox-UI-Fix/wiki/Options#defaults-6
 pref("userContent.player.click_to_play", true); // [HIDDEN]
 
-pref("browser.phoenix.status.desktop.common", "005");
+pref("browser.phoenix.status.desktop.common", "006");
 
-/*** 006 ATTACK SURFACE REDUCTION ***/
+/*** 007 ATTACK SURFACE REDUCTION ***/
 
 /// Disable WebXR
 // https://developer.mozilla.org/docs/Web/API/WebXR_Device_API
 pref("permissions.default.xr", 2); // [HIDDEN on Thunderbird]
 
-pref("browser.phoenix.status.desktop.common", "006");
+pref("browser.phoenix.status.desktop.common", "007");
 
-/*** 007 GEOLOCATION [NO-OSX] ***/
+/*** 008 GEOLOCATION [NO-OSX] ***/
 
 // Disable Microsoft Location Services [WINDOWS] [NO-OSX]
 pref("geo.provider.ms-windows-location", false); // [NO-OSX]
 
-pref("browser.phoenix.status.desktop.common", "007"); // [NO-OSX]
+pref("browser.phoenix.status.desktop.common", "008"); // [NO-OSX]
 
-/*** 008 DEBUGGING ***/
+/*** 009 DEBUGGING ***/
 
 /// Enforce local debugging only
 pref("devtools.inspector.remote", false, locked); // [DEFAULT]
 
-pref("browser.phoenix.status.desktop.common", "008");
+pref("browser.phoenix.status.desktop.common", "009");
 
-/*** 009 MISC. PRIVACY ***/
+/*** 010 MISC. PRIVACY ***/
 
 /// Disable Firefox Sync by default
 // When signing in to Firefox Sync, this controls the items (checkboxes) that are set to sync (under about:preferences#sync).
@@ -1859,9 +2170,9 @@ pref("clipboard.copyPrivateDataToClipboardCloudOrHistory", false); // [DEFAULT] 
 /// Prevent sharing identifying info if a remote AutoConfig is being used
 pref("autoadmin.append_emailaddr", false, locked); // [HIDDEN]
 
-pref("browser.phoenix.status.desktop.common", "009");
+pref("browser.phoenix.status.desktop.common", "010");
 
-/*** 010 MISC. SECURITY ***/
+/*** 011 MISC. SECURITY ***/
 
 /// Disable GNOME Integration [LINUX] [NO-OSX]
 // https://searchfox.org/mozilla-central/source/browser/components/shell/nsGNOMEShellService.cpp [NO-OSX]
@@ -1871,8 +2182,26 @@ pref("browser.gnome-search-provider.enabled", false); // [HIDDEN] [NO-OSX]
 // https://security.googleblog.com/2016/10/disclosing-vulnerabilities-to-protect.html [NO-OSX]
 // https://docs.google.com/document/d/1gJDlk-9xkh6_8M_awrczWCaUuyr0Zd2TKjNBCiPO_G4/edit [NO-OSX]
 pref("security.sandbox.content.win32k-disable", true); // [DEFAULT] [NO-OSX]
-pref("security.sandbox.gmp.win32k-disable", true); // [NO-OSX]
+pref("security.sandbox.gmp.win32k-disable", true); // [DEFAULT] [NO-OSX]
 pref("security.sandbox.socket.win32k-disable", true); // [DEFAULT] [NO-OSX]
+
+/// Enable Arbitrary Code Guard (ACG) [WINDOWS] [NO-OSX]
+// https://medium.com/@boutnaru/the-windows-security-journey-acg-arbitrary-code-guard-74b08a8bd1e5 [NO-OSX]
+pref("security.sandbox.gmp.acg.enabled", true); // [DEFAULT] [NO-OSX]
+pref("security.sandbox.rdd.acg.enabled", true); // [DEFAULT] [NO-OSX]
+pref("security.sandbox.utility-wmf.acg.enabled", true); // [DEFAULT] [NO-OSX]
+
+/// Enable Code Integrity Guard (CIG) for pre-spawn [WINDOWS] [NO-OSX]
+// https://medium.com/@boutnaru/the-windows-security-journey-cig-code-integrity-guard-7e410c8d2304 [NO-OSX]
+pref("security.sandbox.cig.prespawn.enabled", true); // [DEFAULT - Nightly] [NO-OSX]
+
+/// Enable Shadow Stacks [WINDOWS] [NO-OSX]
+// https://wikipedia.org/wiki/Shadow_stack [NO-OSX]
+pref("security.sandbox.content.shadow-stack.enabled", true); // [NO-OSX]
+pref("security.sandbox.gmp.shadow-stack.enabled", true); // [DEFAULT] [NO-OSX]
+pref("security.sandbox.gpu.shadow-stack.enabled", true); // [DEFAULT] [NO-OSX]
+pref("security.sandbox.rdd.shadow-stack.enabled", true); // [DEFAULT] [NO-OSX]
+pref("security.sandbox.socket.shadow-stack.enabled", true); // [DEFAULT] [NO-OSX]
 
 /// Prevent hiding extensions
 pref("devtools.aboutdebugging.showHiddenAddons", true, locked);
@@ -1881,9 +2210,21 @@ pref("devtools.aboutdebugging.showHiddenAddons", true, locked);
 // https://www.mozilla.org/firefox/62.0/releasenotes/
 pref("general.config.sandbox_enabled", true, locked);
 
-pref("browser.phoenix.status.desktop.common", "010");
+/// Warn on unprivileged namespaces [LINUX] [NO-OSX]
+pref("security.sandbox.warn_unprivileged_namespaces", true); // [DEFAULT] [LINUX] [NO-OSX]
 
-/*** 011 PERFORMANCE ***/
+pref("browser.phoenix.status.desktop.common", "011");
+
+/*** 012 MISC. ***/
+
+/// Disable network connectivity status monitoring [NO-OSX]
+// (Ex. used for automatically switching between offline & online mode)  [NO-OSX]
+// https://bugzilla.mozilla.org/show_bug.cgi?id=620472 [NO-OSX]
+pref("toolkit.networkmanager.disable", true); // RedHat/Fedora-specific [NO-OSX]
+
+pref("browser.phoenix.status.desktop.common", "012");
+
+/*** 013 PERFORMANCE ***/
 
 /// Disable certain UI animations
 // https://searchfox.org/mozilla-central/source/widget/nsXPLookAndFeel.cpp
@@ -1895,14 +2236,24 @@ pref("ui.swipeAnimationEnabled", 0); // [HIDDEN]
 /// Taken from https://github.com/yokoffing/Betterfox/blob/main/Fastfox.js
 pref("network.http.max-connections", 1800); // [Default = 900]
 
-pref("browser.phoenix.status.desktop.common", "011");
+pref("browser.phoenix.status.desktop.common", "013");
 
-/*** 012 Personal Touch 💜 ***/
+/*** 014 Personal Touch 💜 ***/
 
 /// Things that are  nice to have™
 // Not directly privacy & security related
 
+/// Enable the ability to download and switch locales
+pref("app.update.langpack.enabled", true); // [DEFAULT]
+pref("intl.multilingual.downloadEnabled", true); // [DEFAULT - non-Developer/Nightly]
+pref("intl.multilingual.enabled", true); // [DEFAULT - non-Developer/Nightly]
+
+/// Enable the ability to switch locales without requiring a restart
+pref("intl.multilingual.liveReload", true); // [DEFAULT - Firefox release/beta]
+pref("intl.multilingual.liveReloadBidirectional", true);
+
 /// Developer tools...
+pref("devtools.browsertoolbox.scope", "everything"); // [DEFAULT - Thunderbird] Set Browser/Error Console scope to "Multiprocess" instead of "Parent process only" by default
 pref("devtools.command-button-experimental-prefs.enabled", true); // [HIDDEN]
 pref("devtools.command-button-measure.enabled", true);
 pref("devtools.command-button-rulers.enabled", true);
@@ -1912,13 +2263,11 @@ pref("devtools.debugger.ui.editor-wrapping", true); // Enable long line wrapping
 pref("devtools.dom.enabled", true);
 pref("devtools.inspector.showUserAgentStyles", true); // Show default/browser styles in the Inspector by default
 pref("devtools.netmonitor.persistlog", true); // Do not automatically clear log messages after page reloads/navigation
+pref("devtools.browserconsole.enableNetworkMonitoring", true); // Enable network monitoring by default
+pref("devtools.webconsole.input.editorOnboarding", false); // Disable editor onboarding
 pref("devtools.webconsole.persistlog", true); // Do not automatically clear log messages after page reloads/navigation
+pref("devtools.webconsole.sidebarToggle", true); // Enable the sidebar toggle
 pref("devtools.webconsole.timestampMessages", true); // Enable timestamps in the web console by default
-
-/// Disable extra logging for policies by default
-// This pref allows controlling the log level of policies (extremely useful for troubleshooting...), set here to the default value so that it's exposed in the about:config
-// https://searchfox.org/mozilla-central/source/browser/components/BrowserGlue.sys.mjs#967
-pref("browser.policies.loglevel", "error"); // [DEFAULT, HIDDEN]
 
 /// Disable the Accessibility Inspector/context menu item by default
 // https://firefox-source-docs.mozilla.org/devtools-user/accessibility_inspector/
@@ -1942,25 +2291,28 @@ pref("ui.useAccessibilityTheme", 0); // [DEFAULT, HIDDEN]
 
 pref("security.xfocsp.hideOpenInNewWindow", false); // [ESR]
 
-pref("browser.phoenix.status.desktop.common", "012");
+pref("browser.phoenix.status.desktop.common", "014");
 
-/*** 013 UPDATES ***/
+/*** 015 UPDATES ***/
 
 /// Browser Updates
-pref("app.update.badgeWaitTime", 0); // Immediately show badge on hamburger menu when update is available
+pref("app.update.background.interval", 3600); // Check for updates hourly when the browser is not running in the background (default is 7 hours)
+pref("app.update.badgeWaitTime", 0); // Immediately show badge on hamburger menu when an update is available
+pref("app.update.checkInstallTime.days", 0); // Ensure the binary is always old enough to check for updates
+pref("app.update.interval", 3600); // Check for updates hourly (default is 6 hours)
 pref("app.update.notifyDuringDownload", true); // Ensure that users are notified when an update is downloaded
-pref("app.update.promptWaitTime", 3600); // Decrease time between update prompts, default is very generous...
+pref("app.update.promptWaitTime", 0); // Immediately prompt users to update when an update is ready
 
-pref("browser.phoenix.status.desktop.common", "013");
+pref("browser.phoenix.status.desktop.common", "015");
 
-/*** 014 SPECIALIZED/CUSTOM CONFIGS ***/
+/*** 016 SPECIALIZED/CUSTOM CONFIGS ***/
 
 /// Configure remote AutoConfig files (if active)
 pref("autoadmin.failover_to_cached", true);
 pref("autoadmin.offline_failover", true);
 pref("autoadmin.refresh_interval", 60);
 
-pref("browser.phoenix.status.desktop.common", "014");
+pref("browser.phoenix.status.desktop.common", "016");
 
 pref("browser.phoenix.status.desktop.common", "successfully applied :D", locked);
 
@@ -2041,7 +2393,11 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.04.27.1", locked);
+pref("mail.dove.version", "2025.05.11.1", locked);
+
+/// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
+// This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.05.11.1 💜", locked);
 
 /* INDEX 
 
@@ -2080,6 +2436,9 @@ pref("mail.dove.status", "001");
 
 /*** 002 MOZILLA CRAP™ ***/
 
+/// Clear unnecessary/undesired Mozilla URLs
+pref("mail.pgpmime.addon_url", ""); // Contains a dead link to Enigmail - a now dead extension that used to provide E2EE for Thunderbird (before it was built-in like it is nowadays...) - Likely not used anywhere
+
 /// Disable Donation Prompts
 // Please still donate to Thunderbird if you appreciate it! ;)
 // https://www.thunderbird.net/?form=support
@@ -2094,12 +2453,6 @@ pref("mail.provider.suppress_dialog_on_startup", true); // [HIDDEN]
 /// Disable Filelink
 // https://support.mozilla.org/kb/filelink-large-attachments
 pref("mail.cloud_files.enabled", false);
-
-/// Disable Firefox Translations
-// The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings, meaning it's useless :/
-pref("browser.translations.automaticallyPopup", false);
-pref("browser.translations.enable", false); // [DEFAULT]
-pref("browser.translations.select.enable", false); // [DEFAULT]
 
 /// Disable 'In-App Notifications'
 // https://searchfox.org/comm-central/source/mail/components/inappnotifications/docs/index.md
@@ -2116,7 +2469,13 @@ pref("mail.rights.override", true);
 pref("mailnews.start_page_override.mstone", "ignore", locked);
 
 /// Disable recommendations
-pref("extensions.getAddons.recommended.url", "");
+pref("extensions.getAddons.recommended.url", "", locked);
+
+/// Disable the Remote Settings Firefox Relay Allowlist Collection
+// Unnecessary for our use case
+// https://searchfox.org/mozilla-central/source/toolkit/components/satchel/integrations/FirefoxRelay.sys.mjs
+// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-allowlist/changeset?_expected=0
+pref("signon.firefoxRelay.allowListRemoteSettingsCollection", ""); // [HIDDEN]
 
 /// Disable Start Page by default & switch the URL to the about:config
 // This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
@@ -2134,11 +2493,28 @@ pref("mail.shell.checkDefaultClient", false);
 /// Prevent checking if Thunderbird is the default PDF viewer
 pref("pdfjs.firstRun", false);
 
-/// Remove tracking parameters from Mozilla URLs
-pref("app.releaseNotesURL", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("app.releaseNotesURL.aboutDialog", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("app.releaseNotesURL.prompt", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%");
+/// Remove Mozilla partner/search parameter
+// https://searchfox.org/comm-central/source/mozilla/toolkit/components/search/AppProvidedSearchEngine.sys.mjs
+// https://searchfox.org/comm-central/source/mail/branding/include/release-prefs.js
+pref("browser.search.param.ms-pc", "", locked);
+
+/// Remove tracking parameters from Mozilla URLs + prevent exposing locale & unnecessary information
+// For info on the extension update (`extensions.update.`) URL parameters, see https://devdoc.net/web/developer.mozilla.org/en-US/docs/Install_Manifests.html & https://mozilla-balrog.readthedocs.io/en/latest/database.html
+pref("app.releaseNotesURL", "https://www.thunderbird.net/releases", locked);
+pref("app.releaseNotesURL.aboutDialog", "https://www.thunderbird.net/releases", locked);
+pref("app.releaseNotesURL.prompt", "https://www.thunderbird.net/releases", locked);
+pref("app.vendorURL", "https://www.thunderbird.net/", locked);
+pref("browser.dictionaries.download.url", "https://addons.thunderbird.net/language-tools/");
+pref("extensions.getAddons.compatOverides.url", "https://services.addons.thunderbird.net/api/v4/addons/compat-override/?guid=%IDS%"); // Also updates to the newer v4 API (default is still v3...) - https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions - though I doubt this URL is used anywhere
+pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%"); // Also updates to the newer v4 API (default is still v3...) - https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.link.url", "https://addons.thunderbird.net/");
+pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/search/?q=%TERMS%");
+pref("extensions.getAddons.search.url", "https://services.addons.thunderbird.net/api/%API_VERSION%/search/%TERMS%/all/%MAX_RESULTS%/");
+pref("extensions.update.background.url", "https://versioncheck-bg.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), 'current' app/browser version (currentAppVersion), and compatibility mode (compatMode)
+pref("extensions.update.url", "https://versioncheck.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), 'current' app/browser version (currentAppVersion), and compatibility mode (compatMode)
+pref("mail.cloud_files.learn_more_url", "https://support.mozilla.org/kb/filelink-large-attachments");
+pref("mail.ignore_thread.learn_more_url", "https://support.mozilla.org/kb/ignore-threads");
+pref("spellchecker.dictionaries.download.url", "https://addons.thunderbird.net/language-tools/");
 
 pref("mail.dove.status", "002");
 
@@ -2220,11 +2596,11 @@ pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv
 // We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which causes all kinds of breakage and weird behavior (ex. on the ATO)
 // We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-JSLocale,-NavigatorUserAgent");
+pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); // [ESR] [DEFAULT] (This is the equivalent of the `+CanvasExtractionBeforeUserInputIsBlocked` target)
 
-/// Reset Phoenix's FPP overrides + disable Mozilla's remote overrides
+/// Reset Phoenix's FPP overrides
 // These are meant for browsers and may have undesired privacy implications for our use case...
 pref("privacy.fingerprintingProtection.granularOverrides", ""); // [DEFAULT]
-pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
 
 pref("mail.dove.status", "005");
 
@@ -2345,6 +2721,10 @@ pref("mail.dove.status", "008");
 /// Disable link previews
 pref("mail.compose.add_link_preview", false);
 
+/// Disable network connectivity status monitoring
+// (Ex. used for automatically switching between offline & online mode)
+pref("offline.autoDetect", false);
+
 /// Improve list of built-in DoH resolvers
 pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 - Real-time Malware Protection"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) - Hardened Real-time Malware Protection"},{"url":"https://dns0.eu","name":"DNS0 - Real-time Malware Protection"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) - Ad/Tracking/Limited Malware Protection"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard (Public) - Ad/Tracking Protection"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad - Unfiltered"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia - Unfiltered"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS (Public) - Unfiltered"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Public) - Unfiltered"},{"url":"https://kids.dns0.eu","name":"DNS0 - Kids"},{"url":"https://family.dns.mullvad.net/dns-query","name":"Mullvad (Family)"},{"url":"https://family.adguard-dns.com/dns-query","name":"AdGuard (Public) - Family Protection"},{"url":"https://extended.dns.mullvad.net/dns-query","name":"Mullvad (Extended) - Ad/Tracking/Limited Malware/Social Media Protection"},{"url":"https://all.dns.mullvad.net/dns-query","name":"Mullvad (All) - Ad/Tracking/Limited Malware/Social Media/Adult/Gambling Protection"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare - Malware Protection"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare - Unfiltered (Stricter privacy policy)"},{"url":"https://family.cloudflare-dns.com/dns-query","name":"Cloudflare - Adult Content/Malware Protection"}]'); // [HIDDEN]
 
@@ -2384,6 +2764,14 @@ pref("mail.dove.status", "010");
 
 /*** 011 ATTACK SURFACE REDUCTION ***/
 
+/// Disable Android Debugging
+pref("devtools.remote.adb.extensionID", "");
+pref("devtools.remote.adb.extensionURL", "");
+
+/// Disable DRM/EME
+pref("media.eme.encrypted-media-encryption-scheme.enabled", false);
+pref("media.eme.hdcp-policy-check.enabled", false);
+
 /// Disable FFmpeg
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ffmpeg
 pref("media.ffmpeg.enabled", false);
@@ -2392,9 +2780,19 @@ pref("media.ffmpeg.vaapi.enabled", false); // [DEFAULT]
 pref("media.rdd-ffmpeg.enabled", false);
 pref("media.utility-ffmpeg.enabled", false);
 
-/// Disable Gecko Media Plugins
-// https://wiki.mozilla.org/GeckoMediaPlugins
-pref("media.gmp-provider.enabled", false);
+/// Disable Firefox Translations
+// The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings,so it's useless :/
+pref("browser.translations.automaticallyPopup", false);
+pref("browser.translations.enable", false); // [DEFAULT]
+pref("browser.translations.select.enable", false); // [DEFAULT]
+
+/// Disable Narrator
+// Broken on Thunderbird
+pref("narrate.enabled", false);
+
+/// Disable Reader Mode
+// Broken on Thunderbird
+pref("reader.parse-on-load.enabled", false);
 
 /// Disable SVG
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
@@ -2404,6 +2802,17 @@ pref("svg.disabled", true);
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=webrtc
 // https://x.com/GrapheneOS/status/1728921946396725618
 pref("media.peerconnection.enabled", false);
+
+/// Disable Windows Media Foundation Media Engine [NO-OSX]
+// By default, it's enabled for protected content (DRM) [NO-OSX]
+// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [NO-OSX]
+pref("media.wmf.media-engine.enabled", 0); // [NO-OSX]
+
+/// Require permission for websites to use EME
+// Defense in depth
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1620102
+// https://searchfox.org/mozilla-central/source/dom/media/eme/MediaKeySystemAccessPermissionRequest.h
+pref("media.eme.require-app-approval", true); // [DEFAULT]
 
 pref("mail.dove.status", "011");
 
@@ -2420,11 +2829,6 @@ pref("mail.dove.status", "012");
 
 /// Allow reporting malicious add-ons/themes to Mozilla
 pref("extensions.abuseReport.enabled", true);
-
-/// Allow running uBlock Origin on restricted/quarantined domains
-// Necessary since uBlock Origin isn't 'recommended' like it is on Firefox...
-// https://support.mozilla.org/kb/quarantined-domains
-pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true); // [HIDDEN]
 
 /// Always allow installing "incompatible" add-ons
 // REQUIRED FOR UBLOCK ORIGIN
@@ -2483,6 +2887,15 @@ pref("mail.dove.status", "014");
 // https://security.stackexchange.com/questions/13799/is-webgl-a-security-concern
 pref("webgl.disabled", true);
 
+/// Switch Remote Settings to use Firefox's server instead of Thunderbird's
+// NOTE: This will ONLY work if you set the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable to `1` (If `MOZ_REMOTE_SETTINGS_DEVTOOLS` isn't set, Thunderbird will just continue to use its default server)
+// Thunderbird's Remote Settings instance has little to no use, hasn't been updated since ~2022, etc...
+// Using Firefox's server instead of Thunderbird's allows us to download and take advantage of add-on blocklists, certificate intermediates, certificate revocations, CRLite, tracking protection lists, etc... and doesn't appear to cause issues or undesired behavior.
+// For testing: https://github.com/mozilla-extensions/remote-settings-devtools
+pref("security.content.signature.root_hash", "C8:A8:0E:9A:FA:EF:4E:21:9B:6F:B5:D7:A7:1D:0F:10:12:23:BA:C5:00:1A:C2:8F:9B:0D:43:DC:59:A1:06:DB");
+pref("services.settings.default_bucket", "main");
+pref("services.settings.server", "https://firefox.settings.services.mozilla.com/v1", locked);
+
 pref("mail.dove.status", "015");
 
 /*** 016 MISC. PRIVACY ***/
@@ -2498,7 +2911,6 @@ pref("mail.collect_email_address_outgoing", false);
 
 /// Disable Geolocation
 // https://browserleaks.com/geo
-pref("browser.geolocation.warning.infoURL", "");
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
@@ -2579,6 +2991,14 @@ pref("mail.dove.status", "017");
 // Override from Phoenix
 pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT] [HIDDEN]
 
+/// Disable support for web applications manifests
+// Ex. used for PWAs (& PWA inspection on desktop)
+// Unnecessary for our use case
+// https://developer.mozilla.org/docs/Web/Progressive_web_apps/Manifest
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1603673
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
+pref("dom.manifest.enabled", false);
+
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
 
@@ -2605,6 +3025,11 @@ pref("dom.disable_window_status_change", true); // [DEFAULT]
 pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
+
+/// Update AMO API
+// Default is still v3, which has been deprecated for quite some time...
+// https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.langpacks.url", "https://services.addons.thunderbird.net/api/v4/addons/language-tools/?app=thunderbird&type=language&appversion=%VERSION%");
 
 /// Use a blank new tab page
 // This likely isn't used anywhere, but Thunderbird does seem to pull in this component and this setting appears in the `about:config`, so we can set it anyways
@@ -2633,6 +3058,12 @@ pref("messenger.options.messagesStyle.theme", "bubbles"); // [CHAT]
 /// Enable dark theme for the message pane
 pref("mail.dark-reader.enabled", true);
 pref("mail.dark-reader.show-toggle", true); // [HIDDEN] UI toggle - https://searchfox.org/comm-central/source/mail/base/content/msgHdrView.js#2787
+
+/// Enable the global indexer (Gloda) by default
+// We still disable OS indexing/integration above, this is just for Thunderbird itself.
+// This is required for searching emails - which is a critical feature for an email client IMO...
+// This is typically the default, but some (ex. RedHat/Fedora) override it.
+pref("mailnews.database.global.indexer.enabled", true); // [DEFAULT]
 
 /// Enable inline spellcheck when composing messages + check before sending by default
 pref("mail.spellcheck.inline", true); // [DEFAULT]
