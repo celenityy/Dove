@@ -16,7 +16,11 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.04.27.1", locked);
+pref("mail.dove.version", "2025.05.11.1", locked);
+
+/// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
+// This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.05.11.1 💜", locked);
 
 /* INDEX 
 
@@ -55,6 +59,9 @@ pref("mail.dove.status", "001");
 
 /*** 002 MOZILLA CRAP™ ***/
 
+/// Clear unnecessary/undesired Mozilla URLs
+pref("mail.pgpmime.addon_url", ""); // Contains a dead link to Enigmail - a now dead extension that used to provide E2EE for Thunderbird (before it was built-in like it is nowadays...) - Likely not used anywhere
+
 /// Disable Donation Prompts
 // Please still donate to Thunderbird if you appreciate it! ;)
 // https://www.thunderbird.net/?form=support
@@ -69,12 +76,6 @@ pref("mail.provider.suppress_dialog_on_startup", true); // [HIDDEN]
 /// Disable Filelink
 // https://support.mozilla.org/kb/filelink-large-attachments
 pref("mail.cloud_files.enabled", false);
-
-/// Disable Firefox Translations
-// The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings, meaning it's useless :/
-pref("browser.translations.automaticallyPopup", false);
-pref("browser.translations.enable", false); // [DEFAULT]
-pref("browser.translations.select.enable", false); // [DEFAULT]
 
 /// Disable 'In-App Notifications'
 // https://searchfox.org/comm-central/source/mail/components/inappnotifications/docs/index.md
@@ -91,7 +92,13 @@ pref("mail.rights.override", true);
 pref("mailnews.start_page_override.mstone", "ignore", locked);
 
 /// Disable recommendations
-pref("extensions.getAddons.recommended.url", "");
+pref("extensions.getAddons.recommended.url", "", locked);
+
+/// Disable the Remote Settings Firefox Relay Allowlist Collection
+// Unnecessary for our use case
+// https://searchfox.org/mozilla-central/source/toolkit/components/satchel/integrations/FirefoxRelay.sys.mjs
+// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-allowlist/changeset?_expected=0
+pref("signon.firefoxRelay.allowListRemoteSettingsCollection", ""); // [HIDDEN]
 
 /// Disable Start Page by default & switch the URL to the about:config
 // This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
@@ -109,11 +116,28 @@ pref("mail.shell.checkDefaultClient", false);
 /// Prevent checking if Thunderbird is the default PDF viewer
 pref("pdfjs.firstRun", false);
 
-/// Remove tracking parameters from Mozilla URLs
-pref("app.releaseNotesURL", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("app.releaseNotesURL.aboutDialog", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("app.releaseNotesURL.prompt", "https://live.thunderbird.net/%APP%/releasenotes?locale=%LOCALE%&version=%VERSION%&channel=%CHANNEL%&os=%OS%&buildid=%APPBUILDID%");
-pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/%LOCALE%/%APP%/search/?q=%TERMS%");
+/// Remove Mozilla partner/search parameter
+// https://searchfox.org/comm-central/source/mozilla/toolkit/components/search/AppProvidedSearchEngine.sys.mjs
+// https://searchfox.org/comm-central/source/mail/branding/include/release-prefs.js
+pref("browser.search.param.ms-pc", "", locked);
+
+/// Remove tracking parameters from Mozilla URLs + prevent exposing locale & unnecessary information
+// For info on the extension update (`extensions.update.`) URL parameters, see https://devdoc.net/web/developer.mozilla.org/en-US/docs/Install_Manifests.html & https://mozilla-balrog.readthedocs.io/en/latest/database.html
+pref("app.releaseNotesURL", "https://www.thunderbird.net/releases", locked);
+pref("app.releaseNotesURL.aboutDialog", "https://www.thunderbird.net/releases", locked);
+pref("app.releaseNotesURL.prompt", "https://www.thunderbird.net/releases", locked);
+pref("app.vendorURL", "https://www.thunderbird.net/", locked);
+pref("browser.dictionaries.download.url", "https://addons.thunderbird.net/language-tools/");
+pref("extensions.getAddons.compatOverides.url", "https://services.addons.thunderbird.net/api/v4/addons/compat-override/?guid=%IDS%"); // Also updates to the newer v4 API (default is still v3...) - https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions - though I doubt this URL is used anywhere
+pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%"); // Also updates to the newer v4 API (default is still v3...) - https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.link.url", "https://addons.thunderbird.net/");
+pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/search/?q=%TERMS%");
+pref("extensions.getAddons.search.url", "https://services.addons.thunderbird.net/api/%API_VERSION%/search/%TERMS%/all/%MAX_RESULTS%/");
+pref("extensions.update.background.url", "https://versioncheck-bg.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), 'current' app/browser version (currentAppVersion), and compatibility mode (compatMode)
+pref("extensions.update.url", "https://versioncheck.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), 'current' app/browser version (currentAppVersion), and compatibility mode (compatMode)
+pref("mail.cloud_files.learn_more_url", "https://support.mozilla.org/kb/filelink-large-attachments");
+pref("mail.ignore_thread.learn_more_url", "https://support.mozilla.org/kb/ignore-threads");
+pref("spellchecker.dictionaries.download.url", "https://addons.thunderbird.net/language-tools/");
 
 pref("mail.dove.status", "002");
 
@@ -195,11 +219,11 @@ pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv
 // We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which causes all kinds of breakage and weird behavior (ex. on the ATO)
 // We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-JSLocale,-NavigatorUserAgent");
+pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); // [ESR] [DEFAULT] (This is the equivalent of the `+CanvasExtractionBeforeUserInputIsBlocked` target)
 
-/// Reset Phoenix's FPP overrides + disable Mozilla's remote overrides
+/// Reset Phoenix's FPP overrides
 // These are meant for browsers and may have undesired privacy implications for our use case...
 pref("privacy.fingerprintingProtection.granularOverrides", ""); // [DEFAULT]
-pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
 
 pref("mail.dove.status", "005");
 
@@ -320,6 +344,10 @@ pref("mail.dove.status", "008");
 /// Disable link previews
 pref("mail.compose.add_link_preview", false);
 
+/// Disable network connectivity status monitoring
+// (Ex. used for automatically switching between offline & online mode)
+pref("offline.autoDetect", false);
+
 /// Improve list of built-in DoH resolvers
 pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 - Real-time Malware Protection"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) - Hardened Real-time Malware Protection"},{"url":"https://dns0.eu","name":"DNS0 - Real-time Malware Protection"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) - Ad/Tracking/Limited Malware Protection"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard (Public) - Ad/Tracking Protection"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad - Unfiltered"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia - Unfiltered"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS (Public) - Unfiltered"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Public) - Unfiltered"},{"url":"https://kids.dns0.eu","name":"DNS0 - Kids"},{"url":"https://family.dns.mullvad.net/dns-query","name":"Mullvad (Family)"},{"url":"https://family.adguard-dns.com/dns-query","name":"AdGuard (Public) - Family Protection"},{"url":"https://extended.dns.mullvad.net/dns-query","name":"Mullvad (Extended) - Ad/Tracking/Limited Malware/Social Media Protection"},{"url":"https://all.dns.mullvad.net/dns-query","name":"Mullvad (All) - Ad/Tracking/Limited Malware/Social Media/Adult/Gambling Protection"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare - Malware Protection"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare - Unfiltered (Stricter privacy policy)"},{"url":"https://family.cloudflare-dns.com/dns-query","name":"Cloudflare - Adult Content/Malware Protection"}]'); // [HIDDEN]
 
@@ -359,6 +387,14 @@ pref("mail.dove.status", "010");
 
 /*** 011 ATTACK SURFACE REDUCTION ***/
 
+/// Disable Android Debugging
+pref("devtools.remote.adb.extensionID", "");
+pref("devtools.remote.adb.extensionURL", "");
+
+/// Disable DRM/EME
+pref("media.eme.encrypted-media-encryption-scheme.enabled", false);
+pref("media.eme.hdcp-policy-check.enabled", false);
+
 /// Disable FFmpeg
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ffmpeg
 pref("media.ffmpeg.enabled", false);
@@ -367,9 +403,19 @@ pref("media.ffmpeg.vaapi.enabled", false); // [DEFAULT]
 pref("media.rdd-ffmpeg.enabled", false);
 pref("media.utility-ffmpeg.enabled", false);
 
-/// Disable Gecko Media Plugins
-// https://wiki.mozilla.org/GeckoMediaPlugins
-pref("media.gmp-provider.enabled", false);
+/// Disable Firefox Translations
+// The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings,so it's useless :/
+pref("browser.translations.automaticallyPopup", false);
+pref("browser.translations.enable", false); // [DEFAULT]
+pref("browser.translations.select.enable", false); // [DEFAULT]
+
+/// Disable Narrator
+// Broken on Thunderbird
+pref("narrate.enabled", false);
+
+/// Disable Reader Mode
+// Broken on Thunderbird
+pref("reader.parse-on-load.enabled", false);
 
 /// Disable SVG
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
@@ -379,6 +425,17 @@ pref("svg.disabled", true);
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=webrtc
 // https://x.com/GrapheneOS/status/1728921946396725618
 pref("media.peerconnection.enabled", false);
+
+/// Disable Windows Media Foundation Media Engine [NO-OSX]
+// By default, it's enabled for protected content (DRM) [NO-OSX]
+// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [NO-OSX]
+pref("media.wmf.media-engine.enabled", 0); // [NO-OSX]
+
+/// Require permission for websites to use EME
+// Defense in depth
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1620102
+// https://searchfox.org/mozilla-central/source/dom/media/eme/MediaKeySystemAccessPermissionRequest.h
+pref("media.eme.require-app-approval", true); // [DEFAULT]
 
 pref("mail.dove.status", "011");
 
@@ -395,11 +452,6 @@ pref("mail.dove.status", "012");
 
 /// Allow reporting malicious add-ons/themes to Mozilla
 pref("extensions.abuseReport.enabled", true);
-
-/// Allow running uBlock Origin on restricted/quarantined domains
-// Necessary since uBlock Origin isn't 'recommended' like it is on Firefox...
-// https://support.mozilla.org/kb/quarantined-domains
-pref("extensions.quarantineIgnoredByUser.uBlock0@raymondhill.net", true); // [HIDDEN]
 
 /// Always allow installing "incompatible" add-ons
 // REQUIRED FOR UBLOCK ORIGIN
@@ -458,6 +510,15 @@ pref("mail.dove.status", "014");
 // https://security.stackexchange.com/questions/13799/is-webgl-a-security-concern
 pref("webgl.disabled", true);
 
+/// Switch Remote Settings to use Firefox's server instead of Thunderbird's
+// NOTE: This will ONLY work if you set the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable to `1` (If `MOZ_REMOTE_SETTINGS_DEVTOOLS` isn't set, Thunderbird will just continue to use its default server)
+// Thunderbird's Remote Settings instance has little to no use, hasn't been updated since ~2022, etc...
+// Using Firefox's server instead of Thunderbird's allows us to download and take advantage of add-on blocklists, certificate intermediates, certificate revocations, CRLite, tracking protection lists, etc... and doesn't appear to cause issues or undesired behavior.
+// For testing: https://github.com/mozilla-extensions/remote-settings-devtools
+pref("security.content.signature.root_hash", "C8:A8:0E:9A:FA:EF:4E:21:9B:6F:B5:D7:A7:1D:0F:10:12:23:BA:C5:00:1A:C2:8F:9B:0D:43:DC:59:A1:06:DB");
+pref("services.settings.default_bucket", "main");
+pref("services.settings.server", "https://firefox.settings.services.mozilla.com/v1", locked);
+
 pref("mail.dove.status", "015");
 
 /*** 016 MISC. PRIVACY ***/
@@ -473,7 +534,6 @@ pref("mail.collect_email_address_outgoing", false);
 
 /// Disable Geolocation
 // https://browserleaks.com/geo
-pref("browser.geolocation.warning.infoURL", "");
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
@@ -554,6 +614,14 @@ pref("mail.dove.status", "017");
 // Override from Phoenix
 pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT] [HIDDEN]
 
+/// Disable support for web applications manifests
+// Ex. used for PWAs (& PWA inspection on desktop)
+// Unnecessary for our use case
+// https://developer.mozilla.org/docs/Web/Progressive_web_apps/Manifest
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1603673
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
+pref("dom.manifest.enabled", false);
+
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
 
@@ -580,6 +648,11 @@ pref("dom.disable_window_status_change", true); // [DEFAULT]
 pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
+
+/// Update AMO API
+// Default is still v3, which has been deprecated for quite some time...
+// https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.langpacks.url", "https://services.addons.thunderbird.net/api/v4/addons/language-tools/?app=thunderbird&type=language&appversion=%VERSION%");
 
 /// Use a blank new tab page
 // This likely isn't used anywhere, but Thunderbird does seem to pull in this component and this setting appears in the `about:config`, so we can set it anyways
@@ -608,6 +681,12 @@ pref("messenger.options.messagesStyle.theme", "bubbles"); // [CHAT]
 /// Enable dark theme for the message pane
 pref("mail.dark-reader.enabled", true);
 pref("mail.dark-reader.show-toggle", true); // [HIDDEN] UI toggle - https://searchfox.org/comm-central/source/mail/base/content/msgHdrView.js#2787
+
+/// Enable the global indexer (Gloda) by default
+// We still disable OS indexing/integration above, this is just for Thunderbird itself.
+// This is required for searching emails - which is a critical feature for an email client IMO...
+// This is typically the default, but some (ex. RedHat/Fedora) override it.
+pref("mailnews.database.global.indexer.enabled", true); // [DEFAULT]
 
 /// Enable inline spellcheck when composing messages + check before sending by default
 pref("mail.spellcheck.inline", true); // [DEFAULT]
