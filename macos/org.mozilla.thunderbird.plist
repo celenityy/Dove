@@ -1149,7 +1149,7 @@
 		<key>uBlock0@raymondhill.net</key>
 		<dict>
 			<key>install_url</key>
-			<string>https://github.com/gorhill/uBlock/releases/download/1.63.2/uBlock0_1.63.2.thunderbird.xpi</string>
+			<string>https://github.com/gorhill/uBlock/releases/download/1.64.0/uBlock0_1.64.0.thunderbird.xpi</string>
 			<key>installation_mode</key>
 			<string>normal_installed</string>
 			<key>private_browsing</key>
