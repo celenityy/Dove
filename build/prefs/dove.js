@@ -16,11 +16,11 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.05.11.1", locked);
+pref("mail.dove.version", "2025.05.13.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.05.11.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.05.13.1 💜", locked);
 
 /* INDEX 
 
@@ -133,8 +133,8 @@ pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/ap
 pref("extensions.getAddons.link.url", "https://addons.thunderbird.net/");
 pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/search/?q=%TERMS%");
 pref("extensions.getAddons.search.url", "https://services.addons.thunderbird.net/api/%API_VERSION%/search/%TERMS%/all/%MAX_RESULTS%/");
-pref("extensions.update.background.url", "https://versioncheck-bg.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), 'current' app/browser version (currentAppVersion), and compatibility mode (compatMode)
-pref("extensions.update.url", "https://versioncheck.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), 'current' app/browser version (currentAppVersion), and compatibility mode (compatMode)
+pref("extensions.update.background.url", "https://versioncheck-bg.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&currentAppVersion=%CURRENT_APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), and compatibility mode (compatMode)
+pref("extensions.update.url", "https://versioncheck.addons.thunderbird.net/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&currentAppVersion=%CURRENT_APP_VERSION%&updateType=%UPDATE_TYPE%"); // Removes maximum app/browser version (maxAppVersion), operating system (appOS), ABI (appABI), locale (locale), and compatibility mode (compatMode)
 pref("mail.cloud_files.learn_more_url", "https://support.mozilla.org/kb/filelink-large-attachments");
 pref("mail.ignore_thread.learn_more_url", "https://support.mozilla.org/kb/ignore-threads");
 pref("spellchecker.dictionaries.download.url", "https://addons.thunderbird.net/language-tools/");
@@ -441,6 +441,14 @@ pref("mail.dove.status", "011");
 
 /*** 012 PASSWORDS & AUTHENTICATION ***/
 
+/// Allow cross-origin sub-resources to open HTTP authentication dialogs
+// Required for password-protected CalDAV sync
+// https://codeberg.org/celenity/Dove/issues/25
+// Test: https://www.caldavserver.com/DAV
+// We still at least prevent cross-origin images from opening these dialogs... (network.auth.subresource-img-cross-origin-http-auth-allow)
+pref("network.auth.non-web-content-triggered-resources-http-auth-allow", true); // [DEFAULT]
+pref("network.auth.subresource-http-auth-allow", 2); // [DEFAULT]
+
 /// Re-enable Password Manager by default
 // This is useful & important for Thunderbird, since it's the only way to stay logged in/store account passwords...
 // Also no UI toggle for it :/
@@ -610,6 +618,9 @@ pref("mail.dove.status", "017");
 
 /*** 018 MISC. ***/
 
+/// Allow using Thunderbird without a configured email account
+pref("app.use_without_mail_account", true);
+
 /// Disable `mailto:` warning...
 // Override from Phoenix
 pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT] [HIDDEN]
@@ -642,6 +653,17 @@ pref("rss.message.loadWebPageOnSelect", 0);
 /// Prevent status bar spoofing
 // https://searchfox.org/comm-central/source/mail/app/profile/all-thunderbird.js#542
 pref("dom.disable_window_status_change", true); // [DEFAULT]
+
+/// Re-enable SharedArrayBuffer using window.postMessage
+// Required for password-protected CalDAV sync
+// https://codeberg.org/celenity/Dove/issues/25
+// Test: https://www.caldavserver.com/DAV
+// We still disable it in insecure contexts (dom.postMessage.sharedArrayBuffer.bypassCOOP_COEP.insecure.enabled) - this just allows it when it meets certain conditions related to COOP and COEP
+// https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer
+// https://developer.mozilla.org/docs/Web/API/Window/postMessage
+// https://blog.mozilla.org/security/2018/01/03/mitigations-landing-new-class-timing-attack/
+// https://github.com/tc39/ecma262/issues/1435
+pref("dom.postMessage.sharedArrayBuffer.withCOOP_COEP", true); // [DEFAULT]
 
 /// Send emails in plaintext by default
 // https://drewdevault.com/2016/04/11/Please-use-text-plain-for-emails.html
@@ -691,6 +713,9 @@ pref("mailnews.database.global.indexer.enabled", true); // [DEFAULT]
 /// Enable inline spellcheck when composing messages + check before sending by default
 pref("mail.spellcheck.inline", true); // [DEFAULT]
 pref("mail.SpellCheckBeforeSend", true);
+
+/// Enable the new Account Hub by default
+pref("mail.accounthub.enabled", true);
 
 /// Hide Title Bar by default
 pref("mail.tabs.drawInTitlebar", true); // [DEFAULT]
