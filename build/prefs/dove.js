@@ -617,6 +617,9 @@ pref("mail.dove.status", "017");
 
 /*** 018 MISC. ***/
 
+/// Allow using Thunderbird without a configured email account
+pref("app.use_without_mail_account", true);
+
 /// Disable `mailto:` warning...
 // Override from Phoenix
 pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT] [HIDDEN]
