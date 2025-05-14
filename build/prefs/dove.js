@@ -440,6 +440,14 @@ pref("mail.dove.status", "011");
 
 /*** 012 PASSWORDS & AUTHENTICATION ***/
 
+/// Allow cross-origin sub-resources to open HTTP authentication dialogs
+// Required for password-protected CalDAV sync
+// https://codeberg.org/celenity/Dove/issues/25
+// Test: https://www.caldavserver.com/DAV
+// We still at least prevent cross-origin images from opening these dialogs... (network.auth.subresource-img-cross-origin-http-auth-allow)
+pref("network.auth.non-web-content-triggered-resources-http-auth-allow", true); // [DEFAULT]
+pref("network.auth.subresource-http-auth-allow", 2); // [DEFAULT]
+
 /// Re-enable Password Manager by default
 // This is useful & important for Thunderbird, since it's the only way to stay logged in/store account passwords...
 // Also no UI toggle for it :/
@@ -641,6 +649,17 @@ pref("rss.message.loadWebPageOnSelect", 0);
 /// Prevent status bar spoofing
 // https://searchfox.org/comm-central/source/mail/app/profile/all-thunderbird.js#542
 pref("dom.disable_window_status_change", true); // [DEFAULT]
+
+/// Re-enable SharedArrayBuffer using window.postMessage
+// Required for password-protected CalDAV sync
+// https://codeberg.org/celenity/Dove/issues/25
+// Test: https://www.caldavserver.com/DAV
+// We still disable it in insecure contexts (dom.postMessage.sharedArrayBuffer.bypassCOOP_COEP.insecure.enabled) - this just allows it when it meets certain conditions related to COOP and COEP
+// https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer
+// https://developer.mozilla.org/docs/Web/API/Window/postMessage
+// https://blog.mozilla.org/security/2018/01/03/mitigations-landing-new-class-timing-attack/
+// https://github.com/tc39/ecma262/issues/1435
+pref("dom.postMessage.sharedArrayBuffer.withCOOP_COEP", true); // [DEFAULT]
 
 /// Send emails in plaintext by default
 // https://drewdevault.com/2016/04/11/Please-use-text-plain-for-emails.html
