@@ -710,6 +710,9 @@ pref("mailnews.database.global.indexer.enabled", true); // [DEFAULT]
 pref("mail.spellcheck.inline", true); // [DEFAULT]
 pref("mail.SpellCheckBeforeSend", true);
 
+/// Enable the new Account Hub by default
+pref("mail.accounthub.enabled", true);
+
 /// Hide Title Bar by default
 pref("mail.tabs.drawInTitlebar", true); // [DEFAULT]
 
