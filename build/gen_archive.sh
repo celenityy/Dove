@@ -18,4 +18,4 @@ zip -r -FS archives/dove.zip * -x 'archives/*' 'assets/*' 'build/*' 'configs/*' 
 
 echo_green_text "Creating archives/dove-osx.zip..."
 
-zip -r -FS archives/dove-osx.zip * -x 'archives/*' 'assets/*' 'build/*' 'configs/*' 'dove.cfg' 'etc/*' 'extensions/*' 'flake.*' 'installer_scripts/*' 'macos/defaults/*' 'macos/dove-bootstrap.cfg' 'macos/Library/*' 'macos/migration/*' 'prefs/*' 'policies.json' 'uBlock/*' 'uninstaller_scripts/*' 'windows/*' '*.code-workspace' '.domains' '.DS_Store' '.git*' '_redirects'
+zip -r -FS archives/dove-osx.zip * -x 'archives/*' 'assets/*' 'build/*' 'configs/*' 'dove.cfg' 'etc/*' 'extensions/*' 'flake.*' 'installer_scripts/*' 'macos/defaults/*' 'macos/dove-bootstrap.cfg' 'macos/intel/*' 'macos/Library/*' 'prefs/*' 'policies.json' 'uBlock/*' 'uninstaller_scripts/*' 'windows/*' '*.code-workspace' '.domains' '.DS_Store' '.git*' '_redirects'
