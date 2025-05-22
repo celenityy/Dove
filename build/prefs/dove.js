@@ -214,10 +214,11 @@ pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); 
 
 /// Set FPP granular overrides
 // This currently:
-// Resets Phoenix's overrides (Meant for browsers, may have undesired implications for our use case)
+// Resets Phoenix's overrides (Meant for browsers, may have undesired implications for our use case - we can add back ones actually relevant to us though if needed...)
 // Spoofs user agent globally (+HttpUserAgent & +NavigatorUserAgent) globally - See above for why we set these here instead of with the standard 'privacy.fingerprintingProtection.overrides' pref
 // Disables user agent spoofing for 'thunderbird.net' - Breaks installing add-ons from the ATN (addons.thunderbird.net)
-pref("privacy.fingerprintingProtection.granularOverrides", '[{"firstPartyDomain":"*","overrides":"+HttpUserAgent,+NavigatorUserAgent"},{"firstPartyDomain":"*","thirdPartyDomain":"*","overrides":"+HttpUserAgent,+NavigatorUserAgent"},{"firstPartyDomain":"thunderbird.net","overrides":"-HttpUserAgent,-NavigatorUserAgent"}]');
+// Spoofs 'CSSPrefersColorScheme' (+CSSPrefersColorScheme) for 'thunderbird.net' - doesn't support dark mode, so unnecessary...
+pref("privacy.fingerprintingProtection.granularOverrides", '[{"firstPartyDomain":"*","overrides":"+HttpUserAgent,+NavigatorUserAgent"},{"firstPartyDomain":"*","thirdPartyDomain":"*","overrides":"+HttpUserAgent,+NavigatorUserAgent"},{"firstPartyDomain":"thunderbird.net","overrides":"+CSSPrefersColorScheme,-HttpUserAgent,-NavigatorUserAgent"}]');
 
 //// Freeze user agent for domains we exempt above (currently only applies to 'thunderbird.net')
 // This prevents revealing Thunderbird's specific minor version, like the FPP targets to spoof UA typically do (only difference is this sets the app name to 'Thunderbird' instead of 'Firefox', unlike those targets)
