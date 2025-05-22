@@ -204,26 +204,27 @@ pref("mail.dove.status", "004");
 
 /*** 005 FINGERPRINTING PROTECTION ***/
 
+/// Freeze user agent to protect against fingerprinting
+// As explained below, we can't use the standard RFP/FPP 'HttpUserAgent' & 'NavigatorUserAgent` targets, as Thunderbird lies and pretends to be Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
+// Until Thunderbird fixes this upstream, we'll spoof it ourselves
+// This matches what Firefox's RFP/FPP targets use (only difference being we switch out Firefox for Thunderbird)
+// We'll keep platform always spoofed to Windows - since we block JS by default, can be useful (and I can't see this causing weird issues like we see on Firefox...)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1950775
+pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Thunderbird/128.0"); // [HIDDEN]
+
 /// Harden FPP
 // As explained here: https://codeberg.org/celenity/Phoenix/wiki/Features#fingerprinting
 // and here: https://codeberg.org/celenity/Phoenix/wiki/Extended.md#fingerprinting
-// We're adding -HttpUserAgent & -NavigatorUserAgent due to a weird bug that prevents them from working as granular overrides (which we need for ex. the ATN) if we set them here (We still enable these targets globally though, with 'privacy.fingerprintingProtection.granularOverrides', see below)
+// We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
 // We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-JSLocale,-NavigatorUserAgent");
 pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); // [ESR] [DEFAULT] (This is the equivalent of the `+CanvasExtractionBeforeUserInputIsBlocked` target)
 
 /// Set FPP granular overrides
 // This currently:
-// Resets Phoenix's overrides (Meant for browsers, may have undesired implications for our use case - we can add back ones actually relevant to us though if needed...)
-// Spoofs user agent globally (+HttpUserAgent & +NavigatorUserAgent) globally - See above for why we set these here instead of with the standard 'privacy.fingerprintingProtection.overrides' pref
-// Disables user agent spoofing for 'thunderbird.net' - Breaks installing add-ons from the ATN (addons.thunderbird.net)
+// Resets Phoenix's overrides (Meant for browsers, may have undesired implications for our use case - we can add back ones actually relevant to us though as needed...)
 // Spoofs 'CSSPrefersColorScheme' (+CSSPrefersColorScheme) for 'thunderbird.net' - doesn't support dark mode, so unnecessary...
-pref("privacy.fingerprintingProtection.granularOverrides", '[{"firstPartyDomain":"*","overrides":"+HttpUserAgent,+NavigatorUserAgent"},{"firstPartyDomain":"*","thirdPartyDomain":"*","overrides":"+HttpUserAgent,+NavigatorUserAgent"},{"firstPartyDomain":"thunderbird.net","overrides":"+CSSPrefersColorScheme,-HttpUserAgent,-NavigatorUserAgent"}]');
-
-//// Freeze user agent for domains we exempt above (currently only applies to 'thunderbird.net')
-// This prevents revealing Thunderbird's specific minor version, like the FPP targets to spoof UA typically do (only difference is this sets the app name to 'Thunderbird' instead of 'Firefox', unlike those targets)
-// (I'll probably remove this pref once/if the ATN supports installing extensions when the UA is 'Firefox' (so we won't need to disable UA spoofing above for 'thunderbird.net') - but in the meantime, we can still freeze the UA and provide some level of protection against ex. Mozilla)
-pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Thunderbird/128.0"); // [HIDDEN]
+pref("privacy.fingerprintingProtection.granularOverrides", '[{"firstPartyDomain":"thunderbird.net","overrides":"+CSSPrefersColorScheme"}]');
 
 pref("mail.dove.status", "005");
 
