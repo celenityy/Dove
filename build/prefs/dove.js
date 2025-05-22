@@ -204,6 +204,14 @@ pref("mail.dove.status", "004");
 
 /*** 005 FINGERPRINTING PROTECTION ***/
 
+/// Prevent exposing WebGL Renderer Info
+// (We also disable WebGL entirely, see 015 MISC. PRIVACY + SECURITY) 
+// This does the same thing as the 'WebGLRenderInfo' RFP/FPP target (so it shouldn't interfere with FPP/RFP) - but I also want to set this here to ensure users are always protected if they disable FPP for whatever reason, and because we simply don't need this functionality at all for our use case...
+// https://searchfox.org/mozilla-central/source/dom/canvas/ClientWebGLContext.cpp#2362
+// https://searchfox.org/mozilla-central/source/dom/canvas/ClientWebGLContext.cpp#5899
+pref("webgl.enable-debug-renderer-info", false);
+pref("webgl.enable-renderer-query", false);
+
 /// Freeze user agent to protect against fingerprinting
 // As explained below, we can't use the standard RFP/FPP 'HttpUserAgent' & 'NavigatorUserAgent` targets, as Thunderbird lies and pretends to be Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
 // Until Thunderbird fixes this upstream, we'll spoof it ourselves
