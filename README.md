@@ -95,12 +95,13 @@ yay -S dove-flatpak
  Before installing Dove, you'll first need to add [celenity's OBS repo](https://build.opensuse.org/project/show/home:celenity):
 
 > [!NOTE]
-> You may get a Warning like the following when you update The Apt Cache.
-> ```
+> You may see a warning, such as the following, when updating your `apt` cache.
+>
+> ```sh
 > Warning: https://download.opensuse.org/repositories/home:/celenity/Debian_12/InRelease: Policy will reject signature within a year, see --audit for details
 > ```
-> This is because The Apt policy doesn't support V3 GPG key after `2026-02-01` and currently OBS uses V3 GPG key. But for now there is no problem.
-
+>
+> This is because `apt` will not support V3 GPG keys after `2026-02-01`, and currently the OBS uses a V3 GPG key. For now, there shouldn't be any issues.
 
  ```sh
  echo 'deb https://download.opensuse.org/repositories/home:/celenity/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/home:celenity.list
