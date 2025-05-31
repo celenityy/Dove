@@ -204,13 +204,11 @@ pref("mail.dove.status", "004");
 
 /*** 005 FINGERPRINTING PROTECTION ***/
 
-/// Prevent exposing WebGL Renderer Info
-// (We also disable WebGL entirely, see 015 MISC. PRIVACY + SECURITY) 
-// This does the same thing as the 'WebGLRenderInfo' RFP/FPP target (so it shouldn't interfere with FPP/RFP) - but I also want to set this here to ensure users are always protected if they disable FPP for whatever reason, and because we simply don't need this functionality at all for our use case...
-// https://searchfox.org/mozilla-central/source/dom/canvas/ClientWebGLContext.cpp#2362
-// https://searchfox.org/mozilla-central/source/dom/canvas/ClientWebGLContext.cpp#5899
-pref("webgl.enable-debug-renderer-info", false);
-pref("webgl.enable-renderer-query", false);
+/// Ensure we always report "video-dynamic-range" as "standard"
+// This does the same thing as the 'CSSVideoDynamicRange' RFP/FPP target (so it shouldn't interfere with FPP/RFP) - but I also want to set this here to ensure users are always protected if they disable FPP for whatever reason, and because we simply don't need this functionality at all for our use case...
+// https://searchfox.org/mozilla-central/rev/20fc11f1/layout/style/nsMediaFeatures.cpp#345
+// https://developer.mozilla.org/docs/Web/CSS/@media/video-dynamic-range
+pref("layout.css.video-dynamic-range.allows-high", false); // [DEFAULT - Windows]
 
 /// Freeze user agent to protect against fingerprinting
 // As explained below, we can't use the standard RFP/FPP 'HttpUserAgent' & 'NavigatorUserAgent` targets, as Thunderbird lies and pretends to be Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
@@ -227,6 +225,14 @@ pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv
 // We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
 pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); // [ESR] [DEFAULT] (This is the equivalent of the `+CanvasExtractionBeforeUserInputIsBlocked` target)
+
+/// Prevent exposing WebGL Renderer Info
+// (We also disable WebGL entirely, see 015 MISC. PRIVACY + SECURITY) 
+// This does the same thing as the 'WebGLRenderInfo' RFP/FPP target (so it shouldn't interfere with FPP/RFP) - but I also want to set this here to ensure users are always protected if they disable FPP for whatever reason, and because we simply don't need this functionality at all for our use case...
+// https://searchfox.org/mozilla-central/rev/20fc11f1/dom/canvas/ClientWebGLContext.cpp#2362
+// https://searchfox.org/mozilla-central/rev/20fc11f1/dom/canvas/ClientWebGLContext.cpp#5899
+pref("webgl.enable-debug-renderer-info", false);
+pref("webgl.enable-renderer-query", false);
 
 /// Set FPP granular overrides
 // This currently:
