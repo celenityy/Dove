@@ -555,6 +555,7 @@ pref("mail.collect_email_address_outgoing", false);
 
 /// Disable Geolocation
 // https://browserleaks.com/geo
+pref("geo.prompt.open_system_prefs", false); // Ensure users aren't prompted to open settings and enable Geolocation - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
