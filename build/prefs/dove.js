@@ -559,6 +559,7 @@ pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
 pref("geo.provider.use_corelocation", false);
 pref("geo.provider.use_geoclue", false);
+pref("geo.provider.use_mls", false); // [HIDDEN]
 pref("network.wifi.scanning_period", 0);
 
 /// Disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo [CHAT]
