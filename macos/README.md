@@ -299,22 +299,82 @@ By default, Dove is installed & updated via your operating system's package mana
 
 However, if this is not desirable for you & your situation, or you would simply like to use Dove on an unsupported operating system, you can manually install Dove with the following steps:
 
-**1:** Download `dove.cfg` file from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/dove.cfg). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal: 
+**1:** Download `dove.cfg` for your platform:
+
+- Linux: [`https://gitlab.com/celenityy/Dove/-/raw/pages/linux/dove.cfg`](https://gitlab.com/celenityy/Dove/-/raw/pages/linux/dove.cfg)
+- macOS: [`https://gitlab.com/celenityy/Dove/-/raw/pages/macos/macos/dove.cfg`](https://gitlab.com/celenityy/Dove/-/raw/pages/macos/macos/dove.cfg)
+- Windows: [`https://gitlab.com/celenityy/Dove/-/raw/pages/windows/dove.cfg`](https://gitlab.com/celenityy/Dove/-/raw/pages/windows/dove.cfg)
+
+You can right click and select `Save page as` from your browser after navigating to the link for your platform's `dove.cfg`, or you can run the following command in your terminal:
+
+**Linux**:
 
 ```sh
-wget https://gitlab.com/celenityy/Dove/-/raw/pages/dove.cfg
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/linux/dove.cfg
 ```
 
-**2:** Download `dove.js` from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/prefs/dove.js). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
+**macOS**:
 
 ```sh
-wget https://gitlab.com/celenityy/Dove/-/raw/pages/prefs/dove.js
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/macos/dove.cfg
 ```
 
-**3:** Download `policies.json` from [here](https://gitlab.com/celenityy/Dove/-/raw/pages/policies.json). You can right click and select `Save page as` from your browser, or you can run the following command in your terminal:
+**Windows**:
 
 ```sh
-wget https://gitlab.com/celenityy/Dove/-/raw/pages/policies.json
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/windows/dove.cfg
+```
+
+**2:** Download `dove.js` for your platform:
+
+- Linux: [`https://gitlab.com/celenityy/Dove/-/raw/pages/linux/defaults/pref/dove.js`](https://gitlab.com/celenityy/Dove/-/raw/pages/linux/defaults/pref/dove.js)
+- macOS: [`https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove.js`](https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove.js)
+- Windows: [`https://gitlab.com/celenityy/Dove/-/raw/pages/windows/defaults/pref/dove.js`](https://gitlab.com/celenityy/Dove/-/raw/pages/windows/defaults/pref/dove.js)
+
+You can right click and select `Save page as` from your browser after navigating to the link for your platform's `dove.js`, or you can run the following command in your terminal:
+
+**Linux**:
+
+```sh
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/linux/defaults/pref/dove.js
+```
+
+**macOS**:
+
+```sh
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove.js
+```
+
+**Windows**:
+
+```sh
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/windows/defaults/pref/dove.js
+```
+
+**3:** Download `policies.json` *(or `org.mozilla.thunderbird.plist` for macOS users)* for your platform:
+
+- Linux: [`https://gitlab.com/celenityy/Dove/-/raw/pages/linux/policies/policies.json`](https://gitlab.com/celenityy/Dove/-/raw/pages/linux/policies/policies.json)
+- macOS: [`https://gitlab.com/celenityy/Dove/-/raw/pages/macos/macos/org.mozilla.thunderbird.plist`](https://gitlab.com/celenityy/Dove/-/raw/pages/macos/macos/org.mozilla.thunderbird.plist)
+- Windows: [`https://gitlab.com/celenityy/Dove/-/raw/pages/windows/distribution/policies.json`](https://gitlab.com/celenityy/Dove/-/raw/pages/windows/distribution/policies.json)
+
+You can right click and select `Save page as` from your browser after navigating to the link for your platform's `policies.json` *(or `org.mozilla.thunderbird.plist` for macOS users)*, or you can run the following command in your terminal:
+
+**Linux**:
+
+```sh
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/linux/policies/policies.json
+```
+
+**macOS**:
+
+```sh
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/macos/org.mozilla.thunderbird.plist
+```
+
+**Windows**:
+
+```sh
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/windows/distribution/policies.json
 ```
 
 **4:** Locate your Thunderbird installation directory. This will vary depending on your platform, you can generally find it by navigating to `Help` (Located on top bar) -> `Troubleshooting information` & checking the directory next to `Application Binary`. For example, on Fedora Linux, I see `/usr/lib64/thunderbird/thunderbird` next to `Application Binary`. This means our installation directory is `/usr/lib64/thunderbird`.
@@ -322,27 +382,43 @@ wget https://gitlab.com/celenityy/Dove/-/raw/pages/policies.json
 > [!CAUTION]
 >**Unless you're on Fedora Linux, your directory will probably be different, and you should replace this path on the following steps with your actual installation directory's path.**
 
-**5:** Move `dove.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command, assuming `/usr/lib64/thunderbird` is your installation directory:
+**5:** Move `dove.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command:
+
+**Linux/macOS**, *assuming `/usr/lib64/thunderbird` is your installation directory*:
 
 ```sh
 sudo cp dove.cfg /usr/lib64/thunderbird/dove.cfg
 ```
 
-**6:** **For macOS & Flatpak users**: If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory *(it won't be)*, you could run the following command:
+**Windows**:
+
+```sh
+cp dove.cfg C:\'Program Files'\'Mozilla Thunderbird'\dove.cfg
+```
+
+**6:** **For macOS, Windows, and Flatpak users**: If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. You can do this manually through your file explorer, or you can run the following command for your platform:
+
+**Flatpak/macOS**, *assuming `/usr/lib64/thunderbird` is your installation directory*:
 
 ```sh
 sudo mkdir -p /usr/lib64/thunderbird/defaults/pref
 ```
 
-**For GNU/Linux users:** If it does not already exist, you will want to create a folder named `thunderbird` located in your system's `etc` directory. Inside this `thunderbird` folder, create a new folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. This will work **regardless of your distribution** - even Snaps are supported. You can also just run the command below:
+**Windows**:
+
+```sh
+mkdir -p C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref
+```
+
+**For standard Linux users:** If it does not already exist, you will want to create a folder named `thunderbird` located in your system's `etc` directory. Inside this `thunderbird` folder, create a new folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. This will work **regardless of your distribution** - even Snaps are supported. You can also just run the command below:
 
 ```sh
 sudo mkdir -p /etc/thunderbird/defaults/pref
 ```
 
-On macOS & GNU/Linux, you'll also want to ensure that the folder you created has proper permissions:
+On macOS and GNU/Linux, you'll also want to ensure that the folder you created has proper permissions:
 
-**For macOS users:** - assuming `/usr/lib64/thunderbird` is your installation directory *(it won't be)*
+**Flatpak/macOS**, *assuming `/usr/lib64/thunderbird` is your installation directory*:
 
 ```sh
 sudo chmod 744 /usr/lib64/thunderbird/defaults/pref
@@ -354,10 +430,18 @@ sudo chmod 744 /usr/lib64/thunderbird/defaults/pref
 sudo chmod 655 /etc/thunderbird/defaults/pref
 ```
 
-**7:** Move `dove.js` to the `pref` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
+**7:** Move `dove.js` to the `pref` folder that you just created. You can run the following command for your platform below:
+
+**Linux/macOS**, *Assuming your installation directory is `/usr/lib64/thunderbird`*:
 
 ```sh
 sudo cp dove.js /usr/lib64/thunderbird/defaults/pref/dove.js
+```
+
+**Windows**:
+
+```sh
+cp dove.js C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref\dove.js
 ```
 
 **For all non-Flatpak GNU/Linux users:**
@@ -366,39 +450,37 @@ sudo cp dove.js /usr/lib64/thunderbird/defaults/pref/dove.js
 sudo cp dove.js /etc/thunderbird/defaults/pref/dove.js
 ```
 
-**8:** On macOS & Windows, in the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or assuming `/usr/lib64/thunderbird` is your installation directory, you can run the following command:
+**8:** On Windows, in the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or you can run the following command:
 
 ```sh
-sudo mkdir -p /usr/lib64/thunderbird/distribution
+mkdir -p C:\'Program Files'\'Mozilla Thunderbird'\distribution
 ```
 
-GNU/Linux users should **instead** create a `policies` folder inside of a `thunderbird` folder located in `/etc`. This will work **regardless** of your distribution, and even for Snaps.
+non-Flatpak GNU/Linux users should **instead** create a `policies` folder inside of the `thunderbird` folder located in `/etc`. This will work **regardless** of your distribution, and even for Snaps.
 
 ```sh
 sudo mkdir -p /etc/thunderbird/policies
 ```
 
-On macOS & GNU/Linux, you'll also want to ensure that the folder you created has proper permissions:
-
-**For macOS users:** - assuming `/usr/lib64/thunderbird` is your installation directory *(it won't be)*
-
-```sh
-sudo chmod 744 /usr/lib64/thunderbird/distribution
-```
-
-**For all non-Flatpak GNU/Linux users:**
+For non-Flatpak GNU/Linux users, you'll also want to ensure that the folder you created has proper permissions:
 
 ```sh
 sudo chmod 655 /etc/thunderbird/policies
 ```
 
-**9:** Finally, those on Windows & macOS should move `policies.json` to the `distribution` folder that you just created. Assuming your installation directory is `/usr/lib64/thunderbird`, you can run the following command:
+**9:** Finally, those on Windows should copy `policies.json` to the `distribution` folder that you just created. You can run the following command:
 
 ```sh
-sudo cp policies.json /usr/lib64/thunderbird/distribution/policies.json
+cp policies.json C:\'Program Files'\'Mozilla Thunderbird'\distribution\policies.json
 ```
 
-GNU/Linux users should **instead** move `policies.json` to their `/etc/thunderbird/policies` folder they just created.
+macOS users should **instead** copy `org.mozilla.thunderbird.plist` to `/Library/Preferences`, and **reboot** their device once finished:
+
+```sh
+sudo cp org.mozilla.thunderbird.plist /Library/Preferences/org.mozilla.thunderbird.plist`
+```
+
+GNU/Linux users should **instead** copy `policies.json` to their `/etc/thunderbird/policies` folder they just created.
 
 ```sh
 sudo cp policies.json /etc/thunderbird/policies/policies.json
