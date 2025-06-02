@@ -217,12 +217,6 @@ pref("mail.dove.status", "004");
 
 /*** 005 FINGERPRINTING PROTECTION ***/
 
-/// Always disable WebGL debug renderer info
-// (We also disable WebGL entirely, see 015 MISC. PRIVACY + SECURITY) 
-// This is currently covered by the 'WebGLRenderInfo' RFP/FPP target (so it shouldn't interfere with FPP/RFP) - but I also want to set this here to ensure users are always protected if they disable FPP for whatever reason, and because we simply don't need this functionality at all for our use case...
-// https://searchfox.org/mozilla-central/rev/20fc11f1/dom/canvas/ClientWebGLContext.cpp#5899
-pref("webgl.enable-debug-renderer-info", false);
-
 /// Ensure we always report "video-dynamic-range" as "standard"
 // This does the same thing as the 'CSSVideoDynamicRange' RFP/FPP target (so it shouldn't interfere with FPP/RFP) - but I also want to set this here to ensure users are always protected if they disable FPP for whatever reason, and because we simply don't need this functionality at all for our use case...
 // https://searchfox.org/mozilla-central/rev/20fc11f1/layout/style/nsMediaFeatures.cpp#345
