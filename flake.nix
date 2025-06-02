@@ -55,9 +55,9 @@
                     message = "Dove module has not been ported to nix-darwin yet. Contributions welcomed.";
                   }
                 ];
-                environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/prefs/dove.js";
+                environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/linux/defaults/pref/dove.js";
                 programs.thunderbird.policies =
-                  (builtins.fromJSON (builtins.readFile "${pkgs.dove}/policies.json")).policies;
+                  (builtins.fromJSON (builtins.readFile "${pkgs.dove}/linux/policies/policies.json")).policies;
                 nixpkgs.overlays = [
                   self.overlays.default
                   (
@@ -108,7 +108,7 @@
                 export phoenix_dir=${phoenix}
                 patchShebangs ./build/*.sh
                 ./build/build.sh
-                sed -i '/general.config.filename/d' prefs/dove.js
+                sed -i '/general.config.filename/d' build/dove-unified.js
 
                 runHook postBuild
               '';
@@ -123,11 +123,11 @@
                     ''
                   else
                     ''
-                      cp -r policies.json dove.cfg prefs $out/
+                      cp -r linux/policies/policies.json linux/dove.cfg linux/defaults/pref $out/
                     ''
                 }
-                install -Dm644 README.md $out/share/doc/dove/README.md
-                install -Dm644 COPYING $out/share/doc/dove/COPYING
+                install -Dm644 linux/README.md $out/share/doc/dove/README.md
+                install -Dm644 linux/COPYING $out/share/doc/dove/COPYING
 
                 runHook postInstall
               '';

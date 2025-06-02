@@ -10,12 +10,24 @@ echo_green_text() {
 	echo -e "\033[32m$1\033[0m"
 }
 
-rm archives/dove.zip archives/dove-osx.zip
+rm -rf archives/*
 
-echo_green_text "Creating archives/dove.zip..."
+cd "$dove_linux_dir"
 
-zip -r -FS archives/dove.zip * -x 'archives/*' 'assets/*' 'build/*' 'configs/*' 'extensions/*' 'flake.*' 'installer_scripts/*' 'macos/*' 'uBlock/*' 'uninstaller_scripts/*' 'windows/*' '*.code-workspace' '.domains' '.DS_Store' '.git*' '_redirects'
+echo_green_text "Creating archives/dove-linux.zip..."
+
+zip -r -FS "$dove_dir/archives/dove-linux.zip" *
+
+cd "$dove_osx_dir"
 
 echo_green_text "Creating archives/dove-osx.zip..."
 
-zip -r -FS archives/dove-osx.zip * -x 'archives/*' 'assets/*' 'build/*' 'configs/*' 'dove.cfg' 'etc/*' 'extensions/*' 'flake.*' 'installer_scripts/*' 'macos/defaults/*' 'macos/dove-bootstrap.cfg' 'macos/Library/*' 'macos/migration/*' 'prefs/*' 'policies.json' 'uBlock/*' 'uninstaller_scripts/*' 'windows/*' '*.code-workspace' '.domains' '.DS_Store' '.git*' '_redirects'
+zip -r -FS "$dove_dir/archives/dove-osx.zip" * -x 'Library/*'
+
+cd "$dove_windows_dir"
+
+echo_green_text "Creating archives/dove-windows.zip..."
+
+zip -r -FS "$dove_dir/archives/dove-windows.zip" *
+
+cd "$dove_dir"
