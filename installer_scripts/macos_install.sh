@@ -92,14 +92,6 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 /bin/launchctl load /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
-echo_green_text "Downloading dove-bootstrap.js..."
-curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/defaults/pref/dove-bootstrap.js || error_fn
-echo
-
-echo_green_text "Changing permissions of dove-bootstrap.js to 644..."
-/bin/chmod -v 644 dove-bootstrap.js || error_fn
-echo
-
 echo_green_text "Creating /Library/celenity/Dove directory..."
 sudo /bin/mkdir -v -p /Library/celenity/Dove || error_fn
 echo
@@ -144,9 +136,53 @@ case ${DEVICETYPE} in
 		sudo /bin/launchctl load -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
 		echo
 
-		echo_green_text "Downloading dove-bootstrap.cfg..."
-		curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/dove-bootstrap.cfg || error_fn
-		echo
+		echo -e ""
+		echo_green_text "Where is your installation of Thunderbird located?";
+		echo_green_text "Your options are:";
+		echo_red_text "1. system - /Applications/Thunderbird.app";
+		echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
+		read "LOCATION?Please enter your selection: "
+		case ${LOCATION} in
+			"system" | "System" | "SYSTEM" | 1)
+				## Ensure Thunderbird isn't quarantined so we don't break it...
+				# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+				sudo /usr/bin/xattr -v -r -d com.apple.quarantine /Applications/Thunderbird.app
+
+				echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+				sudo /bin/mkdir -v -p /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+				echo
+
+				echo_green_text "Changing permissions of /Applications/Thunderbird.app/Contents/Resources/defaults/pref to 755..."
+				sudo /bin/chmod -R -v 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+				echo
+
+				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
+				sudo /bin/ln -s /opt/homebrew/opt/dove/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
+				echo
+
+				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/macos/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
+				sudo /bin/ln -s /opt/homebrew/opt/dove/macos/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
+				echo
+				;;
+
+			"user" | "User" | "USER" | 2)
+				## Ensure Thunderbird isn't quarantined so we don't break it...
+				# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+				/usr/bin/xattr -v -r -d com.apple.quarantine "${HOME}/Applications/Thunderbird.app"
+
+				echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+				/bin/mkdir -v -p "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
+				echo
+
+				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
+				/bin/ln -s /opt/homebrew/opt/dove/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
+				echo
+
+				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/macos/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
+				/bin/ln -s /opt/homebrew/opt/dove/macos/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
+				echo
+				;;
+		esac
 		;;
 
 	"intel" | "Intel" | "INTEL" | 2)
@@ -178,57 +214,53 @@ case ${DEVICETYPE} in
 		sudo /bin/launchctl load -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
 		echo
 
-		echo_green_text "Downloading dove-bootstrap.cfg..."
-		curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/intel/dove-bootstrap.cfg || error_fn
-		echo
-		;;
-esac
+		echo -e ""
+		echo_green_text "Where is your installation of Thunderbird located?";
+		echo_green_text "Your options are:";
+		echo_red_text "1. system - /Applications/Thunderbird.app";
+		echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
+		read "LOCATION?Please enter your selection: "
+		case ${LOCATION} in
+			"system" | "System" | "SYSTEM" | 1)
+				## Ensure Thunderbird isn't quarantined so we don't break it...
+				# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+				sudo /usr/bin/xattr -v -r -d com.apple.quarantine /Applications/Thunderbird.app
 
-echo_green_text "Changing permissions of dove-bootstrap.cfg to 644..."
-sudo /bin/chmod -v 644 dove-bootstrap.cfg || error_fn
-echo
+				echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+				sudo /bin/mkdir -v -p /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+				echo
 
-echo -e ""
-echo_green_text "Where is your installation of Thunderbird located?";
-echo_green_text "Your options are:";
-echo_red_text "1. system - /Applications/Thunderbird.app";
-echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
-read "LOCATION?Please enter your selection: "
-case ${LOCATION} in
-	"system" | "System" | "SYSTEM" | 1)
-        ## Ensure Thunderbird isn't quarantined so we don't break it...
-		# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
-		sudo /usr/bin/xattr -v -r -d com.apple.quarantine /Applications/Thunderbird.app
+				echo_green_text "Changing permissions of /Applications/Thunderbird.app/Contents/Resources/defaults/pref to 755..."
+				sudo /bin/chmod -R -v 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+				echo
 
-		echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-		sudo /bin/mkdir -v -p /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
-		echo
+				echo_green_text "Creating a symlink from /usr/local/opt/dove/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
+				sudo /bin/ln -s /usr/local/opt/dove/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
+				echo
 
-		echo_green_text "Copying dove-bootstrap.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js..."
-		sudo /bin/cp dove-bootstrap.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js || error_fn
-		echo
+				echo_green_text "Creating a symlink from /usr/local/opt/dove/macos/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
+				sudo /bin/ln -s /usr/local/opt/dove/macos/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
+				echo
+				;;
 
-		echo_green_text "Copying dove-bootstrap.cfg to /Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg.."
-		sudo /bin/cp dove-bootstrap.cfg /Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg || error_fn
-		echo
-		;;
+			"user" | "User" | "USER" | 2)
+				## Ensure Thunderbird isn't quarantined so we don't break it...
+				# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+				/usr/bin/xattr -v -r -d com.apple.quarantine "${HOME}/Applications/Thunderbird.app"
 
-	"user" | "User" | "USER" | 2)
-		## Ensure Thunderbird isn't quarantined so we don't break it...
-		# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
-		/usr/bin/xattr -v -r -d com.apple.quarantine "${HOME}/Applications/Thunderbird.app"
+				echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+				/bin/mkdir -v -p "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
+				echo
 
-		echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-		/bin/mkdir -v -p "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
-		echo
+				echo_green_text "Creating a symlink from /usr/local/opt/dove/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
+				/bin/ln -s /usr/local/opt/dove/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
+				echo
 
-		echo_green_text "Copying dove-bootstrap.js to ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js..."
-		/bin/cp dove-bootstrap.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js" || error_fn
-		echo
-
-		echo_green_text "Copying dove-bootstrap.cfg to ${HOME}/Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg.."
-		/bin/cp dove-bootstrap.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg" || error_fn
-		echo
+				echo_green_text "Creating a symlink from /usr/local/opt/dove/macos/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
+				/bin/ln -s /usr/local/opt/dove/macos/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
+				echo
+				;;
+		esac
 		;;
 esac
 

@@ -124,22 +124,22 @@ echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
 read "LOCATION?Please enter your selection: "
 case ${LOCATION} in
 	"system" | "System" | "SYSTEM" | 1)
-        echo_green_text "Removing dove-bootstrap.js..."
-        sudo /bin/rm -f /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js || error_fn
+        echo_green_text "Removing dove.js..."
+        sudo /bin/rm -f /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
         echo
 
-        echo_green_text "Removing dove-bootstrap.cfg..."
-        sudo /bin/rm -f /Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg || error_fn
+        echo_green_text "Removing dove.cfg..."
+        sudo /bin/rm -f /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
         echo
 		;;
 
 	"user" | "User" | "USER" | 2)
-		echo_green_text "Removing dove-bootstrap.js..."
-        /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove-bootstrap.js" || error_fn
+		echo_green_text "Removing dove.js..."
+        /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
         echo
 
-        echo_green_text "Removing dove-bootstrap.cfg..."
-        /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove-bootstrap.cfg" || error_fn
+        echo_green_text "Removing dove.cfg..."
+        /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
         echo
 		;;
 esac

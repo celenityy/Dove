@@ -46,6 +46,20 @@ pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.05.13.1 💜", l
 
 */
 
+/* KEY
+
+Unspecified = This preference should be set EVERYWHERE
+
+[LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
+[OSX-ONLY] = This preference should ONLY be set for macOS
+[WINDOWS-ONLY] = This preference should ONLY be set for Windows
+
+[NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
+[NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
+[NO-WINDOWS] = This preference should be set everywhere, EXCEPT for Windows
+
+*/
+
 pref("mail.dove.status", "000");
 
 /*** 001 DATA COLLECTION ***/
@@ -99,7 +113,7 @@ pref("extensions.getAddons.recommended.url", "", locked);
 // https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-allowlist/changeset?_expected=0
 pref("signon.firefoxRelay.allowListRemoteSettingsCollection", ""); // [HIDDEN]
 
-/// Disable Start Page by default & switch the URL to the about:config
+/// Disable Start Page by default and switch the URL to the about:config
 // This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
 // Or by pressing alt + home
 pref("mailnews.start_page.enabled", false);
@@ -128,7 +142,6 @@ pref("app.releaseNotesURL.prompt", "https://www.thunderbird.net/releases", locke
 pref("app.vendorURL", "https://www.thunderbird.net/", locked);
 pref("browser.dictionaries.download.url", "https://addons.thunderbird.net/language-tools/");
 pref("extensions.getAddons.compatOverides.url", "https://services.addons.thunderbird.net/api/v4/addons/compat-override/?guid=%IDS%"); // Also updates to the newer v4 API (default is still v3...) - https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions - though I doubt this URL is used anywhere
-pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%"); // Also updates to the newer v4 API (default is still v3...) - https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
 pref("extensions.getAddons.link.url", "https://addons.thunderbird.net/");
 pref("extensions.getAddons.search.browseURL", "https://addons.thunderbird.net/search/?q=%TERMS%");
 pref("extensions.getAddons.search.url", "https://services.addons.thunderbird.net/api/%API_VERSION%/search/%TERMS%/all/%MAX_RESULTS%/");
@@ -439,10 +452,10 @@ pref("svg.disabled", true);
 // https://x.com/GrapheneOS/status/1728921946396725618
 pref("media.peerconnection.enabled", false);
 
-/// Disable Windows Media Foundation Media Engine [NO-OSX]
-// By default, it's enabled for protected content (DRM) [NO-OSX]
-// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [NO-OSX]
-pref("media.wmf.media-engine.enabled", 0); // [NO-OSX]
+/// Disable Windows Media Foundation Media Engine [WINDOWS-ONLY]
+// By default, it's enabled for protected content (DRM) [WINDOWS-ONLY]
+// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [WINDOWS-ONLY]
+pref("media.wmf.media-engine.enabled", 0); // [WINDOWS-ONLY]
 
 /// Require permission for websites to use EME
 // Defense in depth
@@ -476,7 +489,7 @@ pref("extensions.abuseReport.enabled", true);
 
 /// Always allow installing "incompatible" add-ons
 // REQUIRED FOR UBLOCK ORIGIN
-pref("extensions.strictCompatibility", false, locked); // [DEFAULT] [HIDDEN]
+pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
 
 /// Allow unprivileged extensions to use experimental APIs
 // Required for ex. CardBook, also used by DKIM Verifier
@@ -492,7 +505,7 @@ pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 // Note that this does NOT apply to `Recommended` extensions (collecitons) found at `Settings` -> `Advanced` -> `Extensions`.
 // Unfortunately doesn't have a prompt when disabled like Desktop :(
 // Setting here to expose via the `about:config`...
-pref("xpinstall.enabled", true); // [DEFAULT] [HIDDEN]
+pref("xpinstall.enabled", true); // [HIDDEN] [DEFAULT]
 
 pref("mail.dove.status", "013");
 
@@ -503,7 +516,7 @@ pref("extensions.cardbook.optionsMigrated", false); // [HIDDEN]
 
 /// Display list, public key, technical, & vCard tabs by default
 pref("extensions.cardbook.keyTabView", true); // [HIDDEN] Public Keys
-pref("extensions.cardbook.listTabView", true); // [DEFAULT] [HIDDEN] Lists
+pref("extensions.cardbook.listTabView", true); // [HIDDEN] [DEFAULT] Lists
 pref("extensions.cardbook.technicalTabView", true); // [HIDDEN] Technical
 pref("extensions.cardbook.vcardTabView", true); // [HIDDEN] vCard
 
@@ -515,10 +528,10 @@ pref("extensions.cardbook.localDataEncryption", true); // [HIDDEN]
 pref("extensions.cardbook.useOnlyEmail", true); // [HIDDEN]
 
 /// Use OpenStreetMap instead of Bing/Google Maps for `Show on Map` functionality
-pref("extensions.cardbook.localizeEngine", "OpenStreetMap"); // [DEFAULT] [HIDDEN]
+pref("extensions.cardbook.localizeEngine", "OpenStreetMap"); // [HIDDEN] [DEFAULT]
 
 /// Warn when attempting to email contacts without an email address
-pref("extensions.cardbook.warnEmptyEmails", true); // [DEFAULT] [HIDDEN]
+pref("extensions.cardbook.warnEmptyEmails", true); // [HIDDEN] [DEFAULT]
 
 pref("mail.dove.status", "014");
 
@@ -564,12 +577,16 @@ pref("chat.prpls.prpl-gtalk.disable", true); // [DEFAULT] [CHAT]
 pref("chat.prpls.prpl-twitter.disable", true); // [DEFAULT] [CHAT]
 pref("chat.prpls.prpl-yahoo.disable", true); // [DEFAULT] [CHAT]
 
-/// Disable macOS Spotlight and Windows file indexing for email by default
-pref("mail.spotlight.enable", false); // [DEFAULT]
-pref("mail.spotlight.firstRunDone", true);
-pref("mail.winsearch.enable", false); // [DEFAULT] [NO-OSX]
-pref("mail.winsearch.firstRunDone", true); // [NO-OSX]
+/// Disable macOS Spotlight file indexing for email by default [OSX-ONLY]
+pref("mail.spotlight.enable", false); // [OSX-ONLY] [DEFAULT]
+pref("mail.spotlight.firstRunDone", true); // [OSX-ONLY]
+
+/// Disable OS file indexing/search integration for email by default
 pref("searchintegration.enable", false);
+
+/// Disable Windows file indexing for email by default [WINDOWS-ONLY]
+pref("mail.winsearch.enable", false); // [WINDOWS-ONLY] [DEFAULT]
+pref("mail.winsearch.firstRunDone", true); // [WINDOWS-ONLY]
 
 /// Prevent calendar from extracting data from emails by default
 pref("calendar.extract.service.enabled", false); // [DEFAULT]
@@ -587,12 +604,12 @@ pref("mail.dove.status", "016");
 /// Always warn users before launching other apps
 pref("mail.external_protocol_requires_permission", true); // [HIDDEN]
 
-/// Disable insecure NTLMv1
-// Fedora's Thunderbird package overrides this to `true`... :/
-// https://www.janbambas.cz/ntlm-v1-and-firefox/
-// https://bugzilla.mozilla.org/show_bug.cgi?id=828183
-// https://bugzilla.redhat.com/show_bug.cgi?id=1110291
-pref("network.negotiate-auth.allow-insecure-ntlm-v1", false); // [DEFAULT] [HIDDEN]
+/// Disable insecure NTLMv1 [LINUX-ONLY]
+// Fedora's Thunderbird package overrides this to `true`... :/ [LINUX-ONLY]
+// https://www.janbambas.cz/ntlm-v1-and-firefox/ [LINUX-ONLY]
+// https://bugzilla.mozilla.org/show_bug.cgi?id=828183 [LINUX-ONLY]
+// https://bugzilla.redhat.com/show_bug.cgi?id=1110291 [LINUX-ONLY]
+pref("network.negotiate-auth.allow-insecure-ntlm-v1", false); // [LINUX-ONLY] [HIDDEN] [DEFAULT]
 
 /// Enable built-in phishing protection
 // https://support.mozilla.org/kb/thunderbirds-scam-detection
@@ -601,10 +618,10 @@ pref("mail.phishing.detection.enabled", true); // [DEFAULT]
 pref("mail.phishing.detection.ipaddresses", true); // [DEFAULT]
 pref("mail.phishing.detection.mismatched_hosts", true); // [DEFAULT]
 
-/// Enable mozilla::pkix certificate verification
-// Fedora's Thunderbird package overrides this to `false`... :/
-// https://wiki.mozilla.org/SecurityEngineering/mozpkix-testing
-pref("security.use_mozillapkix_verification", true);  // [DEFAULT] [HIDDEN]
+/// Enable mozilla::pkix certificate verification [LINUX-ONLY]
+// Fedora's Thunderbird package overrides this to `false`... :/ [LINUX-ONLY]
+// https://wiki.mozilla.org/SecurityEngineering/mozpkix-testing [LINUX-ONLY]
+pref("security.use_mozillapkix_verification", true); // [LINUX-ONLY] [HIDDEN] [DEFAULT]
 
 /// Limit classes that can process incoming data
 // Enables a blocklist to avoid HTML, inline images, and other unknown content types
@@ -614,7 +631,7 @@ pref("rss.display.disallow_mime_handlers", 3);
 
 /// Prevent 3rd party software from intercepting & analyzing emails
 // This is the "Allow Antivirus clients to quarantine individual incoming messages" option within Privacy & Security settings
-// https://searchfox.org/comm-central/source/mail/components/MailGlue.sys.mjs#1299
+// https://searchfox.org/comm-central/rev/2713116a/mail/components/preferences/privacy.inc.xhtml#372
 pref("mailnews.downloadToTempFile", false, locked);
 
 /// Sanitize HTML content
@@ -632,7 +649,7 @@ pref("app.use_without_mail_account", true);
 
 /// Disable `mailto:` warning...
 // Override from Phoenix
-pref("network.protocol-handler.warn-external.mailto", false); // [DEFAULT] [HIDDEN]
+pref("network.protocol-handler.warn-external.mailto", false); // [HIDDEN] [DEFAULT]
 
 /// Disable support for web applications manifests
 // Ex. used for PWAs (& PWA inspection on desktop)
@@ -683,6 +700,7 @@ pref("mail.identity.default.compose_html", false);
 /// Update AMO API
 // Default is still v3, which has been deprecated for quite some time...
 // https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%&lang=%LOCALE%");
 pref("extensions.getAddons.langpacks.url", "https://services.addons.thunderbird.net/api/v4/addons/language-tools/?app=thunderbird&type=language&appversion=%VERSION%");
 
 /// Use a blank new tab page
@@ -704,14 +722,14 @@ pref("devtools.aboutdebugging.local-tab-debugging", true);
 /// Disable extra logging for policies by default
 // This pref allows controlling the log level of policies (extremely useful for troubleshooting...), set here to the default value so that it's exposed in the about:config
 // https://searchfox.org/comm-central/source/mail/components/enterprisepolicies/Policies.sys.mjs
-pref("browser.policies.loglevel", "Error"); // [DEFAULT, HIDDEN]
+pref("browser.policies.loglevel", "Error"); // [HIDDEN] [DEFAULT]
 
 /// Enable the 'Bubbles' chat theme by default [CHAT]
 pref("messenger.options.messagesStyle.theme", "bubbles"); // [CHAT]
 
 /// Enable dark theme for the message pane
 pref("mail.dark-reader.enabled", true);
-pref("mail.dark-reader.show-toggle", true); // [HIDDEN] UI toggle - https://searchfox.org/comm-central/source/mail/base/content/msgHdrView.js#2787
+pref("mail.dark-reader.show-toggle", true); // [HIDDEN] UI toggle https://searchfox.org/comm-central/rev/2713116a/mail/base/content/msgHdrView.js#2794
 
 /// Enable the global indexer (Gloda) by default
 // We still disable OS indexing/integration above, this is just for Thunderbird itself.
@@ -743,13 +761,13 @@ pref("mail.save_msg_filename_underscores_for_space", true);
 
 pref("mail.dove.status", "019");
 
-/*** 020 SPECIALIZED/CUSTOM CONFIGS [NO-OSX] ***/
+/*** 020 SPECIALIZED/CUSTOM CONFIGS [LINUX-ONLY] ***/
 
-/// Enable support for custom/specialized configs... [NO-OSX]
-pref("general.config.filename", "dove.cfg"); // [NO-OSX]
-pref("general.config.vendor", "dove"); // [NO-OSX]
-pref("general.config.obscure_value", 0); // [NO-OSX]
+/// Enable support for custom/specialized configs... [LINUX-ONLY]
+pref("general.config.filename", "dove.cfg"); // [LINUX-ONLY]
+pref("general.config.vendor", "dove"); // [LINUX-ONLY]
+pref("general.config.obscure_value", 0); // [LINUX-ONLY]
 
-pref("mail.dove.status", "020"); // [NO-OSX]
+pref("mail.dove.status", "020"); // [LINUX-ONLY]
 
 pref("mail.dove.status", "successfully applied :D", locked);

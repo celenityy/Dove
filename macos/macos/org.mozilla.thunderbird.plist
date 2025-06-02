@@ -509,6 +509,13 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>brave-leta@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deprecated</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
+		</dict>
 		<key>brave-search-extension@brave.com</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -556,6 +563,13 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>ddg@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deprecated</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
+		</dict>
 		<key>dkim_verifier@pl</key>
 		<dict>
 			<key>install_url</key>
@@ -564,6 +578,20 @@
 			<string>normal_installed</string>
 			<key>private_browsing</key>
 			<true/>
+		</dict>
+		<key>duckduckgo-html@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deprecated</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
+		</dict>
+		<key>duckduckgo-lite@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deprecated</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
 		</dict>
 		<key>dynamic-probe-telemetry-extension@mozilla.com</key>
 		<dict>
@@ -695,6 +723,13 @@
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in GMX Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/gmx/manifest.json</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
+		</dict>
+		<key>google-leta@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deprecated</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
@@ -887,10 +922,24 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>mojeek@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deprecated</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
+		</dict>
 		<key>naver-kr@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in NAVER Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/naver-kr/manifest.json</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
+		</dict>
+		<key>no-search@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deprecated</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
@@ -1108,6 +1157,13 @@
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Avast SafePrice, by Avast. Highly sketchy &amp; known for selling data.</string>
+			<key>installation_mode</key>
+			<string>blocked</string>
+		</dict>
+		<key>startpage@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deprecated</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
