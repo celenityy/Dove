@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.05.11.1", locked);
+pref("browser.phoenix.version", "2025.06.02.2", locked);
 
 /* INDEX 
 
@@ -567,6 +567,10 @@ pref("privacy.fingerprintingProtection.remoteOverrides.enabled", false);
 // https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/22548
 pref("media.benchmark.vp9.threshold", 0);
 
+/// Do not use the theme's toolbar color scheme for in-content pages by default
+// https://searchfox.org/mozilla-central/source/toolkit/modules/LightweightThemeConsumer.sys.mjs
+pref("browser.theme.unified-color-scheme", false); // [HIDDEN - non-Thunderbird] [DEFAULT - non-Thunderbird]
+
 /// Enable canvas randomization for the browser chrome
 pref("privacy.resistFingerprinting.randomization.canvas.disable_for_chrome", false); // [DEFAULT]
 
@@ -603,10 +607,9 @@ pref("webgl.sanitize-unmasked-renderer", true); // [DEFAULT] [DEFENSE IN DEPTH]
 pref("webgl.override-unmasked-renderer", "Mozilla"); // Attempts to spoof "Unmasked Renderer" Debug info to "Mozilla" (like FPP/RFP does for the WebGL renderer query), but Firefox seems to override to "Generic Renderer" anyways
 pref("webgl.override-unmasked-vendor", "Mozilla"); // Spoofs "Unmasked Vendor" Debug info to "Mozilla" (like FPP/RFP does for the WebGL renderer query)
 
-/// Prevent pre-allocating/re-using content processes
+/// Prevent pre-allocating content processes
 // These can cause certain values/settings to persist, even after a user changes them - which could result in leakage/fingerprinting concerns
 // https://firefox-source-docs.mozilla.org/dom/ipc/process_model.html#preallocated-content
-pref("dom.ipc.disableContentProcessReuse", true);
 pref("dom.ipc.processPrelaunch.enabled", false); // [DEFAULT - Android]
 pref("dom.ipc.processPrelaunch.fission.number", 0);
 
@@ -2061,8 +2064,8 @@ pref("security.sandbox.cig.prespawn.enabled", true); // [WINDOWS-ONLY] [DEFAULT 
 
 /// Enable content process sandboxing [NO-ANDROID]
 // These are especially useful for ex. Thunderbird, which seems to disable sandboxing by default... [NO-ANDROID]
-// Sandbox is obviously critical from a security perspective as well, so doesn't hurt IMO to explicitly enable here [NO-ANDROID]
-pref("security.sandbox.content.level", 20); // [WINDOWS-ONLY] (Default = 8: https://searchfox.org/mozilla-central/rev/20fc11f1/browser/app/profile/firefox.js#1473 - This strengthens it: https://searchfox.org/mozilla-central/rev/20fc11f1/security/sandbox/win/src/sandboxbroker/sandboxBroker.cpp#860)
+// Sandboxing is obviously critical from a security perspective as well, so doesn't hurt IMO to explicitly enable here [NO-ANDROID]
+pref("security.sandbox.content.level", 8); // [WINDOWS-ONLY] [DEFAULT] https://searchfox.org/mozilla-central/rev/20fc11f1/security/sandbox/win/src/sandboxbroker/sandboxBroker.cpp#860)
 
 /// Enable the Cross-Origin-Embedder Policy Header
 // https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy
@@ -2714,7 +2717,7 @@ Unspecified = This preference should be set EVERYWHERE
 
 /// Add custom branding under `Firefox Updates` at `about:preferences#general` [NO-ANDROID]
 // This will unfortunately only display if the version of Firefox you're using is repackaged (ex. Flatpaks/Linux distros) [NO-ANDROID]
-pref("distribution.about", "Phoenix: Extended for Mozilla Firefox - 2025.05.11.1 💜", locked); // [NO-ANDROID]
+pref("distribution.about", "Phoenix: Extended for Mozilla Firefox - 2025.06.02.2 💜", locked); // [NO-ANDROID]
 
 /*** 001 FINGERPRINTING PROTECTION ***/
 
@@ -2779,11 +2782,11 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.05.13.1", locked);
+pref("mail.dove.version", "2025.06.02.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.05.13.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.02.1 💜", locked);
 
 /* INDEX 
 
@@ -2977,12 +2980,6 @@ pref("mailnews.auto_config.fetchFromISP.sendEmailAddress", false);
 pref("mail.dove.status", "004");
 
 /*** 005 FINGERPRINTING PROTECTION ***/
-
-/// Always disable WebGL debug renderer info
-// (We also disable WebGL entirely, see 015 MISC. PRIVACY + SECURITY) 
-// This is currently covered by the 'WebGLRenderInfo' RFP/FPP target (so it shouldn't interfere with FPP/RFP) - but I also want to set this here to ensure users are always protected if they disable FPP for whatever reason, and because we simply don't need this functionality at all for our use case...
-// https://searchfox.org/mozilla-central/rev/20fc11f1/dom/canvas/ClientWebGLContext.cpp#5899
-pref("webgl.enable-debug-renderer-info", false);
 
 /// Ensure we always report "video-dynamic-range" as "standard"
 // This does the same thing as the 'CSSVideoDynamicRange' RFP/FPP target (so it shouldn't interfere with FPP/RFP) - but I also want to set this here to ensure users are always protected if they disable FPP for whatever reason, and because we simply don't need this functionality at all for our use case...

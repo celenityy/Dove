@@ -15,11 +15,11 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.05.13.1", locked);
+pref("mail.dove.version", "2025.06.02.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.05.13.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.02.1 💜", locked);
 
 /* INDEX 
 

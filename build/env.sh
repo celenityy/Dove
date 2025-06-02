@@ -7,7 +7,7 @@ if [ -z ${phoenix_dir+x} ]; then
 fi
 
 # Version of Dove you'd like to build
-export dove_version=2025.05.13.1
+export dove_version=2025.06.02.1
 
 # Where `Dove` (this repo) is located
 export dove_dir=$(dirname $(dirname "$(realpath "$0")"))

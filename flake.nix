@@ -123,11 +123,11 @@
                     ''
                   else
                     ''
-                      cp -r policies.json dove.cfg prefs $out/
+                      cp -r linux/policies/policies.json linux/dove.cfg linux/defaults/pref $out/
                     ''
                 }
-                install -Dm644 README.md $out/share/doc/dove/README.md
-                install -Dm644 COPYING $out/share/doc/dove/COPYING
+                install -Dm644 linux/README.md $out/share/doc/dove/README.md
+                install -Dm644 linux/COPYING $out/share/doc/dove/COPYING
 
                 runHook postInstall
               '';
