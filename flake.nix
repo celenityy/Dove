@@ -55,9 +55,9 @@
                     message = "Dove module has not been ported to nix-darwin yet. Contributions welcomed.";
                   }
                 ];
-                environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/linux/defaults/pref/dove.js";
+                environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/pref/dove.js";
                 programs.thunderbird.policies =
-                  (builtins.fromJSON (builtins.readFile "${pkgs.dove}/linux/policies/policies.json")).policies;
+                  (builtins.fromJSON (builtins.readFile "${pkgs.dove}/policies.json")).policies;
                 nixpkgs.overlays = [
                   self.overlays.default
                   (
