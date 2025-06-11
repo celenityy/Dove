@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.06.06.1", locked);
+pref("browser.phoenix.version", "2025.06.10.1", locked);
 
 /* INDEX 
 
@@ -2004,12 +2004,6 @@ pref("security.csp.truncate_blocked_uri_for_frame_navigations", true); // [DEFAU
 pref("network.cookie.maxageCap", 15552000);
 
 
-/// Prevent notifying websites if users switch focus/active windows by default
-// Unfortunately doesn't work with tabs...
-// https://bugzilla.mozilla.org/show_bug.cgi?id=704583
-// For testing: https://www.proginosko.com/test/WindowFocusEvents.html
-pref("focusmanager.testmode", true);
-
 /// Prevent sharing identifying information if a remote AutoConfig is being used
 // https://searchfox.org/mozilla-central/source/extensions/pref/autoconfig/src/nsAutoConfig.cpp#220
 pref("autoadmin.append_emailaddr", false, locked); // [DEFAULT] [HIDDEN]
@@ -2727,7 +2721,7 @@ Unspecified = This preference should be set EVERYWHERE
 
 /// Add custom branding under `Firefox Updates` at `about:preferences#general` [NO-ANDROID]
 // This will unfortunately only display if the version of Firefox you're using is repackaged (ex. Flatpaks/Linux distros) [NO-ANDROID]
-pref("distribution.about", "Phoenix: Extended for Mozilla Firefox - 2025.06.06.1 💜", locked); // [NO-ANDROID]
+pref("distribution.about", "Phoenix: Extended for Mozilla Firefox - 2025.06.10.1 💜", locked); // [NO-ANDROID]
 
 /*** 001 FINGERPRINTING PROTECTION ***/
 
@@ -2792,11 +2786,11 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.06.06.1", locked);
+pref("mail.dove.version", "2025.06.10.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.06.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.10.1 💜", locked);
 
 /* INDEX 
 
