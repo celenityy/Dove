@@ -1071,6 +1071,13 @@
         "contentURL": "https://big.oisd.nl/",
         "supportURL": "https://oisd.nl/report"
     },
+    "pagevis": {
+        "content": "filters",
+        "group": "default",
+        "title": "👻 Block Page Visibility",
+        "contentURL": "https://gitlab.com/celenityy/BadBlock/-/raw/pages/hardened/block-page-visibility.txt",
+        "supportURL": "https://badblock.celenity.dev/issues"
+    },
     "sproutannoyances": {
         "content": "filters",
         "group": "annoyances",
