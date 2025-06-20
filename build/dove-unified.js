@@ -107,12 +107,6 @@ pref("mailnews.start_page_override.mstone", "ignore", locked);
 /// Disable recommendations
 pref("extensions.getAddons.recommended.url", "", locked);
 
-/// Disable the Remote Settings Firefox Relay Allowlist Collection
-// Unnecessary for our use case
-// https://searchfox.org/mozilla-central/source/toolkit/components/satchel/integrations/FirefoxRelay.sys.mjs
-// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-allowlist/changeset?_expected=0
-pref("signon.firefoxRelay.allowListRemoteSettingsCollection", ""); // [HIDDEN]
-
 /// Disable Start Page by default and switch the URL to the about:config
 // This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
 // Or by pressing alt + home
@@ -450,12 +444,6 @@ pref("media.peerconnection.enabled", false);
 // By default, it's enabled for protected content (DRM) [WINDOWS-ONLY]
 // https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [WINDOWS-ONLY]
 pref("media.wmf.media-engine.enabled", 0); // [WINDOWS-ONLY]
-
-/// Require permission for websites to use EME
-// Defense in depth
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1620102
-// https://searchfox.org/mozilla-central/source/dom/media/eme/MediaKeySystemAccessPermissionRequest.h
-pref("media.eme.require-app-approval", true); // [DEFAULT]
 
 pref("mail.dove.status", "011");
 
