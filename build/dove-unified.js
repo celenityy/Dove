@@ -105,7 +105,7 @@ pref("mail.rights.override", true);
 pref("mailnews.start_page_override.mstone", "ignore", locked);
 
 /// Disable recommendations
-pref("extensions.getAddons.recommended.url", "", locked);
+pref("extensions.getAddons.recommended.url", "");
 
 /// Disable Start Page by default and switch the URL to the about:config
 // This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
