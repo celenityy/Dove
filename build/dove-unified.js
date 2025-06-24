@@ -696,11 +696,6 @@ pref("mail.dove.status", "018");
 /// Things that are nice to have™
 // Not directly privacy & security related
 
-/// Allow inspecting/debugging local tabs
-// Extremely useful for Thunderbird, as it gives us a URL bar...
-// Can be accessed via `Tools` -> `Developer Tools` -> `Debug Add-ons` (`about:debugging`), simply choose `Inspect` next to any tab of your choice and profit...
-pref("devtools.aboutdebugging.local-tab-debugging", true);
-
 /// Disable extra logging for policies by default
 // This pref allows controlling the log level of policies (extremely useful for troubleshooting...), set here to the default value so that it's exposed in the about:config
 // https://searchfox.org/comm-central/source/mail/components/enterprisepolicies/Policies.sys.mjs
