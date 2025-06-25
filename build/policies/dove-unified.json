@@ -59,6 +59,9 @@
             "gconversation@xulforum.org": {
                 "private_browsing": true
             },
+            "languagetool-mailextension@languagetool.org": {
+                "private_browsing": true
+            },
             "uBlock0@raymondhill.net": {
                 "installation_mode": "normal_installed",
                 "install_url": "https://github.com/gorhill/uBlock/releases/download/1.64.0/uBlock0_1.64.0.thunderbird.xpi",
