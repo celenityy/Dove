@@ -261,11 +261,6 @@ pref("purple.logging.log_ims", false); // [CHAT]
 /// Disable logging E2EE messages (OTR) [CHAT]
 pref("chat.otr.default.allowMsgLog", false); // [CHAT]
 
-/// Enable Private Browsing
-// https://support.mozilla.org/kb/private-browsing-use-firefox-without-history
-pref("browser.privatebrowsing.autostart", true);
-pref("mailnews.oauth.usePrivateBrowser", true);
-
 /// Prevent permission manager from writing to disk
 pref("permissions.memory_only", true); // [HIDDEN]
 
@@ -277,14 +272,11 @@ pref("mail.biff.alert.show_preview", false);
 pref("mail.biff.alert.show_sender", false);
 pref("mail.biff.alert.show_subject", false);
 
-/// Sanitization
-// These are mostly just for defense in depth/useful if users disable Private Browsing
-// Clears cookies on exit & prevents storing them persistently
+/// Prevent storing cookies persistently
+// Unfortunately, Private Browsing mode currently breaks extensions (unless they're manually added to policies...)
+// So for now, this is best option we have; treats cookies the same way as they are in private browsing, by preventing them from being stored persistently
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1675829
 pref("network.cookie.noPersistentStorage", true);
-pref("privacy.clearOnShutdown.cookies", true);
-pref("privacy.clearOnShutdown.offlineApps", true); // [HIDDEN]
-pref("privacy.clearOnShutdown_v2.cookiesAndStorage", true);
 
 pref("mail.dove.status", "006");
 
