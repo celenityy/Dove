@@ -51,6 +51,9 @@
             "cardbook@vigneau.philippe": {
                 "private_browsing": true
             },
+            "deepl@itagagaki": {
+                "private_browsing": true
+            },
             "dkim_verifier@pl": {
                 "installation_mode": "normal_installed",
                 "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
