@@ -475,6 +475,10 @@ pref("extensions.experiments.enabled", true); // [DEFAULT]
 pref("extensions.quarantineIgnoredByUser.cardbook@vigneau.philippe", false); // [DEFAULT]
 pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 
+/// Disable compatibility overrides
+// https://mozilla.github.io/addons-server/topics/api/v3_legacy/addons.html#compat-override
+pref("extensions.getAddons.compatOverides.url", "");
+
 /// Disable installation of add-ons + only allow enabling it per-session
 // Includes extensions and themes
 // This doesn't impact already installed add-ons and add-ons installed by policies
