@@ -504,6 +504,12 @@ pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 pref("extensions.InstallTrigger.enabled", true); // [DEFAULT]
 pref("extensions.InstallTriggerImpl.enabled", true);
 
+/// Update AMO API
+// Default is still v3, which has been deprecated for quite some time...
+// https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%&lang=%LOCALE%");
+pref("extensions.getAddons.langpacks.url", "https://services.addons.thunderbird.net/api/v4/addons/language-tools/?app=thunderbird&type=language&appversion=%VERSION%");
+
 pref("mail.dove.status", "013");
 
 /*** 014 CARDBOOK ***/
@@ -693,12 +699,6 @@ pref("dom.postMessage.sharedArrayBuffer.withCOOP_COEP", true); // [DEFAULT]
 pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
-
-/// Update AMO API
-// Default is still v3, which has been deprecated for quite some time...
-// https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
-pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%&lang=%LOCALE%");
-pref("extensions.getAddons.langpacks.url", "https://services.addons.thunderbird.net/api/v4/addons/language-tools/?app=thunderbird&type=language&appversion=%VERSION%");
 
 /// Use a blank new tab page
 // This likely isn't used anywhere, but Thunderbird does seem to pull in this component and this setting appears in the `about:config`, so we can set it anyways
