@@ -48,17 +48,1032 @@
                     "locale"
                 ]
             },
+            "{12a1584b-2123-473d-8752-e82e74e3cb1b}": {
+                "blocked_install_message": "NestedQuote Remover: https://addons.thunderbird.net/addon/nestedquote-remover/",
+                "private_browsing": true
+            },
+            "{139a120b-c2ea-41d2-bf70-542d9f063dfd}": {
+                "blocked_install_message": "URL Link: https://addons.thunderbird.net/addon/url-link/",
+                "private_browsing": true
+            },
+            "{1B0ADFEC-846C-401D-BA54-7842CBD485D4}": {
+                "blocked_install_message": "Check and Send: https://addons.thunderbird.net/addon/check-and-send/",
+                "private_browsing": true
+            },
+            "{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}": {
+                "blocked_install_message": "Colored Diffs: https://addons.thunderbird.net/addon/colored-diffs/",
+                "private_browsing": true
+            },
+            "{2909fbd8-b061-4b52-989e-46b05fbdb650}": {
+                "blocked_install_message": "Proton Calendar Toolbar Button: https://addons.thunderbird.net/proton-calendar-toolbar-button/",
+                "private_browsing": true
+            },
+            "{2ab1b709-ba03-4361-abf9-c50b964ff75d}": {
+                "blocked_install_message": "Signature Switch: https://addons.thunderbird.net/addon/signature-switch/",
+                "private_browsing": true
+            },
+            "{2af208f6-fdc2-4c74-8db9-bb4a8de6359d}": {
+                "blocked_install_message": "@Contact Mention: https://addons.thunderbird.net/addon/contact-mention/",
+                "private_browsing": true
+            },
+            "{3579f63b-d8ee-424f-bbb6-6d0ce3285e6a}": {
+                "blocked_install_message": "Chameleon: https://addons.mozilla.org/addon/chameleon-ext/",
+                "private_browsing": true
+            },
+            "{3AB03506-4329-483F-BA03-EA5493232260}": {
+                "blocked_install_message": "New Tab Button: https://addons.thunderbird.net/addon/new-tab-button/",
+                "private_browsing": true
+            },
+            "{43ed69b5-6fb0-44d0-b200-d1b26d3fed39}": {
+                "blocked_install_message": "Proton Mail Toolbar Button: https://addons.thunderbird.net/addon/proton-mail-toolbar-button/",
+                "private_browsing": true
+            },
+            "{446900e4-71c2-419f-a6a7-df9c091e268b}": {
+                "blocked_install_message": "Bitwarden Password Manager: https://addons.mozilla.org/addon/bitwarden-password-manager/",
+                "private_browsing": true
+            },
+            "{4753278b-acea-4b2b-a111-1fc9450d239d}": {
+                "blocked_install_message": "BetterUnsubscribe: https://addons.thunderbird.net/addon/betterunsubscribe/",
+                "private_browsing": true
+            },
+            "{47ef7cc0-2201-11da-8cd6-0800200c9a66}": {
+                "blocked_install_message": "Correct identity: https://addons.thunderbird.net/addon/correct-identity/",
+                "private_browsing": true
+            },
+            "{532269cf-a10e-4396-8613-b5d9a9a516d4}": {
+                "blocked_install_message": "Allow HTML Temp: https://addons.thunderbird.net/addon/allow-html-temp/",
+                "private_browsing": true
+            },
+            "{54e72d7b-ed31-4736-854f-f517358f21ee}": {
+                "blocked_install_message": "BiDi Mail UI: https://addons.thunderbird.net/addon/bidi-mail-ui/",
+                "private_browsing": true
+            },
+            "{5ce3f3ea-38fc-11eb-adc1-0242ac120002}": {
+                "blocked_install_message": "Composer Contacts Mention: https://addons.thunderbird.net/addon/mentions/",
+                "private_browsing": true
+            },
+            "{88B31EFE-2E3B-43a6-A805-B53433C3B265}": {
+                "blocked_install_message": "Evernote Tab: https://addons.thunderbird.net/addon/evernote-tab/",
+                "private_browsing": true
+            },
+            "{957509b1-217a-46c7-b08b-f67d08d53883}": {
+                "blocked_install_message": "SubSwitch: https://addons.thunderbird.net/addon/subswitch/",
+                "private_browsing": true
+            },
+            "{9de7f477-6a8d-4bf6-932c-1dc736b90394}": {
+                "blocked_install_message": "Attachment Saver: https://addons.thunderbird.net/addon/attachment-saver/",
+                "private_browsing": true
+            },
+            "{A23E4120-431F-4753-AE53-5D028C42CFDC}": {
+                "blocked_install_message": "ThreadVis: https://addons.thunderbird.net/addon/threadvis/",
+                "private_browsing": true
+            },
+            "{a300a000-5e21-4ee0-a115-9ec8f4eaa92b}": {
+                "blocked_install_message": "Remove Duplicate Messages: https://addons.thunderbird.net/addon/removedupes/",
+                "private_browsing": true
+            },
+            "{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}": {
+                "blocked_install_message": "Provider for Google Calendar: https://addons.thunderbird.net/addon/provider-for-google-calendar/",
+                "private_browsing": true
+            },
+            "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}": {
+                "blocked_install_message": "User-Agent Switcher and Manager: https://addons.mozilla.org/addon/user-agent-string-switcher/",
+                "private_browsing": true
+            },
+            "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}": {
+                "blocked_install_message": "Violentmonkey: https://addons.mozilla.org/addon/violentmonkey/",
+                "private_browsing": true
+            },
+            "{b11bea1f-a888-4332-8d8a-cec2be7d24b9}": {
+                "blocked_install_message": "Snowflake: https://addons.mozilla.org/addon/torproject-snowflake/",
+                "private_browsing": true
+            },
+            "{b1a994eb-f617-4a56-a4a4-e073e2310f07}": {
+                "blocked_install_message": "Jitsi Meet event generator: https://addons.thunderbird.net/addon/jitsi-meet-event-generator/",
+                "private_browsing": true
+            },
+            "{b86e4813-687a-43e6-ab65-0bde4ab75758}": {
+                "blocked_install_message": "LocalCDN: https://addons.mozilla.org/addon/localcdn-fork-of-decentraleyes/",
+                "private_browsing": true
+            },
+            "{d8815e01-8ffc-4d85-a082-d750b35f21c1}": {
+                "blocked_install_message": "Dark Plain Text: https://addons.thunderbird.net/addon/dark-plain-text/",
+                "private_browsing": true
+            },
+            "{e5b6e4ac-ec96-44f5-b257-e4d3c8291b41}": {
+                "blocked_install_message": "Linguist - web pages translator: https://addons.mozilla.org/addon/linguist-translator/",
+                "private_browsing": true
+            },
+            "78272b6fa58f4a1abaac99321d503a20@proton.me": {
+                "blocked_install_message": "Proton Pass: Free Password Manager: https://addons.mozilla.org/addon/proton-pass/",
+                "private_browsing": true
+            },
+            "addon@darkreader.org": {
+                "blocked_install_message": "Dark Reader: https://addons.thunderbird.net/addon/darkreader/",
+                "private_browsing": true
+            },
+            "addon@simplelogin": {
+                "blocked_install_message": "SimpleLogin by Proton: Secure Email Aliases: https://addons.mozilla.org/addon/simplelogin/",
+                "private_browsing": true
+            },
+            "addon_simple_template@forest-soft.net": {
+                "blocked_install_message": "Simple Template: https://addons.thunderbird.net/addon/simple-template/",
+                "private_browsing": true
+            },
+            "addoncompatibility@opto.one": {
+                "blocked_install_message": "Add-on compatibility check: https://addons.thunderbird.net/addon/addon-compatibility-check/",
+                "private_browsing": true
+            },
+            "addressbookssync@ggbs.de": {
+                "blocked_install_message": "Addressbooks Synchronizer: https://addons.thunderbird.net/addon/addressbooks-synchronizer/",
+                "private_browsing": true
+            },
+            "adguardadblocker@adguard.com": {
+                "blocked_install_message": "AdGuard AdBlocker: https://addons.mozilla.org/addon/adguard-adblocker/",
+                "private_browsing": true
+            },
+            "admin@fastaddons.com_AI": {
+                "blocked_install_message": "AI Anywhere for ChatGPT: https://addons.thunderbird.net/addon/ai_anywhere/",
+                "private_browsing": true
+            },
+            "admin@fastaddons.com_Darko": {
+                "blocked_install_message": "Darko: https://addons.thunderbird.net/addon/darko_t/",
+                "private_browsing": true
+            },
+            "admin@fastaddons.com_WebTranslate": {
+                "blocked_install_message": "Web Translate: https://addons.thunderbird.net/addon/web_translate/",
+                "private_browsing": true
+            },
+            "admin@justreport.it": {
+                "blocked_install_message": "Just Report It: https://addons.thunderbird.net/addon/just-report-it/",
+                "private_browsing": true
+            },
+            "admin@justverify.it": {
+                "blocked_install_message": "Just Verify It: https://addons.thunderbird.net/addon/just-verify-it/",
+                "private_browsing": true
+            },
+            "advanced-composer@thunderbird.extension": {
+                "blocked_install_message": "Advanced Composer: https://addons.thunderbird.net/addon/advanced-composer/",
+                "private_browsing": true
+            },
+            "aify@shoryuken.me": {
+                "blocked_install_message": "Aify: https://addons.thunderbird.net/addon/aify/",
+                "private_browsing": true
+            },
+            "alldaytasks@ggbs.de": {
+                "blocked_install_message": "Allday Tasks: https://addons.thunderbird.net/addon/allday-tasks/",
+                "private_browsing": true
+            },
+            "antidote_uni12_thunderbird@druide.com": {
+                "blocked_install_message": "Antidote Connector: https://addons.thunderbird.net/addon/connecteur-antidote/",
+                "private_browsing": true
+            },
+            "archive-old-messagesr@adamreichold.de": {
+                "blocked_install_message": "Archive old messages: https://addons.thunderbird.net/addon/archive-old-messages/",
+                "private_browsing": true
+            },
+            "AutoAddressCleaner-T@Toshi_": {
+                "blocked_install_message": "Auto Address Cleaner: https://addons.thunderbird.net/addon/auto-address-cleaner-t/",
+                "private_browsing": true
+            },
+            "AutoarchiveReloaded@brummolix.addons.mozilla.org": {
+                "blocked_install_message": "AutoarchiveReloaded: https://addons.thunderbird.net/addon/autoarchivereloaded/",
+                "private_browsing": true
+            },
+            "autofile@oasisllc.com": {
+                "blocked_install_message": "Autofile: https://addons.thunderbird.net/addon/autofile-fast-e-mail-to-folder/",
+                "private_browsing": true
+            },
+            "autoMarkFolderRead.silvester@addons.thunderbird.net": {
+                "blocked_install_message": "Auto-Mark Folder Read: https://addons.thunderbird.net/addon/auto-mark-folder-read/",
+                "private_browsing": true
+            },
+            "automatic_dictionary_extension@jordi_beltran.net": {
+                "blocked_install_message": "Automatic Dictionary: https://addons.thunderbird.net/addon/automatic-dictionary-switching/",
+                "private_browsing": true
+            },
+            "autoprofilepicture@astucesweb.fr": {
+                "blocked_install_message": "Auto Profile Picture: https://addons.thunderbird.net/addon/auto-profile-picture/",
+                "private_browsing": true
+            },
+            "awesome-emoji-picker@rugk.github.io": {
+                "blocked_install_message": "Awesome Emoji Picker: https://addons.thunderbird.net/addon/awesome-emoji-picker/",
+                "private_browsing": true
+            },
+            "birthdaycalendar@rsjtdrjgfuzkfg.com": {
+                "blocked_install_message": "Birthday Calendar: https://addons.thunderbird.net/addon/birthday-calendar/",
+                "private_browsing": true
+            },
+            "bordercolors-d@addonsdev.mozilla.org": {
+                "blocked_install_message": "BorderColors D: https://addons.thunderbird.net/addon/bordercolors-d/",
+                "private_browsing": true
+            },
+            "box-cloudfile@darktrojan.net": {
+                "blocked_install_message": "FileLink Provider for Box: https://addons.thunderbird.net/addon/filelink-provider-for-box/",
+                "private_browsing": true
+            },
+            "buttons@dillinger": {
+                "blocked_install_message": "Phoenity Buttons: https://addons.thunderbird.net/addon/phoenity-buttons/",
+                "private_browsing": true
+            },
+            "calendarsearchexport@ggbs.de": {
+                "blocked_install_message": "CalendarSearchExport: https://addons.thunderbird.net/addon/calendarsearchexport/",
+                "private_browsing": true
+            },
             "cardbook@vigneau.philippe": {
-      	        "private_browsing": true
+                "blocked_install_message": "CardBook: https://addons.thunderbird.net/addon/cardbook/",
+                "private_browsing": true
+            },
+            "carddavbrowser@mtalbot.addons.mozilla.org": {
+                "blocked_install_message": "CardDAV Browser: https://addons.thunderbird.net/addon/carddav-browser/",
+                "private_browsing": true
+            },
+            "changelogger@r01": {
+                "blocked_install_message": "Changelogger: https://addons.thunderbird.net/addon/changelogger/",
+                "private_browsing": true
+            },
+            "CharsetMenu@jorgk.com": {
+                "blocked_install_message": "Charset Menu: https://addons.thunderbird.net/addon/charset-menu/",
+                "private_browsing": true
+            },
+            "chatgpt@example.com": {
+                "blocked_install_message": "ChatGPT: https://addons.thunderbird.net/addon/chatgpt-addon/",
+                "private_browsing": true
+            },
+            "check-before-sending-email@apar.jp": {
+                "blocked_install_message": "Check before sending email: https://addons.thunderbird.net/addon/check-before-sending-email/",
+                "private_browsing": true
+            },
+            "clippings-tb@aecreations.github.io": {
+                "blocked_install_message": "Clippings for Thunderbird: https://addons.thunderbird.net/addon/clippings-tb/",
+                "private_browsing": true
+            },
+            "cloud@johannes-endres.de": {
+                "blocked_install_message": "*cloud - FileLink for Nextcloud and ownCloud: https://addons.thunderbird.net/addon/filelink-nextcloud-owncloud/",
+                "private_browsing": true
+            },
+            "collectaddresses@ggbs.de": {
+                "blocked_install_message": "CollectAddresses: https://addons.thunderbird.net/addon/collectaddresses/",
+                "private_browsing": true
+            },
+            "compactHeaders@dillinger": {
+                "blocked_install_message": "Compact Headers: https://addons.thunderbird.net/addon/compact-headers/",
+                "private_browsing": true
+            },
+            "configButton@dillinger": {
+                "blocked_install_message": "Config Button: https://addons.thunderbird.net/addon/config-button/",
+                "private_browsing": true
+            },
+            "confirm-address@kenmaz.net": {
+                "blocked_install_message": "Confirm-Address: https://addons.thunderbird.net/addon/confirm-address-5582/",
+                "private_browsing": true
+            },
+            "ContactFinder@DegrangeM.addons.thunderbird.net": {
+                "blocked_install_message": "Contact Finder: https://addons.thunderbird.net/addon/contact-finder/",
+                "private_browsing": true
+            },
+            "copy-message-id@j.kahn": {
+                "blocked_install_message": "Copy Message ID: https://addons.thunderbird.net/addon/copy-message-id/",
+                "private_browsing": true
+            },
+            "copyaddrs@pqpq.dev": {
+                "blocked_install_message": "Copy Address: https://addons.thunderbird.net/addon/copy-address/",
+                "private_browsing": true
+            },
+            "copyfolderAddOn1@datawave.sk": {
+                "blocked_install_message": "Copy Folder: https://addons.thunderbird.net/addon/copy-folder/",
+                "private_browsing": true
+            },
+            "copysent2current@ggbs.de": {
+                "blocked_install_message": "Copy Sent to Current: https://addons.thunderbird.net/addon/copy-sent-to-current/",
+                "private_browsing": true
+            },
+            "dav-cloudfile@darktrojan.net": {
+                "blocked_install_message": "FileLink provider for WebDAV: https://addons.thunderbird.net/addon/filelink-provider-for-webdav/",
+                "private_browsing": true
+            },
+            "deepl@itagagaki": {
+                "blocked_install_message": "DeepL Selected Text: https://addons.thunderbird.net/addon/deepl-selected-text/",
+                "private_browsing": true
+            },
+            "deselectondelete@baz.pw": {
+                "blocked_install_message": "Deselect on Delete TB78: https://addons.thunderbird.net/addon/deselect-on-delete-tb78/",
+                "private_browsing": true
+            },
+            "devToolsButton@dillinger": {
+                "blocked_install_message": "DevTools Button: https://addons.thunderbird.net/addon/devtools-button/",
+                "private_browsing": true
+            },
+            "disable_dnd_tb_v2@pqrs.org": {
+                "blocked_install_message": "Disable DragAndDrop (Thunderbird): https://addons.thunderbird.net/addon/disable-draganddrop-tb/",
+                "private_browsing": true
+            },
+            "DisplayMailUserAgent-T@Toshi_": {
+                "blocked_install_message": "Display Mail User Agent T: https://addons.thunderbird.net/addon/display-mail-user-agent-t/",
+                "private_browsing": true
             },
             "dkim_verifier@pl": {
+                "blocked_install_message": "DKIM Verifier: https://addons.thunderbird.net/addon/dkim-verifier/",
                 "installation_mode": "normal_installed",
                 "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
                 "private_browsing": true
             },
+            "dropbox-cloudfile@darktrojan.net": {
+                "blocked_install_message": "FileLink Provider for Dropbox: https://addons.thunderbird.net/addon/filelink-provider-for-dropbox/",
+                "private_browsing": true
+            },
+            "drsjb80@gmail.com": {
+                "blocked_install_message": "Thematic: https://addons.thunderbird.net/addon/thematic/",
+                "private_browsing": true
+            },
+            "edithtmlsource@jobisoft.de": {
+                "blocked_install_message": "HTML Source Editor: https://addons.thunderbird.net/addon/html-source-editor/",
+                "private_browsing": true
+            },
+            "EditMailSubject@jcp.convenant": {
+                "blocked_install_message": "EditEmailSubject MX: https://addons.thunderbird.net/addon/edit-email-subject/",
+                "private_browsing": true
+            },
+            "egaffiot@outlook.com": {
+                "blocked_install_message": "Mail Extractor: https://addons.thunderbird.net/addon/mail-extractor/",
+                "private_browsing": true
+            },
+            "elm-editor@dyrk.org": {
+                "blocked_install_message": "EML-Editor: https://addons.thunderbird.net/addon/eml-editor/",
+                "private_browsing": true
+            },
+            "emoji@ganss.org": {
+                "blocked_install_message": "Emoji: https://addons.thunderbird.net/addon/emojiaddin/",
+                "private_browsing": true
+            },
+            "emoji@saveriomorelli.com": {
+                "blocked_install_message": "Emoji: https://addons.thunderbird.net/addon/emoji-sav/",
+                "private_browsing": true
+            },
+            "enygmail@dyrk.org": {
+                "blocked_install_message": "PGPGeek: https://addons.thunderbird.net/addon/pgpgeek/",
+                "private_browsing": true
+            },
+            "expand_mailing_lists@davero.addons.mozilla.org": {
+                "blocked_install_message": "Expand mailing lists: https://addons.thunderbird.net/addon/expand-mailing-lists/",
+                "private_browsing": true
+            },
+            "export-to-zip@serna.ar": {
+                "blocked_install_message": "Export to ZIP: https://addons.thunderbird.net/addon/export-to-zip/",
+                "private_browsing": true
+            },
+            "expressionsearch@opto.one": {
+                "blocked_install_message": "Expression Search - NG: https://addons.thunderbird.net/addon/expression-search-ng/",
+                "private_browsing": true
+            },
+            "exquilla@mesquilla.com": {
+                "blocked_install_message": "ExQuilla for Exchange: https://addons.thunderbird.net/addon/exquilla-exchange-web-services/",
+                "private_browsing": true
+            },
+            "external-editor-revived@tsundere.moe": {
+                "blocked_install_message": "External Editor Revived: https://addons.thunderbird.net/addon/external-editor-revived/",
+                "private_browsing": true
+            },
+            "extractem@tmccoid.tech": {
+                "blocked_install_message": "Extract 'Em!: https://addons.thunderbird.net/addon/extract-em/",
+                "private_browsing": true
+            },
+            "farahats9@yahoo.com": {
+                "blocked_install_message": "Simple Startup Minimizer: https://addons.thunderbird.net/addon/simple-startup-minimizer/",
+                "private_browsing": true
+            },
+            "filelink-owncloud@thosmos.com": {
+                "blocked_install_message": "FileLink Provider for OwnCloud and NextCloud: https://addons.thunderbird.net/addon/filelink-provider-for-owncloud/",
+                "private_browsing": true
+            },
+            "filtaquilla@mesquilla.com": {
+                "blocked_install_message": "FiltaQuilla: https://addons.thunderbird.net/addon/filtaquilla/",
+                "private_browsing": true
+            },
+            "filterManager@dillinger": {
+                "blocked_install_message": "Filter Manager: https://addons.thunderbird.net/addon/filter-manager/",
+                "private_browsing": true
+            },
+            "firefox@tampermonkey.net": {
+                "blocked_install_message": "Tampermonkey: https://addons.mozilla.org/addon/tampermonkey/",
+                "private_browsing": true
+            },
+            "flexible-confirm-mail@clear-code.com": {
+                "blocked_install_message": "FlexConfirmMail: https://addons.thunderbird.net/addon/flex-confirm-mail/",
+                "private_browsing": true
+            },
+            "FoFB@drexler": {
+                "blocked_install_message": "Filter on Folder Button: https://addons.thunderbird.net/addon/filter-on-folder-button/",
+                "private_browsing": true
+            },
+            "FolderPaneSwitcher@kamens.us": {
+                "blocked_install_message": "Folder Pane View Switcher: https://addons.thunderbird.net/addon/folder-pane-view-switcher/",
+                "private_browsing": true
+            },
+            "foxyproxy@eric.h.jung": {
+                "blocked_install_message": "FoxyProxy Standard: https://addons.mozilla.org/addon/foxyproxy-standard/",
+                "private_browsing": true
+            },
+            "foxyproxy-basic@eric.h.jung": {
+                "blocked_install_message": "FoxyProxy Basic: https://addons.mozilla.org/addon/foxyproxy-standard/",
+                "private_browsing": true
+            },
+            "FrameWhite@Sungho.Hwang": {
+                "blocked_install_message": "FrameWhite: https://addons.thunderbird.net/addon/framewhite/",
+                "private_browsing": true
+            },
+            "freecosys_filelink@birdiecode.ru": {
+                "blocked_install_message": "Freecosys - FileLink provider: https://addons.thunderbird.net/addon/freecosys-filelink-provider/",
+                "private_browsing": true
+            },
+            "French-GC-TB@grammalecte.net": {
+                "blocked_install_message": "Grammalecte [fr]: https://addons.thunderbird.net/addon/grammalecte-fr-thunderbird/",
+                "private_browsing": true
+            },
+            "full-address-column@lukasz.kosson.net": {
+                "blocked_install_message": "Full Address column: https://addons.thunderbird.net/addon/full-address-column/",
+                "private_browsing": true
+            },
+            "gamb@pharqcon.com": {
+                "blocked_install_message": "Get All Mail Button: https://addons.thunderbird.net/addon/get-all-mail-button/",
+                "private_browsing": true
+            },
+            "gcaltab@ftassy.github.io": {
+                "blocked_install_message": "GCalTab: https://addons.thunderbird.net/addon/gcaltab/",
+                "private_browsing": true
+            },
+            "gchat-thunder@tantely.fr": {
+                "blocked_install_message": "Open Google Chat: https://addons.thunderbird.net/addon/open-google-chat/",
+                "private_browsing": true
+            },
+            "gconversation@xulforum.org": {
+                "blocked_install_message": "Thunderbird Conversations: https://addons.thunderbird.net/addon/gmail-conversation-view/",
+                "private_browsing": true
+            },
+            "gmail-labels@itln.pl": {
+                "blocked_install_message": "GMail Labels: https://addons.thunderbird.net/addon/gmail-labels/",
+                "private_browsing": true
+            },
+            "gmessages_sigurd@dagestad.info": {
+                "blocked_install_message": "Google Messages Tab: https://addons.thunderbird.net/addon/google-messages-tab/",
+                "private_browsing": true
+            },
+            "google-chat-tab@eternaltyro": {
+                "blocked_install_message": "Google Chat Tab: https://addons.thunderbird.net/addon/google-chat-tab/",
+                "private_browsing": true
+            },
+            "googleCalendar@weptun.de": {
+                "blocked_install_message": "Google Calendar Plugin: https://addons.thunderbird.net/addon/google-calendar-plugin/",
+                "private_browsing": true
+            },
+            "gtasks-thunder@tantely.fr": {
+                "blocked_install_message": "Open Google Tasks: https://addons.thunderbird.net/addon/open-google-tasks/",
+                "private_browsing": true
+            },
+            "hdrtoolslite@dillinger": {
+                "blocked_install_message": "Header Tools Improved: https://addons.thunderbird.net/addon/header-tools-improved/",
+                "private_browsing": true
+            },
+            "headerToolsLite@kaosmos.nnp": {
+                "blocked_install_message": "Header Tools Lite: https://addons.thunderbird.net/addon/header-tools-lite/",
+                "private_browsing": true
+            },
+            "helpdesk@eledia.org": {
+                "blocked_install_message": "Move Folder (context-menu): https://addons.thunderbird.net/addon/move-folder-context-menu/",
+                "private_browsing": true
+            },
+            "icons@dillinger": {
+                "blocked_install_message": "Phoenity Icons: https://addons.thunderbird.net/addon/phoenity-icons/",
+                "private_browsing": true
+            },
+            "identitychooser@janek.org": {
+                "blocked_install_message": "Identity Chooser: https://addons.thunderbird.net/addon/identity-chooser/",
+                "private_browsing": true
+            },
+            "ImportExportToolsNG@cleidigh.kokkini.net": {
+                "blocked_install_message": "ImportExportTools NG: https://addons.thunderbird.net/addon/importexporttools-ng/",
+                "private_browsing": true
+            },
+            "InsertSignature@digitaldolphins.jp": {
+                "blocked_install_message": "InsertSignature: https://addons.thunderbird.net/addon/insertsignature/",
+                "private_browsing": true
+            },
+            "jid1-BoFifL9Vbdl2zQ@jetpack": {
+                "blocked_install_message": "Decentraleyes: https://addons.mozilla.org/addon/decentraleyes/",
+                "private_browsing": true
+            },
+            "joplin-export@martin.doerfelt": {
+                "blocked_install_message": "Joplin Export: https://addons.thunderbird.net/addon/joplin-export/",
+                "private_browsing": true
+            },
+            "JorgK@dictionaryforrecipient": {
+                "blocked_install_message": "Dictionary for recipient: https://addons.thunderbird.net/addon/dictionary-for-recipient/",
+                "private_browsing": true
+            },
+            "jorgk@sender-frequency": {
+                "blocked_install_message": "Sender Frequency: https://addons.thunderbird.net/addon/sender-frequency/",
+                "private_browsing": true
+            },
+            "JunkMailByeBye@example.com": {
+                "blocked_install_message": "Junk Mail ByeBye: https://addons.thunderbird.net/addon/junk-mail-byebye/",
+                "private_browsing": true
+            },
+            "juraj.masiar@gmail.com_LinkInTab": {
+                "blocked_install_message": "Link in Tab: https://addons.thunderbird.net/addon/link_in_tab/",
+                "private_browsing": true
+            },
+            "juraj.masiar@gmail.com_ScrollAnywhere": {
+                "blocked_install_message": "ScrollAnywhere: https://addons.thunderbird.net/addon/scroll_anywhere/",
+                "private_browsing": true
+            },
+            "keepassxc-mail@kkapsner.de": {
+                "blocked_install_message": "keepassxc-mail: https://addons.thunderbird.net/addon/keepassxc-mail/",
+                "private_browsing": true
+            },
+            "keynav@andrew.hart": {
+                "blocked_install_message": "Quick Folder Key Navigation: https://addons.thunderbird.net/addon/quick-folder-key-navigation/",
+                "private_browsing": true
+            },
+            "languagetool-mailextension@languagetool.org": {
+                "blocked_install_message": "LanguageTool: https://addons.thunderbird.net/addon/grammar-and-spell-checker/",
+                "private_browsing": true
+            },
+            "layoutbutton@turtletec.ie": {
+                "blocked_install_message": "Layout Button: https://addons.thunderbird.net/addon/layout-button/",
+                "private_browsing": true
+            },
+            "leworoe@gmail.com": {
+                "blocked_install_message": "Outlook/Teams Appointments: https://addons.thunderbird.net/addon/outlook-teams-appointments/",
+                "private_browsing": true
+            },
+            "lightningcalendartabs@jlx.84": {
+                "blocked_install_message": "Lightning Calendar Tabs: https://addons.thunderbird.net/addon/lightning-calendar-tabs/",
+                "private_browsing": true
+            },
+            "limit_non-BCC_recipients@davero.addons.mozilla.org": {
+                "blocked_install_message": "Limit non-BCC recipients: https://addons.thunderbird.net/addon/limit-non-bcc-recipients/",
+                "private_browsing": true
+            },
+            "links@tealdulcet.com": {
+                "blocked_install_message": "Link Creator: https://addons.thunderbird.net/addon/link-creator/",
+                "private_browsing": true
+            },
+            "list-addons-in-win-programs@clear-code.com": {
+                "blocked_install_message": "List Addons in Windows' Programs: https://addons.thunderbird.net/addon/list-addons-in-win-programs/",
+                "private_browsing": true
+            },
+            "llama3-grammar-thunderbird@johannes.buchner.net": {
+                "blocked_install_message": "AI Grammar: https://addons.thunderbird.net/addon/ai-grammar/",
+                "private_browsing": true
+            },
+            "lookout@s3_fix_version": {
+                "blocked_install_message": "LookOut (fix version): https://addons.thunderbird.net/addon/lookout-fix-version/",
+                "private_browsing": true
+            },
+            "macrotemplate@nattoheaven.com": {
+                "blocked_install_message": "Macro Template: https://addons.thunderbird.net/addon/macro-template/",
+                "private_browsing": true
+            },
+            "magnolia@12.34": {
+                "blocked_install_message": "Bypass Paywalls Clean: https://gitflic.ru/project/magnolia1234/bypass-paywalls-firefox-clean",
+                "private_browsing": true
+            },
+            "mailmerge@example.net": {
+                "blocked_install_message": "Mail Merge: https://addons.thunderbird.net/addon/mail-merge/",
+                "private_browsing": true
+            },
+            "mailMoveShortcuts@extension": {
+                "blocked_install_message": "Move Mail Shortcuts: https://addons.thunderbird.net/addon/move-mail-shortcuts/",
+                "private_browsing": true
+            },
+            "markdown-here-revival@xul.calypsoblue.org": {
+                "blocked_install_message": "Markdown Here Revival: https://addons.thunderbird.net/addon/markdown-here-revival/",
+                "private_browsing": true
+            },
+            "marwe@turtletect.ie": {
+                "blocked_install_message": "Mark All Read:WE: https://addons.thunderbird.net/addon/mark-all-read-we/",
+                "private_browsing": true
+            },
+            "mas@aandrzej.com": {
+                "blocked_install_message": "Minimize on startup: https://addons.thunderbird.net/addon/minimize-on-startup/",
+                "private_browsing": true
+            },
+            "messagemover@michele.locati.it": {
+                "blocked_install_message": "Message Mover: https://addons.thunderbird.net/addon/message-mover/",
+                "private_browsing": true
+            },
+            "mhublite@schiffner.com": {
+                "blocked_install_message": "M-Hub Lite: https://addons.thunderbird.net/addon/m-hub-lite_microsft-office-365/",
+                "private_browsing": true
+            },
+            "minimizeonclose@rsjtdrjgfuzkfg.com": {
+                "blocked_install_message": "Minimize on Close: https://addons.thunderbird.net/addon/minimize-on-close/",
+                "private_browsing": true
+            },
+            "moresnooze@cyrille.nocus": {
+                "blocked_install_message": "MoreSnooze: https://addons.thunderbird.net/addon/more-snooze/",
+                "private_browsing": true
+            },
+            "myphoneexplorer@fjsoft.at": {
+                "blocked_install_message": "MyPhoneExplorer: https://addons.thunderbird.net/addon/myphoneexplorer/",
+                "private_browsing": true
+            },
+            "newthreadall@opto.one": {
+                "blocked_install_message": "New Thread to All: https://addons.thunderbird.net/addon/new-thread-to-all/",
+                "private_browsing": true
+            },
+            "night.and.day@sancus.net": {
+                "blocked_install_message": "Night and Day Dynamic: https://addons.thunderbird.net/addon/night-and-day-dynamic/",
+                "private_browsing": true
+            },
+            "nomessagepanesort@janek.org": {
+                "blocked_install_message": "No Message Pane Sort: https://addons.thunderbird.net/addon/no-message-pane-sort-by-mouse/",
+                "private_browsing": true
+            },
+            "nostalgy@opto.one": {
+                "blocked_install_message": "Manage Emails/ Nostalgy++: https://addons.thunderbird.net/addon/nostalgy_ng/",
+                "private_browsing": true
+            },
+            "ntfntf@dan-sullivan.co.uk": {
+                "blocked_install_message": "NTFNTF: Notify on This Folder Not That Folder: https://addons.thunderbird.net/addon/ntfntf/",
+                "private_browsing": true
+            },
+            "ObsidianClipper@KevinHaw.com": {
+                "blocked_install_message": "ObsidianClipper: https://addons.thunderbird.net/addon/obsidianclipper/",
+                "private_browsing": true
+            },
+            "oldicons@deltablast": {
+                "blocked_install_message": "Old Icons: https://addons.thunderbird.net/addon/old-icons/",
+                "private_browsing": true
+            },
+            "open-image-in-new-tab@rmmccann.github.io": {
+                "blocked_install_message": "Open Image In New Tab: https://addons.thunderbird.net/addon/open-image-in-new-tab/",
+                "private_browsing": true
+            },
+            "open-in-browser@adamreichold.de": {
+                "blocked_install_message": "Open in browser: https://addons.thunderbird.net/addon/open-in-browser/",
+                "private_browsing": true
+            },
+            "opengooglecalendar@glicer": {
+                "blocked_install_message": "Open Google Calendar: https://addons.thunderbird.net/addon/open-google-calendar/",
+                "private_browsing": true
+            },
+            "OpenTab@Toshi_": {
+                "blocked_install_message": "Open Tab: https://addons.thunderbird.net/addon/open-tab/",
+                "private_browsing": true
+            },
+            "outlook-ab-enabler@jorgk.com": {
+                "blocked_install_message": "Outlook Address Book Enabler: https://addons.thunderbird.net/addon/outlook-address-book-enabler/",
+                "private_browsing": true
+            },
+            "owl@beonex.com": {
+                "blocked_install_message": "Owl for Exchange: https://addons.thunderbird.net/addon/owl-for-exchange/",
+                "private_browsing": true
+            },
+            "plik@johannes-endres.de": {
+                "blocked_install_message": "FileLink for Plik: https://addons.thunderbird.net/addon/filelink-for-plik/",
+                "private_browsing": true
+            },
+            "popmaillistrecipients@funke.nz": {
+                "blocked_install_message": "PopmailListRecipients: https://addons.thunderbird.net/addon/popmaillistrecipients-2/",
+                "private_browsing": true
+            },
+            "prefsButton@dillinger": {
+                "blocked_install_message": "Preferences Button: https://addons.thunderbird.net/addon/preferences-button/",
+                "private_browsing": true
+            },
+            "previous-colors@alkatrazstudio.net": {
+                "blocked_install_message": "Previous Colors: https://addons.thunderbird.net/addon/previous-colors/",
+                "private_browsing": true
+            },
+            "PrintingToolsNG@cleidigh.kokkini.net": {
+                "blocked_install_message": "PrintingTools NG: https://addons.thunderbird.net/addon/printingtools-ng/",
+                "private_browsing": true
+            },
+            "pswitcher2@dillinger": {
+                "blocked_install_message": "Profile Switcher: https://addons.thunderbird.net/addon/profile-switcher/",
+                "private_browsing": true
+            },
+            "qnote@dqdp.net": {
+                "blocked_install_message": "QNote: https://addons.thunderbird.net/addon/qnote/",
+                "private_browsing": true
+            },
+            "quickarchiver@bergerdata.de": {
+                "blocked_install_message": "QuickArchiver: https://addons.thunderbird.net/addon/quickarchiver/",
+                "private_browsing": true
+            },
+            "quickersearch@opto.one": {
+                "blocked_install_message": "Quicker Quicksearch: https://addons.thunderbird.net/addon/quicker-quicksearch/",
+                "private_browsing": true
+            },
+            "quickFilters@axelg.com": {
+                "blocked_install_message": "quickFilters: https://addons.thunderbird.net/addon/quickfilters/",
+                "private_browsing": true
+            },
+            "quickfolders@curious.be": {
+                "blocked_install_message": "QuickFolders: https://addons.thunderbird.net/addon/quickfolders-tabbed-folders/",
+                "private_browsing": true
+            },
+            "quickmove@mozilla.kewis.ch": {
+                "blocked_install_message": "Quick Folder Move: https://addons.thunderbird.net/addon/quick-folder-move/",
+                "private_browsing": true
+            },
+            "quotecolors@thunderbird-mail.de": {
+                "blocked_install_message": "Quote Colors & Collapse: https://addons.thunderbird.net/addon/quotecolors/",
+                "private_browsing": true
+            },
+            "read-aloud@lsdsoftware.com": {
+                "blocked_install_message": "Read Aloud: https://addons.thunderbird.net/addon/read-aloud/",
+                "private_browsing": true
+            },
+            "refwdformatter@masahiko.info": {
+                "blocked_install_message": "ReFwdFormatter: https://addons.thunderbird.net/addon/refwdformatter/",
+                "private_browsing": true
+            },
+            "RemindIt@o.marce.free.fr": {
+                "blocked_install_message": "RemindIt: https://addons.thunderbird.net/addon/remindit/",
+                "private_browsing": true
+            },
+            "RemindMed@cparg.de": {
+                "blocked_install_message": "RemindMe: https://addons.thunderbird.net/addon/remindme/",
+                "private_browsing": true
+            },
+            "reply-all-auto-cc@github.com": {
+                "blocked_install_message": "reply-all-auto-cc: https://addons.thunderbird.net/addon/reply-all-auto-cc/",
+                "private_browsing": true
+            },
+            "ReplyAsOriginalRecipient@github.com": {
+                "blocked_install_message": "ReplyAsOriginalRecipientUp: https://addons.thunderbird.net/addon/replyasoriginalrecipientup/",
+                "private_browsing": true
+            },
+            "replywithheader@myjeeva.com": {
+                "blocked_install_message": "ReplyWithHeader: https://addons.thunderbird.net/addon/replywithheader/",
+                "private_browsing": true
+            },
+            "restartButton@dillinger": {
+                "blocked_install_message": "Restart Button: https://addons.thunderbird.net/addon/restart-button/",
+                "private_browsing": true
+            },
+            "rspamd-spamness@alexander.moisseev": {
+                "blocked_install_message": "Rspamd-spamness: https://addons.thunderbird.net/addon/rspamd-spamness/",
+                "private_browsing": true
+            },
+            "s3-filelink-provider-developer@josephcz.xyz": {
+                "blocked_install_message": "S3 FileLink Provider: https://addons.thunderbird.net/addon/s3-filelink-provider/",
+                "private_browsing": true
+            },
+            "SearchButton@pharqcon.com": {
+                "blocked_install_message": "Search Button: https://addons.thunderbird.net/addon/search-button/",
+                "private_browsing": true
+            },
+            "searchfor@infonny.com": {
+                "blocked_install_message": "Search for: https://addons.thunderbird.net/addon/search-for/",
+                "private_browsing": true
+            },
+            "send@tealdulcet.com": {
+                "blocked_install_message": "FileLink provider for Send: https://addons.thunderbird.net/addon/filelink-provider-for-send/",
+                "private_browsing": true
+            },
+            "send_later123@extension.com": {
+                "blocked_install_message": "Send Later Button: https://addons.thunderbird.net/addon/später-senden-button/",
+                "private_browsing": true
+            },
+            "sendlater3@kamens.us": {
+                "blocked_install_message": "Send Later: https://addons.thunderbird.net/addon/send-later-3/",
+                "private_browsing": true
+            },
+            "sendtocategory@jobisoft.de": {
+                "blocked_install_message": "Category Manager: https://addons.thunderbird.net/addon/categorymanager/",
+                "private_browsing": true
+            },
+            "showInOut@ggbs.de": {
+                "blocked_install_message": "Show InOut: https://addons.thunderbird.net/addon/show-inout/",
+                "private_browsing": true
+            },
+            "signal-spam@signal-spam.fr": {
+                "blocked_install_message": "Signal Spam: https://addons.thunderbird.net/addon/signal-spam/",
+                "private_browsing": true
+            },
+            "signature-sync@thunderbird.extensions.kam193": {
+                "blocked_install_message": "Signature sync for Gmail: https://addons.thunderbird.net/addon/signature-sync-for-gmail/",
+                "private_browsing": true
+            },
+            "simplemailredirection@ggbs.de": {
+                "blocked_install_message": "Simple Mail Redirection: https://addons.thunderbird.net/addon/simple-mail-redirection/",
+                "private_browsing": true
+            },
+            "skipredirect@sblask": {
+                "blocked_install_message": "Skip Redirect: https://addons.mozilla.org/addon/skip-redirect/",
+                "private_browsing": true
+            },
+            "smarttemplate4@thunderbird.extension": {
+                "blocked_install_message": "SmartTemplates: https://addons.thunderbird.net/addon/smarttemplate4/",
+                "private_browsing": true
+            },
+            "smileyfixer@matthias-g": {
+                "blocked_install_message": "Smileyfixer: https://addons.thunderbird.net/addon/smileyfixer/",
+                "private_browsing": true
+            },
+            "spambee@verifrom.com": {
+                "blocked_install_message": "SSPAMBEE: https://addons.thunderbird.net/addon/spambee/",
+                "private_browsing": true
+            },
+            "spamscores@czaenker": {
+                "blocked_install_message": "Spam Scores: https://addons.thunderbird.net/addon/spam-scores/",
+                "private_browsing": true
+            },
+            "spoofdetection@marvin.herrmann": {
+                "blocked_install_message": "Spoofdetection: https://addons.thunderbird.net/addon/spoofdetection/",
+                "private_browsing": true
+            },
+            "StandardTexter@pharqcon.com": {
+                "blocked_install_message": "StandardTexter: https://addons.thunderbird.net/addon/standardtexter/",
+                "private_browsing": true
+            },
+            "Startup@pharqcon.com": {
+                "blocked_install_message": "Start with Inbox: https://addons.thunderbird.net/addon/start-with-inbox/",
+                "private_browsing": true
+            },
+            "sub@pharqcon.com": {
+                "blocked_install_message": "Send Unsent Button: https://addons.thunderbird.net/addon/send-unsent-mail-button/",
+                "private_browsing": true
+            },
+            "sync@opto.one": {
+                "blocked_install_message": "Sync for TB: https://addons.thunderbird.net/addon/sync-for-tb/",
+                "private_browsing": true
+            },
+            "tabcontrol@nuitcodecitoyen.org": {
+                "blocked_install_message": "TabControl: https://addons.thunderbird.net/addon/tab-control/",
+                "private_browsing": true
+            },
+            "tagger@xot.nl": {
+                "blocked_install_message": "Tagger: https://addons.thunderbird.net/addon/tagger/",
+                "private_browsing": true
+            },
+            "tb-addtomailinglists@tb.dev": {
+                "blocked_install_message": "AddToMailinglist: https://addons.thunderbird.net/addon/add-to-mailing-list/",
+                "private_browsing": true
+            },
+            "tbkeys-lite@addons.thunderbird.net": {
+                "blocked_install_message": "tbkeys-lite: https://addons.thunderbird.net/addon/tbkeys-lite/",
+                "private_browsing": true
+            },
+            "te-in-th@ftassy.github.io": {
+                "blocked_install_message": "Telegram Web in Thunderbird: https://addons.thunderbird.net/addon/telegram-web-in-thunderbird/",
+                "private_browsing": true
+            },
+            "Textmarker@pharqcon.com": {
+                "blocked_install_message": "Textmarker: https://addons.thunderbird.net/addon/textmarker/",
+                "private_browsing": true
+            },
+            "thirdstats@devmount.de": {
+                "blocked_install_message": "ThirdStats: https://addons.thunderbird.net/addon/thirdstats/",
+                "private_browsing": true
+            },
+            "thunderai@micz.it": {
+                "blocked_install_message": "ThunderAI: https://addons.thunderbird.net/addon/thunderai/",
+                "private_browsing": true
+            },
+            "thunderbird@mailhops.com": {
+                "blocked_install_message": "MailHops: https://addons.thunderbird.net/addon/mailhops/",
+                "private_browsing": true
+            },
+            "thunderbird-todoist@apps.smeanox.com": {
+                "blocked_install_message": "Thunderbird Todoist: https://addons.thunderbird.net/addon/thunderbird-todoist/",
+                "private_browsing": true
+            },
+            "thunderbird_extension@wordeep.com": {
+                "blocked_install_message": "Grammar, Proofreading & Spell Checker: https://addons.thunderbird.net/addon/grammar-proofreading-check/",
+                "private_browsing": true
+            },
+            "thunderhawkmailer@gmail.com": {
+                "blocked_install_message": "Hawk for Thunderbird: https://addons.thunderbird.net/addon/hawk/",
+                "private_browsing": true
+            },
+            "thunderkeepplus@gmail.com": {
+                "blocked_install_message": "Google Keep Tab: https://addons.thunderbird.net/addon/google-keep-tab/",
+                "private_browsing": true
+            },
+            "thunderstats@micz.it": {
+                "blocked_install_message": "ThunderStats: https://addons.thunderbird.net/addon/thunderstats/",
+                "private_browsing": true
+            },
+            "thundervoice@chris.schiffner": {
+                "blocked_install_message": "G-Hub Lite: https://addons.thunderbird.net/addon/g-hub-lite_google-tabs/",
+                "private_browsing": true
+            },
+            "thunderwebtabs@gmail.com": {
+                "blocked_install_message": "ThunderWebTabs: https://addons.thunderbird.net/addon/thunderwebtabs/",
+                "private_browsing": true
+            },
+            "tls-paranoia@gdr.name": {
+                "blocked_install_message": "Paranoia: https://addons.thunderbird.net/addon/paranoia/",
+                "private_browsing": true
+            },
+            "toggle-headers@mattsch.com": {
+                "blocked_install_message": "Toggle Headers: https://addons.thunderbird.net/addon/toggle-headers/",
+                "private_browsing": true
+            },
+            "toggleHTML@dillinger": {
+                "blocked_install_message": "Toggle HTML: https://addons.thunderbird.net/addon/toggle-html/",
+                "private_browsing": true
+            },
+            "toggleMessagePane@dillinger": {
+                "blocked_install_message": "Toggle Message Pane: https://addons.thunderbird.net/addon/toggle-message-pane/",
+                "private_browsing": true
+            },
+            "togglereplied@kamens.us": {
+                "blocked_install_message": "ToggleReplied: https://addons.thunderbird.net/addon/togglereplied-2/",
+                "private_browsing": true
+            },
+            "topic-tree@opto-one": {
+                "blocked_install_message": "Topic Tree / Notebook: https://addons.thunderbird.net/addon/topic-tree-notebook/",
+                "private_browsing": true
+            },
+            "torpedo@tu-darmstadt.de": {
+                "blocked_install_message": "TORPEDO: https://addons.thunderbird.net/addon/torpedo-phishing-detection/",
+                "private_browsing": true
+            },
+            "typical-reply@clear-code.com": {
+                "blocked_install_message": "Typical Reply: https://addons.thunderbird.net/addon/typical-reply/",
+                "private_browsing": true
+            },
             "uBlock0@raymondhill.net": {
+                "blocked_install_message": "uBlock Origin: https://github.com/gorhill/ublock",
                 "installation_mode": "normal_installed",
                 "install_url": "https://github.com/gorhill/uBlock/releases/download/1.64.0/uBlock0_1.64.0.thunderbird.xpi",
+                "private_browsing": true
+            },
+            "unicodify@rugk.github.io": {
+                "blocked_install_message": "Unicodify – Text transformer: https://addons.thunderbird.net/addon/unicodify-text-transformer/",
+                "private_browsing": true
+            },
+            "unified-folders@extensions.thunderbird.net": {
+                "blocked_install_message": "Unified Folders Debugging: https://addons.thunderbird.net/addon/unified-folders-debugging/",
+                "private_browsing": true
+            },
+            "unmangleOutlookSafelinks@havekes.eu": {
+                "blocked_install_message": "Unmangle Outlook Safelinks: https://addons.thunderbird.net/addon/unmangle-outlook-safelinks/",
+                "private_browsing": true
+            },
+            "unsubscribe@fra-uas.de": {
+                "blocked_install_message": "Unsubscribe: https://addons.thunderbird.net/addon/unsub/",
+                "private_browsing": true
+            },
+            "userChromeJS@kamens.us": {
+                "blocked_install_message": "userChromeJS: https://addons.thunderbird.net/addon/userchromejs-2/",
+                "private_browsing": true
+            },
+            "vpn@proton.ch": {
+                "blocked_install_message": "Proton VPN: Fast & Secure: https://addons.mozilla.org/addon/proton-vpn-firefox-extension/",
+                "private_browsing": true
+            },
+            "wa-in-th@ftassy.github.io": {
+                "blocked_install_message": "WhatsApp Web in Thunderbird: https://addons.thunderbird.net/addon/whatsapp-web-in-thunderbird/",
+                "private_browsing": true
+            },
+            "weatherlicious@ntim.ml": {
+                "blocked_install_message": "Weatherlicious: https://addons.thunderbird.net/addon/weatherlicious/",
+                "private_browsing": true
+            },
+            "x-pm-headers@danq.me": {
+                "blocked_install_message": "ProtonMail Headers: https://addons.thunderbird.net/addon/protonmail-encryption-status/",
+                "private_browsing": true
+            },
+            "xmha97@gmail.com": {
+                "blocked_install_message": "KeepRunning: https://addons.thunderbird.net/addon/keeprunning/",
+                "private_browsing": true
+            },
+            "xnote@froihofer.net": {
+                "blocked_install_message": "XNote++: https://addons.thunderbird.net/addon/xnotepp/",
+                "private_browsing": true
+            },
+            "@dmrhn.chatgpt.qa": {
+                "blocked_install_message": "ChatGPT - Quick Access: https://addons.thunderbird.net/addon/chatgpt-quick-access/",
+                "private_browsing": true
+            },
+            "@dmrhn.gemini.qa": {
+                "blocked_install_message": "Gemini - Quick Access: https://addons.thunderbird.net/addon/gemini-quick-access/",
+                "private_browsing": true
+            },
+            "@dmrhn.googlecalendar.qa": {
+                "blocked_install_message": "Google Calendar - Quick Access: https://addons.thunderbird.net/addon/google-calendar-quick-access/",
+                "private_browsing": true
+            },
+            "@dmrhn.microsoftteams.qa": {
+                "blocked_install_message": "Microsoft Teams - Quick Access: https://addons.thunderbird.net/addon/microsoft-teams-quick-access/",
+                "private_browsing": true
+            },
+            "@dmrhn.mstodo.qa": {
+                "blocked_install_message": "Microsoft To Do - Quick Access: https://addons.thunderbird.net/addon/microsoft-todo-quick-access/",
+                "private_browsing": true
+            },
+            "@dmrhn.whatsapp.qa": {
+                "blocked_install_message": "Whatsapp Web - Quick Access: https://addons.thunderbird.net/addon/whatsapp-quick-access/",
+                "private_browsing": true
+            },
+            "@eddie.outlookcalendar.qa": {
+                "blocked_install_message": "Outlook Calendar - Quick Access: https://addons.thunderbird.net/addon/outlook-calendar-quick-access/",
                 "private_browsing": true
             }
         },

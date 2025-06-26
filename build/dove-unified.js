@@ -15,11 +15,11 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.06.10.1", locked);
+pref("mail.dove.version", "2025.06.26.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.10.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.26.1 💜", locked);
 
 /* INDEX 
 
@@ -105,13 +105,7 @@ pref("mail.rights.override", true);
 pref("mailnews.start_page_override.mstone", "ignore", locked);
 
 /// Disable recommendations
-pref("extensions.getAddons.recommended.url", "", locked);
-
-/// Disable the Remote Settings Firefox Relay Allowlist Collection
-// Unnecessary for our use case
-// https://searchfox.org/mozilla-central/source/toolkit/components/satchel/integrations/FirefoxRelay.sys.mjs
-// https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-allowlist/changeset?_expected=0
-pref("signon.firefoxRelay.allowListRemoteSettingsCollection", ""); // [HIDDEN]
+pref("extensions.getAddons.recommended.url", "");
 
 /// Disable Start Page by default and switch the URL to the about:config
 // This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
@@ -267,11 +261,6 @@ pref("purple.logging.log_ims", false); // [CHAT]
 /// Disable logging E2EE messages (OTR) [CHAT]
 pref("chat.otr.default.allowMsgLog", false); // [CHAT]
 
-/// Enable Private Browsing
-// https://support.mozilla.org/kb/private-browsing-use-firefox-without-history
-pref("browser.privatebrowsing.autostart", true);
-pref("mailnews.oauth.usePrivateBrowser", true);
-
 /// Prevent permission manager from writing to disk
 pref("permissions.memory_only", true); // [HIDDEN]
 
@@ -283,14 +272,11 @@ pref("mail.biff.alert.show_preview", false);
 pref("mail.biff.alert.show_sender", false);
 pref("mail.biff.alert.show_subject", false);
 
-/// Sanitization
-// These are mostly just for defense in depth/useful if users disable Private Browsing
-// Clears cookies on exit & prevents storing them persistently
+/// Prevent storing cookies persistently
+// Unfortunately, Private Browsing mode currently breaks extensions (unless they're manually added to policies...)
+// So for now, this is best option we have; treats cookies the same way as they are in private browsing, by preventing them from being stored persistently
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1675829
 pref("network.cookie.noPersistentStorage", true);
-pref("privacy.clearOnShutdown.cookies", true);
-pref("privacy.clearOnShutdown.offlineApps", true); // [HIDDEN]
-pref("privacy.clearOnShutdown_v2.cookiesAndStorage", true);
 
 pref("mail.dove.status", "006");
 
@@ -369,7 +355,7 @@ pref("mail.compose.add_link_preview", false);
 pref("offline.autoDetect", false);
 
 /// Improve list of built-in DoH resolvers
-pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 - Real-time Malware Protection"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) - Hardened Real-time Malware Protection"},{"url":"https://dns0.eu","name":"DNS0 - Real-time Malware Protection"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) - Ad/Tracking/Limited Malware Protection"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard (Public) - Ad/Tracking Protection"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad - Unfiltered"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia - Unfiltered"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS (Public) - Unfiltered"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Public) - Unfiltered"},{"url":"https://kids.dns0.eu","name":"DNS0 - Kids"},{"url":"https://family.dns.mullvad.net/dns-query","name":"Mullvad (Family)"},{"url":"https://family.adguard-dns.com/dns-query","name":"AdGuard (Public) - Family Protection"},{"url":"https://extended.dns.mullvad.net/dns-query","name":"Mullvad (Extended) - Ad/Tracking/Limited Malware/Social Media Protection"},{"url":"https://all.dns.mullvad.net/dns-query","name":"Mullvad (All) - Ad/Tracking/Limited Malware/Social Media/Adult/Gambling Protection"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare - Malware Protection"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare - Unfiltered (Stricter privacy policy)"},{"url":"https://family.cloudflare-dns.com/dns-query","name":"Cloudflare - Adult Content/Malware Protection"}]'); // [HIDDEN]
+pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 - Real-time Malware Protection - 🇨🇭"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) - Hardened Real-time Malware Protection - 🇫🇷"},{"url":"https://dns0.eu","name":"DNS0 - Real-time Malware Protection - 🇫🇷"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) - Ad/Tracking/Limited Malware Protection - 🇸🇪"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard (Public) - Ad/Tracking Protection - 🇨🇾"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad - Unfiltered - 🇸🇪"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia - Unfiltered - 🇺🇸"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS (Public) - Unfiltered - 🇺🇸"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Public) - Unfiltered - 🇨🇾"},{"url":"https://kids.dns0.eu","name":"DNS0 - Kids"},{"url":"https://family.dns.mullvad.net/dns-query","name":"Mullvad (Family)"},{"url":"https://family.adguard-dns.com/dns-query","name":"AdGuard (Public) - Family Protection - 🇨🇾"},{"url":"https://extended.dns.mullvad.net/dns-query","name":"Mullvad (Extended) - Ad/Tracking/Limited Malware/Social Media Protection - 🇸🇪"},{"url":"https://all.dns.mullvad.net/dns-query","name":"Mullvad (All) - Ad/Tracking/Limited Malware/Social Media/Adult/Gambling Protection - 🇸🇪"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare - Malware Protection - 🇺🇸"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare - Unfiltered (Stricter privacy policy) - 🇺🇸"},{"url":"https://family.cloudflare-dns.com/dns-query","name":"Cloudflare - Adult Content/Malware Protection - 🇺🇸"}]'); // [HIDDEN]
 
 /// Prompt before going online on Thunderbird's launch
 pref("offline.startup_state", 1);
@@ -451,12 +437,6 @@ pref("media.peerconnection.enabled", false);
 // https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [WINDOWS-ONLY]
 pref("media.wmf.media-engine.enabled", 0); // [WINDOWS-ONLY]
 
-/// Require permission for websites to use EME
-// Defense in depth
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1620102
-// https://searchfox.org/mozilla-central/source/dom/media/eme/MediaKeySystemAccessPermissionRequest.h
-pref("media.eme.require-app-approval", true); // [DEFAULT]
-
 pref("mail.dove.status", "011");
 
 /*** 012 PASSWORDS & AUTHENTICATION ***/
@@ -490,16 +470,54 @@ pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
 // https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
 pref("extensions.experiments.enabled", true); // [DEFAULT]
 
-/// Block Cardbook (if installed) & DKIM Verifier from accessing restricted/quarantined domains
+/// Block Cardbook (if installed) and DKIM Verifier from accessing restricted/quarantined domains
 // https://support.mozilla.org/kb/quarantined-domains
 pref("extensions.quarantineIgnoredByUser.cardbook@vigneau.philippe", false); // [DEFAULT]
 pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 
-/// Enable installation of add-ons by default
-// Note that this does NOT apply to `Recommended` extensions (collecitons) found at `Settings` -> `Advanced` -> `Extensions`.
-// Unfortunately doesn't have a prompt when disabled like Desktop :(
-// Setting here to expose via the `about:config`...
-pref("xpinstall.enabled", true); // [HIDDEN] [DEFAULT]
+/// Disable compatibility overrides
+// https://mozilla.github.io/addons-server/topics/api/v3_legacy/addons.html#compat-override
+pref("extensions.getAddons.compatOverides.url", "");
+
+/// Disable installation of add-ons + only allow enabling it per-session
+// Includes extensions and themes
+// This doesn't impact already installed add-ons and add-ons installed by policies
+// Thunderbird will prompt to re-enable this when necessary
+// We're also setting this as a user pref, which is quite nice from a security perspective - as it allows users to enable this functionality only when it's necessary...
+// Ex: A user attempts to install an extension, sees the extra prompt/warning, and selects `Enable` (which temporarily sets this pref to `true`...). The user then proceeds to install the extension. On the next launch of Thunderbird, this pref is reset back to `false`, meaning the ability to install extensions is fully disabled without them even thinking about it
+pref("xpinstall.enabled", false); // [HIDDEN] So the default is `false`
+pref("xpinstall.enabled", false, sticky); // [HIDDEN] So it's converted to a user pref and applied per-session
+
+/// Disable mozAddonManager
+// mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
+// It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
+pref("extensions.webapi.enabled", false);
+pref("privacy.resistFingerprinting.block_mozAddonManager", true);
+
+/// Disable recommendations for alternatives to legacy add-ons
+// https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#25
+// https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#76
+pref("extensions.alternativeAddonSearch.url", "");
+
+/// Unbreak installation of add-ons from ATN (`addons.thunderbird.net`) if mozAddonManager is disabled
+// For context, when mozAddonManager is disabled on Firefox, AMO will fallback and successfully install add-ons without fail out of the box. This is unfortunately NOT the case for ATN currently.
+// HOWEVER, ATN DOES still have a fallback when mozAddonManager is disabled, via the legacy InstallTrigger interface (which is disabled by default nowadays).
+// So essentially, we're going to re-enable InstallTrigger so ATN can fallback, but to avoid fingerprinting, we're stubbing it with uBlock Origin for every website EXCEPT `addons.thunderbird.net`.
+// For `addons.thunderbird.net`, we're also stubbing`window.InstallTrigger.enabled` and `window.InstallTrigger.updateEnabled`with uBlock Origin, to prevent exposing whether the user has enabled or disabled the installation of add-ons (via the `xpinstall.enabled` pref).
+// This effectively allows users to install add-ons from ATN, but without compromising their privacy and security.
+// https://github.com/thunderbird/addons-server/issues/332
+// https://devdoc.net/web/developer.mozilla.org/en-US/docs/XPInstall_API_Reference/InstallTrigger_Object.html
+// https://searchfox.org/mozilla-central/source/dom/webidl/InstallTrigger.webidl
+pref("extensions.InstallTrigger.enabled", true); // [DEFAULT]
+pref("extensions.InstallTriggerImpl.enabled", true);
+
+/// Update AMO API
+// Default is still v3, which has been deprecated for quite some time...
+// https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
+pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%&lang=%LOCALE%");
+pref("extensions.getAddons.langpacks.url", "https://services.addons.thunderbird.net/api/v4/addons/language-tools/?app=thunderbird&type=language&appversion=%VERSION%");
 
 pref("mail.dove.status", "013");
 
@@ -588,6 +606,11 @@ pref("calendar.extract.service.enabled", false); // [DEFAULT]
 /// Remove default Google Groups link
 pref("mailnews.messageid_browser.url", "");
 
+/// (Attempt to) Unbreak Tracking Protection list downloads
+// The default is `moz-sbrs:://antitracking`, which fetches these lists from Remote Settings - but the problem is that Thunderbird's Remote Settings unfortunately doesn't ship the Tracking Protection lists like Firefox
+// So this switches the URL to try downloading them directly from Mozilla
+pref("browser.safebrowsing.provider.mozilla.updateURL", "https://shavar.services.mozilla.com/downloads?client=	navclient-auto-ffox&appver=%VERSION%&pver=2.2");
+
 /// Warn users if they have not addressed a BCC (Blind Carbon Copy) warning
 pref("mail.compose.warn_public_recipients.aggressive", true);
 
@@ -653,6 +676,10 @@ pref("network.protocol-handler.warn-external.mailto", false); // [HIDDEN] [DEFAU
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
 pref("dom.manifest.enabled", false);
 
+/// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
+pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
+pref("mailnews.auto_config.addons_url", ""); // [DEFAULT = https://autoconfig.thunderbird.net/addons.json]
+
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
 
@@ -691,12 +718,6 @@ pref("mail.default_send_format", 1);
 pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
 
-/// Update AMO API
-// Default is still v3, which has been deprecated for quite some time...
-// https://mozilla.github.io/addons-server/topics/api/overview.html#api-versions
-pref("extensions.getAddons.get.url", "https://services.addons.thunderbird.net/api/v4/addons/search/?guid=%IDS%&lang=%LOCALE%");
-pref("extensions.getAddons.langpacks.url", "https://services.addons.thunderbird.net/api/v4/addons/language-tools/?app=thunderbird&type=language&appversion=%VERSION%");
-
 /// Use a blank new tab page
 // This likely isn't used anywhere, but Thunderbird does seem to pull in this component and this setting appears in the `about:config`, so we can set it anyways
 pref("browser.newtabpage.enabled", false);
@@ -708,10 +729,9 @@ pref("mail.dove.status", "018");
 /// Things that are nice to have™
 // Not directly privacy & security related
 
-/// Allow inspecting/debugging local tabs
-// Extremely useful for Thunderbird, as it gives us a URL bar...
-// Can be accessed via `Tools` -> `Developer Tools` -> `Debug Add-ons` (`about:debugging`), simply choose `Inspect` next to any tab of your choice and profit...
-pref("devtools.aboutdebugging.local-tab-debugging", true);
+/// Disable certain UI animations by default
+// Improves performance and responsiveness
+pref("browser.preferences.animateFadeIn", false); // [DEFAULT - non-macOS]
 
 /// Disable extra logging for policies by default
 // This pref allows controlling the log level of policies (extremely useful for troubleshooting...), set here to the default value so that it's exposed in the about:config
