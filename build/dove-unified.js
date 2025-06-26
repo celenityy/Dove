@@ -671,6 +671,10 @@ pref("network.protocol-handler.warn-external.mailto", false); // [HIDDEN] [DEFAU
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
 pref("dom.manifest.enabled", false);
 
+/// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
+pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
+pref("mailnews.auto_config.addons_url", ""); // [DEFAULT = https://autoconfig.thunderbird.net/addons.json]
+
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
 
