@@ -724,6 +724,10 @@ pref("mail.dove.status", "018");
 /// Things that are nice to have™
 // Not directly privacy & security related
 
+/// Disable certain UI animations by default
+// Improves performance and responsiveness
+pref("browser.preferences.animateFadeIn", false); // [DEFAULT - non-macOS]
+
 /// Disable extra logging for policies by default
 // This pref allows controlling the log level of policies (extremely useful for troubleshooting...), set here to the default value so that it's exposed in the about:config
 // https://searchfox.org/comm-central/source/mail/components/enterprisepolicies/Policies.sys.mjs
