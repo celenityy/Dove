@@ -475,6 +475,15 @@ pref("extensions.experiments.enabled", true); // [DEFAULT]
 pref("extensions.quarantineIgnoredByUser.cardbook@vigneau.philippe", false); // [DEFAULT]
 pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 
+/// Disable installation of add-ons + only allow enabling it per-session
+// Includes extensions and themes
+// This doesn't impact already installed add-ons and add-ons installed by policies
+// Thunderbird will prompt to re-enable this when necessary
+// We're also setting this as a user pref, which is quite nice from a security perspective - as it allows users to enable this functionality only when it's necessary...
+// Ex: A user attempts to install an extension, sees the extra prompt/warning, and selects `Enable` (which temporarily sets this pref to `true`...). The user then proceeds to install the extension. On the next launch of Thunderbird, this pref is reset back to `false`, meaning the ability to install extensions is fully disabled without them even thinking about it
+pref("xpinstall.enabled", false); // [HIDDEN] So the default is `false`
+pref("xpinstall.enabled", false, sticky); // [HIDDEN] So it's converted to a user pref and applied per-session
+
 /// Disable mozAddonManager
 // mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
 // It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
@@ -482,12 +491,6 @@ pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
 pref("extensions.webapi.enabled", false);
 pref("privacy.resistFingerprinting.block_mozAddonManager", true);
-
-/// Enable installation of add-ons by default
-// Note that this does NOT apply to `Recommended` extensions (collecitons) found at `Settings` -> `Advanced` -> `Extensions`.
-// Unfortunately doesn't have a prompt when disabled like Desktop :(
-// Setting here to expose via the `about:config`...
-pref("xpinstall.enabled", true); // [HIDDEN] [DEFAULT]
 
 /// Unbreak installation of add-ons from ATN (`addons.thunderbird.net`) if mozAddonManager is disabled
 // For context, when mozAddonManager is disabled on Firefox, AMO will fallback and successfully install add-ons without fail out of the box. This is unfortunately NOT the case for ATN currently.
