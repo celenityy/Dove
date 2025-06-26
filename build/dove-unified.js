@@ -492,6 +492,11 @@ pref("xpinstall.enabled", false, sticky); // [HIDDEN] So it's converted to a use
 pref("extensions.webapi.enabled", false);
 pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 
+/// Disable recommendations for alternatives to legacy add-ons
+// https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#25
+// https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#76
+pref("extensions.alternativeAddonSearch.url", "");
+
 /// Unbreak installation of add-ons from ATN (`addons.thunderbird.net`) if mozAddonManager is disabled
 // For context, when mozAddonManager is disabled on Firefox, AMO will fallback and successfully install add-ons without fail out of the box. This is unfortunately NOT the case for ATN currently.
 // HOWEVER, ATN DOES still have a fallback when mozAddonManager is disabled, via the legacy InstallTrigger interface (which is disabled by default nowadays).
