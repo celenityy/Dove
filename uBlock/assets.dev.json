@@ -974,6 +974,14 @@
         "contentURL": "https://divested.dev/hosts-domains-wildcards",
         "supportURL": "https://codeberg.org/divested/dnsbl/issues"
     },
+    "dove-filters": {
+        "content": "filters",
+        "group": "default",
+        "parent": "Dove filters",
+        "title": "Dove filters",
+        "contentURL": "https://gitlab.com/celenityy/Dove/-/raw/pages/uBlock/filters.txt",
+        "supportURL": "https://dove.celenity.dev/issues"
+    },
     "dyndns": {
         "content": "filters",
         "group": "malware",
