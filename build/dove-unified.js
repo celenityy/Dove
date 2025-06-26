@@ -475,6 +475,14 @@ pref("extensions.experiments.enabled", true); // [DEFAULT]
 pref("extensions.quarantineIgnoredByUser.cardbook@vigneau.philippe", false); // [DEFAULT]
 pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 
+/// Disable mozAddonManager
+// mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
+// It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
+pref("extensions.webapi.enabled", false);
+pref("privacy.resistFingerprinting.block_mozAddonManager", true);
+
 /// Enable installation of add-ons by default
 // Note that this does NOT apply to `Recommended` extensions (collecitons) found at `Settings` -> `Advanced` -> `Extensions`.
 // Unfortunately doesn't have a prompt when disabled like Desktop :(
