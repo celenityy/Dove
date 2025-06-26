@@ -115,6 +115,10 @@
 			<string>http://youtube-nocookie.com/</string>
 			<string>https://youtube-nocookie.com/</string>
 		</array>
+		<key>Locked</key>
+		<false/>
+		<key>RejectTracker</key>
+		<true/>
 	</dict>
 	<key>DNSOverHTTPS</key>
 	<dict>
@@ -166,6 +170,62 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>78272b6fa58f4a1abaac99321d503a20@proton.me</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Proton Pass: Free Password Manager: https://addons.mozilla.org/addon/proton-pass/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>@dmrhn.chatgpt.qa</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ChatGPT - Quick Access: https://addons.thunderbird.net/addon/chatgpt-quick-access/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>@dmrhn.gemini.qa</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Gemini - Quick Access: https://addons.thunderbird.net/addon/gemini-quick-access/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>@dmrhn.googlecalendar.qa</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Google Calendar - Quick Access: https://addons.thunderbird.net/addon/google-calendar-quick-access/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>@dmrhn.microsoftteams.qa</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Microsoft Teams - Quick Access: https://addons.thunderbird.net/addon/microsoft-teams-quick-access/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>@dmrhn.mstodo.qa</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Microsoft To Do - Quick Access: https://addons.thunderbird.net/addon/microsoft-todo-quick-access/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>@dmrhn.whatsapp.qa</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Whatsapp Web - Quick Access: https://addons.thunderbird.net/addon/whatsapp-quick-access/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>@eddie.outlookcalendar.qa</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Outlook Calendar - Quick Access: https://addons.thunderbird.net/addon/outlook-calendar-quick-access/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>@yahoo_wider_mail_extension</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -180,6 +240,20 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>AutoAddressCleaner-T@Toshi_</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Auto Address Cleaner: https://addons.thunderbird.net/addon/auto-address-cleaner-t/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>AutoarchiveReloaded@brummolix.addons.mozilla.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>AutoarchiveReloaded: https://addons.thunderbird.net/addon/autoarchivereloaded/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>BraveSearchExtension@io.Uvera</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -187,12 +261,33 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>CharsetMenu@jorgk.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Charset Menu: https://addons.thunderbird.net/addon/charset-menu/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>ContactFinder@DegrangeM.addons.thunderbird.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Contact Finder: https://addons.thunderbird.net/addon/contact-finder/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>Converter_Suite_fqRObEsLaM@convertersuite.com</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Converter Suite. Hijacks search engine to Yahoo without user consent/knowledge.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>DisplayMailUserAgent-T@Toshi_</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Display Mail User Agent T: https://addons.thunderbird.net/addon/display-mail-user-agent-t/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>Easy_Games_Tab_zKsDuEzLrv@easygamestab.com</key>
 		<dict>
@@ -207,6 +302,13 @@
 			<string>Easy Manuals Finder &amp; Custom Web Search. Hijacks search engine to Yahoo without user consent/knowledge.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>EditMailSubject@jcp.convenant</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>EditEmailSubject MX: https://addons.thunderbird.net/addon/edit-email-subject/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>Ezy_Alarm_Clock___Custom_Web_Search_aGDLGGilLT@ezyalarmclock.com</key>
 		<dict>
@@ -243,12 +345,54 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>FoFB@drexler</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Filter on Folder Button: https://addons.thunderbird.net/addon/filter-on-folder-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>FolderPaneSwitcher@kamens.us</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Folder Pane View Switcher: https://addons.thunderbird.net/addon/folder-pane-view-switcher/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>FrameWhite@Sungho.Hwang</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FrameWhite: https://addons.thunderbird.net/addon/framewhite/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>FreespokeSearchExtension@com.Freespoke</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Freespoke Search. Extension is unnecessary, just add this in either about:preferences#search or from the Omnibox.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>French-GC-TB@grammalecte.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Grammalecte [fr]: https://addons.thunderbird.net/addon/grammalecte-fr-thunderbird/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>ImportExportToolsNG@cleidigh.kokkini.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ImportExportTools NG: https://addons.thunderbird.net/addon/importexporttools-ng/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>InsertSignature@digitaldolphins.jp</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>InsertSignature: https://addons.thunderbird.net/addon/insertsignature/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>InternetProtection@360safe.com</key>
 		<dict>
@@ -257,6 +401,20 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>JorgK@dictionaryforrecipient</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Dictionary for recipient: https://addons.thunderbird.net/addon/dictionary-for-recipient/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>JunkMailByeBye@example.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Junk Mail ByeBye: https://addons.thunderbird.net/addon/junk-mail-byebye/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>Maps_Assist___Custom_Web_Search_VeyzPDMlKh@mapsassist.com</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -264,12 +422,33 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>ObsidianClipper@KevinHaw.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ObsidianClipper: https://addons.thunderbird.net/addon/obsidianclipper/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>OpenTab@Toshi_</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Open Tab: https://addons.thunderbird.net/addon/open-tab/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>Package_Tracking_Tab___Custom_Web_Search_JVVfIFSBVe@packagetrackingtab.com</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Package Tracking Tab &amp; Custom Web Search, by PackageTrackingTab. Hijacks search engine to Yahoo without user consent/knowledge.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>PrintingToolsNG@cleidigh.kokkini.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>PrintingTools NG: https://addons.thunderbird.net/addon/printingtools-ng/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>Quick_Live_News_spxMukSrlT@quicklivenews.com</key>
 		<dict>
@@ -285,12 +464,47 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>RemindIt@o.marce.free.fr</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>RemindIt: https://addons.thunderbird.net/addon/remindit/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>RemindMed@cparg.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>RemindMe: https://addons.thunderbird.net/addon/remindme/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>ReplyAsOriginalRecipient@github.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ReplyAsOriginalRecipientUp: https://addons.thunderbird.net/addon/replyasoriginalrecipientup/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>Safeplex_Search_qeKaqkdrwd@safeplexsearch.com</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Safeplex Search. Hijacks search engine to Yahoo without user consent/knowledge. (Also just completely unncessary anyways with uBlock Origin &amp; Google Safe Browsing :/)</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>SearchButton@pharqcon.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Search Button: https://addons.thunderbird.net/addon/search-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>StandardTexter@pharqcon.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>StandardTexter: https://addons.thunderbird.net/addon/standardtexter/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>StartpageSearchExtension@roteKlaue</key>
 		<dict>
@@ -299,12 +513,26 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>Startup@pharqcon.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Start with Inbox: https://addons.thunderbird.net/addon/start-with-inbox/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>Task_Manager_Tab___Custom_Web_Search_nKQMsPVbct@taskmanagertab.com</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Task Manager Tab &amp; Custom Web Search, by TaskManagerTab. Hijacks search engine to Yahoo without user consent/knowledge.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>Textmarker@pharqcon.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Textmarker: https://addons.thunderbird.net/addon/textmarker/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>Turbo_Converter___Custom_Web_Search_jkERzVmVos@turboconverter.co</key>
 		<dict>
@@ -355,6 +583,13 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>addon@darkreader.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Dark Reader: https://addons.thunderbird.net/addon/darkreader/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>addon@documentconverter.com</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -368,6 +603,13 @@
 			<string>Map Route Pro and Search. Hijacks search engine to Yahoo without user consent/knowledge.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>addon@simplelogin</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>SimpleLogin by Proton: Secure Email Aliases: https://addons.mozilla.org/addon/simplelogin/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>addon@speedtestmeter.com</key>
 		<dict>
@@ -383,12 +625,96 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>addon_simple_template@forest-soft.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Simple Template: https://addons.thunderbird.net/addon/simple-template/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>addoncompatibility@opto.one</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Add-on compatibility check: https://addons.thunderbird.net/addon/addon-compatibility-check/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>addressbookssync@ggbs.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Addressbooks Synchronizer: https://addons.thunderbird.net/addon/addressbooks-synchronizer/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>adguardadblocker@adguard.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>AdGuard AdBlocker: https://addons.mozilla.org/addon/adguard-adblocker/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>admin@fastaddons.com_AI</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>AI Anywhere for ChatGPT: https://addons.thunderbird.net/addon/ai_anywhere/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>admin@fastaddons.com_Darko</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Darko: https://addons.thunderbird.net/addon/darko_t/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>admin@fastaddons.com_WebTranslate</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Web Translate: https://addons.thunderbird.net/addon/web_translate/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>admin@justreport.it</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Just Report It: https://addons.thunderbird.net/addon/just-report-it/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>admin@justverify.it</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Just Verify It: https://addons.thunderbird.net/addon/just-verify-it/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>ads@mozac.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla Android Components - Ads Telemetry...</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>advanced-composer@thunderbird.extension</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Advanced Composer: https://addons.thunderbird.net/addon/advanced-composer/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>aify@shoryuken.me</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Aify: https://addons.thunderbird.net/addon/aify/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>alldaytasks@ggbs.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Allday Tasks: https://addons.thunderbird.net/addon/allday-tasks/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>allegro-pl@search.mozilla.org</key>
 		<dict>
@@ -418,12 +744,61 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>antidote_uni12_thunderbird@druide.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Antidote Connector: https://addons.thunderbird.net/addon/connecteur-antidote/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>aos@avg.com</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>AVG Online Security, by Avast. Highly sketchy &amp; known for selling data. Also unnecessary with Google Safe Browsing &amp; uBlock Origin, avoid.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>archive-old-messagesr@adamreichold.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Archive old messages: https://addons.thunderbird.net/addon/archive-old-messages/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>autoMarkFolderRead.silvester@addons.thunderbird.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Auto-Mark Folder Read: https://addons.thunderbird.net/addon/auto-mark-folder-read/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>autofile@oasisllc.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Autofile: https://addons.thunderbird.net/addon/autofile-fast-e-mail-to-folder/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>automatic_dictionary_extension@jordi_beltran.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Automatic Dictionary: https://addons.thunderbird.net/addon/automatic-dictionary-switching/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>autoprofilepicture@astucesweb.fr</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Auto Profile Picture: https://addons.thunderbird.net/addon/auto-profile-picture/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>awesome-emoji-picker@rugk.github.io</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Awesome Emoji Picker: https://addons.thunderbird.net/addon/awesome-emoji-picker/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>baidu@search.mozilla.org</key>
 		<dict>
@@ -438,6 +813,27 @@
 			<string>Mozilla's extension for the built-in Bing Search Engine. Bing should be avoided due to its horrible privacy practices, but regardless, Bing still appears to be selectable as a search engine with this removed. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/bing/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>birthdaycalendar@rsjtdrjgfuzkfg.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Birthday Calendar: https://addons.thunderbird.net/addon/birthday-calendar/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>bordercolors-d@addonsdev.mozilla.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>BorderColors D: https://addons.thunderbird.net/addon/bordercolors-d/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>box-cloudfile@darktrojan.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FileLink Provider for Box: https://addons.thunderbird.net/addon/filelink-provider-for-box/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>brave-leta@celenity.dev</key>
 		<dict>
@@ -460,8 +856,31 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>buttons@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Phoenity Buttons: https://addons.thunderbird.net/addon/phoenity-buttons/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>calendarsearchexport@ggbs.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>CalendarSearchExport: https://addons.thunderbird.net/addon/calendarsearchexport/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>cardbook@vigneau.philippe</key>
 		<dict>
+			<key>blocked_install_message</key>
+			<string>CardBook: https://addons.thunderbird.net/addon/cardbook/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>carddavbrowser@mtalbot.addons.mozilla.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>CardDAV Browser: https://addons.thunderbird.net/addon/carddav-browser/</string>
 			<key>private_browsing</key>
 			<true/>
 		</dict>
@@ -472,12 +891,75 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>changelogger@r01</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Changelogger: https://addons.thunderbird.net/addon/changelogger/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>chatgpt@example.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ChatGPT: https://addons.thunderbird.net/addon/chatgpt-addon/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>check-before-sending-email@apar.jp</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Check before sending email: https://addons.thunderbird.net/addon/check-before-sending-email/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>clippings-tb@aecreations.github.io</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Clippings for Thunderbird: https://addons.thunderbird.net/addon/clippings-tb/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>cloud@johannes-endres.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>*cloud - FileLink for Nextcloud and ownCloud: https://addons.thunderbird.net/addon/filelink-nextcloud-owncloud/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>coccoc@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in Cốc Cốc Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/coccoc/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>collectaddresses@ggbs.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>CollectAddresses: https://addons.thunderbird.net/addon/collectaddresses/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>compactHeaders@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Compact Headers: https://addons.thunderbird.net/addon/compact-headers/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>configButton@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Config Button: https://addons.thunderbird.net/addon/config-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>confirm-address@kenmaz.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Confirm-Address: https://addons.thunderbird.net/addon/confirm-address-5582/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>cookies@mozac.org</key>
 		<dict>
@@ -486,12 +968,47 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>copy-message-id@j.kahn</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Copy Message ID: https://addons.thunderbird.net/addon/copy-message-id/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>copyaddrs@pqpq.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Copy Address: https://addons.thunderbird.net/addon/copy-address/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>copyfolderAddOn1@datawave.sk</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Copy Folder: https://addons.thunderbird.net/addon/copy-folder/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>copysent2current@ggbs.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Copy Sent to Current: https://addons.thunderbird.net/addon/copy-sent-to-current/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>daum-kr@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in Daum Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/daum-kr/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>dav-cloudfile@darktrojan.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FileLink provider for WebDAV: https://addons.thunderbird.net/addon/filelink-provider-for-webdav/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>ddg@celenity.dev</key>
 		<dict>
@@ -500,12 +1017,56 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>deepl@itagagaki</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>DeepL Selected Text: https://addons.thunderbird.net/addon/deepl-selected-text/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>deselectondelete@baz.pw</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Deselect on Delete TB78: https://addons.thunderbird.net/addon/deselect-on-delete-tb78/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>devToolsButton@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>DevTools Button: https://addons.thunderbird.net/addon/devtools-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>disable_dnd_tb_v2@pqrs.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Disable DragAndDrop (Thunderbird): https://addons.thunderbird.net/addon/disable-draganddrop-tb/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>dkim_verifier@pl</key>
 		<dict>
+			<key>blocked_install_message</key>
+			<string>DKIM Verifier: https://addons.thunderbird.net/addon/dkim-verifier/</string>
 			<key>install_url</key>
 			<string>https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi</string>
 			<key>installation_mode</key>
 			<string>normal_installed</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>dropbox-cloudfile@darktrojan.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FileLink Provider for Dropbox: https://addons.thunderbird.net/addon/filelink-provider-for-dropbox/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>drsjb80@gmail.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Thematic: https://addons.thunderbird.net/addon/thematic/</string>
 			<key>private_browsing</key>
 			<true/>
 		</dict>
@@ -579,6 +1140,48 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>edithtmlsource@jobisoft.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>HTML Source Editor: https://addons.thunderbird.net/addon/html-source-editor/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>egaffiot@outlook.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Mail Extractor: https://addons.thunderbird.net/addon/mail-extractor/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>elm-editor@dyrk.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>EML-Editor: https://addons.thunderbird.net/addon/eml-editor/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>emoji@ganss.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Emoji: https://addons.thunderbird.net/addon/emojiaddin/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>emoji@saveriomorelli.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Emoji: https://addons.thunderbird.net/addon/emoji-sav/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>enygmail@dyrk.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>PGPGeek: https://addons.thunderbird.net/addon/pgpgeek/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>ep@FreeTestNow</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -593,6 +1196,76 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>expand_mailing_lists@davero.addons.mozilla.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Expand mailing lists: https://addons.thunderbird.net/addon/expand-mailing-lists/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>export-to-zip@serna.ar</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Export to ZIP: https://addons.thunderbird.net/addon/export-to-zip/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>expressionsearch@opto.one</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Expression Search - NG: https://addons.thunderbird.net/addon/expression-search-ng/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>exquilla@mesquilla.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ExQuilla for Exchange: https://addons.thunderbird.net/addon/exquilla-exchange-web-services/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>external-editor-revived@tsundere.moe</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>External Editor Revived: https://addons.thunderbird.net/addon/external-editor-revived/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>extractem@tmccoid.tech</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Extract 'Em!: https://addons.thunderbird.net/addon/extract-em/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>farahats9@yahoo.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Simple Startup Minimizer: https://addons.thunderbird.net/addon/simple-startup-minimizer/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>filelink-owncloud@thosmos.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FileLink Provider for OwnCloud and NextCloud: https://addons.thunderbird.net/addon/filelink-provider-for-owncloud/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>filtaquilla@mesquilla.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FiltaQuilla: https://addons.thunderbird.net/addon/filtaquilla/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>filterManager@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Filter Manager: https://addons.thunderbird.net/addon/filter-manager/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>firefox-translations-addon@mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -600,12 +1273,103 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>firefox@tampermonkey.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Tampermonkey: https://addons.mozilla.org/addon/tampermonkey/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>flexible-confirm-mail@clear-code.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FlexConfirmMail: https://addons.thunderbird.net/addon/flex-confirm-mail/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>foxyproxy-basic@eric.h.jung</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FoxyProxy Basic: https://addons.mozilla.org/addon/foxyproxy-standard/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>foxyproxy@eric.h.jung</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FoxyProxy Standard: https://addons.mozilla.org/addon/foxyproxy-standard/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>freecosys_filelink@birdiecode.ru</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Freecosys - FileLink provider: https://addons.thunderbird.net/addon/freecosys-filelink-provider/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>full-address-column@lukasz.kosson.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Full Address column: https://addons.thunderbird.net/addon/full-address-column/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>gamb@pharqcon.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Get All Mail Button: https://addons.thunderbird.net/addon/get-all-mail-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>gcaltab@ftassy.github.io</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>GCalTab: https://addons.thunderbird.net/addon/gcaltab/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>gchat-thunder@tantely.fr</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Open Google Chat: https://addons.thunderbird.net/addon/open-google-chat/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>gconversation@xulforum.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Thunderbird Conversations: https://addons.thunderbird.net/addon/gmail-conversation-view/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>gmail-labels@itln.pl</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>GMail Labels: https://addons.thunderbird.net/addon/gmail-labels/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>gmessages_sigurd@dagestad.info</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Google Messages Tab: https://addons.thunderbird.net/addon/google-messages-tab/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>gmx@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in GMX Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/gmx/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>google-chat-tab@eternaltyro</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Google Chat Tab: https://addons.thunderbird.net/addon/google-chat-tab/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>google-leta@celenity.dev</key>
 		<dict>
@@ -621,12 +1385,47 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>googleCalendar@weptun.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Google Calendar Plugin: https://addons.thunderbird.net/addon/google-calendar-plugin/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>gtasks-thunder@tantely.fr</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Open Google Tasks: https://addons.thunderbird.net/addon/open-google-tasks/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>gulesider-NO@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in Gulesider.no Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/gulesider-NO/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>hdrtoolslite@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Header Tools Improved: https://addons.thunderbird.net/addon/header-tools-improved/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>headerToolsLite@kaosmos.nnp</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Header Tools Lite: https://addons.thunderbird.net/addon/header-tools-lite/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>helpdesk@eledia.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Move Folder (context-menu): https://addons.thunderbird.net/addon/move-folder-context-menu/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>homeutil@yandex.ru</key>
 		<dict>
@@ -642,6 +1441,20 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>icons@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Phoenity Icons: https://addons.thunderbird.net/addon/phoenity-icons/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>identitychooser@janek.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Identity Chooser: https://addons.thunderbird.net/addon/identity-chooser/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>jid1-16aeif9OQIRKxA@jetpack</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -655,6 +1468,13 @@
 			<string>Honey, by PayPal, terrible privacy, and also a scam...</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>jid1-BoFifL9Vbdl2zQ@jetpack</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Decentraleyes: https://addons.mozilla.org/addon/decentraleyes/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>jid1-G80Ec8LLEbK5fQ@jetpack</key>
 		<dict>
@@ -684,6 +1504,34 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>joplin-export@martin.doerfelt</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Joplin Export: https://addons.thunderbird.net/addon/joplin-export/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>jorgk@sender-frequency</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Sender Frequency: https://addons.thunderbird.net/addon/sender-frequency/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>juraj.masiar@gmail.com_LinkInTab</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Link in Tab: https://addons.thunderbird.net/addon/link_in_tab/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>juraj.masiar@gmail.com_ScrollAnywhere</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ScrollAnywhere: https://addons.thunderbird.net/addon/scroll_anywhere/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>kagi-html@celenity.dev</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -697,6 +1545,34 @@
 			<string>Deprecated</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>keepassxc-mail@kkapsner.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>keepassxc-mail: https://addons.thunderbird.net/addon/keepassxc-mail/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>keynav@andrew.hart</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Quick Folder Key Navigation: https://addons.thunderbird.net/addon/quick-folder-key-navigation/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>languagetool-mailextension@languagetool.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>LanguageTool: https://addons.thunderbird.net/addon/grammar-and-spell-checker/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>layoutbutton@turtletec.ie</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Layout Button: https://addons.thunderbird.net/addon/layout-button/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>leo_ende_de@search.mozilla.org</key>
 		<dict>
@@ -719,6 +1595,48 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>leworoe@gmail.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Outlook/Teams Appointments: https://addons.thunderbird.net/addon/outlook-teams-appointments/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>lightningcalendartabs@jlx.84</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Lightning Calendar Tabs: https://addons.thunderbird.net/addon/lightning-calendar-tabs/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>limit_non-BCC_recipients@davero.addons.mozilla.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Limit non-BCC recipients: https://addons.thunderbird.net/addon/limit-non-bcc-recipients/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>links@tealdulcet.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Link Creator: https://addons.thunderbird.net/addon/link-creator/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>list-addons-in-win-programs@clear-code.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>List Addons in Windows' Programs: https://addons.thunderbird.net/addon/list-addons-in-win-programs/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>llama3-grammar-thunderbird@johannes.buchner.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>AI Grammar: https://addons.thunderbird.net/addon/ai-grammar/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>longdo@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -726,12 +1644,47 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>lookout@s3_fix_version</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>LookOut (fix version): https://addons.thunderbird.net/addon/lookout-fix-version/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>macrotemplate@nattoheaven.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Macro Template: https://addons.thunderbird.net/addon/macro-template/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>magnolia@12.34</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Bypass Paywalls Clean: https://gitflic.ru/project/magnolia1234/bypass-paywalls-firefox-clean</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>mailMoveShortcuts@extension</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Move Mail Shortcuts: https://addons.thunderbird.net/addon/move-mail-shortcuts/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>mailcom@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in mail.com Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/mailcom/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>mailmerge@example.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Mail Merge: https://addons.thunderbird.net/addon/mail-merge/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>mailru@search.mozilla.org</key>
 		<dict>
@@ -747,6 +1700,27 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>markdown-here-revival@xul.calypsoblue.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Markdown Here Revival: https://addons.thunderbird.net/addon/markdown-here-revival/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>marwe@turtletect.ie</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Mark All Read:WE: https://addons.thunderbird.net/addon/mark-all-read-we/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>mas@aandrzej.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Minimize on startup: https://addons.thunderbird.net/addon/minimize-on-startup/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>mercadolibre@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -761,12 +1735,33 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>messagemover@michele.locati.it</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Message Mover: https://addons.thunderbird.net/addon/message-mover/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>metager@celenity.dev</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Deprecated</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>mhublite@schiffner.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>M-Hub Lite: https://addons.thunderbird.net/addon/m-hub-lite_microsft-office-365/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>minimizeonclose@rsjtdrjgfuzkfg.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Minimize on Close: https://addons.thunderbird.net/addon/minimize-on-close/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>mojeek@celenity.dev</key>
 		<dict>
@@ -775,12 +1770,40 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>moresnooze@cyrille.nocus</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>MoreSnooze: https://addons.thunderbird.net/addon/more-snooze/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>myphoneexplorer@fjsoft.at</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>MyPhoneExplorer: https://addons.thunderbird.net/addon/myphoneexplorer/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>naver-kr@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in NAVER Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/naver-kr/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>newthreadall@opto.one</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>New Thread to All: https://addons.thunderbird.net/addon/new-thread-to-all/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>night.and.day@sancus.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Night and Day Dynamic: https://addons.thunderbird.net/addon/night-and-day-dynamic/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>no-search@celenity.dev</key>
 		<dict>
@@ -789,12 +1812,33 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>nomessagepanesort@janek.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>No Message Pane Sort: https://addons.thunderbird.net/addon/no-message-pane-sort-by-mouse/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>nortonsafeweb@symantec.com</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Norton Safe Web, by Norton. Must I say more? Would almost rather getting a virus than installing this crap... Also unnecessary with Google Safe Browsing &amp; uBlock Origin, avoid.</string>
 			<key>installtaion_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>nostalgy@opto.one</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Manage Emails/ Nostalgy++: https://addons.thunderbird.net/addon/nostalgy_ng/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>ntfntf@dan-sullivan.co.uk</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>NTFNTF: Notify on This Folder Not That Folder: https://addons.thunderbird.net/addon/ntfntf/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>odpiralni@search.mozilla.org</key>
 		<dict>
@@ -803,12 +1847,82 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>oldicons@deltablast</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Old Icons: https://addons.thunderbird.net/addon/old-icons/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>open-image-in-new-tab@rmmccann.github.io</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Open Image In New Tab: https://addons.thunderbird.net/addon/open-image-in-new-tab/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>open-in-browser@adamreichold.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Open in browser: https://addons.thunderbird.net/addon/open-in-browser/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>opengooglecalendar@glicer</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Open Google Calendar: https://addons.thunderbird.net/addon/open-google-calendar/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>outlook-ab-enabler@jorgk.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Outlook Address Book Enabler: https://addons.thunderbird.net/addon/outlook-address-book-enabler/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>owl@beonex.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Owl for Exchange: https://addons.thunderbird.net/addon/owl-for-exchange/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>pazaruvaj@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in Pazaruvaj Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/pazaruvaj/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>plik@johannes-endres.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FileLink for Plik: https://addons.thunderbird.net/addon/filelink-for-plik/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>popmaillistrecipients@funke.nz</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>PopmailListRecipients: https://addons.thunderbird.net/addon/popmaillistrecipients-2/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>prefsButton@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Preferences Button: https://addons.thunderbird.net/addon/preferences-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>previous-colors@alkatrazstudio.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Previous Colors: https://addons.thunderbird.net/addon/previous-colors/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>priberam@search.mozilla.org</key>
 		<dict>
@@ -823,6 +1937,62 @@
 			<string>Mozilla's extension for the built-in Prisjakt Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/prisjakt-sv-SE/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>pswitcher2@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Profile Switcher: https://addons.thunderbird.net/addon/profile-switcher/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>qnote@dqdp.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>QNote: https://addons.thunderbird.net/addon/qnote/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>quickFilters@axelg.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>quickFilters: https://addons.thunderbird.net/addon/quickfilters/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>quickarchiver@bergerdata.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>QuickArchiver: https://addons.thunderbird.net/addon/quickarchiver/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>quickersearch@opto.one</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Quicker Quicksearch: https://addons.thunderbird.net/addon/quicker-quicksearch/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>quickfolders@curious.be</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>QuickFolders: https://addons.thunderbird.net/addon/quickfolders-tabbed-folders/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>quickmove@mozilla.kewis.ch</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Quick Folder Move: https://addons.thunderbird.net/addon/quick-folder-move/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>quotecolors@thunderbird-mail.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Quote Colors &amp; Collapse: https://addons.thunderbird.net/addon/quotecolors/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>qwant-junior@celenity.dev</key>
 		<dict>
@@ -880,12 +2050,61 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>read-aloud@lsdsoftware.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Read Aloud: https://addons.thunderbird.net/addon/read-aloud/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>readmoo@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in Readmoo Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/readmoo/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>refwdformatter@masahiko.info</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ReFwdFormatter: https://addons.thunderbird.net/addon/refwdformatter/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>reply-all-auto-cc@github.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>reply-all-auto-cc: https://addons.thunderbird.net/addon/reply-all-auto-cc/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>replywithheader@myjeeva.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ReplyWithHeader: https://addons.thunderbird.net/addon/replywithheader/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>restartButton@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Restart Button: https://addons.thunderbird.net/addon/restart-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>rspamd-spamness@alexander.moisseev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Rspamd-spamness: https://addons.thunderbird.net/addon/rspamd-spamness/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>s3-filelink-provider-developer@josephcz.xyz</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>S3 FileLink Provider: https://addons.thunderbird.net/addon/s3-filelink-provider/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>salidzinilv@search.mozilla.org</key>
 		<dict>
@@ -950,6 +2169,13 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>searchfor@infonny.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Search for: https://addons.thunderbird.net/addon/search-for/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>secureline-vpn@avast.com</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -957,12 +2183,89 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>send@tealdulcet.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>FileLink provider for Send: https://addons.thunderbird.net/addon/filelink-provider-for-send/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>send_later123@extension.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Send Later Button: https://addons.thunderbird.net/addon/später-senden-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>sendlater3@kamens.us</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Send Later: https://addons.thunderbird.net/addon/send-later-3/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>sendtocategory@jobisoft.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Category Manager: https://addons.thunderbird.net/addon/categorymanager/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>seznam-cz@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Mozilla's extension for the built-in Seznam Search Engine. Should be avoided, but regardless, can still be added manually. https://searchfox.org/mozilla-release/source/browser/components/search/extensions/seznam-cz/manifest.json</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>showInOut@ggbs.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Show InOut: https://addons.thunderbird.net/addon/show-inout/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>signal-spam@signal-spam.fr</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Signal Spam: https://addons.thunderbird.net/addon/signal-spam/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>signature-sync@thunderbird.extensions.kam193</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Signature sync for Gmail: https://addons.thunderbird.net/addon/signature-sync-for-gmail/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>simplemailredirection@ggbs.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Simple Mail Redirection: https://addons.thunderbird.net/addon/simple-mail-redirection/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>skipredirect@sblask</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Skip Redirect: https://addons.mozilla.org/addon/skip-redirect/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>smarttemplate4@thunderbird.extension</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>SmartTemplates: https://addons.thunderbird.net/addon/smarttemplate4/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>smileyfixer@matthias-g</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Smileyfixer: https://addons.thunderbird.net/addon/smileyfixer/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>sp@SearchSmart</key>
 		<dict>
@@ -985,12 +2288,40 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>spambee@verifrom.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>SSPAMBEE: https://addons.thunderbird.net/addon/spambee/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>spamscores@czaenker</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Spam Scores: https://addons.thunderbird.net/addon/spam-scores/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>spoofdetection@marvin.herrmann</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Spoofdetection: https://addons.thunderbird.net/addon/spoofdetection/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>startpage@celenity.dev</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Deprecated</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>sub@pharqcon.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Send Unsent Button: https://addons.thunderbird.net/addon/send-unsent-mail-button/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>support@netzilo.com</key>
 		<dict>
@@ -1013,6 +2344,167 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>sync@opto.one</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Sync for TB: https://addons.thunderbird.net/addon/sync-for-tb/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>tabcontrol@nuitcodecitoyen.org</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>TabControl: https://addons.thunderbird.net/addon/tab-control/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>tagger@xot.nl</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Tagger: https://addons.thunderbird.net/addon/tagger/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>tb-addtomailinglists@tb.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>AddToMailinglist: https://addons.thunderbird.net/addon/add-to-mailing-list/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>tbkeys-lite@addons.thunderbird.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>tbkeys-lite: https://addons.thunderbird.net/addon/tbkeys-lite/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>te-in-th@ftassy.github.io</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Telegram Web in Thunderbird: https://addons.thunderbird.net/addon/telegram-web-in-thunderbird/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thirdstats@devmount.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ThirdStats: https://addons.thunderbird.net/addon/thirdstats/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thunderai@micz.it</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ThunderAI: https://addons.thunderbird.net/addon/thunderai/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thunderbird-todoist@apps.smeanox.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Thunderbird Todoist: https://addons.thunderbird.net/addon/thunderbird-todoist/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thunderbird@mailhops.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>MailHops: https://addons.thunderbird.net/addon/mailhops/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thunderbird_extension@wordeep.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Grammar, Proofreading &amp; Spell Checker: https://addons.thunderbird.net/addon/grammar-proofreading-check/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thunderhawkmailer@gmail.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Hawk for Thunderbird: https://addons.thunderbird.net/addon/hawk/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thunderkeepplus@gmail.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Google Keep Tab: https://addons.thunderbird.net/addon/google-keep-tab/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thunderstats@micz.it</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ThunderStats: https://addons.thunderbird.net/addon/thunderstats/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thundervoice@chris.schiffner</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>G-Hub Lite: https://addons.thunderbird.net/addon/g-hub-lite_google-tabs/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>thunderwebtabs@gmail.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ThunderWebTabs: https://addons.thunderbird.net/addon/thunderwebtabs/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>tls-paranoia@gdr.name</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Paranoia: https://addons.thunderbird.net/addon/paranoia/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>toggle-headers@mattsch.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Toggle Headers: https://addons.thunderbird.net/addon/toggle-headers/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>toggleHTML@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Toggle HTML: https://addons.thunderbird.net/addon/toggle-html/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>toggleMessagePane@dillinger</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Toggle Message Pane: https://addons.thunderbird.net/addon/toggle-message-pane/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>togglereplied@kamens.us</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ToggleReplied: https://addons.thunderbird.net/addon/togglereplied-2/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>topic-tree@opto-one</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Topic Tree / Notebook: https://addons.thunderbird.net/addon/topic-tree-notebook/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>torpedo@tu-darmstadt.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>TORPEDO: https://addons.thunderbird.net/addon/torpedo-phishing-detection/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>tyda-sv-SE@search.mozilla.org</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -1020,12 +2512,56 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>typical-reply@clear-code.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Typical Reply: https://addons.thunderbird.net/addon/typical-reply/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>uBlock0@raymondhill.net</key>
 		<dict>
+			<key>blocked_install_message</key>
+			<string>uBlock Origin: https://github.com/gorhill/ublock</string>
 			<key>install_url</key>
 			<string>https://github.com/gorhill/uBlock/releases/download/1.64.0/uBlock0_1.64.0.thunderbird.xpi</string>
 			<key>installation_mode</key>
 			<string>normal_installed</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>unicodify@rugk.github.io</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Unicodify – Text transformer: https://addons.thunderbird.net/addon/unicodify-text-transformer/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>unified-folders@extensions.thunderbird.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Unified Folders Debugging: https://addons.thunderbird.net/addon/unified-folders-debugging/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>unmangleOutlookSafelinks@havekes.eu</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Unmangle Outlook Safelinks: https://addons.thunderbird.net/addon/unmangle-outlook-safelinks/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>unsubscribe@fra-uas.de</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Unsubscribe: https://addons.thunderbird.net/addon/unsub/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>userChromeJS@kamens.us</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>userChromeJS: https://addons.thunderbird.net/addon/userchromejs-2/</string>
 			<key>private_browsing</key>
 			<true/>
 		</dict>
@@ -1057,12 +2593,33 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>vpn@proton.ch</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Proton VPN: Fast &amp; Secure: https://addons.mozilla.org/addon/proton-vpn-firefox-extension/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>wa-in-th@ftassy.github.io</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>WhatsApp Web in Thunderbird: https://addons.thunderbird.net/addon/whatsapp-web-in-thunderbird/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>weather@yandex.ru</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Yandex Elements Weather, by Yandex. Extremely sketchy, requires highly invasive permissions. Yandex generally is sketchy and should be avoided. Just use Firefox's new weather feature on about:home, or an extension like Tabliss.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>weatherlicious@ntim.ml</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Weatherlicious: https://addons.thunderbird.net/addon/weatherlicious/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>webde@search.mozilla.org</key>
 		<dict>
@@ -1091,6 +2648,27 @@
 			<string>Avast Online Security, by Avast. Highly sketchy &amp; known for selling data. Also unnecessary with Google Safe Browsing &amp; uBlock Origin, avoid.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>x-pm-headers@danq.me</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ProtonMail Headers: https://addons.thunderbird.net/addon/protonmail-encryption-status/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>xmha97@gmail.com</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>KeepRunning: https://addons.thunderbird.net/addon/keeprunning/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>xnote@froihofer.net</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>XNote++: https://addons.thunderbird.net/addon/xnotepp/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>yahoo-jp-auctions@search.mozilla.org</key>
 		<dict>
@@ -1141,12 +2719,33 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>{12a1584b-2123-473d-8752-e82e74e3cb1b}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>NestedQuote Remover: https://addons.thunderbird.net/addon/nestedquote-remover/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{139a120b-c2ea-41d2-bf70-542d9f063dfd}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>URL Link: https://addons.thunderbird.net/addon/url-link/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>{17c75373-e1fc-43a5-a05b-7f17e306359e}</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Stay secure with CyberGhost VPN Free Proxy, by Running __Elephants. This extension appears fake and unmaintained (and CyberGhost itself is also very sketchy anyways...</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{1B0ADFEC-846C-401D-BA54-7842CBD485D4}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Check and Send: https://addons.thunderbird.net/addon/check-and-send/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{1e924475-d910-44ab-bed8-af34439d2a8a}</key>
 		<dict>
@@ -1169,12 +2768,40 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>{282C3C7A-15A8-4037-A30D-BBEB17FFC76B}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Colored Diffs: https://addons.thunderbird.net/addon/colored-diffs/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{2909fbd8-b061-4b52-989e-46b05fbdb650}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Proton Calendar Toolbar Button: https://addons.thunderbird.net/proton-calendar-toolbar-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>{2a168bd0-55d2-466f-9c68-077c416943be}</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>YouTube Search Engine, by A. Taha Baki. Extension is unnecessary, just add YouTube in either about:preferences#search or from the Omnibox.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{2ab1b709-ba03-4361-abf9-c50b964ff75d}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Signature Switch: https://addons.thunderbird.net/addon/signature-switch/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{2af208f6-fdc2-4c74-8db9-bb4a8de6359d}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>@Contact Mention: https://addons.thunderbird.net/addon/contact-mention/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{2d158f19-1146-4bfe-9085-cc15f947bb35}</key>
 		<dict>
@@ -1197,12 +2824,26 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>{3579f63b-d8ee-424f-bbb6-6d0ce3285e6a}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Chameleon: https://addons.mozilla.org/addon/chameleon-ext/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>{3968ec87-3c9f-45cd-8d9e-7f6d1f3a5093}</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Glider Proctoring, by GLIDER.ai. Used for remote monitoring/test 'Proctoring'</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{3AB03506-4329-483F-BA03-EA5493232260}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>New Tab Button: https://addons.thunderbird.net/addon/new-tab-button/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{43d20840-2895-4866-9d79-4f6f2ea537f7}</key>
 		<dict>
@@ -1211,12 +2852,40 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>{43ed69b5-6fb0-44d0-b200-d1b26d3fed39}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Proton Mail Toolbar Button: https://addons.thunderbird.net/addon/proton-mail-toolbar-button/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>{441ae0e7-c955-4b0e-8209-99462af458db}</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Presearch.com Search Extension. Extension is unnecessary, just add this in either about:preferences#search or from the Omnibox.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{446900e4-71c2-419f-a6a7-df9c091e268b}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Bitwarden Password Manager: https://addons.mozilla.org/addon/bitwarden-password-manager/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{4753278b-acea-4b2b-a111-1fc9450d239d}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>BetterUnsubscribe: https://addons.thunderbird.net/addon/betterunsubscribe/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{47ef7cc0-2201-11da-8cd6-0800200c9a66}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Correct identity: https://addons.thunderbird.net/addon/correct-identity/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{4d5b7a5e-5232-9e45-97f4-f8e1ca2626e5}</key>
 		<dict>
@@ -1231,6 +2900,27 @@
 			<string>SignalHire. Data Broker.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{532269cf-a10e-4396-8613-b5d9a9a516d4}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Allow HTML Temp: https://addons.thunderbird.net/addon/allow-html-temp/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{54e72d7b-ed31-4736-854f-f517358f21ee}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>BiDi Mail UI: https://addons.thunderbird.net/addon/bidi-mail-ui/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{5ce3f3ea-38fc-11eb-adc1-0242ac120002}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Composer Contacts Mention: https://addons.thunderbird.net/addon/mentions/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{635abd67-4fe9-1b23-4f01-e679fa7484c1}</key>
 		<dict>
@@ -1274,6 +2964,13 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>{88B31EFE-2E3B-43a6-A805-B53433C3B265}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Evernote Tab: https://addons.thunderbird.net/addon/evernote-tab/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>{8A0D66E3-1C08-49A6-8F6C-7E024029D199}</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -1294,6 +2991,13 @@
 			<string>Google Analytics Opt-Out, by Vishwas. Unnecessary with content blocking.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{957509b1-217a-46c7-b08b-f67d08d53883}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>SubSwitch: https://addons.thunderbird.net/addon/subswitch/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{9763fbae-6f90-483b-a8ca-aeb9ccfdacac}</key>
 		<dict>
@@ -1316,12 +3020,47 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>{9de7f477-6a8d-4bf6-932c-1dc736b90394}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Attachment Saver: https://addons.thunderbird.net/addon/attachment-saver/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{A23E4120-431F-4753-AE53-5D028C42CFDC}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ThreadVis: https://addons.thunderbird.net/addon/threadvis/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>{a07b7886-3015-4959-9a88-4273860edd6d}</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Microsoft Bing Homepage and Search Engine, by Microsoft. Please don't use Bing... but if you insist, extension is unnecessary, just set it in about:preferences#search.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{a300a000-5e21-4ee0-a115-9ec8f4eaa92b}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Remove Duplicate Messages: https://addons.thunderbird.net/addon/removedupes/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Provider for Google Calendar: https://addons.thunderbird.net/addon/provider-for-google-calendar/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>User-Agent Switcher and Manager: https://addons.mozilla.org/addon/user-agent-string-switcher/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{aa9eef0b-ca4e-4e24-b42e-e1b006c7160a}</key>
 		<dict>
@@ -1337,6 +3076,13 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>{aecec67f-0d10-4fa7-b7c7-609a2db280cf}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Violentmonkey: https://addons.mozilla.org/addon/violentmonkey/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>{af37054b-3ace-46a2-ac59-709e4412bec6}</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -1344,12 +3090,33 @@
 			<key>installation_mode</key>
 			<string>blocked</string>
 		</dict>
+		<key>{b11bea1f-a888-4332-8d8a-cec2be7d24b9}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Snowflake: https://addons.mozilla.org/addon/torproject-snowflake/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{b1a994eb-f617-4a56-a4a4-e073e2310f07}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Jitsi Meet event generator: https://addons.thunderbird.net/addon/jitsi-meet-event-generator/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>{b69c9b46-2236-45c2-9abd-143972558677}</key>
 		<dict>
 			<key>blocked_install_message</key>
 			<string>Yahoo jp, by Viktor. Please don't use Yahoo... but if you insist, extension is unnecessary, just set it in either about:preferences#search or from the Omnibox.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{b86e4813-687a-43e6-ab65-0bde4ab75758}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>LocalCDN: https://addons.mozilla.org/addon/localcdn-fork-of-decentraleyes/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{b9ddfa6d-fb38-47a6-8cf2-8d1044540a1f}</key>
 		<dict>
@@ -1392,6 +3159,20 @@
 			<string>Adblock Plus, by Eyeo. Highly sketchy, avoid &amp; just use uBlock Origin instead.</string>
 			<key>installation_mode</key>
 			<string>blocked</string>
+		</dict>
+		<key>{d8815e01-8ffc-4d85-a082-d750b35f21c1}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Dark Plain Text: https://addons.thunderbird.net/addon/dark-plain-text/</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
+		<key>{e5b6e4ac-ec96-44f5-b257-e4d3c8291b41}</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>Linguist - web pages translator: https://addons.mozilla.org/addon/linguist-translator/</string>
+			<key>private_browsing</key>
+			<true/>
 		</dict>
 		<key>{eefb374b-ea77-47a1-bb1b-bd5758569056}</key>
 		<dict>
@@ -1438,6 +3219,8 @@
 	</dict>
 	<key>Proxy</key>
 	<dict>
+		<key>Locked</key>
+		<false/>
 		<key>Mode</key>
 		<string>none</string>
 		<key>UseProxyForDNS</key>
@@ -1448,6 +3231,8 @@
 		<key>Add</key>
 		<array>
 			<dict>
+				<key>Alias</key>
+				<string>@duckduckgohtml, @ddghtml</string>
 				<key>Description</key>
 				<string>Search DuckDuckGo (HTML)</string>
 				<key>IconURL</key>
@@ -1462,6 +3247,8 @@
 				<string>https://html.duckduckgo.com/html/?q={searchTerms}</string>
 			</dict>
 			<dict>
+				<key>Alias</key>
+				<string>@duckduckgolite, @ddglite</string>
 				<key>Description</key>
 				<string>Search DuckDuckGo (Lite)</string>
 				<key>IconURL</key>
@@ -1476,6 +3263,8 @@
 				<string>https://lite.duckduckgo.com/lite/?q={searchTerms}</string>
 			</dict>
 			<dict>
+				<key>Alias</key>
+				<string>@mojeek</string>
 				<key>Description</key>
 				<string>Search Mojeek</string>
 				<key>IconURL</key>
@@ -1488,6 +3277,8 @@
 				<string>https://www.mojeek.com/search?q={searchTerms}</string>
 			</dict>
 			<dict>
+				<key>Alias</key>
+				<string>@letabrave, @letab</string>
 				<key>Description</key>
 				<string>Search Mullvad Leta (with Brave's index)</string>
 				<key>IconURL</key>
@@ -1500,6 +3291,8 @@
 				<string>https://leta.mullvad.net/?q={searchTerms}&amp;engine=brave</string>
 			</dict>
 			<dict>
+				<key>Alias</key>
+				<string>@letagoogle, @letag</string>
 				<key>Description</key>
 				<string>Search Mullvad Leta (with Google's index)</string>
 				<key>IconURL</key>
@@ -1522,6 +3315,8 @@
 				<string>https://nosearch.invalid/{searchTerms}</string>
 			</dict>
 			<dict>
+				<key>Alias</key>
+				<string>@startpage, @sp</string>
 				<key>Description</key>
 				<string>Search Startpage</string>
 				<key>IconURL</key>
@@ -1537,6 +3332,8 @@
 			</dict>
 		</array>
 		<key>Default</key>
+		<string>DuckDuckGo</string>
+		<key>DefaultPrivate</key>
 		<string>DuckDuckGo</string>
 		<key>PreventInstalls</key>
 		<false/>
