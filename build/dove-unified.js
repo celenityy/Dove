@@ -470,7 +470,7 @@ pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
 // https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
 pref("extensions.experiments.enabled", true); // [DEFAULT]
 
-/// Block Cardbook (if installed) & DKIM Verifier from accessing restricted/quarantined domains
+/// Block Cardbook (if installed) and DKIM Verifier from accessing restricted/quarantined domains
 // https://support.mozilla.org/kb/quarantined-domains
 pref("extensions.quarantineIgnoredByUser.cardbook@vigneau.philippe", false); // [DEFAULT]
 pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
@@ -480,6 +480,18 @@ pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 // Unfortunately doesn't have a prompt when disabled like Desktop :(
 // Setting here to expose via the `about:config`...
 pref("xpinstall.enabled", true); // [HIDDEN] [DEFAULT]
+
+/// Unbreak installation of add-ons from ATN (`addons.thunderbird.net`) if mozAddonManager is disabled
+// For context, when mozAddonManager is disabled on Firefox, AMO will fallback and successfully install add-ons without fail out of the box. This is unfortunately NOT the case for ATN currently.
+// HOWEVER, ATN DOES still have a fallback when mozAddonManager is disabled, via the legacy InstallTrigger interface (which is disabled by default nowadays).
+// So essentially, we're going to re-enable InstallTrigger so ATN can fallback, but to avoid fingerprinting, we're stubbing it with uBlock Origin for every website EXCEPT `addons.thunderbird.net`.
+// For `addons.thunderbird.net`, we're also stubbing`window.InstallTrigger.enabled` and `window.InstallTrigger.updateEnabled`with uBlock Origin, to prevent exposing whether the user has enabled or disabled the installation of add-ons (via the `xpinstall.enabled` pref).
+// This effectively allows users to install add-ons from ATN, but without compromising their privacy and security.
+// https://github.com/thunderbird/addons-server/issues/332
+// https://devdoc.net/web/developer.mozilla.org/en-US/docs/XPInstall_API_Reference/InstallTrigger_Object.html
+// https://searchfox.org/mozilla-central/source/dom/webidl/InstallTrigger.webidl
+pref("extensions.InstallTrigger.enabled", true); // [DEFAULT]
+pref("extensions.InstallTriggerImpl.enabled", true);
 
 pref("mail.dove.status", "013");
 
