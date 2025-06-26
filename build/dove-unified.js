@@ -606,6 +606,11 @@ pref("calendar.extract.service.enabled", false); // [DEFAULT]
 /// Remove default Google Groups link
 pref("mailnews.messageid_browser.url", "");
 
+/// (Attempt to) Unbreak Tracking Protection list downloads
+// The default is `moz-sbrs:://antitracking`, which fetches these lists from Remote Settings - but the problem is that Thunderbird's Remote Settings unfortunately doesn't ship the Tracking Protection lists like Firefox
+// So this switches the URL to try downloading them directly from Mozilla
+pref("browser.safebrowsing.provider.mozilla.updateURL", "https://shavar.services.mozilla.com/downloads?client=	navclient-auto-ffox&appver=%VERSION%&pver=2.2");
+
 /// Warn users if they have not addressed a BCC (Blind Carbon Copy) warning
 pref("mail.compose.warn_public_recipients.aggressive", true);
 
