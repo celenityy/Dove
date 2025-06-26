@@ -11,6 +11,13 @@
 ! Required for installing add-ons
 addons.thunderbird.net#@#^script
 
+! Required for various functionality (such as viewing user pages - ex. https://addons.mozilla.org/firefox/user/4757633/)
+addons.mozilla.org#@#^script
+
+! Required for viewing files and installing add-ons
+gitflic.ru#@#^script
+github.com#@#^script
+
 ! Required for AOL
 login.aol.com#@#^script
 
