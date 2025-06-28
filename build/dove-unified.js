@@ -678,7 +678,12 @@ pref("dom.manifest.enabled", false);
 
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
-pref("mailnews.auto_config.addons_url", ""); // [DEFAULT = https://autoconfig.thunderbird.net/addons.json]
+pref("mailnews.auto_config.addons_url", ""); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json]
+
+/// Enable stricter media autoplay blocking
+// https://utcc.utoronto.ca/%7Ecks/space/blog/web/FirefoxMediaAutoplaySettingsIII
+// https://searchfox.org/mozilla-central/rev/3ce874dc2703831af3e5ef3a1d216ffd08057fa5/modules/libpref/init/StaticPrefList.yaml#6353-6360
+pref("media.autoplay.blocking_policy", 2); // [DEFAULT: 0]
 
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
