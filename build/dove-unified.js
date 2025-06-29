@@ -74,6 +74,7 @@ pref("mail.dove.status", "001");
 
 /// Clear unnecessary/undesired Mozilla URLs
 pref("mail.pgpmime.addon_url", ""); // Contains a dead link to Enigmail - a now dead extension that used to provide E2EE for Thunderbird (before it was built-in like it is nowadays...) - Likely not used anywhere
+pref("toolkit.crashreporter.infoURL", "");
 
 /// Disable Donation Prompts
 // Please still donate to Thunderbird if you appreciate it! ;)
@@ -619,7 +620,7 @@ pref("mail.dove.status", "016");
 /*** 017 MISC. SECURITY ***/
 
 /// Always warn users before launching other apps
-pref("mail.external_protocol_requires_permission", true); // [HIDDEN]
+pref("mail.external_protocol_requires_permission", true);
 
 /// Disable insecure NTLMv1 [LINUX-ONLY]
 // Fedora's Thunderbird package overrides this to `true`... :/ [LINUX-ONLY]
