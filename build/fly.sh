@@ -51,7 +51,7 @@ export DOVE_WINDOWS_POLICIES="windows/distribution/policies.json"
 export DOVE_OSX_POLICIES_JSON="unused/macos/policies.json"
 export DOVE_OSX_POLICIES_PLIST="macos/macos/org.mozilla.thunderbird.plist"
 
-mkdir -p /tmp/dove
+mkdir -vp /tmp/dove
 
 # GNU/LINUX
 
@@ -107,7 +107,10 @@ echo "Created /tmp/dove/osx-temp3.js"
 
 cat /tmp/dove/osx-temp1.js /tmp/dove/osx-temp2.js /tmp/dove/osx-temp3.js > "$DOVE_OSX_PREFS"
 
-python3 build/convert.py "$DOVE_OSX_PREFS" "$DOVE_OSX_CFG"
+python3 build/convert.py "$DOVE_OSX_PREFS" /tmp/dove/dove-osx-tmp.cfg
+
+# Add "user" prefs
+cat /tmp/dove/dove-osx-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_OSX_CFG"
 
 # WINDOWS
 
@@ -135,7 +138,10 @@ echo "Created /tmp/dove/windows-temp3.js"
 
 cat /tmp/dove/windows-temp1.js /tmp/dove/windows-temp2.js /tmp/dove/windows-temp3.js > "$DOVE_WINDOWS_PREFS"
 
-python3 build/convert.py "$DOVE_WINDOWS_PREFS" "$DOVE_WINDOWS_CFG"
+python3 build/convert.py "$DOVE_WINDOWS_PREFS" /tmp/dove/dove-windows-tmp.cfg
+
+# Add "user" prefs
+cat /tmp/dove/dove-windows-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_WINDOWS_CFG"
 
 # POLICIES
 
