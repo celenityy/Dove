@@ -787,6 +787,7 @@ pref("mail.spellcheck.inline", true); // [DEFAULT]
 pref("mail.SpellCheckBeforeSend", true);
 
 /// Enable the new Account Hub by default
+pref("mail.accounthub.addressbook.enabled", true);
 pref("mail.accounthub.enabled", true);
 
 /// Hide Title Bar by default
