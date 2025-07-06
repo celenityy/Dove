@@ -32,6 +32,14 @@ echo_red_text "Press enter to continue."
 read
 
 ## Uninstall Dove
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+echo
+
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
 /bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
@@ -54,6 +62,22 @@ echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
 echo
 
 echo_green_text "Removing the /Library/celenity/Dove directory..."

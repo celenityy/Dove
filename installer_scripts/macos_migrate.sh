@@ -31,6 +31,54 @@ echo_green_text "If you are unable/unwilling to grant your Terminal this permiss
 echo_red_text "Press enter to continue."
 read
 
+echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+echo
+
+echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER.plist to 644..."
+sudo /bin/chmod -v 644 dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+echo
+
+echo_green_text "Copying dev.celenity.dove.env.MOZ_CRASHREPORTER.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
+sudo /bin/cp dev.celenity.dove.env.MOZ_CRASHREPORTER.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+echo
+
+echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
+/bin/launchctl load /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+echo
+
+echo_green_text "Downloading dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+echo
+
+echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist to 644..."
+sudo /bin/chmod -v 644 dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+echo
+
+echo_green_text "Copying dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
+sudo /bin/cp dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+echo
+
+echo_green_text "Loading dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
+/bin/launchctl load /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+echo
+
+echo_green_text "Downloading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
+curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+echo
+
+echo_green_text "Changing permissions of dev.celenity.dove.env.SSLKEYLOGFILE.plist to 644..."
+sudo /bin/chmod -v 644 dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+echo
+
+echo_green_text "Copying dev.celenity.dove.env.SSLKEYLOGFILE.plist to /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
+sudo /bin/cp dev.celenity.dove.env.SSLKEYLOGFILE.plist /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+echo
+
+echo_green_text "Loading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
+/bin/launchctl load /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+echo
+
 echo_green_text "Removing /Library/celenity/Dove/dove-apply-intel.sh..."
 sudo /bin/rm -f /Library/celenity/Dove/dove-apply-intel.sh || error_fn
 echo
