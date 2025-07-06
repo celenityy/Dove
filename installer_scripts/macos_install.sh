@@ -40,10 +40,6 @@ echo_green_text "Updating Homebrew cache..."
 brew update && brew upgrade --force --verbose || error_fn
 echo
 
-echo_green_text "Installing dove package..."
-brew install dove || error_fn
-echo
-
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
 curl --cert-status --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
@@ -108,6 +104,10 @@ echo_green_text "2. Intel";
 read "DEVICETYPE?Please enter your selection: "
 case ${DEVICETYPE} in
 	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
+		echo_green_text "Installing dove package..."
+		brew install dove || error_fn
+		echo
+
         echo_green_text "Downloading dove-apply.sh..."
 		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply.sh || error_fn
 		echo
@@ -186,8 +186,12 @@ case ${DEVICETYPE} in
 		;;
 
 	"intel" | "Intel" | "INTEL" | 2)
+		echo_green_text "Installing dove-intel package..."
+		brew install dove-intel || error_fn
+		echo
+
 		echo_green_text "Downloading dove-apply-intel.sh..."
-		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/celenity/Dove/dove-apply-intel.sh || error_fn
+		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos-intel/Library/celenity/Dove/dove-apply-intel.sh || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dove-apply-intel.sh to 744..."
@@ -199,7 +203,7 @@ case ${DEVICETYPE} in
 		echo
 
 		echo_green_text "Downloading dev.celenity.dove.apply.intel.plist..."
-		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/macos-intel/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dev.celenity.dove.apply.intel.plist to 644..."
@@ -234,12 +238,12 @@ case ${DEVICETYPE} in
 				sudo /bin/chmod -R -v 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
 				echo
 
-				echo_green_text "Creating a symlink from /usr/local/opt/dove/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
-				sudo /bin/ln -s /usr/local/opt/dove/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
+				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
+				sudo /bin/ln -s /usr/local/opt/dove-intel/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
 				echo
 
-				echo_green_text "Creating a symlink from /usr/local/opt/dove/macos/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
-				sudo /bin/ln -s /usr/local/opt/dove/macos/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
+				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
+				sudo /bin/ln -s /usr/local/opt/dove-intel/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
 				echo
 				;;
 
@@ -252,12 +256,12 @@ case ${DEVICETYPE} in
 				/bin/mkdir -v -p "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
 				echo
 
-				echo_green_text "Creating a symlink from /usr/local/opt/dove/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
-				/bin/ln -s /usr/local/opt/dove/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
+				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
+				/bin/ln -s /usr/local/opt/dove-intel/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
 				echo
 
-				echo_green_text "Creating a symlink from /usr/local/opt/dove/macos/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
-				/bin/ln -s /usr/local/opt/dove/macos/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
+				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
+				/bin/ln -s /usr/local/opt/dove-intel/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
 				echo
 				;;
 		esac

@@ -24,6 +24,12 @@ echo_green_text "Creating archives/dove-osx.zip..."
 
 zip -r -FS "$dove_dir/archives/dove-osx.zip" * -x 'Library/*'
 
+cd "$dove_osx_intel_dir"
+
+echo_green_text "Creating archives/dove-osx-intel.zip..."
+
+zip -r -FS "$dove_dir/archives/dove-osx-intel.zip" * -x 'Library/*'
+
 cd "$dove_windows_dir"
 
 echo_green_text "Creating archives/dove-windows.zip..."

@@ -18,5 +18,8 @@ export dove_linux_dir="$dove_dir/linux"
 # Where the `macos` directory is located
 export dove_osx_dir="$dove_dir/macos"
 
+# Where the `macos-intel` directory is located
+export dove_osx_intel_dir="$dove_dir/macos-intel"
+
 # Where the `windows` directory is located
 export dove_windows_dir="$dove_dir/windows"
