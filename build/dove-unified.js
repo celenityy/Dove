@@ -686,7 +686,7 @@ pref("dom.manifest.enabled", false);
 
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
-pref("mailnews.auto_config.addons_url", ""); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json]
+pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json] - Setting to blank results in error on set-up stating that no URL is configured
 
 /// Enable stricter media autoplay blocking
 // https://utcc.utoronto.ca/%7Ecks/space/blog/web/FirefoxMediaAutoplaySettingsIII
