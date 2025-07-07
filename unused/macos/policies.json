@@ -11,11 +11,9 @@
     "DNSOverHTTPS": {
       "Enabled": true,
       "Fallback": false,
-      "Locked": false,
       "ProviderURL": "https://dns.quad9.net/dns-query"
     },
     "Proxy": {
-      "Locked": false,
       "Mode": "none",
       "UseProxyForDNS": true
     },
@@ -1852,12 +1850,6 @@
         "blocked_install_message": "Typical Reply: https://addons.thunderbird.net/addon/typical-reply/",
         "private_browsing": true
       },
-      "uBlock0@raymondhill.net": {
-        "blocked_install_message": "uBlock Origin: https://github.com/gorhill/ublock",
-        "installation_mode": "normal_installed",
-        "install_url": "https://github.com/gorhill/uBlock/releases/download/1.64.0/uBlock0_1.64.0.thunderbird.xpi",
-        "private_browsing": true
-      },
       "unicodify@rugk.github.io": {
         "blocked_install_message": "Unicodify – Text transformer: https://addons.thunderbird.net/addon/unicodify-text-transformer/",
         "private_browsing": true
@@ -1928,6 +1920,12 @@
       },
       "@eddie.outlookcalendar.qa": {
         "blocked_install_message": "Outlook Calendar - Quick Access: https://addons.thunderbird.net/addon/outlook-calendar-quick-access/",
+        "private_browsing": true
+      },
+      "uBlock0@raymondhill.net": {
+        "blocked_install_message": "uBlock Origin: https://github.com/gorhill/uBlock",
+        "installation_mode": "normal_installed",
+        "install_url": "file:///opt/homebrew/opt/dove/assets/uBlock.xpi",
         "private_browsing": true
       }
     },

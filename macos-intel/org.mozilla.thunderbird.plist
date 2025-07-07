@@ -126,8 +126,6 @@
 		<true/>
 		<key>Fallback</key>
 		<false/>
-		<key>Locked</key>
-		<false/>
 		<key>ProviderURL</key>
 		<string>https://dns.quad9.net/dns-query</string>
 	</dict>
@@ -2529,9 +2527,9 @@
 		<key>uBlock0@raymondhill.net</key>
 		<dict>
 			<key>blocked_install_message</key>
-			<string>uBlock Origin: https://github.com/gorhill/ublock</string>
+			<string>uBlock Origin: https://github.com/gorhill/uBlock</string>
 			<key>install_url</key>
-			<string>https://github.com/gorhill/uBlock/releases/download/1.64.0/uBlock0_1.64.0.thunderbird.xpi</string>
+			<string>file:///usr/local/opt/dove-intel/assets/uBlock.xpi</string>
 			<key>installation_mode</key>
 			<string>normal_installed</string>
 			<key>private_browsing</key>
@@ -3233,8 +3231,6 @@
 	</dict>
 	<key>Proxy</key>
 	<dict>
-		<key>Locked</key>
-		<false/>
 		<key>Mode</key>
 		<string>none</string>
 		<key>UseProxyForDNS</key>

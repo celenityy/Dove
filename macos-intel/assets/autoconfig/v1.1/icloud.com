@@ -1,0 +1,24 @@
+<clientConfig version="1.1">
+  <emailProvider id="me.com">
+    <domain>mac.com</domain>
+    <domain>me.com</domain>
+    <domain>icloud.com</domain>
+    <displayName>Apple iCloud</displayName>
+    <displayShortName>Apple</displayShortName>
+    <incomingServer type="imap">
+      <hostname>imap.mail.me.com</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILLOCALPART%</username>
+      <authentication>password-cleartext</authentication>
+    </incomingServer>
+    <outgoingServer type="smtp">
+      <hostname>smtp.mail.me.com</hostname>
+      <port>587</port>
+      <socketType>STARTTLS</socketType>
+      <username>%EMAILADDRESS%</username>
+      <authentication>password-cleartext</authentication>
+    </outgoingServer>
+    <documentation url="https://support.apple.com/HT202304"/>
+  </emailProvider>
+</clientConfig>

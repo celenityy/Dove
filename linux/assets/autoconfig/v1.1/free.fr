@@ -1,0 +1,46 @@
+<clientConfig version="1.1">
+  <emailProvider id="free.fr">
+    <domain>free.fr</domain>
+    <displayName>Freebox</displayName>
+    <displayShortName>Freebox</displayShortName>
+
+    <incomingServer type="imap">
+      <hostname>imap.free.fr</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILLOCALPART%</username>
+      <authentication>password-cleartext</authentication>
+    </incomingServer>
+
+    <incomingServer type="pop3">
+      <hostname>pop.free.fr</hostname>
+      <port>995</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILLOCALPART%</username>
+      <authentication>password-cleartext</authentication>
+    </incomingServer>
+
+    <outgoingServer type="smtp">
+      <hostname>smtp.free.fr</hostname>
+      <port>465</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILLOCALPART%</username>
+      <authentication>password-cleartext</authentication>
+    </outgoingServer>
+
+    <documentation url="https://assistance.free.fr/articles/configurer-de-maniere-avancee-mon-logiciel-de-messagerie-609">
+      <descr lang="en">How to set up Thunderbird with Free.fr</descr>
+      <descr lang="fr">Configurer Thunderbird avec Free</descr>
+    </documentation>
+  </emailProvider>
+
+  <webMail>
+    <loginPage url="https://webmail.free.fr"/>
+    <loginPageInfo url="https://webmail.free.fr">
+      <username>%EMAILADDRESS%</username>
+      <usernameField id="imapuser"/>
+      <passwordField id="passwd"/>
+      <loginButton id="rcmloginsubmit"/>
+    </loginPageInfo>
+  </webMail>
+</clientConfig>

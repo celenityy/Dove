@@ -1,0 +1,33 @@
+<clientConfig version="1.1">
+  <emailProvider id="sfr.fr">
+    <domain>sfr.fr</domain>
+    <domain>neuf.fr</domain>
+    <domain>club-internet.fr</domain>
+    <displayName>SFR / Neuf</displayName>
+    <displayShortName>SFR</displayShortName>
+    <incomingServer type="imap">
+      <hostname>imap.sfr.fr</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILADDRESS%</username>
+      <authentication>password-cleartext</authentication>
+    </incomingServer>
+    <incomingServer type="pop3">
+      <hostname>pop.sfr.fr</hostname>
+      <port>995</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILADDRESS%</username>
+      <authentication>password-cleartext</authentication>
+    </incomingServer>
+    <outgoingServer type="smtp">
+      <hostname>smtp.sfr.fr</hostname>
+      <port>465</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILADDRESS%</username>
+      <authentication>password-cleartext</authentication>
+    </outgoingServer>
+    <documentation url="http://assistance.sfr.fr/runtime/service-et-accessoire/sfr-mail/serveurs-messagerie-sfr.html">
+      <descr lang="fr">Comment configurer son logiciel de messagerie ?</descr>
+    </documentation>
+  </emailProvider>
+</clientConfig>
