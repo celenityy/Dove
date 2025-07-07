@@ -9,6 +9,9 @@ fi
 # Version of Dove you'd like to build
 export dove_version=2025.06.26.1
 
+# Version of uBlock Origin
+export ubo_version=1.64.0
+
 # Where `Dove` (this repo) is located
 export dove_dir=$(dirname $(dirname "$(realpath "$0")"))
 

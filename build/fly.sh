@@ -68,7 +68,7 @@ export DOVE_OSX_INTEL_POLICIES_PLIST="macos-intel/org.mozilla.thunderbird.plist"
 export DOVE_OSX_POLICIES_JSON="unused/macos/policies.json"
 export DOVE_OSX_POLICIES_PLIST="macos/macos/org.mozilla.thunderbird.plist"
 
-mkdir -vp /tmp/dove
+export UBLOCK_XPI="/tmp/dove/uBlock.xpi"
 
 # GNU/LINUX
 
@@ -77,6 +77,10 @@ cp "$DOVE_LICENSE" "$dove_linux_dir"/
 
 # Copy README
 cp "$DOVE_README" "$dove_linux_dir"/
+
+# Copy uBlock Origin
+mkdir -vp "$dove_linux_dir"/assets
+cp "$UBLOCK_XPI" "$dove_linux_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
 grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_USER_PREF_CFG" > "$DOVE_LINUX_USER_PREF_CFG"
@@ -106,6 +110,10 @@ cp "$DOVE_LICENSE" "$dove_linux_flatpak_dir"/
 # Copy README
 cp "$DOVE_README" "$dove_linux_flatpak_dir"/
 
+# Copy uBlock Origin
+mkdir -vp "$dove_linux_flatpak_dir"/assets
+cp "$UBLOCK_XPI" "$dove_linux_flatpak_dir"/assets/
+
 # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [NON-FLATPAK-LINUX-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
 grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_USER_PREF_CFG" > "$DOVE_LINUX_FLATPAK_USER_PREF_CFG"
 echo "Created $DOVE_LINUX_FLATPAK_USER_PREF_CFG"
@@ -133,6 +141,10 @@ cp "$DOVE_LICENSE" "$dove_osx_dir"/
 
 # Copy README
 cp "$DOVE_README" "$dove_osx_dir"/
+
+# Copy uBlock Origin
+mkdir -vp "$dove_osx_dir"/assets
+cp "$UBLOCK_XPI" "$dove_osx_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [NON-FLATPAK-LINUX-ONLY], and [WINDOWS-ONLY]
 grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_OSX_BOOTSTRAP"
@@ -165,6 +177,10 @@ cp "$DOVE_LICENSE" "$dove_osx_intel_dir"/
 # Copy README
 cp "$DOVE_README" "$dove_osx_intel_dir"/
 
+# Copy uBlock Origin
+mkdir -vp "$dove_osx_intel_dir"/assets
+cp "$UBLOCK_XPI" "$dove_osx_intel_dir"/assets/
+
 # Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [NON-FLATPAK-LINUX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
 grep -vE 'FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_OSX_INTEL_BOOTSTRAP"
 echo "Created $DOVE_OSX_INTEL_BOOTSTRAP"
@@ -195,6 +211,10 @@ cp "$DOVE_LICENSE" "$dove_windows_dir"/
 
 # Copy README
 cp "$DOVE_README" "$dove_windows_dir"/
+
+# Copy uBlock Origin
+mkdir -vp "$dove_windows_dir"/assets
+cp "$UBLOCK_XPI" "$dove_windows_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [NON-FLATPAK-LINUX-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
 grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_WINDOWS_BOOTSTRAP"
