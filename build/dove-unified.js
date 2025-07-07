@@ -232,7 +232,7 @@ pref("layout.css.video-dynamic-range.allows-high", false); // [DEFAULT - Windows
 // This matches what Firefox's RFP/FPP targets use (only difference being we switch out Firefox for Thunderbird)
 // We'll keep platform always spoofed to Windows - since we block JS by default, can be useful (and I can't see this causing weird issues like we see on Firefox...)
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1950775
-pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Thunderbird/128.0"); // [HIDDEN]
+pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Thunderbird/140.0"); // [HIDDEN]
 
 /// Harden FPP
 // As explained here: https://codeberg.org/celenity/Phoenix/wiki/Features#fingerprinting
