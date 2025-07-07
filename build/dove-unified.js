@@ -608,6 +608,16 @@ pref("searchintegration.enable", false);
 pref("mail.winsearch.enable", false); // [WINDOWS-ONLY] [DEFAULT]
 pref("mail.winsearch.firstRunDone", true); // [WINDOWS-ONLY]
 
+/// Package Thunderbird's Autoconfiguration files locally
+// By default, these are typically fetched remotely from here: https://autoconfig.thunderbird.net/v1.1/
+// Using these locally improves privacy by avoiding the unwanted network activity/potential leakage, and improves performance/responsiveness
+// https://wiki.mozilla.org/Thunderbird:Autoconfiguration
+pref("mailnews.auto_config_url", "file:///app/etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [FLATPAK-LINUX-ONLY]
+pref("mailnews.auto_config_url", "file:///etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [NON-FLATPAK-LINUX-ONLY]
+pref("mailnews.auto_config_url", "file:///opt/homebrew/opt/dove/assets/autoconfig/v1.1/"); // [SILICON-OSX-ONLY]
+pref("mailnews.auto_config_url", "file:///usr/local/opt/dove-intel/assets/autoconfig/v1.1/"); // [INTEL-OSX-ONLY]
+pref("mailnews.auto_config_url", "file:///C:/Dove/assets/autoconfig/v1.1/"); // [WINDOWS-ONLY]
+
 /// Prevent calendar from extracting data from emails by default
 pref("calendar.extract.service.enabled", false); // [DEFAULT]
 

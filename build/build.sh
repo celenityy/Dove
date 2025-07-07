@@ -23,6 +23,13 @@ curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl
 
 mv "uBlock0_$ubo_version.thunderbird.xpi" uBlock.xpi
 
+mkdir -vp autoconfig/v1.1
+
+cd autoconfig/v1.1
+
+echo "Downloading Thunderbird's latest autoconfiguration files..."
+wget -r -np -nH --cut-dirs=3 -R index.html -e robots=off https://autoconfig.thunderbird.net/v1.1/
+
 cd "$dove_dir"
 
 ./build/fly.sh && ./build/gen_archive.sh

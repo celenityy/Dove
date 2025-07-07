@@ -78,8 +78,11 @@ cp "$DOVE_LICENSE" "$dove_linux_dir"/
 # Copy README
 cp "$DOVE_README" "$dove_linux_dir"/
 
-# Copy uBlock Origin
+# Copy Thunderbird's autoconfiguration files
 mkdir -vp "$dove_linux_dir"/assets
+cp -rf /tmp/dove/assets/autoconfig/ "$dove_linux_dir"/assets/
+
+# Copy uBlock Origin
 cp "$UBLOCK_XPI" "$dove_linux_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
@@ -110,8 +113,11 @@ cp "$DOVE_LICENSE" "$dove_linux_flatpak_dir"/
 # Copy README
 cp "$DOVE_README" "$dove_linux_flatpak_dir"/
 
-# Copy uBlock Origin
+# Copy Thunderbird's autoconfiguration files
 mkdir -vp "$dove_linux_flatpak_dir"/assets
+cp -rf /tmp/dove/assets/autoconfig/ "$dove_linux_flatpak_dir"/assets/
+
+# Copy uBlock Origin
 cp "$UBLOCK_XPI" "$dove_linux_flatpak_dir"/assets/
 
 # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [NON-FLATPAK-LINUX-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
@@ -142,8 +148,11 @@ cp "$DOVE_LICENSE" "$dove_osx_dir"/
 # Copy README
 cp "$DOVE_README" "$dove_osx_dir"/
 
-# Copy uBlock Origin
+# Copy Thunderbird's autoconfiguration files
 mkdir -vp "$dove_osx_dir"/assets
+cp -rf /tmp/dove/assets/autoconfig/ "$dove_osx_dir"/assets/
+
+# Copy uBlock Origin
 cp "$UBLOCK_XPI" "$dove_osx_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [NON-FLATPAK-LINUX-ONLY], and [WINDOWS-ONLY]
@@ -177,8 +186,11 @@ cp "$DOVE_LICENSE" "$dove_osx_intel_dir"/
 # Copy README
 cp "$DOVE_README" "$dove_osx_intel_dir"/
 
-# Copy uBlock Origin
+# Copy Thunderbird's autoconfiguration files
 mkdir -vp "$dove_osx_intel_dir"/assets
+cp -rf /tmp/dove/assets/autoconfig/ "$dove_osx_intel_dir"/assets/
+
+# Copy uBlock Origin
 cp "$UBLOCK_XPI" "$dove_osx_intel_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [NON-FLATPAK-LINUX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
@@ -212,8 +224,11 @@ cp "$DOVE_LICENSE" "$dove_windows_dir"/
 # Copy README
 cp "$DOVE_README" "$dove_windows_dir"/
 
-# Copy uBlock Origin
+# Copy Thunderbird's autoconfiguration files
 mkdir -vp "$dove_windows_dir"/assets
+cp -rf /tmp/dove/assets/autoconfig/ "$dove_windows_dir"/assets/
+
+# Copy uBlock Origin
 cp "$UBLOCK_XPI" "$dove_windows_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [NON-FLATPAK-LINUX-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
