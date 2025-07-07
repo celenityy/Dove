@@ -15,6 +15,9 @@ export dove_dir=$(dirname $(dirname "$(realpath "$0")"))
 # Where the `linux` directory is located
 export dove_linux_dir="$dove_dir/linux"
 
+# Where the `linux-flatpak` directory is located
+export dove_linux_flatpak_dir="$dove_dir/linux-flatpak"
+
 # Where the `macos` directory is located
 export dove_osx_dir="$dove_dir/macos"
 

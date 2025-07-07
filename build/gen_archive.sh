@@ -18,6 +18,12 @@ echo_green_text "Creating archives/dove-linux.zip..."
 
 zip -r -FS "$dove_dir/archives/dove-linux.zip" *
 
+cd "$dove_linux_flatpak_dir"
+
+echo_green_text "Creating archives/dove-flatpak.zip..."
+
+zip -r -FS "$dove_dir/archives/dove-flatpak.zip" *
+
 cd "$dove_osx_dir"
 
 echo_green_text "Creating archives/dove-osx.zip..."

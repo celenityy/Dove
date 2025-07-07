@@ -51,12 +51,16 @@ pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.26.1 💜", l
 Unspecified = This preference should be set EVERYWHERE
 
 [LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
+[FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (Flatpak)
 [INTEL-OSX-ONLY] = This preference should ONLY be set for macOS on Intel
+[NON-FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (non-Flatpak)
 [OSX-ONLY] = This preference should ONLY be set for macOS
 [SILICON-OSX-ONLY] = This preference should ONLY be set for macOS on Apple Silicon
 [WINDOWS-ONLY] = This preference should ONLY be set for Windows
 
+[NO-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (Flatpak)
 [NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
+[NO-NON-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (non-Flatpak)
 [NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
 [NO-INTEL-OSX] = This preference should be set everywhere, EXCEPT for macOS on Intel
 [NO-SILICON-OSX] = This preference should be set everywhere, EXCEPT for macOS on Apple Silicon
