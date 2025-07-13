@@ -499,9 +499,10 @@ pref("xpinstall.enabled", false, sticky); // [HIDDEN] So it's converted to a use
 /// Disable mozAddonManager
 // mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
 // It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
+// We currently need to set `extensions.webapi.enabled` to `true` due to a strange upstream bug that causes it to prevent certain functionality from working (like the `Get Messages` Button), but we still prevent websites from using this API with `privacy.resistFingerprinting.block_mozAddonManager`, which mitigates the concerns described above (See: https://bugzilla.mozilla.org/show_bug.cgi?id=1977082 + https://codeberg.org/celenity/Dove/issues/47)
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
-pref("extensions.webapi.enabled", false);
+pref("extensions.webapi.enabled", true); // [DEFAULT]
 pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 
 /// Disable recommendations for alternatives to legacy add-ons
