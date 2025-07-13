@@ -1,0 +1,34 @@
+<clientConfig version="1.1">
+  <emailProvider id="cty-net.ne.jp">
+    <domain>cty-net.ne.jp</domain>
+    <domain>cty-net.ne.jp</domain>
+    <domain>m2.cty-net.ne.jp</domain>
+    <domain>m3.cty-net.ne.jp</domain>
+    <domain>m4.cty-net.ne.jp</domain>
+    <domain>m5.cty-net.ne.jp</domain>
+    <domain>m6.cty-net.ne.jp</domain>
+    <domain>m7.cty-net.ne.jp</domain>
+    <domain>m8.cty-net.ne.jp</domain>
+    <domain>m9.cty-net.ne.jp</domain>
+    <domain>cty-net.com</domain>
+
+    <displayName>CTY Mail</displayName>
+    <displayShortName>CTYMail</displayShortName>
+
+    <incomingServer type="pop3">
+       <hostname>pops.cty-net.ne.jp</hostname>
+       <port>995</port>
+       <socketType>SSL</socketType>
+       <username>%EMAILADDRESS%</username>
+       <authentication>password-cleartext</authentication>
+    </incomingServer>
+
+    <outgoingServer type="smtp">
+       <hostname>smtps.cty-net.ne.jp</hostname>
+       <port>465</port>
+       <socketType>SSL</socketType>
+       <username>%EMAILADDRESS%</username>
+       <authentication>password-cleartext</authentication>
+    </outgoingServer>
+  </emailProvider>
+</clientConfig>

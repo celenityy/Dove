@@ -15,11 +15,11 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.06.26.1", locked);
+pref("mail.dove.version", "2025.07.13.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.26.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.07.13.1 💜", locked);
 
 /* INDEX 
 
@@ -51,11 +51,19 @@ pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.06.26.1 💜", l
 Unspecified = This preference should be set EVERYWHERE
 
 [LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
+[FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (Flatpak)
+[INTEL-OSX-ONLY] = This preference should ONLY be set for macOS on Intel
+[NON-FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (non-Flatpak)
 [OSX-ONLY] = This preference should ONLY be set for macOS
+[SILICON-OSX-ONLY] = This preference should ONLY be set for macOS on Apple Silicon
 [WINDOWS-ONLY] = This preference should ONLY be set for Windows
 
+[NO-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (Flatpak)
 [NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
+[NO-NON-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (non-Flatpak)
 [NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
+[NO-INTEL-OSX] = This preference should be set everywhere, EXCEPT for macOS on Intel
+[NO-SILICON-OSX] = This preference should be set everywhere, EXCEPT for macOS on Apple Silicon
 [NO-WINDOWS] = This preference should be set everywhere, EXCEPT for Windows
 
 */
@@ -74,6 +82,7 @@ pref("mail.dove.status", "001");
 
 /// Clear unnecessary/undesired Mozilla URLs
 pref("mail.pgpmime.addon_url", ""); // Contains a dead link to Enigmail - a now dead extension that used to provide E2EE for Thunderbird (before it was built-in like it is nowadays...) - Likely not used anywhere
+pref("toolkit.crashreporter.infoURL", "");
 
 /// Disable Donation Prompts
 // Please still donate to Thunderbird if you appreciate it! ;)
@@ -223,7 +232,7 @@ pref("layout.css.video-dynamic-range.allows-high", false); // [DEFAULT - Windows
 // This matches what Firefox's RFP/FPP targets use (only difference being we switch out Firefox for Thunderbird)
 // We'll keep platform always spoofed to Windows - since we block JS by default, can be useful (and I can't see this causing weird issues like we see on Firefox...)
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1950775
-pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Thunderbird/128.0"); // [HIDDEN]
+pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Thunderbird/140.0"); // [HIDDEN]
 
 /// Harden FPP
 // As explained here: https://codeberg.org/celenity/Phoenix/wiki/Features#fingerprinting
@@ -231,7 +240,6 @@ pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv
 // We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
 // We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
-pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); // [ESR] [DEFAULT] (This is the equivalent of the `+CanvasExtractionBeforeUserInputIsBlocked` target)
 
 /// Set FPP granular overrides
 // This currently:
@@ -347,15 +355,15 @@ pref("mail.dove.status", "008");
 
 /*** 009 NETWORKING ***/
 
+/// Customize list of built-in DoH resolvers
+pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 🇨🇭"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard 🇨🇾"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Unfiltered) 🇨🇾"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare 🇺🇸"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare (Malware Protection) 🇺🇸"},{"url":"https://dns0.eu","name":"DNS0 🇫🇷"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) 🇫🇷"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) 🇸🇪"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad (Unfiltered) 🇸🇪"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS 🇺🇸"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia 🇺🇸"}]'); // [HIDDEN]
+
 /// Disable link previews
 pref("mail.compose.add_link_preview", false);
 
 /// Disable network connectivity status monitoring
 // (Ex. used for automatically switching between offline & online mode)
 pref("offline.autoDetect", false);
-
-/// Improve list of built-in DoH resolvers
-pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 - Real-time Malware Protection - 🇨🇭"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) - Hardened Real-time Malware Protection - 🇫🇷"},{"url":"https://dns0.eu","name":"DNS0 - Real-time Malware Protection - 🇫🇷"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) - Ad/Tracking/Limited Malware Protection - 🇸🇪"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard (Public) - Ad/Tracking Protection - 🇨🇾"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad - Unfiltered - 🇸🇪"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia - Unfiltered - 🇺🇸"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS (Public) - Unfiltered - 🇺🇸"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Public) - Unfiltered - 🇨🇾"},{"url":"https://kids.dns0.eu","name":"DNS0 - Kids"},{"url":"https://family.dns.mullvad.net/dns-query","name":"Mullvad (Family)"},{"url":"https://family.adguard-dns.com/dns-query","name":"AdGuard (Public) - Family Protection - 🇨🇾"},{"url":"https://extended.dns.mullvad.net/dns-query","name":"Mullvad (Extended) - Ad/Tracking/Limited Malware/Social Media Protection - 🇸🇪"},{"url":"https://all.dns.mullvad.net/dns-query","name":"Mullvad (All) - Ad/Tracking/Limited Malware/Social Media/Adult/Gambling Protection - 🇸🇪"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare - Malware Protection - 🇺🇸"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare - Unfiltered (Stricter privacy policy) - 🇺🇸"},{"url":"https://family.cloudflare-dns.com/dns-query","name":"Cloudflare - Adult Content/Malware Protection - 🇺🇸"}]'); // [HIDDEN]
 
 /// Prompt before going online on Thunderbird's launch
 pref("offline.startup_state", 1);
@@ -491,9 +499,10 @@ pref("xpinstall.enabled", false, sticky); // [HIDDEN] So it's converted to a use
 /// Disable mozAddonManager
 // mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
 // It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
+// We currently need to set `extensions.webapi.enabled` to `true` due to a strange upstream bug that causes it to prevent certain functionality from working (like the `Get Messages` Button), but we still prevent websites from using this API with `privacy.resistFingerprinting.block_mozAddonManager`, which mitigates the concerns described above (See: https://bugzilla.mozilla.org/show_bug.cgi?id=1977082 + https://codeberg.org/celenity/Dove/issues/47)
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
-pref("extensions.webapi.enabled", false);
+pref("extensions.webapi.enabled", true); // [DEFAULT]
 pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 
 /// Disable recommendations for alternatives to legacy add-ons
@@ -600,6 +609,16 @@ pref("searchintegration.enable", false);
 pref("mail.winsearch.enable", false); // [WINDOWS-ONLY] [DEFAULT]
 pref("mail.winsearch.firstRunDone", true); // [WINDOWS-ONLY]
 
+/// Package Thunderbird's Autoconfiguration files locally
+// By default, these are typically fetched remotely from here: https://autoconfig.thunderbird.net/v1.1/
+// Using these locally improves privacy by avoiding the unwanted network activity/potential leakage, and improves performance/responsiveness
+// https://wiki.mozilla.org/Thunderbird:Autoconfiguration
+pref("mailnews.auto_config_url", "file:///app/etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [FLATPAK-LINUX-ONLY]
+pref("mailnews.auto_config_url", "file:///etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [NON-FLATPAK-LINUX-ONLY]
+pref("mailnews.auto_config_url", "file:///opt/homebrew/opt/dove/assets/autoconfig/v1.1/"); // [SILICON-OSX-ONLY]
+pref("mailnews.auto_config_url", "file:///usr/local/opt/dove-intel/assets/autoconfig/v1.1/"); // [INTEL-OSX-ONLY]
+pref("mailnews.auto_config_url", "file:///C:/Dove/assets/autoconfig/v1.1/"); // [WINDOWS-ONLY]
+
 /// Prevent calendar from extracting data from emails by default
 pref("calendar.extract.service.enabled", false); // [DEFAULT]
 
@@ -609,7 +628,7 @@ pref("mailnews.messageid_browser.url", "");
 /// (Attempt to) Unbreak Tracking Protection list downloads
 // The default is `moz-sbrs:://antitracking`, which fetches these lists from Remote Settings - but the problem is that Thunderbird's Remote Settings unfortunately doesn't ship the Tracking Protection lists like Firefox
 // So this switches the URL to try downloading them directly from Mozilla
-pref("browser.safebrowsing.provider.mozilla.updateURL", "https://shavar.services.mozilla.com/downloads?client=	navclient-auto-ffox&appver=%VERSION%&pver=2.2");
+pref("browser.safebrowsing.provider.mozilla.updateURL", "https://shavar.services.mozilla.com/downloads?client=navclient-auto-ffox&appver=%VERSION%&pver=2.2");
 
 /// Warn users if they have not addressed a BCC (Blind Carbon Copy) warning
 pref("mail.compose.warn_public_recipients.aggressive", true);
@@ -619,7 +638,7 @@ pref("mail.dove.status", "016");
 /*** 017 MISC. SECURITY ***/
 
 /// Always warn users before launching other apps
-pref("mail.external_protocol_requires_permission", true); // [HIDDEN]
+pref("mail.external_protocol_requires_permission", true);
 
 /// Disable insecure NTLMv1 [LINUX-ONLY]
 // Fedora's Thunderbird package overrides this to `true`... :/ [LINUX-ONLY]
@@ -678,7 +697,15 @@ pref("dom.manifest.enabled", false);
 
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
-pref("mailnews.auto_config.addons_url", ""); // [DEFAULT = https://autoconfig.thunderbird.net/addons.json]
+pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json] - Setting to blank results in error on set-up stating that no URL is configured
+
+/// Enable stricter media autoplay blocking
+// https://utcc.utoronto.ca/%7Ecks/space/blog/web/FirefoxMediaAutoplaySettingsIII
+// https://searchfox.org/mozilla-central/rev/3ce874dc2703831af3e5ef3a1d216ffd08057fa5/modules/libpref/init/StaticPrefList.yaml#6353-6360
+pref("media.autoplay.blocking_policy", 2); // [DEFAULT: 0]
+
+/// Enable stricter media autoplay blocking
+pref("media.autoplay.blocking_policy", 2); // [DEFAULT = 0]
 
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);

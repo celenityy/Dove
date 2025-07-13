@@ -56,6 +56,7 @@
                   }
                 ];
                 environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/pref/dove.js";
+                environment.etc."thunderbird/dove/assets".source = "${pkgs.dove}/assets";
                 programs.thunderbird.policies =
                   (builtins.fromJSON (builtins.readFile "${pkgs.dove}/policies.json")).policies;
                 nixpkgs.overlays = [
@@ -120,10 +121,12 @@
                   if stdenvNoCC.isDarwin then
                     ''
                       cp macos/* $out/
+                      cp -r macos/assets $out/assets
                     ''
                   else
                     ''
                       cp -r linux/policies/policies.json linux/dove.cfg linux/defaults/pref $out/
+                      cp -r linux/assets $out/assets
                     ''
                 }
                 install -Dm644 linux/README.md $out/share/doc/dove/README.md

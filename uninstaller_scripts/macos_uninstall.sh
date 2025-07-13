@@ -32,46 +32,12 @@ echo_red_text "Press enter to continue."
 read
 
 ## Uninstall Dove
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
 echo
 
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
-echo
-
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
-echo
-
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
-echo
-
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
-echo
-
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
-echo
-
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
-echo
-
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
-echo
-
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
-echo
-
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
@@ -92,10 +58,26 @@ echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 /bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
@@ -122,6 +104,48 @@ echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
+/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
+sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
 echo
 
 echo_green_text "Removing the /Library/celenity/Dove directory..."
@@ -134,28 +158,6 @@ echo
 sudo /bin/rm -f "${HOME}/Library/Preferences/org.mozilla.thunderbird.plist" || error_fn
 echo
 
-echo_green_text "Uninstalling dove..."
-brew uninstall dove || error_fn
-echo
-
-read "RESULT?Would you also like to remove celenity's Homebrew Tap? [Y/n] "
-echo
-case ${RESULT} in
-
-		"y" | "yes" | "YES" | "Y")
-			echo_green_text "Removing celenity's Tap..."
-			brew untap celenity/tap || error_fn
-			echo
-
-			echo_green_text "Updating Homebrew cache..."
-			brew update && brew upgrade --force --verbose || error_fn
-			echo
-			;;
-		
-		"n" | "no" | "N" | "NO")
-			;;
-esac
-
 echo -e ""
 echo_green_text "Are you using an Apple Silicon (M-series chip) or Intel device?";
 echo_green_text "Your options are:";
@@ -164,6 +166,10 @@ echo_green_text "2. Intel";
 read "DEVICETYPE?Please enter your selection: "
 case ${DEVICETYPE} in
 	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
+		echo_green_text "Uninstalling dove..."
+		brew uninstall dove || error_fn
+		echo
+
         echo_green_text "Unloading dev.celenity.dove.apply.plist..."
 		sudo /bin/launchctl unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
 		echo
@@ -174,6 +180,10 @@ case ${DEVICETYPE} in
 		;;
 
 	"intel" | "Intel" | "INTEL" | 2)
+		echo_green_text "Uninstalling dove-intel..."
+		brew uninstall dove-intel || error_fn
+		echo
+
 		echo_green_text "Unloading dev.celenity.dove.apply.intel.plist..."
 		sudo /bin/launchctl unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
 		echo
@@ -210,6 +220,24 @@ case ${LOCATION} in
         /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
         echo
 		;;
+esac
+
+read "RESULT?Would you also like to remove celenity's Homebrew Tap? [Y/n] "
+echo
+case ${RESULT} in
+
+		"y" | "yes" | "YES" | "Y")
+			echo_green_text "Removing celenity's Tap..."
+			brew untap celenity/tap || error_fn
+			echo
+
+			echo_green_text "Updating Homebrew cache..."
+			brew update && brew upgrade --force --verbose || error_fn
+			echo
+			;;
+		
+		"n" | "no" | "N" | "NO")
+			;;
 esac
 
 echo_red_text "You must now revoke the 'App Management' permission from your Terminal by navigating to 'System Settings' -> 'Privacy & Security' -> 'App Management'"

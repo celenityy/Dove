@@ -1,0 +1,32 @@
+<clientConfig version="1.1">
+  <emailProvider id="seznam.cz">
+    <domain>seznam.cz</domain>
+    <domain>email.cz</domain>
+    <domain>post.cz</domain>
+    <domain>spoluzaci.cz</domain>
+    <displayName>Seznam</displayName>
+    <displayShortName>Seznam</displayShortName>
+    <incomingServer type="imap">
+      <hostname>imap.seznam.cz</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </incomingServer>
+    <incomingServer type="pop3">
+      <hostname>pop3.seznam.cz</hostname>
+      <port>995</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </incomingServer>
+    <outgoingServer type="smtp">
+      <hostname>smtp.seznam.cz</hostname>
+      <port>465</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </outgoingServer>
+    <documentation url="http://napoveda.seznam.cz/cz/email/imap-pop3-smtp/"/>
+  </emailProvider>
+</clientConfig>

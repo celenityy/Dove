@@ -7,7 +7,10 @@ if [ -z ${phoenix_dir+x} ]; then
 fi
 
 # Version of Dove you'd like to build
-export dove_version=2025.06.26.1
+export dove_version=2025.07.13.1
+
+# Version of uBlock Origin
+export ubo_version=1.65.0
 
 # Where `Dove` (this repo) is located
 export dove_dir=$(dirname $(dirname "$(realpath "$0")"))
@@ -15,8 +18,14 @@ export dove_dir=$(dirname $(dirname "$(realpath "$0")"))
 # Where the `linux` directory is located
 export dove_linux_dir="$dove_dir/linux"
 
+# Where the `linux-flatpak` directory is located
+export dove_linux_flatpak_dir="$dove_dir/linux-flatpak"
+
 # Where the `macos` directory is located
 export dove_osx_dir="$dove_dir/macos"
+
+# Where the `macos-intel` directory is located
+export dove_osx_intel_dir="$dove_dir/macos-intel"
 
 # Where the `windows` directory is located
 export dove_windows_dir="$dove_dir/windows"
