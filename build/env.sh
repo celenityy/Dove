@@ -7,7 +7,7 @@ if [ -z ${phoenix_dir+x} ]; then
 fi
 
 # Version of Dove you'd like to build
-export dove_version=2025.06.26.1
+export dove_version=2025.07.13.1
 
 # Version of uBlock Origin
 export ubo_version=1.65.0

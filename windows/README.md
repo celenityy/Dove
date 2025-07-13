@@ -401,19 +401,19 @@ cp dove.cfg C:\'Program Files'\'Mozilla Thunderbird'\dove.cfg
 **Flatpak/macOS**, *assuming `/usr/lib64/thunderbird` is your installation directory*:
 
 ```sh
-sudo mkdir -p /usr/lib64/thunderbird/defaults/pref
+sudo mkdir -vp /usr/lib64/thunderbird/defaults/pref
 ```
 
 **Windows**:
 
 ```sh
-mkdir -p C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref
+mkdir -vp C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref
 ```
 
 **For standard Linux users:** If it does not already exist, you will want to create a folder named `thunderbird` located in your system's `etc` directory. Inside this `thunderbird` folder, create a new folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. This will work **regardless of your distribution** - even Snaps are supported. You can also just run the command below:
 
 ```sh
-sudo mkdir -p /etc/thunderbird/defaults/pref
+sudo mkdir -vp /etc/thunderbird/defaults/pref
 ```
 
 On macOS and GNU/Linux, you'll also want to ensure that the folder you created has proper permissions:
@@ -468,7 +468,7 @@ For non-Flatpak GNU/Linux users, you'll also want to ensure that the folder you 
 sudo chmod 655 /etc/thunderbird/policies
 ```
 
-**9:** Finally, those on Windows should copy `policies.json` to the `distribution` folder that you just created. You can run the following command:
+**9:** Now, those on Windows should copy `policies.json` to the `distribution` folder that you just created. You can run the following command:
 
 ```sh
 cp policies.json C:\'Program Files'\'Mozilla Thunderbird'\distribution\policies.json
@@ -485,6 +485,124 @@ GNU/Linux users should **instead** copy `policies.json` to their `/etc/thunderbi
 ```sh
 sudo cp policies.json /etc/thunderbird/policies/policies.json
 ```
+
+**10**: Download the latest release of uBlock Origin's **`thunderbird`** `.xpi` file. You can download the file directly from uBlock Origin's [GitHub releases here](https://github.com/gorhill/uBlock/releases/latest). **If you're using Firefox**: Ensure you **right click** the `.thunderbird.xpi` file, and select **`Save Link As...`** to prevent Firefox from attempting to install it. If preferred, you can instead run the following command in your terminal, **replacing `{VERSION}` with the latest version of uBlock Origin that you'd like to download**:
+
+```sh
+curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://github.com/gorhill/uBlock/releases/download/{VERSION}/uBlock0_{VERSION}.thunderbird.xpi
+```
+
+**11**: Rename the file you just downloaded to **`uBlock.xpi`**, and copy it to the following directory, depending on your platform:
+
+**Linux** *(Non-Flatpak)*:
+
+```sh
+/etc/thunderbird/dove/assets/uBlock.xpi
+```
+
+Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
+
+```sh
+mkdir -vp /etc/thunderbird/dove/assets
+cp uBlock0_VERSION.thunderbird.xpi /etc/thunderbird/dove/assets/uBlock.xpi
+```
+
+**Linux** *(Flatpak)*:
+
+```sh
+/var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/uBlock.xpi
+```
+
+Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
+
+```sh
+mkdir -vp /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets
+cp uBlock0_VERSION.thunderbird.xpi /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/uBlock.xpi
+```
+
+**macOS** *(Apple Silicon)*:
+
+```sh
+/opt/homebrew/opt/dove/assets/uBlock.xpi
+```
+
+Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
+
+```sh
+mkdir -vp /opt/homebrew/opt/dove/assets
+cp uBlock0_VERSION.thunderbird.xpi /opt/homebrew/opt/dove/assets/uBlock.xpi
+```
+
+**macOS** *(Intel)*:
+
+```sh
+/usr/local/opt/dove-intel/assets/uBlock.xpi
+```
+
+Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
+
+```sh
+mkdir -vp /usr/local/opt/dove-intel/assets
+cp uBlock0_VERSION.thunderbird.xpi /usr/local/opt/dove-intel/assets/uBlock.xpi
+```
+
+**Windows**:
+
+```sh
+C:\dove\assets\uBlock.xpi
+```
+
+Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
+
+```sh
+mkdir -vp C:\dove\assets
+cp uBlock0_VERSION.thunderbird.xpi C:\dove\assets\uBlock.xpi
+```
+
+**12**: Within your Dove `assets` directly, create a directory titled `autoconfig`, and within that directory, create a directory titled `v1.1`. Navigate into the `v1.1` directory.
+
+**Linux** *(Non-Flatpak)*:
+
+```sh
+mkdir -vp /etc/thunderbird/dove/assets/autoconfig/v1.1
+cd /etc/thunderbird/dove/assets/autoconfig/v1.1
+```
+
+**Linux** *(Flatpak)*:
+
+```sh
+mkdir -vp /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/autoconfig/v1.1
+cd /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/autoconfig/v1.1
+```
+
+**macOS** *(Apple Silicon)*:
+
+```sh
+mkdir -vp /opt/homebrew/opt/dove/assets/autoconfig/v1.1
+cd /opt/homebrew/opt/dove/assets/autoconfig/v1.1
+```
+
+**macOS** *(Intel)*:
+
+```sh
+mkdir -vp /usr/local/opt/dove-intel/assets/autoconfig/v1.1
+cd /usr/local/opt/dove-intel/assets/autoconfig/v1.1
+```
+
+**Windows**:
+
+```sh
+mkdir -vp C:\dove\assets\autoconfig\v1.1
+cd C:\dove\assets\autoconfig\v1.1
+```
+
+**13:** Download Mozilla's latest autoconfiguration files into the root of the `v1.1` directory. These [can be found here](https://autoconfig.thunderbird.net/v1.1/). The easiest way to download them is by installing **`wget`** *(if you haven't already)*, and running the following command in your Terminal:
+
+```sh
+wget -r -np -nH --cut-dirs=3 -R index.html -e robots=off https://autoconfig.thunderbird.net/v1.1/
+```
+
+**Alternatively**: At the cost of privacy and security, after installing Dove, you can set the value of `mailnews.auto_config_url` to `https://autoconfig.thunderbird.net/v1.1/` in your `about:config` *(Accessible by navigating to `Settings` -> `General` -> Scroll to the bottom -> `Config Editor...`)*. This is **NOT** recommended, as it will share your email provider with Mozilla, and is slower/less responsive.
 
 Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
 
