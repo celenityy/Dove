@@ -586,10 +586,10 @@ pref("mail.collect_email_address_outgoing", false);
 pref("geo.prompt.open_system_prefs", false); // Ensure users aren't prompted to open settings and enable Geolocation - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
-pref("geo.provider.use_corelocation", false);
-pref("geo.provider.use_geoclue", false);
-pref("geo.provider.use_mls", false); // [HIDDEN]
+pref("geo.provider.use_corelocation", false); // [OSX-ONLY]
+pref("geo.provider.use_geoclue", false); // [LINUX-ONLY]
 pref("network.wifi.scanning_period", 0);
+pref("widget.use-xdg-desktop-portal.location", 0); // [LINUX-ONLY]
 
 /// Disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo [CHAT]
 // https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
