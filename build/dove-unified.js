@@ -707,9 +707,6 @@ pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfi
 // https://searchfox.org/mozilla-central/rev/3ce874dc2703831af3e5ef3a1d216ffd08057fa5/modules/libpref/init/StaticPrefList.yaml#6353-6360
 pref("media.autoplay.blocking_policy", 2); // [DEFAULT: 0]
 
-/// Enable stricter media autoplay blocking
-pref("media.autoplay.blocking_policy", 2); // [DEFAULT = 0]
-
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
 
