@@ -15,11 +15,11 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.07.13.1", locked);
+pref("mail.dove.version", "2025.07.30.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.07.13.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.07.30.1 💜", locked);
 
 /* INDEX 
 
@@ -355,8 +355,11 @@ pref("mail.dove.status", "008");
 
 /*** 009 NETWORKING ***/
 
+/// Block Private Network Access requests unconditionally
+pref("network.lna.blocking", true);
+
 /// Customize list of built-in DoH resolvers
-pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 🇨🇭"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard 🇨🇾"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Unfiltered) 🇨🇾"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare 🇺🇸"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare (Malware Protection) 🇺🇸"},{"url":"https://dns0.eu","name":"DNS0 🇫🇷"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) 🇫🇷"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) 🇸🇪"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad (Unfiltered) 🇸🇪"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS 🇺🇸"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia 🇺🇸"}]'); // [HIDDEN]
+pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 🇨🇭"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard 🇨🇾"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Unfiltered) 🇨🇾"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare 🇺🇸"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare (Malware Protection) 🇺🇸"},{"url":"https://dns0.eu","name":"DNS0 🇫🇷"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) 🇫🇷"},{"url":"https://noads.joindns4.eu/dns-query","name":"DNS4EU (Ad Blocking) 🇨🇿"},{"url":"https://protective.joindns4.eu/dns-query","name":"DNS4EU (Protective) 🇨🇿"},{"url":"https://unfiltered.joindns4.eu/dns-query","name":"DNS4EU (Unfiltered) 🇨🇿"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) 🇸🇪"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad (Unfiltered) 🇸🇪"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS 🇺🇸"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia 🇺🇸"}]'); // [HIDDEN]
 
 /// Disable link previews
 pref("mail.compose.add_link_preview", false);
@@ -586,10 +589,10 @@ pref("mail.collect_email_address_outgoing", false);
 pref("geo.prompt.open_system_prefs", false); // Ensure users aren't prompted to open settings and enable Geolocation - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
-pref("geo.provider.use_corelocation", false);
-pref("geo.provider.use_geoclue", false);
-pref("geo.provider.use_mls", false); // [HIDDEN]
+pref("geo.provider.use_corelocation", false); // [OSX-ONLY]
+pref("geo.provider.use_geoclue", false); // [LINUX-ONLY]
 pref("network.wifi.scanning_period", 0);
+pref("widget.use-xdg-desktop-portal.location", 0); // [LINUX-ONLY]
 
 /// Disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo [CHAT]
 // https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
@@ -624,6 +627,10 @@ pref("calendar.extract.service.enabled", false); // [DEFAULT]
 
 /// Remove default Google Groups link
 pref("mailnews.messageid_browser.url", "");
+
+/// Reset ETP exceptions
+// Unnecessary/undesired for our use case...
+pref("urlclassifier.trackingSkipURLs", ""); // [DEFAULT] [HIDDEN]
 
 /// (Attempt to) Unbreak Tracking Protection list downloads
 // The default is `moz-sbrs:://antitracking`, which fetches these lists from Remote Settings - but the problem is that Thunderbird's Remote Settings unfortunately doesn't ship the Tracking Protection lists like Firefox
@@ -703,9 +710,6 @@ pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfi
 // https://utcc.utoronto.ca/%7Ecks/space/blog/web/FirefoxMediaAutoplaySettingsIII
 // https://searchfox.org/mozilla-central/rev/3ce874dc2703831af3e5ef3a1d216ffd08057fa5/modules/libpref/init/StaticPrefList.yaml#6353-6360
 pref("media.autoplay.blocking_policy", 2); // [DEFAULT: 0]
-
-/// Enable stricter media autoplay blocking
-pref("media.autoplay.blocking_policy", 2); // [DEFAULT = 0]
 
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);

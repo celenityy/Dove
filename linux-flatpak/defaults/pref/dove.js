@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.07.11.1", locked);
+pref("browser.phoenix.version", "2025.07.30.1", locked);
 
 /* INDEX 
 
@@ -78,7 +78,7 @@ Unspecified = This preference should be set EVERYWHERE
 
 /// Disable annoying warnings when attempting to access the `about:config`
 pref("browser.aboutConfig.showWarning", false); // [NO-ANDROID] [HIDDEN - Thunderbird] [DEFAULT - Thunderbird]
-pref("general.warnOnAboutConfig", false);
+pref("general.warnOnAboutConfig", false); // [NO-ANDROID] [ESR]
 
 /// Ensure that the `about:config` is always enabled
 pref("general.aboutConfig.enable", true, locked); // [DEFAULT - non-Android]
@@ -100,7 +100,7 @@ pref("browser.phoenix.status", "000");
 // Ex. We use DuckDuckGo as our default search engine, so we'll nclude their analytics domains
 // On IronFox, we link to our GitLab releases via the `What's New` alert, so we'll also cover their analytics domains, etc...
 // But generally we'll want to keep this limited in favor of ex. uBlock Origin & other mechanisms.
-pref("network.dns.localDomains", "250analytics.com,a.omappapi.com,activity-stream-icons.services.mozilla.com,ads.allizom.org,ads.mozilla.org,ads.nonprod.webservices.mozgcp.net,ads.prod.webservices.mozgcp.net,ads-img.mozilla.org,analytics.getpocket.com,analytics.google.com,analytics.withgoogle.com,anf1.fuzzing.mozilla.org,anonymco.com,api.divviup.org,asan-nightly-frontend-elb-1348905149.us-east-2.elb.amazonaws.com,braze.com,contile.services.mozilla.com,contile-images.services.mozilla.com,classify-client.nonprod.webservices.mozgcp.net,classify-client.prod.webservices.mozgcp.net,classify-client.services.mozilla.com,crash-reports.allizom.org,crash-reports.mozilla.com,crash-reports-xpsp2.mozilla.com,crash-stacks.mozilla.com,crash-stats.allizom.org,crash-stats.mozilla.com,crash-stats.mozilla.org,dap.services.mozilla.com,dap.nonprod.webservices.mozgcp.net,dap.prod.webservices.mozgcp.net,dap-09-3.api.divviup.org,data.mozilla.com,data-ingestion.prod.dataops.mozgcp.net,dataops.mozgcp.net,dataservices.mozgcp.net,discovery.addons.allizom.org,discovery.addons.mozilla.org,discovery.addons-dev.allizom.org,divviup.org,download-stats.mozilla.org,download-stats.r53-2.services.mozilla.com,experimenter.services.mozilla.com,experimenter.nonprod.webservices.mozgcp.net,experimenter.prod.webservices.mozgcp.net,fhr.data.mozilla.com,fhr.r53-2.services.mozilla.com,firefox-android-home-recommendations.getpocket.com,firefox-dns-perf-test.net,fuzzing.mozilla.org,google-analytics.com,google-analytics-cn.com,googleanalytics.com,googlesyndication.com,googlesyndication-cn.com,googletagmanager.com,googletagmanager-cn.com,googletagservices.com,googletagservices-cn.com,improving.duckduckgo.com,incoming.telemetry.mozilla.org,incoming.thunderbird.net,incoming-telemetry.thunderbird.net,ingestion-edge.prod.dataops.mozgcp.net,location.services.mozilla.com,locprod1-elb-eu-west-1.prod.mozaws.net,locprod2-elb-us-west-2.prod.mozaws.net,metrics-content.duckduckgo.com,new-sentry.gitlab.net,nonprod.classify-client.nonprod.webservices.mozgcp.net,normandy.cdn.mozilla.net,normandy.nonprod.cloudops.mozgcp.net,normandy.prod.cloudops.mozgcp.net,normandy-cdn.services.mozilla.com,omappapi.com,pagead2.googlesyndication.com,pipeline-incoming-prod-elb-149169523.us-west-2.elb.amazonaws.com,prod.ads.prod.webservices.mozgcp.net,prod.classify-client.prod.webservices.mozgcp.net,prod.dap.prod.webservices.mozgcp.net,prod.data-ingestion.prod.dataops.mozgcp.net,prod.dataops.mozgcp.net,prod.experimenter.prod.webservices.mozgcp.net,prod.ingestion-edge.prod.dataops.mozgcp.net,prod.sentry.prod.cloudops.mozgcp.net,prod-classifyclient.normandy.prod.cloudops.mozgcp.net,sdk.iad-05.braze.com,search.r53-2.services.mozilla.com,search.services.mozilla.com,self-repair.mozilla.org,self-repair.r53-2.services.mozilla.com,sentry.gitlab.net,sentry.io,sentry.nonprod.cloudops.mozgcp.net,sentry.prod.cloudops.mozgcp.net,sentry.prod.mozaws.net,sitereview.zscaler.com,snippets.allizom.org,snippets.cdn.mozilla.net,snippets.mozilla.com,snippets-prod.frankfurt.moz.works,snippets-prod.moz.works,snippets-prod.oregon-b.moz.works,snippets-stage.moz.works,snippets-stage.oregon-b.moz.works,snowplow.trx.gitlab.net,snowplowalb-1011729428.us-east-1.elb.amazonaws.com,snowplowprd.trx.gitlab.net,snowplowprdnlb-1490493263.us-east-2.elb.amazonaws.com,socorro.nonprod.webservices.mozgcp.net,socorro.prod.webservices.mozgcp.net,socorro-collector.services.mozilla.com,socorro-webapp-allizom.stage.mozaws.net,socorro-webapp.services.mozilla.com,spocs.getpocket.com,spocs.getpocket.dev,spocs.mozilla.net,ssl.google-analytics.com,ssl-google-analytics.l.google.com,stage.sentry.nonprod.cloudops.mozgcp.net,start.fedoraproject.org,start.thunderbird.net,start.ubuntu.com,start-stage.thunderbird.net,survey.mozilla.com,tagmanager.google.com,talkback.mozilla.org,talkback-public.mozilla.org,talkback-reports.mozilla.org,telemetry-coverage.mozilla.org,telemetry-coverage.r53-2.services.mozilla.com,telemetry-experiment.cdn.mozilla.net,telemetry-incoming.r53-2.services.mozilla.com,telemetry-incoming-a.r53-2.services.mozilla.com,telemetry-incoming-b.r53-2.services.mozilla.com,telemetry-prod-1054754349.us-east-1.elb.amazonaws.com,tiles-cdn.prod.ads.prod.webservices.mozgcp.net,updates.thunderbird.net,updates-stage.thunderbird.net,use-application-dns.net,vf.startpage.com,widgets.getpocket.com,www.250analytics.com,www.anonymco.com,www.google-analytics.com,www.google-analytics-cn.com,www.googleanalytics.com,www.googlesyndication.com,www.googlesyndication-cn.com,www.googletagmanager.com,www.googletagmanager-cn.com,www.googletagservices.com,www.googletagservices-cn.com,www.sentry.io,www-google-analytics.l.google.com,www-googletagmanager.l.google.com");
+pref("network.dns.localDomains", "250analytics.com,a.omappapi.com,activity-stream-icons.services.mozilla.com,ads.allizom.org,ads.mozilla.org,ads.nonprod.webservices.mozgcp.net,ads.prod.webservices.mozgcp.net,ads-img.mozilla.org,analytics.getpocket.com,analytics.google.com,analytics.withgoogle.com,anf1.fuzzing.mozilla.org,anonymco.com,api.divviup.org,asan-nightly-frontend-elb-1348905149.us-east-2.elb.amazonaws.com,braze.com,contile.services.mozilla.com,contile-images.services.mozilla.com,classify-client.nonprod.webservices.mozgcp.net,classify-client.prod.webservices.mozgcp.net,classify-client.services.mozilla.com,crash-reports.allizom.org,crash-reports.mozilla.com,crash-reports-xpsp2.mozilla.com,crash-stacks.mozilla.com,crash-stats.allizom.org,crash-stats.mozilla.com,crash-stats.mozilla.org,dap.services.mozilla.com,dap.nonprod.webservices.mozgcp.net,dap.prod.webservices.mozgcp.net,dap-09-3.api.divviup.org,data.mozilla.com,data-ingestion.prod.dataops.mozgcp.net,dataops.mozgcp.net,dataservices.mozgcp.net,debug-ping-preview.firebaseapp.com,discovery.addons.allizom.org,discovery.addons.mozilla.org,discovery.addons-dev.allizom.org,divviup.org,download-stats.mozilla.org,download-stats.r53-2.services.mozilla.com,experimenter.services.mozilla.com,experimenter.nonprod.webservices.mozgcp.net,experimenter.prod.webservices.mozgcp.net,fhr.data.mozilla.com,fhr.r53-2.services.mozilla.com,firefox-android-home-recommendations.getpocket.com,firefox-dns-perf-test.net,fuzzing.mozilla.org,google-analytics.com,google-analytics-cn.com,googleanalytics.com,googlesyndication.com,googlesyndication-cn.com,googletagmanager.com,googletagmanager-cn.com,googletagservices.com,googletagservices-cn.com,improving.duckduckgo.com,incoming.glean.example.com,incoming.telemetry.mozilla.org,incoming.thunderbird.net,incoming-telemetry.thunderbird.net,ingestion-edge.prod.dataops.mozgcp.net,location.services.mozilla.com,locprod1-elb-eu-west-1.prod.mozaws.net,locprod2-elb-us-west-2.prod.mozaws.net,metrics-content.duckduckgo.com,new-sentry.gitlab.net,nonprod.classify-client.nonprod.webservices.mozgcp.net,normandy.cdn.mozilla.net,normandy.nonprod.cloudops.mozgcp.net,normandy.prod.cloudops.mozgcp.net,normandy-cdn.services.mozilla.com,omappapi.com,pagead2.googlesyndication.com,pipeline-incoming-prod-elb-149169523.us-west-2.elb.amazonaws.com,prod.ads.prod.webservices.mozgcp.net,prod.classify-client.prod.webservices.mozgcp.net,prod.dap.prod.webservices.mozgcp.net,prod.data-ingestion.prod.dataops.mozgcp.net,prod.dataops.mozgcp.net,prod.experimenter.prod.webservices.mozgcp.net,prod.ingestion-edge.prod.dataops.mozgcp.net,prod.sentry.prod.cloudops.mozgcp.net,prod-classifyclient.normandy.prod.cloudops.mozgcp.net,sdk.iad-05.braze.com,search.r53-2.services.mozilla.com,search.services.mozilla.com,self-repair.mozilla.org,self-repair.r53-2.services.mozilla.com,sentry.gitlab.net,sentry.io,sentry.nonprod.cloudops.mozgcp.net,sentry.prod.cloudops.mozgcp.net,sentry.prod.mozaws.net,sitereview.zscaler.com,snippets.allizom.org,snippets.cdn.mozilla.net,snippets.mozilla.com,snippets-prod.frankfurt.moz.works,snippets-prod.moz.works,snippets-prod.oregon-b.moz.works,snippets-stage.moz.works,snippets-stage.oregon-b.moz.works,snowplow.trx.gitlab.net,snowplowalb-1011729428.us-east-1.elb.amazonaws.com,snowplowprd.trx.gitlab.net,snowplowprdnlb-1490493263.us-east-2.elb.amazonaws.com,socorro.nonprod.webservices.mozgcp.net,socorro.prod.webservices.mozgcp.net,socorro-collector.services.mozilla.com,socorro-webapp-allizom.stage.mozaws.net,socorro-webapp.services.mozilla.com,spocs.getpocket.com,spocs.getpocket.dev,spocs.mozilla.net,ssl.google-analytics.com,ssl-google-analytics.l.google.com,stage.sentry.nonprod.cloudops.mozgcp.net,start.fedoraproject.org,start.thunderbird.net,start.ubuntu.com,start-stage.thunderbird.net,survey.mozilla.com,tagmanager.google.com,talkback.mozilla.org,talkback-public.mozilla.org,talkback-reports.mozilla.org,telemetry-coverage.mozilla.org,telemetry-coverage.r53-2.services.mozilla.com,telemetry-experiment.cdn.mozilla.net,telemetry-incoming.r53-2.services.mozilla.com,telemetry-incoming-a.r53-2.services.mozilla.com,telemetry-incoming-b.r53-2.services.mozilla.com,telemetry-prod-1054754349.us-east-1.elb.amazonaws.com,tiles-cdn.prod.ads.prod.webservices.mozgcp.net,updates.thunderbird.net,updates-stage.thunderbird.net,use-application-dns.net,vf.startpage.com,widgets.getpocket.com,www.250analytics.com,www.anonymco.com,www.google-analytics.com,www.google-analytics-cn.com,www.googleanalytics.com,www.googlesyndication.com,www.googlesyndication-cn.com,www.googletagmanager.com,www.googletagmanager-cn.com,www.googletagservices.com,www.googletagservices-cn.com,www.sentry.io,www-google-analytics.l.google.com,www-googletagmanager.l.google.com");
 
 /// Disable Browser Usage Telemetry metrics
 // https://searchfox.org/mozilla-central/source/browser/docs/BrowserUsageTelemetry.rst
@@ -385,7 +385,7 @@ pref("services.settings.preview_enabled", false); // [HIDDEN] [DEFAULT]
 // Harmless - We just don't want to waste Mozilla's time due to our custom set-up...
 // Also acts as a potential performance improvement
 // https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml#3604
-pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT - non-Release/ESR]
+pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT - Release/ESR]
 pref("extensions.webcompat-reporter.newIssueEndpoint", "https://phoenix.celenity.dev/issues"); // Temporarily override to our URL instead of Mozilla's to work-around upstream bug - https://bugzilla.mozilla.org/show_bug.cgi?id=1963764
 
 
@@ -403,7 +403,7 @@ pref("browser.tabs.remote.separatePrivilegedMozillaWebContentProcess", false, lo
 pref("browser.tabs.remote.separatedMozillaDomains", "", locked);
 pref("dom.ipc.processCount.privilegedmozilla", 0, locked);
 pref("extensions.webextensions.restrictedDomains", "");
-pref("permissions.manager.defaultsUrl", "", locked); // [HIDDEN - Android] [DEFAULT - Android]
+pref("permissions.manager.defaultsUrl", ""); // [HIDDEN - Android] [DEFAULT - Android]
 pref("svg.context-properties.content.allowed-domains", "", locked); // [DEFAULT - Android/Thunderbird]
 
 /// Remove tracking parameters from Mozilla URLs + prevent exposing locale & unnecessary information
@@ -420,11 +420,15 @@ pref("signon.firefoxRelay.manage_url", "https://relay.firefox.com/accounts/profi
 pref("signon.firefoxRelay.privacy_policy_url", "https://www.mozilla.org/privacy/subscription-services/");
 pref("signon.firefoxRelay.terms_of_service_url", "https://www.mozilla.org/about/legal/terms/subscription-services/");
 
-/// Skip Mozilla's `Privacy Notice` & `Terms of Use`
+/// Skip Mozilla's `Privacy Notice` and `Terms of Use`
 // https://github.com/mozilla/policy-templates/pull/1212
 // https://searchfox.org/mozilla-central/source/browser/components/enterprisepolicies/Policies.sys.mjs
+// https://searchfox.org/mozilla-central/rev/b53d18c1/toolkit/components/telemetry/docs/internals/preferences.rst#208
 pref("datareporting.policy.dataSubmissionPolicyAcceptedVersion", 999, locked);
 pref("datareporting.policy.dataSubmissionPolicyNotifiedTime", "32503679999000", locked);
+pref("termsofuse.acceptedDate", "32503679999000", locked); // [HIDDEN - Android/Thunderbird] [NIGHTLY]
+pref("termsofuse.acceptedVersion", 999, locked); // [HIDDEN - Android/Thunderbird] [NIGHTLY]
+pref("termsofuse.bypassNotification", true, locked); // [HIDDEN - Android/Thunderbird] [DEFAULT - builds without MOZILLA_OFFICIAL] [NIGHTLY]
 
 pref("browser.phoenix.status", "002");
 
@@ -549,6 +553,11 @@ pref("privacy.trackingprotection.allow_list.baseline.enabled", true); // [DEFAUL
 
 /// Lower the network priority of known trackers (if not blocked for whatever reason...)
 pref("privacy.trackingprotection.lower_network_priority", true);
+
+/// Temporarily unbreak display of privacy policies and certain pages (ex. https://privacy.openai.com/policies)
+// https://codeberg.org/celenity/Phoenix/issues/167
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1980034
+pref("urlclassifier.trackingSkipURLs", "https://api.transcend.io/privacy/graphql");
 
 pref("browser.phoenix.status", "003");
 
@@ -1258,7 +1267,10 @@ pref("media.eme.enabled.2.NOTE", "Proceed at your own caution.");
 
 /// Block media autoplay by default
 // https://support.mozilla.org/kb/block-autoplay
+// `media.geckoview.autoplay.request.testing` is used when `media.geckoview.autoplay.request` is set to `true` (ex. on GeckoView/Fenix) - when `media.geckoview.autoplay.request` is false, `media.autoplay.default` appears to be used instead
+// https://searchfox.org/mozilla-central/rev/b53d18c1/modules/libpref/init/StaticPrefList.yaml#12641
 pref("media.autoplay.default", 5);
+pref("media.geckoview.autoplay.request.testing", 2); // [DEFAULT: 0 - Follows the Autoplay site permission]
 
 /// Disable Encrypted Media Extensions (EME) (DRM)
 // Garbage technology with privacy, security, and freedom concerns
@@ -1571,7 +1583,6 @@ pref("xpinstall.enabled", false); // [NO-ANDROID] [HIDDEN] So the default is `fa
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
 // https://github.com/thunderbird/addons-server/issues/332
-pref("extensions.webapi.enabled", false); // [NO-ANDROID]
 pref("extensions.webapi.testing", false); // [DEFAULT] Disables mozAddonManager on Mozilla testing domains
 pref("extensions.webapi.testing.http", false); // [DEFAULT] Disables mozAddonManager on Mozilla testing domains using insecure protocols
 pref("privacy.resistFingerprinting.block_mozAddonManager", true); // [NO-ANDROID]
@@ -1629,7 +1640,7 @@ pref("extensions.webcompat.useScriptingAPI", true); // [DEFAULT]
 // Blocks unsafe eval() - including WebAssembly (WASM)
 // Upgrades network requests to HTTPS
 // Etc...
-pref("extensions.webextensions.base-content-security-policy", "script-src 'self' 'unsafe-inline'; upgrade-insecure-requests;"); // `unsafe-inline` is required for Web Compatibility interventions (`about:compat`)
+pref("extensions.webextensions.base-content-security-policy", "script-src 'self' 'unsafe-inline'; upgrade-insecure-requests;"); // [NO-ANDROID] `unsafe-inline` is required for Web Compatibility interventions (`about:compat`)
 pref("extensions.webextensions.base-content-security-policy.v3", "script-src 'self'; upgrade-insecure-requests;");
 pref("extensions.webextensions.default-content-security-policy", "script-src 'self'; upgrade-insecure-requests;");
 pref("extensions.webextensions.default-content-security-policy.v3", "script-src 'self'; upgrade-insecure-requests;"); // [DEFAULT]
@@ -1774,7 +1785,6 @@ pref("browser.phoenix.status", "017");
 // https://searchfox.org/mozilla-central/rev/f1e32fa7/dom/system/NetworkGeolocationProvider.sys.mjs#21
 pref("geo.provider.network.logging.enabled", false); // [HIDDEN] [DEFAULT] 
 
-pref("geo.prompt.open_system_prefs", false); // [WINDOWS-Only] Ensure users aren't prompted to open settings and enable it - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
 
 /// Disable Mozilla's GeoIP/Region Service
 // Prevents Firefox from monitoring the user's region/general location
@@ -1788,6 +1798,13 @@ pref("browser.region.update.enabled", false);
 pref("browser.search.region", "US"); // [HIDDEN]
 pref("doh-rollout.home-region", "US"); // [HIDDEN]
 
+/// Do not force the use of the Network Geolocation provider by default
+// When either of these preferences are set to `true`, Firefox will ALWAYS use the Network Geolocation provider (BeaconDB in our case), instead of OS geolocation providers
+// We're just setting these here to expose via the `about:config`
+// https://searchfox.org/mozilla-central/rev/985f76ec/dom/geolocation/Geolocation.cpp#775
+pref("geo.provider.testing", false); // [HIDDEN] [DEFAULT]
+pref("geo.provider.use_mls", false); // [HIDDEN] [DEFAULT]
+
 
 
 /// Prevent unconditionally providing high location accuracy [LINUX-ONLY]
@@ -1797,10 +1814,9 @@ pref("geo.provider.geoclue.always_high_accuracy", false); // [LINUX-ONLY]
 
 /// Set BeaconDB as the default network Geolocation provider
 // Default is Google :/
-// https://searchfox.org/mozilla-central/source/dom/geolocation/Geolocation.cpp
-// https://searchfox.org/mozilla-central/source/dom/geolocation/MLSFallback.h
+// https://searchfox.org/mozilla-central/rev/985f76ec/dom/system/NetworkGeolocationProvider.sys.mjs#341
+// https://searchfox.org/mozilla-central/rev/985f76ec/modules/libpref/init/all.js#3085
 pref("geo.provider.network.url", "https://api.beacondb.net/v1/geolocate");
-pref("geo.provider.testing", false); // [HIDDEN] [DEFAULT] When set to `true`, this forces the use of the network Geolocation provider (BeaconDB for us), regardless of anything else - https://searchfox.org/mozilla-central/rev/f1e32fa7/dom/geolocation/Geolocation.cpp#779
 
 
 pref("browser.phoenix.status", "018");
@@ -1879,12 +1895,13 @@ pref("pdfjs.handleOctetStream", false);
 /// Show sidebar by default when viewing PDFs
 pref("pdfjs.sidebarViewOnLoad", 2);
 
-/// Update URL when changing pages
-// ex. Typically, if I load "https://example.invalid/example.pdf", and navigate to Page 27, the URL stays the same as "https://example.invalid/example.pdf"
-// When this is set to "true", if I loaded "https://example.invalid/example.pdf", and navigated to Page 27, the URL would instead update to "https://example.invalid/example.pdf#page=27"
-// So this is an incredibly useful feature that allows easy bookmarking/sharing of PDFs, keeping track of what you've read, etc.
-// (We also still nuke browsing history by default on exit)
-pref("pdfjs.historyUpdateUrl", true);
+/// Update URL when changing pages [NO-ANDROID]
+// ex. Typically, if I load "https://example.invalid/example.pdf", and navigate to Page 27, the URL stays the same as "https://example.invalid/example.pdf" [NO-ANDROID]
+// When this is set to "true", if I loaded "https://example.invalid/example.pdf", and navigated to Page 27, the URL would instead update to "https://example.invalid/example.pdf#page=27" [NO-ANDROID]
+// So this is an incredibly useful feature that allows easy bookmarking/sharing of PDFs, keeping track of what you've read, etc. [NO-ANDROID]
+// (We also still nuke browsing history by default on exit) [NO-ANDROID]
+// This currently doesn't seem to work properly on Android [NO-ANDROID]
+pref("pdfjs.historyUpdateUrl", true); // [NO-ANDROID]
 
 pref("browser.phoenix.status", "019");
 
@@ -1914,6 +1931,14 @@ pref("browser.safebrowsing.provider.google.lists.default", "goog-badbinurl-shava
 
 /// Enable an additional plug-in blocklist from Mozilla
 pref("urlclassifier.blockedTable", "moztest-block-simple,mozplugin-block-digest256"); // [DEFAULT - Nightly]
+
+/// Enable the Potentially Harmful Application list (when Safe Browsing is enabled)
+// This contains threats that are specific to Mobile/Android (of the `POTENTIALLY_HARMFUL_APPLICATION` type)
+// Firefox on non-Android devices will just silently ignore/disregard this list
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1980046
+// https://searchfox.org/mozilla-central/rev/8720f2b5/toolkit/components/url-classifier/nsUrlClassifierUtils.cpp#176
+// https://developers.google.com/safe-browsing/reference/Local.Database
+pref("urlclassifier.malwareTable", "goog-malware-proto,goog-unwanted-proto,moztest-harmful-simple,moztest-malware-simple,moztest-unwanted-simple,goog-harmful-proto");
 
 /// Enable Safe Browsing by default
 // This won't do anything if you don't have an API key from Google, though doesn't hurt...
@@ -2116,9 +2141,16 @@ pref("dom.origin-trials.mls.state", 1);
 /// Enable Private Network Access Restrictions
 // https://wicg.github.io/private-network-access/
 // https://searchfox.org/mozilla-central/rev/a87741c4/netwerk/protocol/http/nsHttpTransaction.cpp#3655
-pref("network.lna.block_trackers", true); // [DEFAULT] [NIGHTLY] https://searchfox.org/mozilla-central/rev/16a9e4fb/modules/libpref/init/StaticPrefList.yaml#14149
-pref("network.lna.blocking", true); // [NIGHTLY]
-pref("network.lna.enabled", true); // [DEFAULT] [NIGHTLY]
+pref("network.lna.block_trackers", true); // [DEFAULT - Nightly] https://searchfox.org/mozilla-central/rev/16a9e4fb/modules/libpref/init/StaticPrefList.yaml#14149
+pref("network.lna.enabled", true); // [DEFAULT]
+
+/// Prevent exposing XPCOM Components.interfaces to websites
+// PRIVACY: Fingerprinting concerns
+// SECURITY: Attack Surface Reduction
+// (For reference, this is also set by ex. Tor Browser)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=429070
+// https://devdoc.net/web/developer.mozilla.org/en-US/docs/Components.interfaces.html
+pref("dom.use_components_shim", false); // [DEFAULT - Nightly]
 
 pref("browser.phoenix.status", "021");
 
@@ -2787,11 +2819,9 @@ pref("toolkit.legacyUserProfileCustomizations.stylesheets", true); // [NO-ANDROI
 pref("media.webspeech.synth.dont_notify_on_error", true); // [HIDDEN]
 
 
-/// Disable fullscreen delay + warning
+/// Disable fullscreen delay
 pref("full-screen-api.transition-duration.enter", "0 0"); // [Default = 200 200]
 pref("full-screen-api.transition-duration.leave", "0 0"); // [Default = 200 200]
-pref("full-screen-api.warning.delay", -1); // [Default = 500, -1 = Automatic]
-pref("full-screen-api.warning.timeout", 0); // [Default = 3000]
 
 
 
@@ -2936,7 +2966,6 @@ pref("browser.phoenix.status", "028");
 
 
 
-pref("browser.places.interactions.log", false); // [HIDDEN] [DEFAULT] Disable logging https://searchfox.org/mozilla-central/source/browser/components/places/Interactions.sys.mjs
 
 
 
@@ -2955,10 +2984,6 @@ pref("browser.places.interactions.log", false); // [HIDDEN] [DEFAULT] Disable lo
 
 
 
-pref("browser.newtabpage.activity-stream.discoverystream.rec.impressions", "{}", locked); // [DEFAULT] https://searchfox.org/mozilla-central/rev/cc4985b7/browser/extensions/newtab/lib/ActivityStream.sys.mjs#978
-pref("browser.newtabpage.activity-stream.discoverystream.spoc.impressions", "{}", locked); // [DEFAULT] https://searchfox.org/mozilla-central/rev/cc4985b7/browser/extensions/newtab/lib/ActivityStream.sys.mjs#962
-pref("browser.newtabpage.activity-stream.feeds.section.topstories.rec.impressions", "{}", locked); // [HIDDEN] https://searchfox.org/mozilla-central/rev/cc4985b7/browser/extensions/newtab/lib/TopStoriesFeed.sys.mjs#33
-pref("browser.newtabpage.activity-stream.feeds.section.topstories.spoc.impressions", "{}", locked); // [HIDDEN] https://searchfox.org/mozilla-central/rev/cc4985b7/browser/extensions/newtab/lib/TopStoriesFeed.sys.mjs#27
 
 
 
@@ -2993,11 +3018,9 @@ pref("browser.phoenix.status", "029");
 
 
 
-// https://searchfox.org/mozilla-central/rev/cc4985b7/browser/components/urlbar/UrlbarView.sys.mjs#2353
 
 
 
-// https://searchfox.org/mozilla-central/rev/10ecded0/browser/app/profile/firefox.js#489
 
 
 
@@ -3033,7 +3056,6 @@ pref("services.sync.sendVersionInfo", false); // [NO-ANDROID]
 
 
 pref("browser.phoenix.status", "031"); // [NO-ANDROID]
-
 
 
 
@@ -3098,7 +3120,7 @@ Unspecified = This preference should be set EVERYWHERE
 
 /// Add custom branding under `Firefox Updates` at `about:preferences#general` [NO-ANDROID]
 // This will unfortunately only display if the version of Firefox you're using is repackaged (ex. Flatpaks/Linux distros) [NO-ANDROID]
-pref("distribution.about", "Phoenix: Extended for Mozilla Firefox - 2025.07.11.1 💜", locked); // [NO-ANDROID]
+pref("distribution.about", "Phoenix: Extended for Mozilla Firefox - 2025.07.30.1 💜", locked); // [NO-ANDROID]
 
 /*** 001 FINGERPRINTING PROTECTION ***/
 
@@ -3163,11 +3185,11 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.07.13.1", locked);
+pref("mail.dove.version", "2025.07.30.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.07.13.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.07.30.1 💜", locked);
 
 /* INDEX 
 
@@ -3496,8 +3518,11 @@ pref("mail.dove.status", "008");
 
 /*** 009 NETWORKING ***/
 
+/// Block Private Network Access requests unconditionally
+pref("network.lna.blocking", true);
+
 /// Customize list of built-in DoH resolvers
-pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 🇨🇭"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard 🇨🇾"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Unfiltered) 🇨🇾"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare 🇺🇸"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare (Malware Protection) 🇺🇸"},{"url":"https://dns0.eu","name":"DNS0 🇫🇷"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) 🇫🇷"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) 🇸🇪"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad (Unfiltered) 🇸🇪"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS 🇺🇸"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia 🇺🇸"}]'); // [HIDDEN]
+pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 🇨🇭"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard 🇨🇾"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Unfiltered) 🇨🇾"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare 🇺🇸"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare (Malware Protection) 🇺🇸"},{"url":"https://dns0.eu","name":"DNS0 🇫🇷"},{"url":"https://zero.dns0.eu","name":"DNS0 (ZERO) 🇫🇷"},{"url":"https://noads.joindns4.eu/dns-query","name":"DNS4EU (Ad Blocking) 🇨🇿"},{"url":"https://protective.joindns4.eu/dns-query","name":"DNS4EU (Protective) 🇨🇿"},{"url":"https://unfiltered.joindns4.eu/dns-query","name":"DNS4EU (Unfiltered) 🇨🇿"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) 🇸🇪"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad (Unfiltered) 🇸🇪"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS 🇺🇸"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia 🇺🇸"}]'); // [HIDDEN]
 
 /// Disable link previews
 pref("mail.compose.add_link_preview", false);
@@ -3723,10 +3748,9 @@ pref("mail.collect_email_address_outgoing", false);
 pref("geo.prompt.open_system_prefs", false); // Ensure users aren't prompted to open settings and enable Geolocation - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
-pref("geo.provider.use_corelocation", false);
-pref("geo.provider.use_geoclue", false);
-pref("geo.provider.use_mls", false); // [HIDDEN]
+pref("geo.provider.use_geoclue", false); // [LINUX-ONLY]
 pref("network.wifi.scanning_period", 0);
+pref("widget.use-xdg-desktop-portal.location", 0); // [LINUX-ONLY]
 
 /// Disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo [CHAT]
 // https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
@@ -3751,6 +3775,10 @@ pref("calendar.extract.service.enabled", false); // [DEFAULT]
 
 /// Remove default Google Groups link
 pref("mailnews.messageid_browser.url", "");
+
+/// Reset ETP exceptions
+// Unnecessary/undesired for our use case...
+pref("urlclassifier.trackingSkipURLs", ""); // [DEFAULT] [HIDDEN]
 
 /// (Attempt to) Unbreak Tracking Protection list downloads
 // The default is `moz-sbrs:://antitracking`, which fetches these lists from Remote Settings - but the problem is that Thunderbird's Remote Settings unfortunately doesn't ship the Tracking Protection lists like Firefox
@@ -3830,9 +3858,6 @@ pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfi
 // https://utcc.utoronto.ca/%7Ecks/space/blog/web/FirefoxMediaAutoplaySettingsIII
 // https://searchfox.org/mozilla-central/rev/3ce874dc2703831af3e5ef3a1d216ffd08057fa5/modules/libpref/init/StaticPrefList.yaml#6353-6360
 pref("media.autoplay.blocking_policy", 2); // [DEFAULT: 0]
-
-/// Enable stricter media autoplay blocking
-pref("media.autoplay.blocking_policy", 2); // [DEFAULT = 0]
 
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
