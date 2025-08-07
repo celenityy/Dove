@@ -6,6 +6,7 @@
     <domain>yahoo.fr</domain>
     <domain>yahoo.es</domain>
     <domain>yahoo.se</domain>
+    <domain>yahoo.co.in</domain>
     <domain>yahoo.co.uk</domain>
     <domain>yahoo.co.nz</domain>
     <domain>yahoo.com.au</domain>
@@ -13,6 +14,7 @@
     <domain>yahoo.com.br</domain>
     <domain>yahoo.com.mx</domain>
     <domain>ymail.com</domain>
+    <domain>myyahoo.com</domain>
     <domain>rocketmail.com</domain>
     <domain>cox.net</domain>
     <!-- MX -->
