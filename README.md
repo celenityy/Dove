@@ -50,6 +50,8 @@ ___
 - [🚀Install](#install)
 - [👋Uninstall](#uninstall)
 - [📛Manual Installation](#manual-installation)
+- [⚖️Licensing](#licensing)
+- [🏛️Notices](#notices)
 - [💜Attribution](#attribution)
 
 </details>
@@ -608,6 +610,22 @@ Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
 
 ___
 
+# ⚖️Licensing
+
+Dove is licensed under the [GNU General Public License v3.0 or later](https://spdx.org/licenses/GPL-3.0-or-later.html) *(`GPL-3.0-or-later`)* where applicable.
+
+Phoenix is licensed under the [GNU General Public License v3.0 or later](https://spdx.org/licenses/GPL-3.0-or-later.html) *(`GPL-3.0-or-later`)* where applicable.
+
+# 🏛️Notices
+
+Mozilla Thunderbird is a trademark of the Mozilla Foundation.
+
+This is not an officially supported Mozilla product. Dove is in no way affiliated with Mozilla.
+
+Dove is not sponsored or endorsed by Mozilla.
+
+Thunderbird source code is available at [https://hg-edge.mozilla.org](https://hg-edge.mozilla.org/).
+
 # 💜Attribution
 
 Huge thank you to the following projects & individuals for making Dove possible. Please show them support!
@@ -617,9 +635,9 @@ Huge thank you to the following projects & individuals for making Dove possible.
 - **[Seyed Mohamad Amin Modaresi](https://codeberg.org/gnu1)**
 	- Suggested Dove's icon, created the install & uninstall scripts, helped with maintenance/packaging, assisted with README formatting, provided general advice & support, and responsible for various other significant contributions to the project.
 
-- **[Kore](https://github.com/bikass/kora)**
+- **[Kora](https://github.com/bikass/kora)**
 	- 🪪 [bikass](https://github.com/bikass)
-	- ⚖️ [GPL-3.0](https://github.com/bikass/kora/blob/9cdedbcd55114eae05440573606c5783aff4be26/LICENSE)
+	- ⚖️ [GPL-3.0-only](https://github.com/bikass/kora/blob/9cdedbcd55114eae05440573606c5783aff4be26/LICENSE)
     - 💸 [Donate](https://ko-fi.com/tarmakofi)
 	- Designed Dove's icon
 
@@ -641,14 +659,14 @@ Huge thank you to the following projects & individuals for making Dove possible.
 
 - **[Narsil's mozilla.cfg](https://codeberg.org/Narsil/mozilla.cfg)**
 	- 🪪 [Narsil](https://codeberg.org/Narsil)
-	- ⚖️ [GPLv3](https://codeberg.org/Narsil/mozilla.cfg/src/branch/master/LICENSE.txt)
-	- Certain prefs & some inspiration
+	- ⚖️ [GPL-3.0-or-later](https://codeberg.org/Narsil/mozilla.cfg/src/branch/master/LICENSE.txt)
+	- Certain preferences + inspiration
 
 - **[Brace](https://codeberg.org/divested/brace)**
 	- 🪪 [Divested Computing Group](https://divested.dev/)
-	- ⚖️ [GPLv3](https://codeberg.org/divested/brace/src/branch/master/LICENSE)
+	- ⚖️ [AGPL-3.0-or-later](https://codeberg.org/divested/brace/src/branch/master/LICENSE)
 	- 💸 [Donate](https://divested.dev/pages/donate)
-	- Where I first learned of the idea to leverage policies & package them... + inspiration
+	- Certain preferences + inspiration
 
 - **[LibreWolf](https://librewolf.net/)**
 	- 🪪 [bgstack15](https://codeberg.org/bgstack15) + [fxbrit](https://codeberg.org/fxbrit) + [Malte Jürgens](https://codeberg.org/maltejur) + [ohfp](https://codeberg.org/ohfp) + [James McClain](https://codeberg.org/TheGreatMcPain) + [threadpanic](https://codeberg.org/threadpanic) + [Guillaume](https://codeberg.org/ltguillaume)
@@ -657,18 +675,12 @@ Huge thank you to the following projects & individuals for making Dove possible.
 
 - **[firefox-config](https://codeberg.org/rusty-snake/firefox-config)**
 	- 🪪 [rusty-snake](https://codeberg.org/rusty-snake)
-	- ⚖️ [CC0](https://codeberg.org/rusty-snake/firefox-config#license-cc0)
+	- ⚖️ [CC0-1.0](https://codeberg.org/rusty-snake/firefox-config#license-cc0)
 	- Inspiration + certain preferences
-
-- **[mobile-config-firefox](https://gitlab.com/postmarketOS/mobile-config-firefox)**
-	- 🪪 [postmarketOS](https://postmarketos.org/)
-	- ⚖️ [MPL-2.0](https://gitlab.com/postmarketOS/mobile-config-firefox/-/blob/master/LICENSE)
-	- 💸 [Donate](https://opencollective.com/postmarketOS)
-	- Inspiration
 
 - **[uBlock Origin](https://github.com/gorhill/uBlock)**
 	- 🪪 [Raymond Hill](https://github.com/gorhill) + [ItsProfesssional](https://github.com/ItsProfessional) + [MasterKia](https://github.com/MasterKia) + [peace2000](https://github.com/peace2000) + [Peter Lowe](https://pgl.yoyo.org/) + [PiQuark6046](https://github.com/piquark6046) + [stephenhawk8054](https://github.com/stephenhawk8054)
-	- ⚖️ [GPLv3](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt)
+	- ⚖️ [GPL-3.0-or-later](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt)
 	- Pre-installed extension - provides content blocking
 
 - **[Quad9](https://quad9.net/)**
@@ -678,7 +690,7 @@ Huge thank you to the following projects & individuals for making Dove possible.
 
 And of course...
 
-- **[Firefox](https://mozilla.org/firefox)**
+- **[Thunderbird](https://www.thunderbird.net/)**
 	- 🪪 [Mozilla](https://www.mozilla.org/)
 	- ⚖️ [MPL-2.0](https://www.mozilla.org/foundation/licensing/)
-	- 💸 [Donate](https://foundation.mozilla.org/donate/)
+	- 💸 [Donate](https://www.thunderbird.net/?form=support)
