@@ -174,12 +174,12 @@ NixOS is supported for [flake-based configurations](https://wiki.nixos.org/wiki/
     # which is often the case. If you've named it something else,
     # you'll need to change the `nixpkgs` below.
     dove = {
-      url = "git+https://gitlab.com/celenityy/Dove";
+      url = "git+https://gitlab.com/celenityy/Dove.git";
       inputs.nixpkgs.follows = "nixpkgs";
 	  inputs.phoenix.follows = "phoenix";
     };
 	phoenix = {
-      url = "git+https://gitlab.com/celenityy/Phoenix";
+      url = "git+https://gitlab.com/celenityy/Phoenix.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
