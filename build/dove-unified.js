@@ -368,6 +368,14 @@ pref("mail.compose.add_link_preview", false);
 // (Ex. used for automatically switching between offline & online mode)
 pref("offline.autoDetect", false);
 
+/// Enable + hard-fail OCSP revocation checks
+// We unfortunately still need this, since CRLite is currently broken on Thunderbird for users not using Firefox's Remote Settings instance (/ the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable)
+// We need to find a way to set that variable for Thunderbird by default - and once we do (or, ideally, once Mozilla actually fixes CRLite for Thunderbird...), I'll remove this - but we'll keep for now due to that reason
+// https://wikipedia.org/wiki/Online_Certificate_Status_Protocol
+// https://github.com/arkenfox/user.js/issues/1576
+pref("security.OCSP.enabled", 1); // [DEFAULT]
+pref("security.OCSP.require", true);
+
 /// Prompt before going online on Thunderbird's launch
 pref("offline.startup_state", 1);
 
