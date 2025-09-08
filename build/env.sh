@@ -10,7 +10,7 @@ fi
 export dove_version=2025.08.06.1
 
 # Version of uBlock Origin
-export ubo_version=1.65.0
+export ubo_version=1.66.0
 
 # Where `Dove` (this repo) is located
 export dove_dir=$(dirname $(dirname "$(realpath "$0")"))
