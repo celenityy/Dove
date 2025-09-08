@@ -703,12 +703,20 @@ pref("app.use_without_mail_account", true);
 pref("network.protocol-handler.warn-external.mailto", false); // [HIDDEN] [DEFAULT]
 
 /// Disable support for web applications manifests
-// Ex. used for PWAs (& PWA inspection on desktop)
+// Ex. used for PWAs (and PWA inspection on Firefox for Desktop)
 // Unnecessary for our use case
 // https://developer.mozilla.org/docs/Web/Progressive_web_apps/Manifest
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1603673
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
 pref("dom.manifest.enabled", false);
+
+/// Disable Sync by default
+// These are Thunderbird-specific sync engines, we disable the standard ones from Phoenix
+// https://searchfox.org/comm-central/rev/d1b7a08e/mail/app/profile/all-thunderbird.js#1412
+pref("services.sync.engine.addressbooks", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.calendars", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.identities", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.servers", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
 
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
@@ -718,6 +726,11 @@ pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfi
 // https://utcc.utoronto.ca/%7Ecks/space/blog/web/FirefoxMediaAutoplaySettingsIII
 // https://searchfox.org/mozilla-central/rev/3ce874dc2703831af3e5ef3a1d216ffd08057fa5/modules/libpref/init/StaticPrefList.yaml#6353-6360
 pref("media.autoplay.blocking_policy", 2); // [DEFAULT: 0]
+
+/// If Sync is enabled, disable sensitive logging by default
+// https://searchfox.org/comm-central/rev/d1b7a08e/mail/app/profile/all-thunderbird.js#1412
+pref("identity.fxaccounts.log.sensitive", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.log.appender.console", "Fatal"); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds] Matches Firefox
 
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
