@@ -1,8 +1,8 @@
 # Dove
 <p align="center">
-	<img src="assets/dove.png"
-		alt="Dove"
-		height="200">
+    <img src="assets/dove.png"
+        alt="Dove"
+        height="200">
 </p>
 
 **Dove is a suite of configurations & advanced modifications for Mozilla Thunderbird, designed to put the user first - with a focus on privacy, security, freedom, functionality, & usability.**
@@ -170,29 +170,29 @@ NixOS is supported for [flake-based configurations](https://wiki.nixos.org/wiki/
 ```nix
 {
   inputs = {
-	# Note that this assumes you have a flake-input called nixpkgs,
-	# which is often the case. If you've named it something else,
-	# you'll need to change the `nixpkgs` below.
-	dove = {
-	  url = "git+https://gitlab.com/celenityy/Dove";
-	  inputs.nixpkgs.follows = "nixpkgs";
+    # Note that this assumes you have a flake-input called nixpkgs,
+    # which is often the case. If you've named it something else,
+    # you'll need to change the `nixpkgs` below.
+    dove = {
+      url = "git+https://gitlab.com/celenityy/Dove.git";
+      inputs.nixpkgs.follows = "nixpkgs";
 	  inputs.phoenix.follows = "phoenix";
-	};
+    };
 	phoenix = {
-	  url = "git+https://gitlab.com/celenityy/Phoenix";
-	  inputs.nixpkgs.follows = "nixpkgs";
-	};
+      url = "git+https://gitlab.com/celenityy/Phoenix.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   # Add the `dove` argument to your output function, as below:
   outputs = {nixpkgs, dove, ...}: {
 	# The configuration here is an example; it will look slightly different
 	# based on your machine name and architecture.
-	nixosConfigurations.your-box = nixpkgs.lib.nixosSystem {
-	  system = "x86_64-linux";
-	  modules = [
-		# This is the important part -- add this line to your module list!
-		dove.nixosModules.default
-	  ];
+    nixosConfigurations.your-box = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        # This is the important part -- add this line to your module list!
+        dove.nixosModules.default
+      ];
 	};
   };
 }
@@ -638,13 +638,13 @@ Huge thank you to the following projects & individuals for making Dove possible.
 - **[Kora](https://github.com/bikass/kora)**
 	- 🪪 [bikass](https://github.com/bikass)
 	- ⚖️ [GPL-3.0-only](https://github.com/bikass/kora/blob/9cdedbcd55114eae05440573606c5783aff4be26/LICENSE)
-	- 💸 [Donate](https://ko-fi.com/tarmakofi)
+    - 💸 [Donate](https://ko-fi.com/tarmakofi)
 	- Designed Dove's icon
 
 - **[thunderbird-user.js](https://github.com/HorlogeSkynet/thunderbird-user.js)**
-	- 🪪 [Samuel FORESTIER](https://github.com/HorlogeSkynet) + [Daniel Nathan Gray](https://github.com/dngray)
-	- ⚖️ [MIT](https://raw.githubusercontent.com/HorlogeSkynet/thunderbird-user.js/master/LICENSE)
-	- Discovered various prefs & learned from their very nice documentation
+    - 🪪 [Samuel FORESTIER](https://github.com/HorlogeSkynet) + [Daniel Nathan Gray](https://github.com/dngray)
+    - ⚖️ [MIT](https://raw.githubusercontent.com/HorlogeSkynet/thunderbird-user.js/master/LICENSE)
+    - Discovered various prefs & learned from their very nice documentation
 
 - **[Arkenfox](https://github.com/arkenfox/user.js)**
 	- 🪪 [Thorin-Oakenpants](https://github.com/thorin-oakenpants) + [earthlng](https://github.com/earthlng) + [claustromaniac](https://github.com/claustromaniac)
@@ -654,8 +654,8 @@ Huge thank you to the following projects & individuals for making Dove possible.
 - **[Betterfox](https://github.com/yokoffing/Betterfox)**
 	- 🪪 [yokoffing](https://github.com/yokoffing)
 	- ⚖️ [MIT](https://github.com/yokoffing/Betterfox/blob/main/LICENSE)
-	- 💸 [Donate](https://github.com/sponsors/yokoffing)
-	- Various performance-related prefs
+    - 💸 [Donate](https://github.com/sponsors/yokoffing)
+    - Various performance-related prefs
 
 - **[Narsil's mozilla.cfg](https://codeberg.org/Narsil/mozilla.cfg)**
 	- 🪪 [Narsil](https://codeberg.org/Narsil)
