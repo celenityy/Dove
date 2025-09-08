@@ -27,6 +27,8 @@ mkdir -vp autoconfig/v1.1
 
 cd autoconfig/v1.1
 
+rm -vrf *
+
 echo "Downloading Thunderbird's latest autoconfiguration files..."
 wget -r -np -nH --cut-dirs=3 -R index.html -e robots=off https://autoconfig.thunderbird.net/v1.1/
 
