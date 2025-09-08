@@ -2,17 +2,11 @@
 
 source build/env.sh
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # Update "mail.dove.version"
-    sed -i '' "s/pref(\"mail.dove.version\", \".*\", locked);/pref(\"mail.dove.version\", \"$dove_version\", locked);/" build/dove-unified.js
-    # Update "distribution.about"
-    sed -i '' "s/pref(\"distribution.about\", \".*\", locked);/pref(\"distribution.about\", \"Dove for Mozilla Thunderbird - $dove_version 💜\", locked);/" build/dove-unified.js
-else
-    # Update "mail.dove.version"
-    sed -i "s/pref(\"mail.dove.version\", \".*\", locked);/pref(\"mail.dove.version\", \"$dove_version\", locked);/" build/dove-unified.js
-    # Update "distribution.about"
-    sed -i "s/pref(\"distribution.about\", \".*\", locked);/pref(\"distribution.about\", \"Dove for Mozilla Thunderbird - $dove_version 💜\", locked);/" build/dove-unified.js
-fi
+# Update "mail.dove.version"
+$SED -i "s/pref(\"mail.dove.version\", \".*\", locked);/pref(\"mail.dove.version\", \"$dove_version\", locked);/" build/dove-unified.js
+
+# Update "distribution.about"
+$SED -i "s/pref(\"distribution.about\", \".*\", locked);/pref(\"distribution.about\", \"Dove for Mozilla Thunderbird - $dove_version 💜\", locked);/" build/dove-unified.js
 
 mkdir -vp /tmp/dove
 
@@ -26,6 +20,8 @@ mv "uBlock0_$ubo_version.thunderbird.xpi" uBlock.xpi
 mkdir -vp autoconfig/v1.1
 
 cd autoconfig/v1.1
+
+rm -vrf *
 
 echo "Downloading Thunderbird's latest autoconfiguration files..."
 wget -r -np -nH --cut-dirs=3 -R index.html -e robots=off https://autoconfig.thunderbird.net/v1.1/

@@ -7,10 +7,10 @@ if [ -z ${phoenix_dir+x} ]; then
 fi
 
 # Version of Dove you'd like to build
-export dove_version=2025.08.06.1
+export dove_version=2025.09.07.1
 
 # Version of uBlock Origin
-export ubo_version=1.65.0
+export ubo_version=1.66.0
 
 # Where `Dove` (this repo) is located
 export dove_dir=$(dirname $(dirname "$(realpath "$0")"))
@@ -29,3 +29,10 @@ export dove_osx_intel_dir="$dove_dir/macos-intel"
 
 # Where the `windows` directory is located
 export dove_windows_dir="$dove_dir/windows"
+
+# Use GNU Sed on macOS instead of the built-in sed, due to differences in syntax
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    SED=gsed
+else
+    SED=sed
+fi

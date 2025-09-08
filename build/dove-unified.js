@@ -15,11 +15,11 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.08.06.1", locked);
+pref("mail.dove.version", "2025.09.07.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.08.06.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.09.07.1 💜", locked);
 
 /* INDEX 
 
@@ -116,14 +116,14 @@ pref("mailnews.start_page_override.mstone", "ignore", locked);
 /// Disable recommendations
 pref("extensions.getAddons.recommended.url", "");
 
-/// Disable Start Page by default and switch the URL to the about:config
-// This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
+/// Disable start page by default and switch the URL to `about:config`
+// This allows users to easily access `about:config` via the menu bar from `Go` -> `Mail Start Page`
 // Or by pressing alt + home
 pref("mailnews.start_page.enabled", false);
 pref("mailnews.start_page.override_url", "");
 pref("mailnews.start_page.url", "about:config");
 
-/// Disable Surveys
+/// Disable surveys
 pref("app.survey.version.viewed", 99, locked); // [HIDDEN]
 
 /// Prevent checking if Thunderbird is the default mail client
@@ -367,6 +367,14 @@ pref("mail.compose.add_link_preview", false);
 /// Disable network connectivity status monitoring
 // (Ex. used for automatically switching between offline & online mode)
 pref("offline.autoDetect", false);
+
+/// Enable + hard-fail OCSP revocation checks
+// We unfortunately still need this, since CRLite is currently broken on Thunderbird for users not using Firefox's Remote Settings instance (/ the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable)
+// We need to find a way to set that variable for Thunderbird by default - and once we do (or, ideally, once Mozilla actually fixes CRLite for Thunderbird...), I'll remove this - but we'll keep for now due to that reason
+// https://wikipedia.org/wiki/Online_Certificate_Status_Protocol
+// https://github.com/arkenfox/user.js/issues/1576
+pref("security.OCSP.enabled", 1); // [DEFAULT]
+pref("security.OCSP.require", true);
 
 /// Prompt before going online on Thunderbird's launch
 pref("offline.startup_state", 1);
@@ -695,12 +703,20 @@ pref("app.use_without_mail_account", true);
 pref("network.protocol-handler.warn-external.mailto", false); // [HIDDEN] [DEFAULT]
 
 /// Disable support for web applications manifests
-// Ex. used for PWAs (& PWA inspection on desktop)
+// Ex. used for PWAs (and PWA inspection on Firefox for Desktop)
 // Unnecessary for our use case
 // https://developer.mozilla.org/docs/Web/Progressive_web_apps/Manifest
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1603673
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
 pref("dom.manifest.enabled", false);
+
+/// Disable Sync by default
+// These are Thunderbird-specific sync engines, we disable the standard ones from Phoenix
+// https://searchfox.org/comm-central/rev/d1b7a08e/mail/app/profile/all-thunderbird.js#1412
+pref("services.sync.engine.addressbooks", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.calendars", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.identities", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.servers", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
 
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
@@ -710,6 +726,11 @@ pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfi
 // https://utcc.utoronto.ca/%7Ecks/space/blog/web/FirefoxMediaAutoplaySettingsIII
 // https://searchfox.org/mozilla-central/rev/3ce874dc2703831af3e5ef3a1d216ffd08057fa5/modules/libpref/init/StaticPrefList.yaml#6353-6360
 pref("media.autoplay.blocking_policy", 2); // [DEFAULT: 0]
+
+/// If Sync is enabled, disable sensitive logging by default
+// https://searchfox.org/comm-central/rev/d1b7a08e/mail/app/profile/all-thunderbird.js#1412
+pref("identity.fxaccounts.log.sensitive", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.log.appender.console", "Fatal"); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds] Matches Firefox
 
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
@@ -787,6 +808,7 @@ pref("mail.spellcheck.inline", true); // [DEFAULT]
 pref("mail.SpellCheckBeforeSend", true);
 
 /// Enable the new Account Hub by default
+pref("mail.accounthub.addressbook.enabled", true);
 pref("mail.accounthub.enabled", true);
 
 /// Hide Title Bar by default

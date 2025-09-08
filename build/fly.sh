@@ -3,7 +3,7 @@
 # Welcome to the Dove Unified build script!
 # This script should be ran from inside the directory where you store Dove, not directly from the 'archives' or `build` folder...
 
-export DOVE_LICENSE="COPYING"
+export DOVE_LICENSE="COPYING.txt"
 export DOVE_README="README.md"
 
 export PHOENIX_UNIFIED_PREFS="$phoenix_dir/build/phoenix-unified.js"

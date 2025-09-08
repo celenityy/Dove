@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.08.06.1", locked);
+pref("browser.phoenix.version", "2025.09.07.1", locked);
 
 /* INDEX 
 
@@ -100,7 +100,7 @@ pref("browser.phoenix.status", "000");
 // Ex. We use DuckDuckGo as our default search engine, so we'll nclude their analytics domains
 // On IronFox, we link to our GitLab releases via the `What's New` alert, so we'll also cover their analytics domains, etc...
 // But generally we'll want to keep this limited in favor of ex. uBlock Origin & other mechanisms.
-pref("network.dns.localDomains", "250analytics.com,a.omappapi.com,activity-stream-icons.services.mozilla.com,ads.allizom.org,ads.mozilla.org,ads.nonprod.webservices.mozgcp.net,ads.prod.webservices.mozgcp.net,ads-img.mozilla.org,analytics.getpocket.com,analytics.google.com,analytics.withgoogle.com,anf1.fuzzing.mozilla.org,anonymco.com,api.divviup.org,asan-nightly-frontend-elb-1348905149.us-east-2.elb.amazonaws.com,braze.com,contile.services.mozilla.com,contile-images.services.mozilla.com,classify-client.nonprod.webservices.mozgcp.net,classify-client.prod.webservices.mozgcp.net,classify-client.services.mozilla.com,crash-reports.allizom.org,crash-reports.mozilla.com,crash-reports-xpsp2.mozilla.com,crash-stacks.mozilla.com,crash-stats.allizom.org,crash-stats.mozilla.com,crash-stats.mozilla.org,dap.services.mozilla.com,dap.nonprod.webservices.mozgcp.net,dap.prod.webservices.mozgcp.net,dap-09-3.api.divviup.org,data.mozilla.com,data-ingestion.prod.dataops.mozgcp.net,dataops.mozgcp.net,dataservices.mozgcp.net,debug-ping-preview.firebaseapp.com,discovery.addons.allizom.org,discovery.addons.mozilla.org,discovery.addons-dev.allizom.org,divviup.org,download-stats.mozilla.org,download-stats.r53-2.services.mozilla.com,experimenter.services.mozilla.com,experimenter.nonprod.webservices.mozgcp.net,experimenter.prod.webservices.mozgcp.net,fhr.data.mozilla.com,fhr.r53-2.services.mozilla.com,firefox-android-home-recommendations.getpocket.com,firefox-dns-perf-test.net,fuzzing.mozilla.org,google-analytics.com,google-analytics-cn.com,googleanalytics.com,googlesyndication.com,googlesyndication-cn.com,googletagmanager.com,googletagmanager-cn.com,googletagservices.com,googletagservices-cn.com,improving.duckduckgo.com,incoming.glean.example.com,incoming.telemetry.mozilla.org,incoming.thunderbird.net,incoming-telemetry.thunderbird.net,ingestion-edge.prod.dataops.mozgcp.net,location.services.mozilla.com,locprod1-elb-eu-west-1.prod.mozaws.net,locprod2-elb-us-west-2.prod.mozaws.net,metrics-content.duckduckgo.com,new-sentry.gitlab.net,nonprod.classify-client.nonprod.webservices.mozgcp.net,normandy.cdn.mozilla.net,normandy.nonprod.cloudops.mozgcp.net,normandy.prod.cloudops.mozgcp.net,normandy-cdn.services.mozilla.com,omappapi.com,pagead2.googlesyndication.com,pipeline-incoming-prod-elb-149169523.us-west-2.elb.amazonaws.com,prod.ads.prod.webservices.mozgcp.net,prod.classify-client.prod.webservices.mozgcp.net,prod.dap.prod.webservices.mozgcp.net,prod.data-ingestion.prod.dataops.mozgcp.net,prod.dataops.mozgcp.net,prod.experimenter.prod.webservices.mozgcp.net,prod.ingestion-edge.prod.dataops.mozgcp.net,prod.sentry.prod.cloudops.mozgcp.net,prod-classifyclient.normandy.prod.cloudops.mozgcp.net,sdk.iad-05.braze.com,search.r53-2.services.mozilla.com,search.services.mozilla.com,self-repair.mozilla.org,self-repair.r53-2.services.mozilla.com,sentry.gitlab.net,sentry.io,sentry.nonprod.cloudops.mozgcp.net,sentry.prod.cloudops.mozgcp.net,sentry.prod.mozaws.net,sitereview.zscaler.com,snippets.allizom.org,snippets.cdn.mozilla.net,snippets.mozilla.com,snippets-prod.frankfurt.moz.works,snippets-prod.moz.works,snippets-prod.oregon-b.moz.works,snippets-stage.moz.works,snippets-stage.oregon-b.moz.works,snowplow.trx.gitlab.net,snowplowalb-1011729428.us-east-1.elb.amazonaws.com,snowplowprd.trx.gitlab.net,snowplowprdnlb-1490493263.us-east-2.elb.amazonaws.com,socorro.nonprod.webservices.mozgcp.net,socorro.prod.webservices.mozgcp.net,socorro-collector.services.mozilla.com,socorro-webapp-allizom.stage.mozaws.net,socorro-webapp.services.mozilla.com,spocs.getpocket.com,spocs.getpocket.dev,spocs.mozilla.net,ssl.google-analytics.com,ssl-google-analytics.l.google.com,stage.sentry.nonprod.cloudops.mozgcp.net,start.fedoraproject.org,start.thunderbird.net,start.ubuntu.com,start-stage.thunderbird.net,survey.mozilla.com,tagmanager.google.com,talkback.mozilla.org,talkback-public.mozilla.org,talkback-reports.mozilla.org,telemetry-coverage.mozilla.org,telemetry-coverage.r53-2.services.mozilla.com,telemetry-experiment.cdn.mozilla.net,telemetry-incoming.r53-2.services.mozilla.com,telemetry-incoming-a.r53-2.services.mozilla.com,telemetry-incoming-b.r53-2.services.mozilla.com,telemetry-prod-1054754349.us-east-1.elb.amazonaws.com,tiles-cdn.prod.ads.prod.webservices.mozgcp.net,updates.thunderbird.net,updates-stage.thunderbird.net,use-application-dns.net,vf.startpage.com,widgets.getpocket.com,www.250analytics.com,www.anonymco.com,www.google-analytics.com,www.google-analytics-cn.com,www.googleanalytics.com,www.googlesyndication.com,www.googlesyndication-cn.com,www.googletagmanager.com,www.googletagmanager-cn.com,www.googletagservices.com,www.googletagservices-cn.com,www.sentry.io,www-google-analytics.l.google.com,www-googletagmanager.l.google.com");
+pref("network.dns.localDomains", "250analytics.com,a.omappapi.com,activity-stream-icons.services.mozilla.com,ads.allizom.org,ads.mozilla.org,ads.nonprod.webservices.mozgcp.net,ads.prod.webservices.mozgcp.net,ads-img.mozilla.org,analytics.getpocket.com,analytics.google.com,analytics.withgoogle.com,anf1.fuzzing.mozilla.org,anonymco.com,api.divviup.org,asan-nightly-frontend-elb-1348905149.us-east-2.elb.amazonaws.com,braze.com,contile.services.mozilla.com,contile-images.services.mozilla.com,classify-client.nonprod.webservices.mozgcp.net,classify-client.prod.webservices.mozgcp.net,classify-client.services.mozilla.com,crash-reports.allizom.org,crash-reports.mozilla.com,crash-reports-xpsp2.mozilla.com,crash-stacks.mozilla.com,crash-stats.allizom.org,crash-stats.mozilla.com,crash-stats.mozilla.org,dap.services.mozilla.com,dap.nonprod.webservices.mozgcp.net,dap.prod.webservices.mozgcp.net,dap-09-3.api.divviup.org,data.mozilla.com,data-ingestion.prod.dataops.mozgcp.net,dataops.mozgcp.net,dataservices.mozgcp.net,debug-ping-preview.firebaseapp.com,discovery.addons.allizom.org,discovery.addons.mozilla.org,discovery.addons-dev.allizom.org,divviup.org,download-stats.mozilla.org,download-stats.r53-2.services.mozilla.com,experimenter.services.mozilla.com,experimenter.nonprod.webservices.mozgcp.net,experimenter.prod.webservices.mozgcp.net,fhr.data.mozilla.com,fhr.r53-2.services.mozilla.com,firefox-android-home-recommendations.getpocket.com,firefox-dns-perf-test.net,fuzzing.mozilla.org,google-analytics.com,google-analytics-cn.com,googleanalytics.com,googlesyndication.com,googlesyndication-cn.com,googletagmanager.com,googletagmanager-cn.com,googletagservices.com,googletagservices-cn.com,improving.duckduckgo.com,incoming.glean.example.com,incoming.telemetry.mozilla.org,incoming.thunderbird.net,incoming-telemetry.thunderbird.net,ingestion-edge.prod.dataops.mozgcp.net,location.services.mozilla.com,locprod1-elb-eu-west-1.prod.mozaws.net,locprod2-elb-us-west-2.prod.mozaws.net,metrics-content.duckduckgo.com,new-sentry.gitlab.net,nonprod.classify-client.nonprod.webservices.mozgcp.net,normandy.cdn.mozilla.net,normandy.nonprod.cloudops.mozgcp.net,normandy.prod.cloudops.mozgcp.net,normandy-cdn.services.mozilla.com,omappapi.com,pagead2.googlesyndication.com,pipeline-incoming-prod-elb-149169523.us-west-2.elb.amazonaws.com,prod.ads.prod.webservices.mozgcp.net,prod.classify-client.prod.webservices.mozgcp.net,prod.dap.prod.webservices.mozgcp.net,prod.data-ingestion.prod.dataops.mozgcp.net,prod.dataops.mozgcp.net,prod.experimenter.prod.webservices.mozgcp.net,prod.ingestion-edge.prod.dataops.mozgcp.net,prod.sentry.prod.cloudops.mozgcp.net,prod-classifyclient.normandy.prod.cloudops.mozgcp.net,profile.accounts.firefox.com,sdk.iad-05.braze.com,search.r53-2.services.mozilla.com,search.services.mozilla.com,self-repair.mozilla.org,self-repair.r53-2.services.mozilla.com,sentry.gitlab.net,sentry.io,sentry.nonprod.cloudops.mozgcp.net,sentry.prod.cloudops.mozgcp.net,sentry.prod.mozaws.net,sitereview.zscaler.com,snippets.allizom.org,snippets.cdn.mozilla.net,snippets.mozilla.com,snippets-prod.frankfurt.moz.works,snippets-prod.moz.works,snippets-prod.oregon-b.moz.works,snippets-stage.moz.works,snippets-stage.oregon-b.moz.works,snowplow.trx.gitlab.net,snowplowalb-1011729428.us-east-1.elb.amazonaws.com,snowplowprd.trx.gitlab.net,snowplowprdnlb-1490493263.us-east-2.elb.amazonaws.com,socorro.nonprod.webservices.mozgcp.net,socorro.prod.webservices.mozgcp.net,socorro-collector.services.mozilla.com,socorro-webapp-allizom.stage.mozaws.net,socorro-webapp.services.mozilla.com,spocs.getpocket.com,spocs.getpocket.dev,spocs.mozilla.net,ssl.google-analytics.com,ssl-google-analytics.l.google.com,stage.sentry.nonprod.cloudops.mozgcp.net,start.fedoraproject.org,start.thunderbird.net,start.ubuntu.com,start-stage.thunderbird.net,survey.mozilla.com,tagmanager.google.com,talkback.mozilla.org,talkback-public.mozilla.org,talkback-reports.mozilla.org,telemetry-coverage.mozilla.org,telemetry-coverage.r53-2.services.mozilla.com,telemetry-experiment.cdn.mozilla.net,telemetry-incoming.r53-2.services.mozilla.com,telemetry-incoming-a.r53-2.services.mozilla.com,telemetry-incoming-b.r53-2.services.mozilla.com,telemetry-prod-1054754349.us-east-1.elb.amazonaws.com,tiles-cdn.prod.ads.prod.webservices.mozgcp.net,updates.thunderbird.net,updates-stage.thunderbird.net,use-application-dns.net,vf.startpage.com,widgets.getpocket.com,www.250analytics.com,www.anonymco.com,www.google-analytics.com,www.google-analytics-cn.com,www.googleanalytics.com,www.googlesyndication.com,www.googlesyndication-cn.com,www.googletagmanager.com,www.googletagmanager-cn.com,www.googletagservices.com,www.googletagservices-cn.com,www.sentry.io,www-google-analytics.l.google.com,www-googletagmanager.l.google.com");
 
 /// Disable Browser Usage Telemetry metrics
 // https://searchfox.org/mozilla-central/source/browser/docs/BrowserUsageTelemetry.rst
@@ -241,9 +241,14 @@ pref("app.normandy.run_interval_seconds", 0, locked); // [HIDDEN - Android/Thund
 pref("app.shield.optoutstudies.enabled", false, locked); // [HIDDEN - Android/Thunderbird] Required for Firefox Labs on Desktop
 pref("messaging-system.rsexperimentloader.collection_id", ""); // [DEFAULT: `nimbus-desktop-experiments`] Required for Firefox Labs on Desktop
 pref("nimbus.appId", ""); // [HIDDEN] [DEFAULT: `firefox-desktop`] Required for Firefox Labs on Desktop
-pref("nimbus.profileId", "", locked); // [HIDDEN] https://searchfox.org/mozilla-central/rev/16a9e4fb/toolkit/components/nimbus/ExperimentAPI.sys.mjs#79 - We also set this as a user pref in `phoenix-user-pref.cfg`, to ensure that Firefox properly uses/recognizes them
-pref("nimbus.profilesdatastoreservice.enabled", false, locked); // [HIDDEN] Disable writing to the NimbusEnrollments table database https://searchfox.org/mozilla-central/rev/16a9e4fb/toolkit/components/nimbus/lib/Enrollments.sys.mjs#418
-pref("nimbus.profilesdatastoreservice.read.enabled", false, locked); // [HIDDEN] Disable reading from the NimbusEnrollments table database https://searchfox.org/mozilla-central/rev/16a9e4fb/toolkit/components/nimbus/lib/Enrollments.sys.mjs#429
+pref("nimbus.profileId", "", locked); // [HIDDEN] https://searchfox.org/mozilla-central/rev/16a9e4fb/toolkit/components/nimbus/ExperimentAPI.sys.mjs#79 - We also set this as a user pref in `phoenix-user-pref.cfg`, to ensure that Firefox properly uses/recognizes it
+pref("nimbus.profilesdatastoreservice.enabled", false, locked); // Disable writing to the NimbusEnrollments table database https://searchfox.org/mozilla-central/rev/16a9e4fb/toolkit/components/nimbus/lib/Enrollments.sys.mjs#418
+pref("nimbus.profilesdatastoreservice.read.enabled", false, locked); // Disable reading from the NimbusEnrollments table database https://searchfox.org/mozilla-central/rev/16a9e4fb/toolkit/components/nimbus/lib/Enrollments.sys.mjs#429
+
+/// Disable Glean redesign/navigation category at `about:glean`
+// This isn't really a major issue for us, but we don't want or support Glean, so I see no reason not to set this
+// https://searchfox.org/firefox-main/rev/cd6acbe9/toolkit/content/aboutGlean.js#215
+pref("about.glean.redesign.enabled", false, locked); // [HIDDEN - non-Desktop Firefox] [DEFAULT]
 
 
 /// Disable Origin Trials
@@ -551,6 +556,7 @@ pref("network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation", tru
 
 /// Enable exceptions required to avoid major breakage by default
 pref("privacy.trackingprotection.allow_list.baseline.enabled", true); // [DEFAULT] [NIGHTLY]
+pref("privacy.trackingprotection.allow_list.hasMigratedCategoryPrefs", true, locked); // [NIGHTLY] Skip migration so that privacy.trackingprotection.allow_list.baseline.enabled isn't overriden to false https://searchfox.org/mozilla-central/rev/59cf9b74/netwerk/url-classifier/UrlClassifierExceptionListService.sys.mjs#236
 
 /// Lower the network priority of known trackers (if not blocked for whatever reason...)
 pref("privacy.trackingprotection.lower_network_priority", true);
@@ -704,6 +710,11 @@ pref("browser.phoenix.status", "004");
 // https://searchfox.org/mozilla-central/source/extensions/permissions/PermissionManager.cpp#758
 pref("permissions.memory_only", false); // [HIDDEN] [DEFAULT]
 
+/// Allow users to automatically delete files downloaded in Private Browsing
+// (browser.download.deletePrivate controls the functionality itself)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1790641
+pref("browser.download.enableDeletePrivate", true); // [DEFAULT - Nightly]
+
 /// Check the boxes for clearing browsing data when navigating to `about:preferences#privacy` -> `Cookies and Site Data` -> `Manage Data...` by default [NO-ANDROID]
 pref("privacy.clearHistory.browsingHistoryAndDownloads", true); // [NO-ANDROID] [HIDDEN - Thunderbird] [DEFAULT]
 pref("privacy.clearHistory.cache", true); // [NO-ANDROID] [HIDDEN - Thunderbird] [DEFAULT]
@@ -762,7 +773,7 @@ pref("layout.css.visited_links_enabled", false);
 
 /// Disable disk cache
 pref("browser.cache.disk.enable", false);
-pref("browser.cache.disk_cache_ssl", false);
+pref("browser.cache.disk_cache_ssl", true); // [DEFAULT] Controls disk cache for secure (HTTPS) resources, depends on `browser.cache.disk.enable` (which is why we're keeping this on by default)
 
 /// Disable favicons in shortcuts [NO-ANDROID]
 // Prevents .ico files from persisting, even after deletion [NO-ANDROID]
@@ -880,6 +891,25 @@ pref("security.ssl3.dhe_rsa_aes_256_sha", false); // [DEFAULT]
 pref("security.ssl3.ecdhe_ecdsa_aes_128_sha", false); // [DEFAULT - Nightly] TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 pref("security.ssl3.ecdhe_ecdsa_aes_256_sha", false); // [DEFAULT - Nightly] TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
 
+/// Disable OCSP revocation checks
+
+// So, my current understanding:
+// According to Mozilla blog: "With CRLite, Firefox periodically downloads a compact encoding of the set of all revoked certificates that appear in Certificate Transparency logs. Firefox stores this encoding locally, updates it every 12 hours, and queries it privately every time a new TLS connection is created."
+// and: "Of course, no browser is performing daily downloads of all CRLs. For a more meaningful comparison, we can consider Chrome’s CRLSets. These are hand-picked sets of revocations that are delivered to Chrome users daily. Recent CRLSets weigh in at 600 kB and include about 1% of all revocations (thirty-five thousand of the four million total). Firefox’s CRLite implementation uses half the bandwidth, updates twice as frequently, and includes all revocations."
+// According to MDN: "Firefox desktop from version 135 requires CT log inclusion for all certificates issued by certificate authorities in Mozilla's Root CA Program".
+//
+// What this means for us:
+// 1. We enforce Certificate Transparency (CT) below (security.pki.certificate_transparency.mode -> 2)
+// 2. Mozilla requires CAs in their program to implement CT, and we disable using the system's root CAs below (security.certerrors.mitm.auto_enable_enterprise_roots + security.enterprise_roots.enabled)
+// 3. We enable + enforce CRLite below (security.pki.crlite_mode -> 2, security.remote_settings.crlite_filters.enabled -> true)
+// 4. CRLite works by using CT logs, AND includes ALL revocations from those logs
+// 5. Therefore, since we're only trusting CAs that use CT, and since CRLite is covering ALL revocations from CT, we can reasonably conclude that CRLite is covering all revocatons, and thus, OCSP should be superfluous
+// So, I'm comfortable finally retiring OCSP... :) - Great to see how far this has come
+// https://wikipedia.org/wiki/Online_Certificate_Status_Protocol
+// https://hacks.mozilla.org/2025/08/crlite-fast-private-and-comprehensive-certificate-revocation-checking-in-firefox/
+// https://developer.mozilla.org/docs/Web/Security/Certificate_Transparency#browser_requirements
+// https://github.com/arkenfox/user.js/issues/1576
+
 /// Disable Parental Controls
 // https://searchfox.org/mozilla-central/source/toolkit/components/parentalcontrols/nsIParentalControlsService.idl
 // https://searchfox.org/mozilla-central/source/netwerk/protocol/http/nsHttpHandler.cpp#547
@@ -930,11 +960,9 @@ pref("security.tls.enable_delegated_credentials", true); // [DEFAULT]
 pref("security.certerrors.mitm.priming.enabled", true); //[HIDDEN - Android/Thunderbird] [DEFAULT - non-Android/Thunderbird]
 pref("security.certerrors.mitm.priming.endpoint", "https://mitmdetection.services.mozilla.com/"); //[HIDDEN - Android/Thunderbird] [DEFAULT - non-Android/Thunderbird]
 
-/// Enable OCSP revocation checks + stapling
-// (https://wikipedia.org/wiki/Online_Certificate_Status_Protocol
+/// Enable OCSP stapling
 // https://blog.mozilla.org/security/2013/07/29/ocsp-stapling-in-firefox/
 // https://blog.cloudflare.com/high-reliability-ocsp-stapling/#ocsp-must-staple
-pref("security.OCSP.enabled", 1); // [DEFAULT - non-Android]
 pref("security.ssl.enable_ocsp_must_staple", true); // [DEFAULT]
 pref("security.ssl.enable_ocsp_stapling", true); // [DEFAULT]
 
@@ -974,11 +1002,6 @@ pref("security.mixed_content.upgrade_display_content.video", true); // [DEFAULT]
 /// Ensure we use the HSTS preload list
 // https://searchfox.org/mozilla-central/source/remote/cdp/domains/parent/Security.sys.mjs
 pref("network.stricttransportsecurity.preloadlist", true); // [DEFAULT]
-
-/// Hard-fail OCSP revocation checks by default
-// Significant security improvement
-// https://github.com/arkenfox/user.js/issues/1576
-pref("security.OCSP.require", true);
 
 /// If HTTPS-Only Mode is disabled in favor of HTTPS-First, prevent automatically exempting domains (to ensure we always try HTTPS first...)
 pref("dom.security.https_first_add_exception_on_failure", false);
@@ -1785,6 +1808,7 @@ pref("extensions.formautofill.ml.experiment.enabled", false);
 
 
 
+
 pref("browser.phoenix.status", "017");
 
 /*** 018 GEOLOCATION ***/
@@ -2158,6 +2182,8 @@ pref("dom.origin-trials.mls.state", 1);
 // https://searchfox.org/mozilla-central/rev/a87741c4/netwerk/protocol/http/nsHttpTransaction.cpp#3655
 pref("network.lna.block_trackers", true); // [DEFAULT - Nightly] https://searchfox.org/mozilla-central/rev/16a9e4fb/modules/libpref/init/StaticPrefList.yaml#14149
 pref("network.lna.enabled", true); // [DEFAULT]
+pref("permissions.default.local-network", 2); // [NO-ANDROID] [NIGHTLY] Blocks websites from prompting to access the local network by default; we won't set on Android for now since there's not a UI there to control this yet...
+pref("permissions.default.localhost", 2); // [NIGHTLY] Blocks websites from prompting to access apps and services (outside of the browser) on your device
 
 /// Prevent exposing XPCOM Components.interfaces to websites
 // PRIVACY: Fingerprinting concerns
@@ -2316,7 +2342,7 @@ pref("network.protocol-handler.warn-external-default", true); // [DEFAULT]
 
 /// Apply CSP to internal browser.xhtml
 pref("security.browser_xhtml_csp.enabled", true); // [DEFAULT]
-pref("security.browser_xhtml_csp.report-only", false);
+pref("security.browser_xhtml_csp.report-only", false); // [NO-ANDROID] [ESR]
 
 /// Decrease the lifetime of extension processes
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1847608
@@ -2836,7 +2862,7 @@ pref("media.videocontrols.picture-in-picture.respect-disablePictureInPicture", f
 /// Allow zoom by default...
 pref("apz.allow_zooming", true); // [DEFAULT]
 
-/// Allow zoom on all websites, even if they try to block it...
+/// Allow zoom on all websites, even if the website tries to block it...
 // (This is the `Zoom on all websites` UI setting for Android)
 pref("browser.ui.zoom.force-user-scalable", true);
 
@@ -3023,6 +3049,8 @@ pref("browser.phoenix.status", "028");
 
 
 
+
+
 /// Prevent adding random recently visited sites to shortcuts/pins by default
 // https://searchfox.org/mozilla-central/rev/73bd66f4/toolkit/components/places/nsNavHistory.cpp#62
 pref("places.frecency.bookmarkVisitBonus", 0); // [HIDDEN - Android/Thunderbird] [Default: 75]
@@ -3080,11 +3108,21 @@ pref("services.sync.engine.tabs", false); // [NO-ANDROID]
 
 
 
+/// Disable Telemetry [NO-ANDROID]
+pref("identity.fxaccounts.account.telemetry.sanitized_uid", "", locked); // [NO-ANDROID]
+pref("identity.fxaccounts.telemetry.clientAssociationPing.enabled", false, locked); // [NO-ANDROID]
 pref("services.sync.log.logger.telemetry", "Fatal"); // [NO-ANDROID] [HIDDEN]
 pref("services.sync.telemetry.maxEventsCount", 0, locked); // [NO-ANDROID] [HIDDEN] Disable `sync` ping https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/docs/data/sync-ping.rst
 pref("services.sync.telemetry.maxPayloadCount", 0, locked); // [NO-ANDROID] Disable `sync` ping https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/docs/data/sync-ping.rst
 pref("services.sync.telemetry.submissionInterval", 999999999, locked); // [NO-ANDROID] Disable `sync` ping https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/docs/data/sync-ping.rst
 
+/// If Firefox sync is enabled, disable avatar fetching [NO-ANDROID]
+// See "network.dns.localDomains" above, we need to block "profile.accounts.firefox.com" [NO-ANDROID]
+// The pref below just prevents Firefox from complaining and generating log files/errors when that domain can't be reached (even though it's unnecessary for Sync to function AFAICT...) [NO-ANDROID]
+pref("services.sync.log.appender.file.level", "Fatal"); // [NO-ANDROID]
+
+/// Improve the reliability of extension storage sync [NO-ANDROID]
+pref("services.sync.extension-storage.skipPercentageChance", 0); // [NO-ANDROID]
 
 
 /// Reduce information shared with Firefox Sync [NO-ANDROID]
@@ -3156,7 +3194,7 @@ Unspecified = This preference should be set EVERYWHERE
 
 /// Add custom branding under `Firefox Updates` at `about:preferences#general` [NO-ANDROID]
 // This will unfortunately only display if the version of Firefox you're using is repackaged (ex. Flatpaks/Linux distros) [NO-ANDROID]
-pref("distribution.about", "Phoenix: Extended for Mozilla Firefox - 2025.08.06.1 💜", locked); // [NO-ANDROID]
+pref("distribution.about", "Phoenix: Extended for Mozilla Firefox - 2025.09.07.1 💜", locked); // [NO-ANDROID]
 
 /*** 001 FINGERPRINTING PROTECTION ***/
 
@@ -3221,11 +3259,11 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.08.06.1", locked);
+pref("mail.dove.version", "2025.09.07.1", locked);
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 // This will unfortunately only display if the version of Thunderbird you're using is repackaged (ex. Flatpaks/Linux distros)
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.08.06.1 💜", locked);
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.09.07.1 💜", locked);
 
 /* INDEX 
 
@@ -3315,14 +3353,14 @@ pref("mailnews.start_page_override.mstone", "ignore", locked);
 /// Disable recommendations
 pref("extensions.getAddons.recommended.url", "");
 
-/// Disable Start Page by default and switch the URL to the about:config
-// This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
+/// Disable start page by default and switch the URL to `about:config`
+// This allows users to easily access `about:config` via the menu bar from `Go` -> `Mail Start Page`
 // Or by pressing alt + home
 pref("mailnews.start_page.enabled", false);
 pref("mailnews.start_page.override_url", "");
 pref("mailnews.start_page.url", "about:config");
 
-/// Disable Surveys
+/// Disable surveys
 pref("app.survey.version.viewed", 99, locked); // [HIDDEN]
 
 /// Prevent checking if Thunderbird is the default mail client
@@ -3566,6 +3604,14 @@ pref("mail.compose.add_link_preview", false);
 /// Disable network connectivity status monitoring
 // (Ex. used for automatically switching between offline & online mode)
 pref("offline.autoDetect", false);
+
+/// Enable + hard-fail OCSP revocation checks
+// We unfortunately still need this, since CRLite is currently broken on Thunderbird for users not using Firefox's Remote Settings instance (/ the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable)
+// We need to find a way to set that variable for Thunderbird by default - and once we do (or, ideally, once Mozilla actually fixes CRLite for Thunderbird...), I'll remove this - but we'll keep for now due to that reason
+// https://wikipedia.org/wiki/Online_Certificate_Status_Protocol
+// https://github.com/arkenfox/user.js/issues/1576
+pref("security.OCSP.enabled", 1); // [DEFAULT]
+pref("security.OCSP.require", true);
 
 /// Prompt before going online on Thunderbird's launch
 pref("offline.startup_state", 1);
@@ -3879,12 +3925,20 @@ pref("app.use_without_mail_account", true);
 pref("network.protocol-handler.warn-external.mailto", false); // [HIDDEN] [DEFAULT]
 
 /// Disable support for web applications manifests
-// Ex. used for PWAs (& PWA inspection on desktop)
+// Ex. used for PWAs (and PWA inspection on Firefox for Desktop)
 // Unnecessary for our use case
 // https://developer.mozilla.org/docs/Web/Progressive_web_apps/Manifest
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1603673
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1647858
 pref("dom.manifest.enabled", false);
+
+/// Disable Sync by default
+// These are Thunderbird-specific sync engines, we disable the standard ones from Phoenix
+// https://searchfox.org/comm-central/rev/d1b7a08e/mail/app/profile/all-thunderbird.js#1412
+pref("services.sync.engine.addressbooks", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.calendars", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.identities", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.engine.servers", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
 
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
@@ -3894,6 +3948,11 @@ pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfi
 // https://utcc.utoronto.ca/%7Ecks/space/blog/web/FirefoxMediaAutoplaySettingsIII
 // https://searchfox.org/mozilla-central/rev/3ce874dc2703831af3e5ef3a1d216ffd08057fa5/modules/libpref/init/StaticPrefList.yaml#6353-6360
 pref("media.autoplay.blocking_policy", 2); // [DEFAULT: 0]
+
+/// If Sync is enabled, disable sensitive logging by default
+// https://searchfox.org/comm-central/rev/d1b7a08e/mail/app/profile/all-thunderbird.js#1412
+pref("identity.fxaccounts.log.sensitive", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
+pref("services.sync.log.appender.console", "Fatal"); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds] Matches Firefox
 
 /// Load summary of RSS feeds instead of the full webpage by default
 pref("rss.show.summary", 1);
@@ -3971,6 +4030,7 @@ pref("mail.spellcheck.inline", true); // [DEFAULT]
 pref("mail.SpellCheckBeforeSend", true);
 
 /// Enable the new Account Hub by default
+pref("mail.accounthub.addressbook.enabled", true);
 pref("mail.accounthub.enabled", true);
 
 /// Hide Title Bar by default

@@ -130,7 +130,7 @@
                     ''
                 }
                 install -Dm644 linux/README.md $out/share/doc/dove/README.md
-                install -Dm644 linux/COPYING $out/share/doc/dove/COPYING
+                install -Dm644 linux/COPYING.txt $out/share/doc/dove/COPYING.txt
 
                 runHook postInstall
               '';
