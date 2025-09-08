@@ -116,14 +116,14 @@ pref("mailnews.start_page_override.mstone", "ignore", locked);
 /// Disable recommendations
 pref("extensions.getAddons.recommended.url", "");
 
-/// Disable Start Page by default and switch the URL to the about:config
-// This allows users to easily access the about:config via the menu bar from Go -> Mail Start Page
+/// Disable start page by default and switch the URL to `about:config`
+// This allows users to easily access `about:config` via the menu bar from `Go` -> `Mail Start Page`
 // Or by pressing alt + home
 pref("mailnews.start_page.enabled", false);
 pref("mailnews.start_page.override_url", "");
 pref("mailnews.start_page.url", "about:config");
 
-/// Disable Surveys
+/// Disable surveys
 pref("app.survey.version.viewed", 99, locked); // [HIDDEN]
 
 /// Prevent checking if Thunderbird is the default mail client
