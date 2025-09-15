@@ -18,7 +18,7 @@
 pref("mail.dove.version", "2025.09.07.1", locked);
 
 /// Add custom branding at `about:support`
-pref("app.support.vendor", "Dove", locked); // [HIDDEN]
+pref("app.support.vendor", "Dove: 2025.09.07.1", locked); // [HIDDEN]
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.09.07.1 💜", locked); // [HIDDEN]
