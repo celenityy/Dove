@@ -616,6 +616,12 @@ Dove is licensed under the [GNU General Public License v3.0 or later](https://sp
 
 Phoenix is licensed under the [GNU General Public License v3.0 or later](https://spdx.org/licenses/GPL-3.0-or-later.html) *(`GPL-3.0-or-later`)* where applicable.
 
+Dove's [archives](https://gitlab.com/celenityy/Dove/-/tree/pages/archives) include:
+
+- `assets/autoconfig/` - From [Thunderbird's `ISPDB`](https://github.com/thunderbird/autoconfig), available under the [Mozilla Public License 2.0](https://spdx.org/licenses/MPL-2.0.html).
+
+- `assets/uBlock.xpi` - From [uBlock Origin](https://github.com/gorhill/uBlock), available under the [GNU General Public License v3.0 only](https://spdx.org/licenses/GPL-3.0-only.html).
+
 # 🏛️Notices
 
 Mozilla Thunderbird is a trademark of the Mozilla Foundation.

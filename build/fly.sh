@@ -68,22 +68,26 @@ export DOVE_OSX_INTEL_POLICIES_PLIST="macos-intel/org.mozilla.thunderbird.plist"
 export DOVE_OSX_POLICIES_JSON="unused/macos/policies.json"
 export DOVE_OSX_POLICIES_PLIST="macos/macos/org.mozilla.thunderbird.plist"
 
-export UBLOCK_XPI="/tmp/dove/uBlock.xpi"
+export UBLOCK_XPI="external/uBlock/uBlock.xpi"
+
+mkdir -vp /tmp/dove
 
 # GNU/LINUX
 
 # Copy license
-cp "$DOVE_LICENSE" "$dove_linux_dir"/
+cp -vf "$DOVE_LICENSE" "$dove_linux_dir"/
 
 # Copy README
-cp "$DOVE_README" "$dove_linux_dir"/
+cp -vf "$DOVE_README" "$dove_linux_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-mkdir -vp "$dove_linux_dir"/assets
-cp -rf /tmp/dove/autoconfig/ "$dove_linux_dir"/assets/
+rm -vrf "$dove_linux_dir"/assets/autoconfig/v1.1/*
+mkdir -vp "$dove_linux_dir"/assets/autoconfig/v1.1
+cp -vrf external/autoconfig/v1.1/ "$dove_linux_dir"/assets/autoconfig/v1.1/
 
 # Copy uBlock Origin
-cp "$UBLOCK_XPI" "$dove_linux_dir"/assets/
+rm -vf "$dove_linux_dir"/assets/uBlock.xpi
+cp -vf "$UBLOCK_XPI" "$dove_linux_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
 grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_USER_PREF_CFG" > "$DOVE_LINUX_USER_PREF_CFG"
@@ -108,17 +112,19 @@ python3 build/convert.py "$DOVE_LINUX_PREFS" "$DOVE_LINUX_CFG"
 # GNU/LINUX (FLATPAK)
 
 # Copy license
-cp "$DOVE_LICENSE" "$dove_linux_flatpak_dir"/
+cp -vf "$DOVE_LICENSE" "$dove_linux_flatpak_dir"/
 
 # Copy README
-cp "$DOVE_README" "$dove_linux_flatpak_dir"/
+cp -vf "$DOVE_README" "$dove_linux_flatpak_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-mkdir -vp "$dove_linux_flatpak_dir"/assets
-cp -rf /tmp/dove/autoconfig/ "$dove_linux_flatpak_dir"/assets/
+rm -vrf "$dove_linux_flatpak_dir"/assets/autoconfig/v1.1/*
+mkdir -vp "$dove_linux_flatpak_dir"/assets/autoconfig/v1.1
+cp -vrf external/autoconfig/v1.1/ "$dove_linux_flatpak_dir"/assets/autoconfig/v1.1/
 
 # Copy uBlock Origin
-cp "$UBLOCK_XPI" "$dove_linux_flatpak_dir"/assets/
+rm -vf "$dove_linux_flatpak_dir"/assets/uBlock.xpi
+cp -vf "$UBLOCK_XPI" "$dove_linux_flatpak_dir"/assets/
 
 # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [NON-FLATPAK-LINUX-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
 grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_USER_PREF_CFG" > "$DOVE_LINUX_FLATPAK_USER_PREF_CFG"
@@ -143,17 +149,19 @@ python3 build/convert.py "$DOVE_LINUX_FLATPAK_PREFS" "$DOVE_LINUX_FLATPAK_CFG"
 # MACOS
 
 # Copy license
-cp "$DOVE_LICENSE" "$dove_osx_dir"/
+cp -vf "$DOVE_LICENSE" "$dove_osx_dir"/
 
 # Copy README
-cp "$DOVE_README" "$dove_osx_dir"/
+cp -vf "$DOVE_README" "$dove_osx_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-mkdir -vp "$dove_osx_dir"/assets
-cp -rf /tmp/dove/autoconfig/ "$dove_osx_dir"/assets/
+rm -vrf "$dove_osx_dir"/assets/autoconfig/v1.1/*
+mkdir -vp "$dove_osx_dir"/assets/autoconfig/v1.1
+cp -vrf external/autoconfig/v1.1/ "$dove_osx_dir"/assets/autoconfig/v1.1/
 
 # Copy uBlock Origin
-cp "$UBLOCK_XPI" "$dove_osx_dir"/assets/
+rm -vf "$dove_osx_dir"/assets/uBlock.xpi
+cp -vf "$UBLOCK_XPI" "$dove_osx_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [NON-FLATPAK-LINUX-ONLY], and [WINDOWS-ONLY]
 grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_OSX_BOOTSTRAP"
@@ -181,17 +189,19 @@ cat /tmp/dove/dove-osx-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_OSX_CFG"
 # MACOS (INTEL)
 
 # Copy license
-cp "$DOVE_LICENSE" "$dove_osx_intel_dir"/
+cp -vf "$DOVE_LICENSE" "$dove_osx_intel_dir"/
 
 # Copy README
-cp "$DOVE_README" "$dove_osx_intel_dir"/
+cp -vf "$DOVE_README" "$dove_osx_intel_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-mkdir -vp "$dove_osx_intel_dir"/assets
-cp -rf /tmp/dove/autoconfig/ "$dove_osx_intel_dir"/assets/
+rm -vrf "$dove_osx_intel_dir"/assets/autoconfig/v1.1/*
+mkdir -vp "$dove_osx_intel_dir"/assets/autoconfig/v1.1
+cp -vrf external/autoconfig/v1.1/ "$dove_osx_intel_dir"/assets/autoconfig/v1.1/
 
 # Copy uBlock Origin
-cp "$UBLOCK_XPI" "$dove_osx_intel_dir"/assets/
+rm -vf "$dove_osx_intel_dir"/assets/uBlock.xpi
+cp -vf "$UBLOCK_XPI" "$dove_osx_intel_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [NON-FLATPAK-LINUX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
 grep -vE 'FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_OSX_INTEL_BOOTSTRAP"
@@ -219,17 +229,19 @@ cat /tmp/dove/dove-osx-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_OSX_INTEL_CFG"
 # WINDOWS
 
 # Copy license
-cp "$DOVE_LICENSE" "$dove_windows_dir"/
+cp -vf "$DOVE_LICENSE" "$dove_windows_dir"/
 
 # Copy README
-cp "$DOVE_README" "$dove_windows_dir"/
+cp -vf "$DOVE_README" "$dove_windows_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-mkdir -vp "$dove_windows_dir"/assets
-cp -rf /tmp/dove/autoconfig/ "$dove_windows_dir"/assets/
+rm -vrf "$dove_windows_dir"/assets/autoconfig/v1.1/*
+mkdir -vp "$dove_windows_dir"/assets/autoconfig/v1.1
+cp -vrf external/autoconfig/v1.1/ "$dove_windows_dir"/assets/autoconfig/v1.1/
 
 # Copy uBlock Origin
-cp "$UBLOCK_XPI" "$dove_windows_dir"/assets/
+rm -vf "$dove_windows_dir"/assets/uBlock.xpi
+cp -vf "$UBLOCK_XPI" "$dove_windows_dir"/assets/
 
 # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [NON-FLATPAK-LINUX-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
 grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_WINDOWS_BOOTSTRAP"
@@ -286,7 +298,7 @@ jq -s '.[0] * .[1]' "$DOVE_POLICIES" "$PHOENIX_UNIFIED_WINDOWS_POLICIES" > /tmp/
 
 jq -s '.[0] * .[1]' /tmp/dove/temp9.json "$DOVE_UNIFIED_WINDOWS_POLICIES" > "$DOVE_WINDOWS_POLICIES"
 
-rm -rf /tmp/dove
+rm -vrf /tmp/dove
 
 python3 build/convert_json_to_plist.py "$DOVE_OSX_INTEL_POLICIES_JSON" "$DOVE_OSX_INTEL_POLICIES_PLIST" 
 python3 build/convert_json_to_plist.py "$DOVE_OSX_POLICIES_JSON" "$DOVE_OSX_POLICIES_PLIST"
