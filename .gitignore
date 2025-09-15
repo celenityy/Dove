@@ -1,3 +1,13 @@
 .DS_Store
 external/autoconfig
 external/uBlock
+linux/assets/autoconfig
+linux/assets/uBlock.xpi
+linux-flatpak/assets/autoconfig
+linux-flatpak/assets/uBlock.xpi
+macos/assets/autoconfig
+macos/assets/uBlock.xpi
+macos-intel/assets/autoconfig
+macos-intel/assets/uBlock.xpi
+windows/assets/autoconfig
+windows/assets/uBlock.xpi
