@@ -81,9 +81,9 @@ cp -vf "$DOVE_LICENSE" "$dove_linux_dir"/
 cp -vf "$DOVE_README" "$dove_linux_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_linux_dir"/assets/autoconfig/v1.1/*
+rm -vrf "$dove_linux_dir"/assets/autoconfig/*
 mkdir -vp "$dove_linux_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig/v1.1/ "$dove_linux_dir"/assets/autoconfig/v1.1/
+cp -vrf external/autoconfig/ "$dove_linux_dir"/assets/autoconfig/
 
 # Copy uBlock Origin
 rm -vf "$dove_linux_dir"/assets/uBlock.xpi
@@ -118,9 +118,9 @@ cp -vf "$DOVE_LICENSE" "$dove_linux_flatpak_dir"/
 cp -vf "$DOVE_README" "$dove_linux_flatpak_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_linux_flatpak_dir"/assets/autoconfig/v1.1/*
+rm -vrf "$dove_linux_flatpak_dir"/assets/autoconfig/*
 mkdir -vp "$dove_linux_flatpak_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig/v1.1/ "$dove_linux_flatpak_dir"/assets/autoconfig/v1.1/
+cp -vrf external/autoconfig/ "$dove_linux_flatpak_dir"/assets/autoconfig/
 
 # Copy uBlock Origin
 rm -vf "$dove_linux_flatpak_dir"/assets/uBlock.xpi
@@ -155,9 +155,9 @@ cp -vf "$DOVE_LICENSE" "$dove_osx_dir"/
 cp -vf "$DOVE_README" "$dove_osx_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_osx_dir"/assets/autoconfig/v1.1/*
+rm -vrf "$dove_osx_dir"/assets/autoconfig/*
 mkdir -vp "$dove_osx_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig/v1.1/ "$dove_osx_dir"/assets/autoconfig/v1.1/
+cp -vrf external/autoconfig/ "$dove_osx_dir"/assets/autoconfig/
 
 # Copy uBlock Origin
 rm -vf "$dove_osx_dir"/assets/uBlock.xpi
@@ -195,9 +195,9 @@ cp -vf "$DOVE_LICENSE" "$dove_osx_intel_dir"/
 cp -vf "$DOVE_README" "$dove_osx_intel_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_osx_intel_dir"/assets/autoconfig/v1.1/*
+rm -vrf "$dove_osx_intel_dir"/assets/autoconfig/*
 mkdir -vp "$dove_osx_intel_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig/v1.1/ "$dove_osx_intel_dir"/assets/autoconfig/v1.1/
+cp -vrf external/autoconfig/ "$dove_osx_intel_dir"/assets/autoconfig/
 
 # Copy uBlock Origin
 rm -vf "$dove_osx_intel_dir"/assets/uBlock.xpi
@@ -235,9 +235,9 @@ cp -vf "$DOVE_LICENSE" "$dove_windows_dir"/
 cp -vf "$DOVE_README" "$dove_windows_dir"/
 
 # Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_windows_dir"/assets/autoconfig/v1.1/*
+rm -vrf "$dove_windows_dir"/assets/autoconfig/*
 mkdir -vp "$dove_windows_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig/v1.1/ "$dove_windows_dir"/assets/autoconfig/v1.1/
+cp -vrf external/autoconfig/ "$dove_windows_dir"/assets/autoconfig/
 
 # Copy uBlock Origin
 rm -vf "$dove_windows_dir"/assets/uBlock.xpi
