@@ -15,13 +15,13 @@
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.09.16.1", locked);
+pref("mail.dove.version", "2025.09.17.1", locked);
 
 /// Add custom branding at `about:support`
-pref("app.support.vendor", "Dove: 2025.09.16.1", locked); // [HIDDEN]
+pref("app.support.vendor", "Dove: 2025.09.17.1", locked); // [HIDDEN]
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.09.16.1 💜", locked); // [HIDDEN]
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.09.17.1 💜", locked); // [HIDDEN]
 pref("distribution.id", "default", locked); // [HIDDEN]
 pref("distribution.version", "default", locked); // [HIDDEN]
 
