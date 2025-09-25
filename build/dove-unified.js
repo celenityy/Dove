@@ -406,6 +406,13 @@ pref("mail.dove.status", "009");
 /// Show email information + headers
 pref("mail.show_headers", 2);
 pref("mailnews.display.date_senders_timezone", true); // Displays timezone of sender
+pref("mailnews.headers.showArchivedAt", true);
+pref("mailnews.headers.showListArchive", true);
+pref("mailnews.headers.showListHelp", true);
+pref("mailnews.headers.showListOwner", true);
+pref("mailnews.headers.showListPost", true);
+pref("mailnews.headers.showListSubscribe", true);
+pref("mailnews.headers.showListUnsubscribe", true);
 pref("mailnews.headers.showMessageId", true);
 pref("mailnews.headers.showOrganization", true);
 pref("mailnews.headers.showReferences", true);
