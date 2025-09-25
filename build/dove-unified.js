@@ -162,6 +162,10 @@ pref("mail.dove.status", "002");
 
 /*** 003 TRACKING PROTECTION ***/
 
+/// Ensure no domains can bypass privacy controls (like mailnews.message_display.disable_remote_image) by default
+// https://searchfox.org/comm-central/rev/ed9d9054/mailnews/mailnews.js#802
+pref("mail.trusteddomains", ""); // [DEFAULT]
+
 /// Prevent messages from loading remote content
 // This still allows adding exceptions
 // https://support.mozilla.org/kb/remote-content-in-messages
