@@ -834,6 +834,9 @@ pref("mailnews.show_send_progress", true); // [DEFAULT]
 /// Use underscores instead of spaces in file names when saving messages by default
 pref("mail.save_msg_filename_underscores_for_space", true);
 
+/// Wrap lines by default
+pref("mail.wrap_long_lines", true); // [DEFAULT]
+
 pref("mail.dove.status", "019");
 
 /*** 020 SPECIALIZED/CUSTOM CONFIGS [LINUX-ONLY] ***/
