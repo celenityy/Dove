@@ -197,10 +197,10 @@ pref("mail.server.default.mdn_report_enabled", false);
 pref("purple.conversations.im.send_read", false); // [CHAT]
 
 /// Disable sending user agent with emails
-//  Unnecessary, not defined in spec, and leaks information
+// Unnecessary, not defined in spec, and leaks information
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1114475
 pref("mailnews.headers.sendUserAgent", false);
-pref("mailnews.headers.useMinimalUserAgent", true); // [DEFAULT, DEFENSE IN DEPTH]
+pref("mailnews.headers.useMinimalUserAgent", true); // [DEFENSE IN DEPTH] [DEFAULT]
 
 /// Prevent leaking local IP addresses with emails via EHLO/HELO
 // https://blog.plee.me/2014/11/mozilla-thunderbird-changing-the-ehlo-helo-value-in-the-received-header-for-outgoing-mail/
