@@ -3368,7 +3368,7 @@
 				<key>Name</key>
 				<string>Startpage</string>
 				<key>SuggestURLTemplate</key>
-				<string>https://www.startpage.com/osuggestions?q={searchTerms}</string>
+				<string>https://www.startpage.com/osuggestions?query={searchTerms}</string>
 				<key>URLTemplate</key>
 				<string>https://www.startpage.com/sp/search?query={searchTerms}</string>
 			</dict>
@@ -3384,7 +3384,7 @@
 				<key>Name</key>
 				<string>Startpage (EU)</string>
 				<key>SuggestURLTemplate</key>
-				<string>https://eu.startpage.com/osuggestions?q={searchTerms}</string>
+				<string>https://eu.startpage.com/osuggestions?query={searchTerms}</string>
 				<key>URLTemplate</key>
 				<string>https://eu.startpage.com/sp/search?query={searchTerms}</string>
 			</dict>
