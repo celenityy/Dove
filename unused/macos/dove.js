@@ -1,4 +1,3 @@
-
 //
 // The Phoenix shall rise from the ashes of what fell before it.
 
