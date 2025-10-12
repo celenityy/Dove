@@ -9,6 +9,10 @@
 			"path": "../Dove.wiki"
 		},
 		{
+			"name": "dove-build-scripts",
+			"path": "../dove-build-scripts"
+		},
+		{
 			"name": "Dove-Debian",
 			"path": "../Dove-Debian"
 		},
