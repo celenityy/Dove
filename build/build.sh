@@ -16,7 +16,7 @@ pushd external/uBlock
 rm -vrf *
 
 echo "Downloading uBlock Origin $ubo_version..."
-curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL "https://github.com/celenityy/uBlock/releases/download/$ubo_version.0/uBlock0_$ubo_version.thunderbird.xpi"
+curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL "https://github.com/celenityy/uBlock/releases/download/$ubo_version/uBlock0_$ubo_version.thunderbird.xpi"
 
 mv -vf "uBlock0_$ubo_version.thunderbird.xpi" uBlock.xpi
 
