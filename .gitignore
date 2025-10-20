@@ -16,3 +16,6 @@ macos-intel/assets/uBlock.xpi
 windows/assets/autoconfig
 windows/assets/uBlock
 windows/assets/uBlock.xpi
+# nix build
+result-*
+result

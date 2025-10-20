@@ -3,6 +3,8 @@
 # Welcome to the Dove Unified build script!
 # This script should be ran from inside the directory where you store Dove, not directly from the 'archives' or `build` folder...
 
+set -euo pipefail
+
 export DOVE_LICENSE="COPYING.txt"
 export DOVE_README="README.md"
 
