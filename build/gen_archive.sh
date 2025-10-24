@@ -6,6 +6,8 @@
 
 # Script should be ran from inside the directory where you store Dove, not directly from the 'archives' or `build` folder...
 
+set -euo pipefail
+
 echo_green_text() {
 	echo -e "\033[32m$1\033[0m"
 }

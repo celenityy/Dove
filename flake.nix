@@ -7,6 +7,18 @@
       url = "git+https://gitlab.com/celenityy/Phoenix";
       flake = false;
     };
+    uBlock = {
+      url = "https://github.com/celenityy/uBlock/releases/download/1.67.0/uBlock0_1.67.0.thunderbird.xpi";
+      flake = false;
+    };
+    uBlockLicense = {
+      url = "https://github.com/celenityy/uBlock/raw/refs/heads/1.67.0/LICENSE.txt";
+      flake = false;
+    };
+    autoconfig = {
+      url = "github:thunderbird/autoconfig?ref=prod";
+      flake = false;
+    };
   };
 
   outputs =
@@ -14,6 +26,9 @@
       self,
       nixpkgs,
       phoenix,
+      uBlock,
+      uBlockLicense,
+      autoconfig
     }:
     let
       inherit (nixpkgs) lib;
@@ -99,7 +114,9 @@
               name = "dove";
               src = ./.;
               nativeBuildInputs = [
-                python3
+                (python3.withPackages (ps: [
+                  ps.lxml
+                ]))
                 jq
                 zip
               ];
@@ -107,7 +124,11 @@
                 runHook preBuild
 
                 export phoenix_dir=${phoenix}
+                export uBlock=${uBlock}
+                export uBlockLicense=${uBlockLicense}
+                export autoconfig_dir=${autoconfig}
                 patchShebangs ./build/*.sh
+
                 ./build/build.sh
                 sed -i '/general.config.filename/d' build/dove-unified.js
 
