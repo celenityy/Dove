@@ -420,7 +420,7 @@ pref("mailnews.headers.showSender", true);
 pref("mailnews.headers.showUserAgent", true);
 
 /// Show full email addresses
-pref("mail.addressDisplayFormat", 0); // [DEFAULT] [HIDDEN] Sets preferred address display format to "Full name and email address"
+pref("mail.addressDisplayFormat", 0); // [HIDDEN] [DEFAULT] Sets preferred address display format to "Full name and email address"
 pref("mail.showCondensedAddresses", false);
 
 pref("mail.dove.status", "010");
@@ -448,6 +448,7 @@ pref("media.utility-ffmpeg.enabled", false);
 pref("browser.translations.automaticallyPopup", false);
 pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
+pref("browser.translations.simulateUnsupportedEngine", true);
 
 /// Disable Narrator
 // Broken on Thunderbird
@@ -650,10 +651,6 @@ pref("calendar.extract.service.enabled", false); // [DEFAULT]
 
 /// Remove default Google Groups link
 pref("mailnews.messageid_browser.url", "");
-
-/// Reset ETP exceptions
-// Unnecessary/undesired for our use case...
-pref("urlclassifier.trackingSkipURLs", ""); // [DEFAULT] [HIDDEN]
 
 /// (Attempt to) Unbreak Tracking Protection list downloads
 // The default is `moz-sbrs:://antitracking`, which fetches these lists from Remote Settings - but the problem is that Thunderbird's Remote Settings unfortunately doesn't ship the Tracking Protection lists like Firefox
