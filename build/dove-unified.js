@@ -85,7 +85,7 @@ pref("mail.dove.status", "001");
 /*** 002 MOZILLA CRAP™ ***/
 
 /// Clear unnecessary/undesired Mozilla URLs
-pref("mail.pgpmime.addon_url", ""); // Contains a dead link to Enigmail - a now dead extension that used to provide E2EE for Thunderbird (before it was built-in like it is nowadays...) - Likely not used anywhere
+pref("mail.pgpmime.addon_url", ""); // Contains a link to Enigmail - a now dead extension that used to provide E2EE for Thunderbird (before it was built-in like it is nowadays...) - Likely not used anywhere
 pref("toolkit.crashreporter.infoURL", "");
 
 /// Disable Donation Prompts
