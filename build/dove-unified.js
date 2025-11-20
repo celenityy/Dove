@@ -434,6 +434,8 @@ pref("devtools.remote.adb.extensionURL", "");
 /// Disable DRM/EME
 pref("media.eme.encrypted-media-encryption-scheme.enabled", false);
 pref("media.eme.hdcp-policy-check.enabled", false);
+pref("media.gmp-widevinecdm.visible", false);
+pref("media.gmp-widevinecdm-l1.visible", false);
 
 /// Disable FFmpeg
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=ffmpeg
