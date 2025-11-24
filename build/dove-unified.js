@@ -277,6 +277,10 @@ pref("purple.logging.log_ims", false); // [CHAT]
 /// Disable logging E2EE messages (OTR) [CHAT]
 pref("chat.otr.default.allowMsgLog", false); // [CHAT]
 
+/// Disable taskbar lists [WINDOWS-ONLY]
+pref("mail.taskbar.lists.enabled", false); // [WINDOWS-ONLY]
+pref("mail.taskbar.lists.tasks.enabled", false); // [WINDOWS-ONLY]
+
 /// Prevent permission manager from writing to disk
 pref("permissions.memory_only", true); // [HIDDEN]
 
