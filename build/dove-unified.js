@@ -114,7 +114,7 @@ pref("mail.inappnotifications.message_enabled", false); // [NIGHTLY] Updates
 // https://searchfox.org/comm-central/source/suite/components/nsSuiteGlue.js#965
 pref("browser.EULA.override", true);
 pref("browser.rights.override", true);
-pref("mail.rights.override", true);
+pref("mail.rights.override", true); // [DEFAULT - Debug/non-MOZILLA_OFFICIAL builds]
 pref("mailnews.start_page_override.mstone", "ignore", locked);
 
 /// Disable recommendations
@@ -267,6 +267,7 @@ pref("mail.imap.use_disk_cache2", false);
 
 /// Disable favicons
 pref("browser.chrome.favicons", false);
+pref("browser.chrome.guess_favicon", false);
 pref("browser.chrome.site_icons", false);
 
 /// Disable logging chat history [CHAT]
@@ -785,8 +786,9 @@ pref("mail.html_compose", false);
 pref("mail.identity.default.compose_html", false);
 
 /// Use a blank new tab page
-// This likely isn't used anywhere, but Thunderbird does seem to pull in this component and this setting appears in the `about:config`, so we can set it anyways
+// This likely isn't used anywhere, but Thunderbird does seem to define these prefs, so we can set them anyways
 pref("browser.newtabpage.enabled", false);
+pref("browser.startup.homepage.abouthome_cache.enabled", false);
 
 pref("mail.dove.status", "018");
 
