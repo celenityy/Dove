@@ -767,6 +767,10 @@ pref("services.sync.engine.calendars", false); // [HIDDEN - non-MOZ_SERVICES_SYN
 pref("services.sync.engine.identities", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
 pref("services.sync.engine.servers", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
 
+/// Disable text fragments
+pref("dom.text_fragments.create_text_fragment.enabled", false);
+pref("dom.text_fragments.enabled", false);
+
 /// Disable tooltips
 pref("browser.chrome.toolbar_tips", false);
 
