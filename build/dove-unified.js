@@ -57,7 +57,7 @@ Unspecified = This preference should be set EVERYWHERE
 [LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
 [FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (Flatpak)
 [INTEL-OSX-ONLY] = This preference should ONLY be set for macOS on Intel
-[NON-FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (non-Flatpak)
+[LINUX-NON-FLATPAK-ONLY] = This preference should ONLY be set for GNU/Linux (non-Flatpak)
 [OSX-ONLY] = This preference should ONLY be set for macOS
 [SILICON-OSX-ONLY] = This preference should ONLY be set for macOS on Apple Silicon
 [WINDOWS-ONLY] = This preference should ONLY be set for Windows
@@ -647,7 +647,7 @@ pref("mail.winsearch.firstRunDone", true); // [WINDOWS-ONLY]
 // Using these locally improves privacy by avoiding the unwanted network activity/potential leakage, and improves performance/responsiveness
 // https://wiki.mozilla.org/Thunderbird:Autoconfiguration
 pref("mailnews.auto_config_url", "file:///app/etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [FLATPAK-LINUX-ONLY]
-pref("mailnews.auto_config_url", "file:///etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [NON-FLATPAK-LINUX-ONLY]
+pref("mailnews.auto_config_url", "file:///etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [LINUX-NON-FLATPAK-ONLY]
 pref("mailnews.auto_config_url", "file:///opt/homebrew/opt/dove/assets/autoconfig/v1.1/"); // [SILICON-OSX-ONLY]
 pref("mailnews.auto_config_url", "file:///usr/local/opt/dove-intel/assets/autoconfig/v1.1/"); // [INTEL-OSX-ONLY]
 pref("mailnews.auto_config_url", "file:///C:/Dove/assets/autoconfig/v1.1/"); // [WINDOWS-ONLY]
