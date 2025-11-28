@@ -809,6 +809,14 @@ pref("browser.chrome.toolbar_tips", false);
 // Likely unused, but this pref is defined in Thunderbird, and it's referenced in code relevant to Thunderbird
 pref("browser.search.separatePrivateDefault.ui.enabled", false); // [DEFAULT]
 
+/// Disable URL fix-up
+pref("browser.fixup.alternate.prefix", "");
+pref("browser.fixup.alternate.protocol", "");
+pref("browser.fixup.alternate.suffix", "");
+pref("browser.fixup.typo.scheme", false); // [HIDDEN]
+pref("browser.urlbar.dnsResolveFullyQualifiedNames", false); // [HIDDEN]
+pref("security.bad_cert_domain_error.url_fix_enabled", false); // https://searchfox.org/firefox-main/rev/82e2435f/docshell/base/nsDocShell.cpp#6251
+
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
 pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json] - Setting to blank results in error on set-up stating that no URL is configured
