@@ -526,6 +526,8 @@ pref("signon.passwordEditCapture.enabled", false);
 pref("signon.recipes.path", "");
 pref("signon.relatedRealms.enabled", false); // [DEFAULT]
 pref("signon.showAutoCompleteFooter", false);
+pref("signon.showAutoCompleteImport", ""); // [HIDDEN] [DEFAULT]
+pref("signon.suggestImportCount", 0); // [HIDDEN] [DEFAULT]
 pref("signon.usernameOnlyForm.enabled", false);
 
 /// Re-enable Password Manager by default
