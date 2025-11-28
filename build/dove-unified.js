@@ -714,6 +714,9 @@ pref("mail.dove.status", "017");
 
 /*** 018 MISC. ***/
 
+/// Allow users to override Oauth provider details for Microsoft Exchange Web Services by default
+pref("experimental.mail.ews.overrideOAuth.enabled", true);
+
 /// Allow using Thunderbird without a configured email account
 pref("app.use_without_mail_account", true);
 
