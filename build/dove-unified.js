@@ -802,6 +802,10 @@ pref("dom.text_fragments.enabled", false);
 /// Disable tooltips
 pref("browser.chrome.toolbar_tips", false);
 
+/// Disable UI for using a different search engine in normal vs. private Windows
+// Likely unused, but this pref is defined in Thunderbird, and it's referenced in code relevant to Thunderbird
+pref("browser.search.separatePrivateDefault.ui.enabled", false); // [DEFAULT]
+
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
 pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json] - Setting to blank results in error on set-up stating that no URL is configured
