@@ -682,6 +682,9 @@ pref("searchintegration.enable", false);
 pref("mail.winsearch.enable", false); // [WINDOWS-ONLY] [DEFAULT]
 pref("mail.winsearch.firstRunDone", true); // [WINDOWS-ONLY]
 
+/// Do not try to submit unrecognized search/URL strings to the default search engine
+pref("keyword.enabled", false);
+
 /// Package Thunderbird's Autoconfiguration files locally
 // By default, these are typically fetched remotely from here: https://autoconfig.thunderbird.net/v1.1/
 // Using these locally improves privacy by avoiding the unwanted network activity/potential leakage, and improves performance/responsiveness
