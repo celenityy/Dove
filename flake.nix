@@ -8,11 +8,11 @@
       flake = false;
     };
     uBlock = {
-      url = "https://github.com/celenityy/uBlock/releases/download/1.67.0/uBlock0_1.67.0.thunderbird.xpi";
+      url = "https://github.com/celenityy/uBlock/releases/download/1.68.0/uBlock0_1.68.0.thunderbird.xpi";
       flake = false;
     };
     uBlockLicense = {
-      url = "https://github.com/celenityy/uBlock/raw/refs/heads/1.67.0/LICENSE.txt";
+      url = "https://github.com/celenityy/uBlock/raw/refs/heads/1.68.0/LICENSE.txt";
       flake = false;
     };
     autoconfig = {
