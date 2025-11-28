@@ -560,24 +560,6 @@ pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 // https://mozilla.github.io/addons-server/topics/api/v3_legacy/addons.html#compat-override
 pref("extensions.getAddons.compatOverides.url", "");
 
-/// Disable installation of add-ons + only allow enabling it per-session
-// Includes extensions and themes
-// This doesn't impact already installed add-ons and add-ons installed by policies
-// Thunderbird will prompt to re-enable this when necessary
-// We're also setting this as a user pref, which is quite nice from a security perspective - as it allows users to enable this functionality only when it's necessary...
-// Ex: A user attempts to install an extension, sees the extra prompt/warning, and selects `Enable` (which temporarily sets this pref to `true`...). The user then proceeds to install the extension. On the next launch of Thunderbird, this pref is reset back to `false`, meaning the ability to install extensions is fully disabled without them even thinking about it
-pref("xpinstall.enabled", false); // [HIDDEN] So the default is `false`
-pref("xpinstall.enabled", false, sticky); // [HIDDEN] So it's converted to a user pref and applied per-session
-
-/// Disable mozAddonManager
-// mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
-// It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
-// We currently need to set `extensions.webapi.enabled` to `true` due to a strange upstream bug that causes it to prevent certain functionality from working (like the `Get Messages` Button), but we still prevent websites from using this API with `privacy.resistFingerprinting.block_mozAddonManager`, which mitigates the concerns described above (See: https://bugzilla.mozilla.org/show_bug.cgi?id=1977082 + https://codeberg.org/celenity/Dove/issues/47)
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
-pref("extensions.webapi.enabled", true); // [DEFAULT]
-pref("privacy.resistFingerprinting.block_mozAddonManager", true);
-
 /// Disable recommendations for alternatives to legacy add-ons
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#25
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#76
@@ -589,17 +571,20 @@ pref("extensions.alternativeAddonSearch.url", "");
 // ex. https://services.addons.mozilla.org/api/v5/addons/browser-mappings/?browser=chrome
 pref("extensions.getAddons.browserMappings.url", ""); // [HIDDEN]
 
-/// Unbreak installation of add-ons from ATN (`addons.thunderbird.net`) if mozAddonManager is disabled
-// For context, when mozAddonManager is disabled on Firefox, AMO will fallback and successfully install add-ons without fail out of the box. This is unfortunately NOT the case for ATN currently.
-// HOWEVER, ATN DOES still have a fallback when mozAddonManager is disabled, via the legacy InstallTrigger interface (which is disabled by default nowadays).
-// So essentially, we're going to re-enable InstallTrigger so ATN can fallback, but to avoid fingerprinting, we're stubbing it with uBlock Origin for every website EXCEPT `addons.thunderbird.net`.
-// For `addons.thunderbird.net`, we're also stubbing`window.InstallTrigger.enabled` and `window.InstallTrigger.updateEnabled`with uBlock Origin, to prevent exposing whether the user has enabled or disabled the installation of add-ons (via the `xpinstall.enabled` pref).
-// This effectively allows users to install add-ons from ATN, but without compromising their privacy and security.
-// https://github.com/thunderbird/addons-server/issues/332
-// https://devdoc.net/web/developer.mozilla.org/en-US/docs/XPInstall_API_Reference/InstallTrigger_Object.html
-// https://searchfox.org/mozilla-central/source/dom/webidl/InstallTrigger.webidl
-pref("extensions.InstallTrigger.enabled", true); // [DEFAULT]
-pref("extensions.InstallTriggerImpl.enabled", true);
+/// Re-enable installation of add-ons by default
+// Unfortunately, Thunderbird doesn't prompt to re-enable this when mozAddonManager is enabled
+// (which we sadly need to enable to support installation of add-ons from `addons.thunderbird.net` for the time-being)
+pref("xpinstall.enabled", true); // [HIDDEN] [DEFAULT]
+
+/// Re-enable mozAddonManager
+// mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
+// It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
+// But, unfortunately, due to the removal of InstallTrigger, this is the only way to install add-ons from `addons.thunderbird.net` ATM.
+// I need to investigate finding another solution, but, for now, unfortunately: we'll re-enable this.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
+pref("extensions.webapi.enabled", true); // [DEFAULT]
+pref("privacy.resistFingerprinting.block_mozAddonManager", false); // [DEFAULT]
 
 /// Update AMO API
 // Default is still v3, which has been deprecated for quite some time...

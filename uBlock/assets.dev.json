@@ -1046,13 +1046,6 @@
         "supportURL": "https://badblock.celenity.dev/issues",
         "instructionURL": "https://badblock.celenity.dev#ethical-whitelist"
     },
-    "installtrigger": {
-        "content": "filters",
-        "group": "default",
-        "title": "InstallTrigger Stub",
-        "contentURL": "https://gitlab.com/celenityy/Dove/-/raw/pages/uBlock/installtrigger.txt",
-        "supportURL": "https://dove.celenity.dev/issues"
-    },
     "multilight": {
         "content": "filters",
         "group": "multipurpose",
