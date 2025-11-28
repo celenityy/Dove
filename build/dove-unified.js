@@ -508,6 +508,15 @@ pref("mail.dove.status", "011");
 pref("network.auth.non-web-content-triggered-resources-http-auth-allow", true); // [DEFAULT]
 pref("network.auth.subresource-http-auth-allow", 2); // [DEFAULT]
 
+/// Disable support for Firefox Relay
+// Unwanted/unused here
+pref("signon.firefoxRelay.base_url", "");
+pref("signon.firefoxRelay.feature", "not available");
+pref("signon.firefoxRelay.learn_more_url", "");
+pref("signon.firefoxRelay.manage_url", "");
+pref("signon.firefoxRelay.privacy_policy_url", "");
+pref("signon.firefoxRelay.terms_of_service_url", "");
+
 /// Disable unused/unwanted password manager/autofill functionality
 // We only want to use the password manager here for ex. saving log-ins to email providers - we don't want/need it trying to interact with webpages
 // and we don't need anything with addresses/credit cards/etc.
