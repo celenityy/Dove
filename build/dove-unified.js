@@ -583,6 +583,12 @@ pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#76
 pref("extensions.alternativeAddonSearch.url", "");
 
+/// Ensure we do not try to fetch browser mappings
+// This is used for mapping Chrome extensions with Firefox ones, as part of browser migration
+// https://mozilla.github.io/addons-server/topics/api/addons.html#browser-mappings
+// ex. https://services.addons.mozilla.org/api/v5/addons/browser-mappings/?browser=chrome
+pref("extensions.getAddons.browserMappings.url", ""); // [HIDDEN]
+
 /// Unbreak installation of add-ons from ATN (`addons.thunderbird.net`) if mozAddonManager is disabled
 // For context, when mozAddonManager is disabled on Firefox, AMO will fallback and successfully install add-ons without fail out of the box. This is unfortunately NOT the case for ATN currently.
 // HOWEVER, ATN DOES still have a fallback when mozAddonManager is disabled, via the legacy InstallTrigger interface (which is disabled by default nowadays).
