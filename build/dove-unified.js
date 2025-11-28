@@ -809,6 +809,11 @@ pref("browser.policies.loglevel", "Error"); // [HIDDEN] [DEFAULT]
 /// Enable the 'Bubbles' chat theme by default [CHAT]
 pref("messenger.options.messagesStyle.theme", "bubbles"); // [CHAT]
 
+/// Enable CSS Masonry Layout for the Address Book
+// (For reference, Phoenix enables this for Gecko)
+// https://www.smashingmagazine.com/native-css-masonry-layout-css-grid/
+pref("layout.css.grid-template-masonry-value.enabled", true); // [DEFAULT]
+
 /// Enable dark theme for the message pane
 pref("mail.dark-reader.enabled", true);
 pref("mail.dark-reader.show-toggle", true); // [HIDDEN] UI toggle https://searchfox.org/comm-central/rev/2713116a/mail/base/content/msgHdrView.js#2794
