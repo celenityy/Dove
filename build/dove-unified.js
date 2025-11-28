@@ -278,6 +278,11 @@ pref("purple.logging.log_ims", false); // [CHAT]
 /// Disable logging E2EE messages (OTR) [CHAT]
 pref("chat.otr.default.allowMsgLog", false); // [CHAT]
 
+/// Disable session restore
+pref("browser.sessionhistory.max_entries", 0); // [HIDDEN]
+pref("browser.sessionstore.debug.no_auto_updates", true);
+pref("browser.sessionstore.restore_windows_to_virtual_desktop", false);
+
 /// Disable taskbar lists [WINDOWS-ONLY]
 pref("mail.taskbar.lists.enabled", false); // [WINDOWS-ONLY]
 pref("mail.taskbar.lists.tasks.enabled", false); // [WINDOWS-ONLY]
