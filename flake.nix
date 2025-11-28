@@ -12,7 +12,7 @@
       flake = false;
     };
     uBlockLicense = {
-      url = "https://github.com/celenityy/uBlock/raw/refs/heads/1.68.0/LICENSE.txt";
+      url = "https://raw.githubusercontent.com/celenityy/uBlock/refs/tags/1.68.0/LICENSE.txt";
       flake = false;
     };
     autoconfig = {
