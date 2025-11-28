@@ -491,8 +491,28 @@ pref("mail.dove.status", "011");
 pref("network.auth.non-web-content-triggered-resources-http-auth-allow", true); // [DEFAULT]
 pref("network.auth.subresource-http-auth-allow", 2); // [DEFAULT]
 
+/// Disable unused/unwanted password manager/autofill functionality
+// We only want to use the password manager here for ex. saving log-ins to email providers - we don't want/need it trying to interact with webpages
+// and we don't need anything with addresses/credit cards/etc.
+pref("extensions.formautofill.addresses.capture.enabled", false);
+pref("extensions.formautofill.addresses.supported", "off");
+pref("extensions.formautofill.addresses.supportedCountries", "");
+pref("extensions.formautofill.creditCards.hideui", true); // [HIDDEN] https://searchfox.org/firefox-release/rev/9d94f5e3/toolkit/components/formautofill/FormAutofill.sys.mjs#29
+pref("extensions.formautofill.creditCards.supported", "off");
+pref("extensions.formautofill.creditCards.supportedCountries", "");
+pref("signon.backup.enabled", false);
+pref("signon.capture.inputChanges.enabled", false);
+pref("signon.formRemovalCapture.enabled", false);
+pref("signon.generation.available", false);
+pref("signon.generation.enabled", false);
+pref("signon.passwordEditCapture.enabled", false);
+pref("signon.recipes.path", "");
+pref("signon.relatedRealms.enabled", false); // [DEFAULT]
+pref("signon.showAutoCompleteFooter", false);
+pref("signon.usernameOnlyForm.enabled", false);
+
 /// Re-enable Password Manager by default
-// This is useful & important for Thunderbird, since it's the only way to stay logged in/store account passwords...
+// This is useful and important for Thunderbird, since it's the only way to stay logged in/store account passwords...
 // Also no UI toggle for it :/
 pref("signon.rememberSignons", true); // [DEFAULT]
 
@@ -724,6 +744,13 @@ pref("app.use_without_mail_account", true);
 // (Likely unused, but defined here, so we can set anyways)
 pref("browser.bookmarks.max_backups", 0);
 
+/// Disable Picture-in-Picture
+// Likely unused, and unwanted for our use case
+pref("media.videocontrols.picture-in-picture.audio-toggle.enabled", false); // [HIDDEN] [DEFAULT]
+pref("media.videocontrols.picture-in-picture.enabled", false); // [DEFAULT]
+pref("media.videocontrols.picture-in-picture.urlbar-button.enabled", false); // [HIDDEN] [DEFAULT]
+pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false); // [DEFAULT]
+
 /// Disable support for web applications manifests
 // Ex. used for PWAs (and PWA inspection on Firefox for Desktop)
 // Unnecessary for our use case
@@ -742,26 +769,6 @@ pref("services.sync.engine.servers", false); // [HIDDEN - non-MOZ_SERVICES_SYNC 
 
 /// Disable tooltips
 pref("browser.chrome.toolbar_tips", false);
-
-/// Disable unused/unwanted password manager/autofill functionality
-// We only want to use the password manager for ex. saving log-ins to email providers - we don't want/need it trying to interact with webpages
-// and we don't need anything with addresses/credit cards/etc.
-pref("extensions.formautofill.addresses.capture.enabled", false);
-pref("extensions.formautofill.addresses.supported", "off");
-pref("extensions.formautofill.addresses.supportedCountries", "");
-pref("extensions.formautofill.creditCards.hideui", true); // [HIDDEN] https://searchfox.org/firefox-release/rev/9d94f5e3/toolkit/components/formautofill/FormAutofill.sys.mjs#29
-pref("extensions.formautofill.creditCards.supported", "off");
-pref("extensions.formautofill.creditCards.supportedCountries", "");
-pref("signon.backup.enabled", false);
-pref("signon.capture.inputChanges.enabled", false);
-pref("signon.formRemovalCapture.enabled", false);
-pref("signon.generation.available", false);
-pref("signon.generation.enabled", false);
-pref("signon.passwordEditCapture.enabled", false);
-pref("signon.recipes.path", "");
-pref("signon.relatedRealms.enabled", false); // [DEFAULT]
-pref("signon.showAutoCompleteFooter", false);
-pref("signon.usernameOnlyForm.enabled", false);
 
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
