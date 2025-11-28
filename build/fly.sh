@@ -115,6 +115,11 @@ cat /tmp/dove/linux-temp1.js /tmp/dove/linux-temp2.js /tmp/dove/linux-temp3.js >
 
 python3 build/convert.py "$DOVE_LINUX_PREFS" "$DOVE_LINUX_CFG"
 
+# Update the version
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_CFG"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_PREFS"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_USER_PREF_CFG"
+
 # GNU/LINUX (FLATPAK)
 
 # Copy license
@@ -154,6 +159,11 @@ echo "Created /tmp/dove/linux-flatpak-temp3.js"
 cat /tmp/dove/linux-flatpak-temp1.js /tmp/dove/linux-flatpak-temp2.js /tmp/dove/linux-flatpak-temp3.js > "$DOVE_LINUX_FLATPAK_PREFS"
 
 python3 build/convert.py "$DOVE_LINUX_FLATPAK_PREFS" "$DOVE_LINUX_FLATPAK_CFG"
+
+# Update the version
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_FLATPAK_CFG"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_FLATPAK_PREFS"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_FLATPAK_USER_PREF_CFG"
 
 # MACOS
 
@@ -198,6 +208,11 @@ python3 build/convert.py "$DOVE_OSX_PREFS" /tmp/dove/dove-osx-tmp.cfg
 # Add "user" prefs
 cat /tmp/dove/dove-osx-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_OSX_CFG"
 
+# Update the version
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_BOOTSTRAP"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_CFG"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_PREFS"
+
 # MACOS (INTEL)
 
 # Copy license
@@ -241,6 +256,11 @@ python3 build/convert.py "$DOVE_OSX_INTEL_PREFS" /tmp/dove/dove-osx-intel-tmp.cf
 # Add "user" prefs
 cat /tmp/dove/dove-osx-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_OSX_INTEL_CFG"
 
+# Update the version
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_INTEL_BOOTSTRAP"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_INTEL_CFG"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_INTEL_PREFS"
+
 # WINDOWS
 
 # Copy license
@@ -283,6 +303,11 @@ python3 build/convert.py "$DOVE_WINDOWS_PREFS" /tmp/dove/dove-windows-tmp.cfg
 
 # Add "user" prefs
 cat /tmp/dove/dove-windows-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_WINDOWS_CFG"
+
+# Update the version
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_WINDOWS_BOOTSTRAP"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_WINDOWS_CFG"
+$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_WINDOWS_PREFS"
 
 # POLICIES
 

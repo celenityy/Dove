@@ -4,15 +4,6 @@ set -euo pipefail
 
 source build/env.sh
 
-# Update "mail.dove.version"
-$SED -i "s/pref(\"mail.dove.version\", \".*\", locked);/pref(\"mail.dove.version\", \"$dove_version\", locked);/" build/dove-unified.js
-
-# Update "app.support.vendor"
-$SED -i "s/pref(\"app.support.vendor\", \".*\", locked);/pref(\"app.support.vendor\", \"Dove: $dove_version\", locked);/" build/dove-unified.js
-
-# Update "distribution.about"
-$SED -i "s/pref(\"distribution.about\", \".*\", locked);/pref(\"distribution.about\", \"Dove for Mozilla Thunderbird - $dove_version 💜\", locked);/" build/dove-unified.js
-
 mkdir -vp external/uBlock
 pushd external/uBlock
 rm -vrf *
