@@ -521,6 +521,7 @@ pref("signon.firefoxRelay.terms_of_service_url", "");
 // We only want to use the password manager here for ex. saving log-ins to email providers - we don't want/need it trying to interact with webpages
 // and we don't need anything with addresses/credit cards/etc.
 pref("extensions.formautofill.addresses.capture.enabled", false);
+pref("extensions.formautofill.addresses.experiments.enabled", false); // [DEFAULT]
 pref("extensions.formautofill.addresses.supported", "off");
 pref("extensions.formautofill.addresses.supportedCountries", "");
 pref("extensions.formautofill.creditCards.hideui", true); // [HIDDEN] https://searchfox.org/firefox-release/rev/9d94f5e3/toolkit/components/formautofill/FormAutofill.sys.mjs#29
