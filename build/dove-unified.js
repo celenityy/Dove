@@ -743,6 +743,26 @@ pref("services.sync.engine.servers", false); // [HIDDEN - non-MOZ_SERVICES_SYNC 
 /// Disable tooltips
 pref("browser.chrome.toolbar_tips", false);
 
+/// Disable unused/unwanted password manager/autofill functionality
+// We only want to use the password manager for ex. saving log-ins to email providers - we don't want/need it trying to interact with webpages
+// and we don't need anything with addresses/credit cards/etc.
+pref("extensions.formautofill.addresses.capture.enabled", false);
+pref("extensions.formautofill.addresses.supported", "off");
+pref("extensions.formautofill.addresses.supportedCountries", "");
+pref("extensions.formautofill.creditCards.hideui", true); // [HIDDEN] https://searchfox.org/firefox-release/rev/9d94f5e3/toolkit/components/formautofill/FormAutofill.sys.mjs#29
+pref("extensions.formautofill.creditCards.supported", "off");
+pref("extensions.formautofill.creditCards.supportedCountries", "");
+pref("signon.backup.enabled", false);
+pref("signon.capture.inputChanges.enabled", false);
+pref("signon.formRemovalCapture.enabled", false);
+pref("signon.generation.available", false);
+pref("signon.generation.enabled", false);
+pref("signon.passwordEditCapture.enabled", false);
+pref("signon.recipes.path", "");
+pref("signon.relatedRealms.enabled", false); // [DEFAULT]
+pref("signon.showAutoCompleteFooter", false);
+pref("signon.usernameOnlyForm.enabled", false);
+
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
 pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json] - Setting to blank results in error on set-up stating that no URL is configured
