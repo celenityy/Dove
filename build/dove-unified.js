@@ -736,6 +736,9 @@ pref("services.sync.engine.calendars", false); // [HIDDEN - non-MOZ_SERVICES_SYN
 pref("services.sync.engine.identities", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
 pref("services.sync.engine.servers", false); // [HIDDEN - non-MOZ_SERVICES_SYNC builds] [DEFAULT - non-MOZ_SERVICES_SYNC builds]
 
+/// Disable tooltips
+pref("browser.chrome.toolbar_tips", false);
+
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
 pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json] - Setting to blank results in error on set-up stating that no URL is configured
