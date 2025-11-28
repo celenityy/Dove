@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
+set -e
+
 # This is a basic script used to create the .zip files you see in the 'archives' directory.
 # We could just clone the entire source code - though lots of of it are completely unnecessary for packaging.
 # This creates a slim .zip file only containing what we actually need.
 
 # Script should be ran from inside the directory where you store Dove, not directly from the 'archives' or `build` folder...
-
-set -euo pipefail
 
 echo_green_text() {
 	echo -e "\033[32m$1\033[0m"

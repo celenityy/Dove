@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Welcome to the Dove Unified build script!
 # This script should be ran from inside the directory where you store Dove, not directly from the 'archives' or `build` folder...
 
-set -euo pipefail
+source "$dove_dir/build/env.sh"
 
 export DOVE_LICENSE="COPYING.txt"
 export DOVE_README="README.md"
