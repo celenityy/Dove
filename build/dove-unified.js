@@ -770,6 +770,10 @@ pref("media.videocontrols.picture-in-picture.enabled", false); // [DEFAULT]
 pref("media.videocontrols.picture-in-picture.urlbar-button.enabled", false); // [HIDDEN] [DEFAULT]
 pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false); // [DEFAULT]
 
+/// Disable the "Search in Private Window" URL bar result by default
+// Likely unused, but this pref is referenced in code relevant to Thunderbird
+pref("browser.search.separatePrivateDefault.urlbarResult.enabled", false); // [HIDDEN] [DEFAULT]
+
 /// Disable support for web applications manifests
 // Ex. used for PWAs (and PWA inspection on Firefox for Desktop)
 // Unnecessary for our use case
