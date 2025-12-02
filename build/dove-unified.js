@@ -482,10 +482,6 @@ pref("narrate.enabled", false);
 // Broken on Thunderbird
 pref("reader.parse-on-load.enabled", false);
 
-/// Disable SVG
-// https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
-pref("svg.disabled", true);
-
 /// Disable WebRTC
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=webrtc
 // https://x.com/GrapheneOS/status/1728921946396725618
