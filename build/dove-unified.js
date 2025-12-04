@@ -651,6 +651,10 @@ pref("mail.dove.status", "015");
 /// Disable automatic collection of email addresses for Thunderbird's Address Book
 pref("mail.collect_email_address_outgoing", false);
 
+/// Disable clipboard events
+// https://developer.mozilla.org/docs/Web/API/ClipboardEvent
+pref("dom.event.clipboardevents.enabled", false);
+
 /// Disable Geolocation
 // https://browserleaks.com/geo
 pref("geo.prompt.open_system_prefs", false); // Ensure users aren't prompted to open settings and enable Geolocation - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
