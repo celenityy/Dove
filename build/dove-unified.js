@@ -767,6 +767,12 @@ pref("app.use_without_mail_account", true);
 // (Likely unused, but defined here, so we can set anyways)
 pref("browser.bookmarks.max_backups", 0);
 
+/// Disable context menu events
+// This prevents websites from hijacking the right click/context menu
+// I can't imagine a legitimate use case for this for our purposes...
+// https://developer.mozilla.org/docs/Web/API/Element/contextmenu_event
+pref("dom.event.contextmenu.enabled", false);
+
 /// Disable Picture-in-Picture
 // Likely unused, and unwanted for our use case
 pref("media.videocontrols.picture-in-picture.audio-toggle.enabled", false); // [HIDDEN] [DEFAULT]
