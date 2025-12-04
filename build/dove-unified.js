@@ -474,6 +474,18 @@ pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
 pref("browser.translations.simulateUnsupportedEngine", true);
 
+/// Disable Media Source Extensions
+// This API is used to support advanced media playback (ex. adaptive streaming) via JavaScript
+// https://wikipedia.org/wiki/Media_Source_Extensions
+// https://developer.mozilla.org/docs/Web/API/Media_Source_Extensions_API
+// https://www.w3.org/TR/media-source/
+// https://docs.webkit.org/Deep%20Dive/Modules/MediaSourceExtensions.html
+pref("media.mediasource.enabled", false);
+pref("media.mediasource.experimental.enabled", false); // [DEFAULT]
+pref("media.mediasource.mp4.enabled", false);
+pref("media.mediasource.vp9.enabled", false);
+pref("media.mediasource.webm.enabled", false);
+
 /// Disable Narrator
 // Broken on Thunderbird
 pref("narrate.enabled", false);
