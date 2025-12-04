@@ -478,6 +478,11 @@ pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
 pref("browser.translations.simulateUnsupportedEngine", true);
 
+/// Disable media control
+// https://searchfox.org/firefox-main/source/dom/media/mediacontrol/MediaControlKeyManager.cpp
+// https://support.mozilla.org/kb/control-audio-or-video-playback-your-keyboard
+pref("media.hardwaremediakeys.enabled", false);
+
 /// Disable Media Source Extensions
 // This API is used to support advanced media playback (ex. adaptive streaming) via JavaScript
 // https://wikipedia.org/wiki/Media_Source_Extensions
