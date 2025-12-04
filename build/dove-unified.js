@@ -456,6 +456,7 @@ pref("devtools.remote.adb.extensionURL", "");
 /// Disable the Audio Output Devices API
 // https://developer.mozilla.org/docs/Web/API/Audio_Output_Devices_API
 pref("media.setsinkid.enabled", false);
+pref("permissions.default.speaker", 2); // [HIDDEN] - 0: Always ask, 2: Block
 
 /// Disable DRM/EME
 pref("media.eme.encrypted-media-encryption-scheme.enabled", false);
