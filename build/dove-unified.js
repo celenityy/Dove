@@ -845,6 +845,13 @@ pref("browser.fixup.typo.scheme", false); // [HIDDEN]
 pref("browser.urlbar.dnsResolveFullyQualifiedNames", false); // [HIDDEN]
 pref("security.bad_cert_domain_error.url_fix_enabled", false); // https://searchfox.org/firefox-main/rev/82e2435f/docshell/base/nsDocShell.cpp#6251
 
+/// Enable audio focus management
+// This prevents multiple audio controllers from playing at the same time
+// (So, ex. - if you have multiple tabs open and playing audio at the same time, this only allows the most recent tab to play audio)
+// https://searchfox.org/firefox-main/rev/5a5b3741/dom/media/mediacontrol/AudioFocusManager.cpp#41
+// Ideally, we don't want audio at all - this at least restricts it
+pref("media.audioFocus.management", true);
+
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137
 pref("mailnews.auto_config.addons_url", "data;"); // [DEFAULT: https://autoconfig.thunderbird.net/addons.json] - Setting to blank results in error on set-up stating that no URL is configured
