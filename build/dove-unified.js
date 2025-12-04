@@ -494,6 +494,15 @@ pref("narrate.enabled", false);
 // Broken on Thunderbird
 pref("reader.parse-on-load.enabled", false);
 
+/// Disable WebCodecs
+// This API provides low-level access to platform media codecs
+// https://developer.mozilla.org/docs/Web/API/WebCodecs_API
+// https://w3c.github.io/webcodecs/#security-considerations
+// https://w3c.github.io/webcodecs/#privacy-considerations
+pref("dom.media.webcodecs.enabled", false);
+pref("dom.media.webcodecs.h265.enabled", false); // [DEFAULT - non-Nightly]
+pref("dom.media.webcodecs.image-decoder.enabled", false);
+
 /// Disable WebRTC
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=webrtc
 // https://x.com/GrapheneOS/status/1728921946396725618
