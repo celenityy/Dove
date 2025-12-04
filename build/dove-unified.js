@@ -494,7 +494,12 @@ pref("narrate.enabled", false);
 // Broken on Thunderbird
 pref("reader.parse-on-load.enabled", false);
 
-/// Disable WebCodecs
+/// Disable the Web Audio API
+// https://developer.mozilla.org/docs/Web/API/Web_Audio_API
+// We don't want/meed audio or the capabilities exposed by this...
+pref("dom.webaudio.enabled", false);
+
+/// Disable the WebCodecs API
 // This API provides low-level access to platform media codecs
 // https://developer.mozilla.org/docs/Web/API/WebCodecs_API
 // https://w3c.github.io/webcodecs/#security-considerations
