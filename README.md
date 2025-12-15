@@ -653,9 +653,8 @@ Huge thank you to the following projects & individuals for making Dove possible.
     - Discovered various prefs & learned from their very nice documentation
 
 - **[Arkenfox](https://github.com/arkenfox/user.js)**
-	- 🪪 [Thorin-Oakenpants](https://github.com/thorin-oakenpants) + [earthlng](https://github.com/earthlng) + [claustromaniac](https://github.com/claustromaniac)
+	- 🪪 [earthlng](https://github.com/earthlng), [claustromaniac](https://github.com/claustromaniac), [Arkenfox authors](https://github.com/arkenfox)
 	- ⚖️ [MIT](https://github.com/arkenfox/user.js/blob/master/LICENSE.txt)
-	- Discovered various prefs - Also learned lots from their excellent research & documentation
 
 - **[Betterfox](https://github.com/yokoffing/Betterfox)**
 	- 🪪 [yokoffing](https://github.com/yokoffing)
