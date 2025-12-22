@@ -809,6 +809,15 @@ pref("browser.bookmarks.max_backups", 0);
 // https://developer.mozilla.org/docs/Web/API/Element/contextmenu_event
 pref("dom.event.contextmenu.enabled", false);
 
+/// Disable the Firefox "AI" (Local machine learning) Runtime
+// https://firefox-source-docs.mozilla.org/toolkit/components/ml/index.html
+// On desktop, we need to keep this enabled, as it's required for certain legitimate functionality,
+// such as PDF.js alt text image generation
+// But, on Thunderbird, the legitimate features aren't implemented, so we can disable it entirely
+// Note that, even when this is enabled,
+// we don't actually enable/install any AI models/functionality by default
+pref("browser.ml.enable", false);
+
 /// Disable Picture-in-Picture
 // Likely unused, and unwanted for our use case
 pref("media.videocontrols.picture-in-picture.audio-toggle.enabled", false); // [HIDDEN] [DEFAULT]
