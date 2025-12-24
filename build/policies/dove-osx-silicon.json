@@ -1,12 +1,4 @@
 {
     "policies": {
-        "ExtensionSettings": {
-            "uBlock0@raymondhill.net": {
-                "blocked_install_message": "uBlock Origin: https://github.com/gorhill/uBlock",
-                "installation_mode": "normal_installed",
-                "install_url": "file:///opt/homebrew/opt/dove/assets/uBlock.xpi",
-                "private_browsing": true
-            }
-        }
     }
 }

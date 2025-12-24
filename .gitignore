@@ -1,21 +1,10 @@
 .DS_Store
-external/autoconfig
-external/uBlock
-linux/assets/autoconfig
-linux/assets/uBlock
-linux/assets/uBlock.xpi
-linux-flatpak/assets/autoconfig
-linux-flatpak/assets/uBlock
-linux-flatpak/assets/uBlock.xpi
-macos/assets/autoconfig
-macos/assets/uBlock
-macos/assets/uBlock.xpi
-macos-intel/assets/autoconfig
-macos-intel/assets/uBlock
-macos-intel/assets/uBlock.xpi
-windows/assets/autoconfig
-windows/assets/uBlock
-windows/assets/uBlock.xpi
+/external/autoconfig
+/linux/assets/autoconfig
+/linux-flatpak/assets/autoconfig
+/macos/assets/autoconfig
+/macos-intel/assets/autoconfig
+/windows/assets/autoconfig
 # nix build
 result-*
 result

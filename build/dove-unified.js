@@ -588,6 +588,9 @@ pref("extensions.abuseReport.enabled", true);
 // REQUIRED FOR UBLOCK ORIGIN
 pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
 
+/// Allow uBird (uBlock Origin builds for Thunderbird) to run on restricted/quarantined domains by default
+pref("extensions.quarantineIgnoredByUser.uBird@celenity.dev", true);
+
 /// Allow unprivileged extensions to use experimental APIs
 // Required for ex. CardBook, also used by DKIM Verifier
 // https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
@@ -606,6 +609,9 @@ pref("extensions.getAddons.compatOverides.url", "");
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#25
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#76
 pref("extensions.alternativeAddonSearch.url", "");
+
+/// Ensure uBird (uBlock Origin builds for Thunderbird) can access all containers by default (if installed)
+pref("extensions.userContextIsolation.uBird@celenity.dev.restricted", "[]"); // [HIDDEN]
 
 /// Ensure we do not try to fetch browser mappings
 // This is used for mapping Chrome extensions with Firefox ones, as part of browser migration

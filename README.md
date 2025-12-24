@@ -455,13 +455,13 @@ sudo cp dove.js /etc/thunderbird/defaults/pref/dove.js
 **8:** On Windows, in the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or you can run the following command:
 
 ```sh
-mkdir -p C:\'Program Files'\'Mozilla Thunderbird'\distribution
+mkdir -vp C:\'Program Files'\'Mozilla Thunderbird'\distribution
 ```
 
 non-Flatpak GNU/Linux users should **instead** create a `policies` folder inside of the `thunderbird` folder located in `/etc`. This will work **regardless** of your distribution, and even for Snaps.
 
 ```sh
-sudo mkdir -p /etc/thunderbird/policies
+sudo mkdir -vp /etc/thunderbird/policies
 ```
 
 For non-Flatpak GNU/Linux users, you'll also want to ensure that the folder you created has proper permissions:
@@ -488,80 +488,7 @@ GNU/Linux users should **instead** copy `policies.json` to their `/etc/thunderbi
 sudo cp policies.json /etc/thunderbird/policies/policies.json
 ```
 
-**10**: Download the latest release of uBlock Origin's **`thunderbird`** `.xpi` file. You can download the file directly from uBlock Origin's [GitHub releases here](https://github.com/gorhill/uBlock/releases/latest). **If you're using Firefox**: Ensure you **right click** the `.thunderbird.xpi` file, and select **`Save Link As...`** to prevent Firefox from attempting to install it. If preferred, you can instead run the following command in your terminal, **replacing `{VERSION}` with the latest version of uBlock Origin that you'd like to download**:
-
-```sh
-curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://github.com/gorhill/uBlock/releases/download/{VERSION}/uBlock0_{VERSION}.thunderbird.xpi
-```
-
-**11**: Rename the file you just downloaded to **`uBlock.xpi`**, and copy it to the following directory, depending on your platform:
-
-**Linux** *(Non-Flatpak)*:
-
-```sh
-/etc/thunderbird/dove/assets/uBlock.xpi
-```
-
-Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
-
-```sh
-mkdir -vp /etc/thunderbird/dove/assets
-cp uBlock0_VERSION.thunderbird.xpi /etc/thunderbird/dove/assets/uBlock.xpi
-```
-
-**Linux** *(Flatpak)*:
-
-```sh
-/var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/uBlock.xpi
-```
-
-Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
-
-```sh
-mkdir -vp /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets
-cp uBlock0_VERSION.thunderbird.xpi /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/uBlock.xpi
-```
-
-**macOS** *(Apple Silicon)*:
-
-```sh
-/opt/homebrew/opt/dove/assets/uBlock.xpi
-```
-
-Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
-
-```sh
-mkdir -vp /opt/homebrew/opt/dove/assets
-cp uBlock0_VERSION.thunderbird.xpi /opt/homebrew/opt/dove/assets/uBlock.xpi
-```
-
-**macOS** *(Intel)*:
-
-```sh
-/usr/local/opt/dove-intel/assets/uBlock.xpi
-```
-
-Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
-
-```sh
-mkdir -vp /usr/local/opt/dove-intel/assets
-cp uBlock0_VERSION.thunderbird.xpi /usr/local/opt/dove-intel/assets/uBlock.xpi
-```
-
-**Windows**:
-
-```sh
-C:\dove\assets\uBlock.xpi
-```
-
-Command-line, replacing **replacing `VERSION` with the latest version of uBlock Origin that you downloaded**:
-
-```sh
-mkdir -vp C:\dove\assets
-cp uBlock0_VERSION.thunderbird.xpi C:\dove\assets\uBlock.xpi
-```
-
-**12**: Within your Dove `assets` directly, create a directory titled `autoconfig`, and within that directory, create a directory titled `v1.1`. Navigate into the `v1.1` directory.
+**10**: Within your Dove `assets` directory, create a directory titled `autoconfig`, and within that directory, create a directory titled `v1.1`. Navigate into the `v1.1` directory.
 
 **Linux** *(Non-Flatpak)*:
 
@@ -598,7 +525,7 @@ mkdir -vp C:\dove\assets\autoconfig\v1.1
 cd C:\dove\assets\autoconfig\v1.1
 ```
 
-**13:** Download Mozilla's latest autoconfiguration files into the root of the `v1.1` directory. These [can be found here](https://autoconfig.thunderbird.net/v1.1/). The easiest way to download them is by installing **`wget`** *(if you haven't already)*, and running the following command in your Terminal:
+**11:** Download Mozilla's latest autoconfiguration files into the root of the `v1.1` directory. These [can be found here](https://autoconfig.thunderbird.net/v1.1/). The easiest way to download them is by installing **`wget`** *(if you haven't already)*, and running the following command in your Terminal:
 
 ```sh
 wget -r -np -nH --cut-dirs=3 -R index.html -e robots=off https://autoconfig.thunderbird.net/v1.1/
@@ -619,8 +546,6 @@ Phoenix is licensed under the [GNU General Public License v3.0 or later](https:/
 Dove's [archives](https://gitlab.com/celenityy/Dove/-/tree/pages/archives) include:
 
 - `assets/autoconfig/` - From [Thunderbird's `ISPDB`](https://github.com/thunderbird/autoconfig), available under the [Mozilla Public License 2.0](https://spdx.org/licenses/MPL-2.0.html).
-
-- `assets/uBlock.xpi` - From [uBlock Origin](https://github.com/gorhill/uBlock), available under the [GNU General Public License v3.0 only](https://spdx.org/licenses/GPL-3.0-only.html).
 
 # 🏛️Notices
 

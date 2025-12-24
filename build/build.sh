@@ -4,28 +4,6 @@ set -eu
 
 source build/env.sh
 
-mkdir -vp external/uBlock
-pushd external/uBlock
-rm -vrf *
-
-if [[ -n "${uBlock-}" ]]; then 
-    echo "Copying uBlock Origin from ${uBlock}" 
-    cp "${uBlock}" uBlock.xpi
-else
-    echo "Downloading uBlock Origin $ubo_version..."
-    curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -o uBlock.xpi -sSL "https://github.com/celenityy/uBlock/releases/download/$ubo_version/uBlock0_$ubo_version.thunderbird.xpi"
-fi
-
-if [[ -n "${uBlockLicense-}" ]]; then
-    echo "Copying uBlock Origin license from ${uBlockLicense}" 
-    cp "${uBlockLicense}" LICENSE.txt
-else
-    echo "Downloading uBlock Origin's LICENSE..."
-    curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -O -sSL https://raw.githubusercontent.com/gorhill/uBlock/refs/heads/master/LICENSE.txt
-fi
-
-popd
-
 mkdir -vp external/autoconfig
 pushd external/autoconfig
 rm -vrf *
@@ -35,6 +13,7 @@ build_autoconfig() {
     mkdir v1.1
     python ${autoconfig_dir}/tools/convert.py -d v1.1 -a ${autoconfig_dir}/ispdb/*.xml
 }
+
 if [[ -n "${autoconfig_dir-}" ]]; then
     echo "Using Thunderbird's autoconfiguration database (ISPDB) repository from ${autoconfig_dir}" 
     build_autoconfig

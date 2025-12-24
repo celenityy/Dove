@@ -1,16 +1,12 @@
-#!/usr/bin/env bash
 
 # Where Phoenix is located
 if [ -z ${phoenix_dir+x} ]; then 
     # default value if unset
-    export phoenix_dir=~/Projects/Phoenix
+    export phoenix_dir=~/Projects/celenity/Phoenix
 fi
 
 # Version of Dove you'd like to build
 export DOVE_VERSION=2025.11.27.1
-
-# Version of uBlock Origin
-export ubo_version=1.68.0
 
 # Where `Dove` (this repo) is located
 export dove_dir=$(dirname $(dirname "$(realpath "$0")"))

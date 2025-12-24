@@ -7,14 +7,6 @@
       url = "git+https://gitlab.com/celenityy/Phoenix";
       flake = false;
     };
-    uBlock = {
-      url = "https://github.com/celenityy/uBlock/releases/download/1.68.0/uBlock0_1.68.0.thunderbird.xpi";
-      flake = false;
-    };
-    uBlockLicense = {
-      url = "https://raw.githubusercontent.com/celenityy/uBlock/refs/tags/1.68.0/LICENSE.txt";
-      flake = false;
-    };
     autoconfig = {
       url = "github:thunderbird/autoconfig?ref=prod";
       flake = false;
@@ -26,8 +18,6 @@
       self,
       nixpkgs,
       phoenix,
-      uBlock,
-      uBlockLicense,
       autoconfig
     }:
     let
@@ -124,8 +114,6 @@
                 runHook preBuild
 
                 export phoenix_dir=${phoenix}
-                export uBlock=${uBlock}
-                export uBlockLicense=${uBlockLicense}
                 export autoconfig_dir=${autoconfig}
                 patchShebangs ./build/*.sh
 
