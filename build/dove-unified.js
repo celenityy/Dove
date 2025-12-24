@@ -758,6 +758,8 @@ pref("mail.dove.status", "016");
 
 /// Always warn users before launching other apps
 pref("mail.external_protocol_requires_permission", true);
+pref("network.protocol-handler.warn-external.http", true);
+pref("network.protocol-handler.warn-external.https", true);
 
 /// Disable insecure NTLMv1 [LINUX-ONLY]
 // Fedora's Thunderbird package overrides this to `true`... :/ [LINUX-ONLY]
