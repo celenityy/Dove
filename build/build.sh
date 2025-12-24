@@ -8,11 +8,13 @@ mkdir -vp external/autoconfig
 pushd external/autoconfig
 rm -vrf *
 
-# Set-up pip
-python -m venv "$PIP_ENV"
-source "$PIP_ENV/bin/activate"
-pip install --upgrade pip
-pip install lxml
+# Set-up pip venv
+if [[ -v USING_NIX_FLAKE ]]; then
+    python -m venv "$PIP_ENV"
+    source "$PIP_ENV/bin/activate"
+    pip install --upgrade pip
+    pip install lxml
+fi
 
 build_autoconfig() {
     cp "${autoconfig_dir}/LICENSE" ./LICENSE.txt
