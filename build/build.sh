@@ -8,6 +8,12 @@ mkdir -vp external/autoconfig
 pushd external/autoconfig
 rm -vrf *
 
+# Set-up pip
+python3.9 -m venv "$PIP_ENV"
+source "$PIP_ENV/bin/activate"
+pip install --upgrade pip
+pip install lxml
+
 build_autoconfig() {
     cp "${autoconfig_dir}/LICENSE" ./LICENSE.txt
     mkdir v1.1

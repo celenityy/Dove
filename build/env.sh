@@ -26,6 +26,9 @@ export dove_osx_intel_dir="$dove_dir/macos-intel"
 # Where the `windows` directory is located
 export dove_windows_dir="$dove_dir/windows"
 
+# Python
+export PIP_ENV="build/pyenv"
+
 # Use GNU Sed on macOS instead of the built-in sed, due to differences in syntax
 if [[ "$OSTYPE" == "darwin"* ]]; then
     SED=gsed
