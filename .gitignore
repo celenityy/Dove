@@ -1,4 +1,5 @@
 .DS_Store
+/build/pyenv/
 /external/
 /linux/assets/autoconfig
 /linux-flatpak/assets/autoconfig
