@@ -18,7 +18,7 @@
 pref("mail.dove.version", "{DOVE_VERSION}", locked);
 
 /// Add custom branding at `about:support`
-pref("app.support.vendor", "Dove: {DOVE_VERSION}"); // [HIDDEN]
+pref("app.support.vendor", "Dove: {DOVE_VERSION} | Phoenix: {PHOENIX_VERSION}"); // [HIDDEN]
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 pref("distribution.about", "Dove for Mozilla Thunderbird - {DOVE_VERSION} 💜", locked); // [HIDDEN]

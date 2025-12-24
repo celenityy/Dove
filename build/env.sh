@@ -8,6 +8,9 @@ fi
 # Version of Dove you'd like to build
 export DOVE_VERSION=2025.11.27.1
 
+# Version of Phoenix that we'd like to use
+export PHOENIX_VERSION=2025.12.23.1
+
 # Where `Dove` (this repo) is located
 export dove_dir=$(dirname $(dirname "$(realpath "$0")"))
 
