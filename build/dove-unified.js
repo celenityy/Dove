@@ -18,7 +18,7 @@
 pref("mail.dove.version", "{DOVE_VERSION}", locked);
 
 /// Add custom branding at `about:support`
-pref("app.support.vendor", "Dove: {DOVE_VERSION}", locked); // [HIDDEN]
+pref("app.support.vendor", "Dove: {DOVE_VERSION}"); // [HIDDEN]
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
 pref("distribution.about", "Dove for Mozilla Thunderbird - {DOVE_VERSION} 💜", locked); // [HIDDEN]
@@ -817,6 +817,12 @@ pref("dom.event.contextmenu.enabled", false);
 // Note that, even when this is enabled,
 // we don't actually enable/install any AI models/functionality by default
 pref("browser.ml.enable", false);
+
+/// Disable the inference content process
+// https://searchfox.org/firefox-main/rev/20a1fb35/dom/docs/ipc/process_model.rst#184
+// This is used for AI/machine learning, as well as Firefox Translations,
+// which we disable and aren't supported here
+pref("dom.ipc.processCount.inference", 0);
 
 /// Disable Picture-in-Picture
 // Likely unused, and unwanted for our use case
