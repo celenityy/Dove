@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2025.11.27.1", locked);
+pref("browser.phoenix.version", "2025.12.23.1", locked);
 
 /* INDEX 
 
@@ -168,7 +168,7 @@ pref("datareporting.policy.dataSubmissionPolicyBypassNotification", true, locked
 pref("datareporting.policy.firstRunURL", "", locked);
 pref("datareporting.usage.uploadEnabled", false, locked); // [HIDDEN - ANDROID] [DEFAULT - Android] Disables "daily usage pings" https://support.mozilla.org/kb/usage-ping-settings
 pref("dom.security.unexpected_system_load_telemetry_enabled", false, locked); // [DEFAULT - non-Nightly]
-pref("extensions.dataCollectionPermissions.enabled", false, locked); // https://support.mozilla.org/kb/extension-data-collection
+pref("extensions.dataCollectionPermissions.enabled", false, locked); // https://support.mozilla.org/kb/extension-data-collection https://extensionworkshop.com/documentation/develop/firefox-builtin-data-consent/
 pref("extensions.telemetry.EnvironmentAddonBuilder", false, locked); // [HIDDEN - non-Android] [NIGHTLY] Do not use Glean for add-on telemetry https://bugzilla.mozilla.org/show_bug.cgi?id=1981496 https://searchfox.org/firefox-main/rev/d285a4fb/toolkit/mozapps/extensions/AddonManager.sys.mjs#4801
 pref("network.jar.record_failure_reason", false, locked); // [DEFAULT - non-Nightly] https://searchfox.org/firefox-release/rev/9d94f5e3/modules/libpref/init/StaticPrefList.yaml#15576
 pref("network.traffic_analyzer.enabled", false, locked); // https://searchfox.org/firefox-release/rev/9d94f5e3/modules/libpref/init/StaticPrefList.yaml#14262
@@ -467,9 +467,9 @@ pref("signon.firefoxRelay.terms_of_service_url", "https://www.mozilla.org/about/
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/components/telemetry/docs/internals/preferences.rst#208
 pref("datareporting.policy.dataSubmissionPolicyAcceptedVersion", 999, locked);
 pref("datareporting.policy.dataSubmissionPolicyNotifiedTime", "32503679999000", locked);
-pref("termsofuse.acceptedDate", "32503679999000", locked); // [HIDDEN - Android/Thunderbird] [NIGHTLY]
-pref("termsofuse.acceptedVersion", 999, locked); // [HIDDEN - Android/Thunderbird] [NIGHTLY]
-pref("termsofuse.bypassNotification", true, locked); // [HIDDEN - Android/Thunderbird] [DEFAULT - builds without MOZILLA_OFFICIAL] [NIGHTLY]
+pref("termsofuse.acceptedDate", "32503679999000", locked); // [HIDDEN - Android/Thunderbird]
+pref("termsofuse.acceptedVersion", 999, locked); // [HIDDEN - Android/Thunderbird]
+pref("termsofuse.bypassNotification", true, locked); // [HIDDEN - Android/Thunderbird] [DEFAULT - builds without MOZILLA_OFFICIAL]
 
 pref("browser.phoenix.status", "002");
 
@@ -821,10 +821,6 @@ pref("browser.contentblocking.database.enabled", false); // [DEFAULT - Android/T
 // https://blog.mindedsecurity.com/2011/10/autocompleteagain.html
 pref("browser.formfill.enable", false);
 
-/// Disable semantic history
-// https://searchfox.org/firefox-main/source/toolkit/components/places/PlacesSemanticHistoryManager.sys.mjs
-pref("places.semanticHistory.featureGate", false); // [HIDDEN - Android/Thunderbird] [DEFAULT - non-Nightly/Dev Firefox Desktop]
-
 
 
 /// Disable WebRTC history
@@ -1133,8 +1129,6 @@ pref("browser.phoenix.status", "008");
 
 /*** 009 SEARCH & URL BAR ***/
 
-/// Allow using a different search engine in normal vs. private Windows
-pref("browser.search.separatePrivateDefault.ui.enabled", true);
 
 /// Always show Punycode
 // Protects against phishing & IDN Homograph Attacks
@@ -1694,7 +1688,6 @@ pref("extensions.addonAbuseReport.url", "");
 // Unfortunately Android doesn't have a prompt like this :( - so we won't disable this by default there - but we'll still set the pref to `true` to expose it via the `about:config` 
 // We're also setting this as a user pref, which is quite nice from a security perspective - as it allows users to enable this functionality only when it's necessary...
 // Ex: A user attempts to install an extension, sees the extra prompt/warning, and selects `Enable` (which temporarily sets this pref to `true`...). The user then proceeds to install the extension. On the next launch of Firefox/Thunderbird, this pref is reset back to `false`, meaning the ability to install extensions is fully disabled without them even thinking about it
-pref("xpinstall.enabled", false); // [NO-ANDROID] [HIDDEN] So the default is `false`
 
 /// Disable mozAddonManager
 // mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
@@ -1705,7 +1698,6 @@ pref("xpinstall.enabled", false); // [NO-ANDROID] [HIDDEN] So the default is `fa
 // https://github.com/thunderbird/addons-server/issues/332
 pref("extensions.webapi.testing", false); // [DEFAULT] Disables mozAddonManager on Mozilla testing domains
 pref("extensions.webapi.testing.http", false); // [DEFAULT] Disables mozAddonManager on Mozilla testing domains using insecure protocols
-pref("privacy.resistFingerprinting.block_mozAddonManager", true); // [NO-ANDROID]
 
 /// Enable Add-on Distribution Control (Install Origins)
 // Prevents extensions being installed from websites that they don't specify in their manifest
@@ -1892,6 +1884,14 @@ pref("browser.phoenix.status", "016");
 pref("extensions.htmlaboutaddons.local_model_management", true); // [DEFAULT]
 
 
+/// Control the Firefox "AI" (Local machine learning) Runtime
+// https://firefox-source-docs.mozilla.org/toolkit/components/ml/index.html
+// On desktop, we need to keep this enabled, as it's required for certain legitimate functionality,
+// such as PDF.js alt text image generation
+// On Android and Thunderbird, the legitimate features aren't implemented, so we can disable it entirely
+// Note that, even when this is enabled,
+// we don't actually enable/install any AI models/functionality by default
+
 
 /// Disable AI/ML Autofill [NO-ANDROID]
 // https://searchfox.org/firefox-esr140/source/toolkit/components/formautofill/MLAutofill.sys.mjs [NO-ANDROID]
@@ -1900,6 +1900,15 @@ pref("extensions.formautofill.ml.experiment.enabled", false); // [NO-ANDROID] [E
 
 
 
+
+/// Disable semantic history
+// https://searchfox.org/firefox-main/source/toolkit/components/places/PlacesSemanticHistoryManager.sys.mjs
+pref("places.semanticHistory.featureGate", false); // [HIDDEN - Android/Thunderbird] [DEFAULT - non-Nightly/Dev Firefox Desktop]
+
+
+/// Disable the WebExtensions AI API
+// https://firefox-source-docs.mozilla.org/toolkit/components/ml/extensions.html#webextensions-ai-api
+pref("extensions.ml.enabled", false);
 
 
 
@@ -1956,9 +1965,12 @@ pref("browser.phoenix.status", "018");
 /*** 019 PDF.js ***/
 
 /// Disable Automatic Alt Text by default
-// This prevents downloading the AI model unless the user opts in (by enabling the toggle to "Create alt text automatically" from "Image alt text settings" when viewing a PDF)
+// This is generated by a local machine learning model
+// Setting these ensures that the inference model is only downloaded if the user opts in (by enabling the toggle to "Create alt text automatically" from "Image alt text settings" when viewing a PDF)
 // https://support.mozilla.org/kb/pdf-alt-text#w_add-alt-text-automatically
+// https://hacks.mozilla.org/2024/05/experimenting-with-local-alt-text-generation-in-firefox-nightly/
 pref("pdfjs.enableAltTextModelDownload", false);
+pref("pdfjs.enableGuessAltText", false);
 
 /// Disable automatic hyperlinks
 // By default, PDF.js automatically creates hyperlinks for URLs - and clicking on or attempting to select a Hyperlink immediately navigates the user to the link, without warning or prior indication
@@ -1981,14 +1993,22 @@ pref("pdfjs.enableXfa", false);
 /// Enable the ability to add signatures
 pref("pdfjs.enableSignatureEditor", true);
 
-/// Enable Alt Text
+/// Enable Alt Text creation
 // This does NOT enable "Automatic Alt Text", we disable that separately above
 // https://support.mozilla.org/kb/pdf-alt-text
 pref("pdfjs.enableAltText", true);
 pref("pdfjs.enableAltTextForEnglish", true);
-pref("pdfjs.enableGuessAltText", true); // [DEFAULT]
 pref("pdfjs.enableNewAltTextWhenAddingImage", true); // [DEFAULT] Enables the Alt Text Editor after adding an image
 pref("pdfjs.enableUpdatedAddImage", true); // [DEFAULT]
+
+/// Enable hardware acceleration by default
+// This should help improve performance, which is especially notable for us since we disable JIT
+pref("pdfjs.enableHWA", true);
+
+/// Enable optimized partial rendering by default
+// In my testing, this appears to make a *significant* performance improvement
+// https://github.com/mozilla/pdf.js/blob/010e52e15db0cb534774cdf92e20c03bcd13d735/web/pdf_page_view.js#L93
+pref("pdfjs.enableOptimizedPartialRendering", true);
 
 /// Enforce using the internal font renderer
 // This disable the CSS Font Loading API
@@ -2083,9 +2103,7 @@ pref("browser.safebrowsing.downloads.enabled", true); // [DEFAULT - non-Android]
 pref("browser.safebrowsing.id", "navclient-auto-ffox"); // [DEFAULT - Official] Ensure we use Mozilla's ID
 pref("browser.safebrowsing.malware.enabled", true); // [DEFAULT]
 pref("browser.safebrowsing.phishing.enabled", true); // [DEFAULT]
-pref("browser.safebrowsing.provider.google5.advisoryURL", "https://developers.google.com/safe-browsing/v4/advisory"); // [DEFAULT - Nightly]
 pref("browser.safebrowsing.provider.google5.enabled", true); // [DEFAULT - Nightly]
-pref("browser.safebrowsing.provider.google5.lists", "goog-phish-proto,googpub-phish-proto,goog-malware-proto,goog-unwanted-proto,goog-harmful-proto"); // [DEFAULT - Nightly]
 pref("browser.safebrowsing.provider.mozilla.gethashURL", "https://shavar.services.mozilla.com/gethash?client=navclient-auto-ffox&appver=%MAJOR_VERSION%&pver=2.2"); // Ensure we always use Mozilla's official ID
 pref("browser.safebrowsing.update.enabled", true); // [HIDDEN] [DEFAULT] Also covers Mozilla's tracking protection lists
 pref("urlclassifier.downloadAllowTable", "goog-downloadwhite-proto"); // [DEFAULT - non-Android]
@@ -2232,7 +2250,7 @@ pref("dom.security.credentialmanagement.identity.lightweight.enabled", false); /
 // https://developer.chrome.com/docs/extensions/develop/concepts/native-messaging
 // https://searchfox.org/firefox-main/rev/af0f713f/toolkit/components/extensions/NativeMessaging.sys.mjs#12
 pref("webextensions.native-messaging.max-input-message-bytes", 0); // [HIDDEN] [DEFAULT: 1048576]
-pref("webextensions.native-messaging.max-output-message-bytes", 0); // [HIDDEN] [DEFAULT: -1]
+pref("webextensions.native-messaging.max-output-message-bytes", 0); // [HIDDEN] [DEFAULT: -1, but, to override: set to 999999999]
 
 /// Disable Reporting API
 // PRIVACY: Fingerprinting concerns, used for analytics by design
@@ -2244,6 +2262,7 @@ pref("dom.reporting.enabled", false); // [DEFAULT]
 pref("dom.reporting.featurePolicy.enabled", false); // [DEFAULT]
 pref("dom.reporting.header.enabled", false); // [DEFAULT]
 pref("dom.reporting.testing.enabled", false); // [DEFAULT]
+
 
 /// Disable Web Share API
 // This API allows websites to share data directly to system applications...
@@ -2270,6 +2289,14 @@ pref("dom.webgpu.enabled", false); // [DEFAULT - non-Windows/non-Nightly]
 // Test: https://permission.site/
 pref("dom.sitepermsaddon-provider.enabled", false);
 pref("dom.webmidi.gated", true); // [DEFAULT]
+pref("permissions.default.midi", 2); // [HIDDEN]
+pref("permissions.default.midi-sysex", 2); // [HIDDEN]
+
+/// Disable the Windows UI Automation API
+// Similar privacy and security concerns as with Accessibility Services (accessibility.force_disabled) above
+// https://wikipedia.org/wiki/Microsoft_UI_Automation
+// https://searchfox.org/firefox-main/rev/87a1e2a5/modules/libpref/init/StaticPrefList.yaml#298
+pref("accessibility.uia.enable", 0);
 
 /// Enable Local Network Access Restrictions
 // https://wicg.github.io/local-network-access/
@@ -2483,6 +2510,7 @@ pref("network.protocol-handler.expose.resource", true); // [HIDDEN]
 pref("network.protocol-handler.expose-all", false); // [DEFAULT - Thunderbird]
 pref("network.protocol-handler.external.about", false); // [HIDDEN]
 pref("network.protocol-handler.external.afp", false); // [DEFAULT]
+pref("network.protocol-handler.external.bankid", true); // [HIDDEN] Ensure we do not try to handle BankID authentication internally...
 pref("network.protocol-handler.external.blob", false); // [HIDDEN]
 pref("network.protocol-handler.external.chrome", false); // [HIDDEN]
 pref("network.protocol-handler.external.data", false); // [DEFAULT]
@@ -2492,8 +2520,6 @@ pref("network.protocol-handler.external.hcp", false); // [DEFAULT]
 pref("network.protocol-handler.external.help", false); // [HIDDEN - non-macOS] [DEFAULT - macOS]
 pref("network.protocol-handler.external.htp", false); // [DEFAULT]
 pref("network.protocol-handler.external.htps", false); // [DEFAULT]
-pref("network.protocol-handler.external.http", false); // [HIDDEN]
-pref("network.protocol-handler.external.https", false); // [HIDDEN]
 pref("network.protocol-handler.external.ie.http", false); // [DEFAULT]
 pref("network.protocol-handler.external.iehistory", false); // [DEFAULT]
 pref("network.protocol-handler.external.ierss", false); // [DEFAULT]
@@ -2509,6 +2535,7 @@ pref("network.protocol-handler.external.ms-cxh", false); // [DEFAULT]
 pref("network.protocol-handler.external.ms-cxh-full", false); // [DEFAULT]
 pref("network.protocol-handler.external.ms-help", false); // [DEFAULT]
 pref("network.protocol-handler.external.ms-msdt", false); // [DEFAULT]
+pref("network.protocol-handler.external.obtainium", true); // [HIDDEN] Ensure we do not try to handle Obtainium app installation internally...
 pref("network.protocol-handler.external.ps", false); // [DEFAULT]
 pref("network.protocol-handler.external.res", false); // [DEFAULT]
 pref("network.protocol-handler.external.resource", false); // [HIDDEN]
@@ -2620,6 +2647,10 @@ pref("security.sandbox.socket.process.level", 1); // [DEFAULT - Linux, non-Thund
 // Also enabled by ex. Tor Browser
 pref("javascript.options.spectre.disable_for_isolated_content", false);
 
+/// Enable Trusted Types
+// https://developer.mozilla.org/docs/Web/API/Trusted_Types_API
+pref("dom.security.trusted_types.enabled", true); // [DEFAULT - Nightly]
+
 /// Enable WebAssembly Memory Control
 // https://github.com/WebAssembly/memory-control/blob/main/proposals/memory-control/Overview.md
 pref("javascript.options.wasm_memory_control", true);
@@ -2642,6 +2673,11 @@ pref("security.data_uri.block_toplevel_data_uri_navigations", true); // [DEFAULT
 /// Ensure we block old/obsolete libavcodec libraries
 // https://searchfox.org/firefox-main/rev/82e2435f/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp#61
 pref("media.libavcodec.allow-obsolete", false); // [DEFAULT]
+
+/// If WebGL is enabled, force it to be loaded out of process
+pref("webgl.out-of-process", true); // [DEFAULT]
+pref("webgl.out-of-process.force", true);
+pref("webgl.out-of-process.worker", true); // [DEFAULT]
 
 
 /// Never skip the assertion that about:pages don't have content security policies (CSP)
@@ -2751,6 +2787,11 @@ pref("security.tls.grease_http3_enable", true);
 /// Enable more detailed property error messages
 pref("javascript.options.property_error_message_fix", true); // [DEFAULT - Nightly/Developer]
 
+/// Ensure that holding shift bypasses context menu events
+// (When holding shift, this prevents websites from hijacking the right click/context menu)
+// https://developer.mozilla.org/docs/Web/API/Element/contextmenu_event
+pref("dom.event.contextmenu.shift_suppresses_event", true); // [DEFAULT]
+
 /// Force pop-up windows to open in new tabs instead
 pref("browser.link.open_newwindow", 3); // [DEFAULT]
 pref("browser.link.open_newwindow.restriction", 0); // [DEFAULT - Android/Thunderbird]
@@ -2783,6 +2824,7 @@ pref("extensions.cookie.rejectWhenInvalid", true); // [NIGHTLY]
 // ex. https://ozuma.sakura.ne.jp/httpstatus/400
 pref("browser.http.blank_page_with_error_response.enabled", false); // [DEFAULT - non-Android]
 
+
 pref("browser.phoenix.status", "024");
 
 /*** 025 DEBUGGING ***/
@@ -2793,16 +2835,25 @@ pref("devtools.chrome.enabled", true); // [DEFAULT - Thunderbird]
 /// Allow inspecting the DOM by default [NO-ANDROID]
 pref("devtools.dom.enabled", true); // [NO-ANDROID]
 
-/// Allow inspecting/debugging local tabs from `about:debugging` by default [NO-ANDROID] [NO-ANDROID]
+/// Allow inspecting/debugging local tabs from `about:debugging` by default [NO-ANDROID]
 // Useful, especially for Thunderbird, as it gives us a URL bar... [NO-ANDROID]
 // On Thunderbird, you can use it by navigating to `Tools` -> `Developer Tools` -> `Debug Add-ons` (`about:debugging`), and choosing `Inspect` next to any tab... [NO-ANDROID]
 pref("devtools.aboutdebugging.local-tab-debugging", true); // [NO-ANDROID] [DEFAULT - non-MOZILLA_OFFICIAL builds]
 
+/// Allow inspecting/debugging processes from `about:debugging` by default [NO-ANDROID]
+pref("devtools.aboutdebugging.process-debugging", true); // [NO-ANDROID] [DEFAULT]
+
 /// Always prompt before connecting to Remote Debugging...
 pref("devtools.debugger.prompt-connection", true, locked); // [DEFAULT - non-Nightly]
 
+/// "Beautify" HTML content upon copy to the clipboard by default [NO-ANDROID]
+pref("devtools.markup.beautifyOnCopy", true); // [NO-ANDROID]
+
 /// Disable annoying "A simpler highlighter can be enabled in the settings..." banner when using developer tools [NO-ANDROID]
 pref("devtools.inspector.simple-highlighters.message-dismissed", true); // [NO-ANDROID] [HIDDEN]
+
+/// Disable annoying "Firefox Profiler is now integrated into Developer Tools" banner when opening the performance panel [NO-ANDROID]
+pref("devtools.performance.new-panel-onboarding", false); // [NO-ANDROID] [HIDDEN]
 
 /// Disable editor onboarding [NO-ANDROID]
 pref("devtools.webconsole.input.editorOnboarding", false); // [NO-ANDROID]
@@ -2816,6 +2867,9 @@ pref("devtools.browserconsole.enableNetworkMonitoring", false); // [NO-ANDROID] 
 
 /// Disable pausing on debugger statements by default [NO-ANDROID]
 pref("devtools.debugger.pause-on-debugger-statement", false); // [NO-ANDROID]
+
+/// Disable the performance panel intro [NO-ANDROID]
+pref("devtools.performance.popup.intro-displayed", true); // [NO-ANDROID]
 
 /// Disable Remote Debugging by default
 // We also reset this per-session by setting it as a user pref in `phoenix-user-pref.cfg`
@@ -2836,9 +2890,15 @@ pref("devtools.webconsole.timestampMessages", true); // [NO-ANDROID]
 // https://searchfox.org/firefox-main/rev/82e2435f/remote/doc/Prefs.md#25
 pref("remote.experimental.enabled", false, locked); // [DEFAULT - non-Nightly]
 
+/// Display responses in the "raw" format in the network monitor by default [NO-ANDROID]
+pref("devtools.netmonitor.ui.default-raw-response", true); // [NO-ANDROID]
+
 /// Enable the Anti tracking debug panel by default [NO-ANDROID]
 // https://searchfox.org/firefox-main/rev/644f0db1/devtools/client/definitions.js#485 [NO-ANDROID]
 pref("devtools.anti-tracking.enabled", true); // [NO-ANDROID]
+
+/// Enable automatic bracket/quote closing by default [NO-ANDROID]
+pref("devtools.editor.autoclosebrackets", true); // [NO-ANDROID] [DEFAULT]
 
 /// Enable DevTools buttons by default [NO-ANDROID]
 pref("devtools.command-button-errorcount.enabled", true); // [NO-ANDROID] [DEFAULT] Error Count - https://searchfox.org/firefox-main/rev/82e2435f/devtools/client/framework/toolbox.js#2209
@@ -2882,12 +2942,20 @@ pref("devtools.webconsole.persistlog", true); // [NO-ANDROID]
 /// Prevent console API from writing to `stdout` when used by chrome content
 pref("devtools.console.stdout.chrome", false); // [DEFAULT - non-Android, `MOZILLA_OFFICIAL` builds]
 
+/// Prevent filter queries/searches and recent selections from persisting across restarts [NO-ANDROID]
+// (For this to be effective, these pref must be set as "user" prefs) [NO-ANDROID]
+pref("devtools.debugger.pending-selected-location", "{}"); // [NO-ANDROID] [DEFAULT]
+pref("devtools.netmonitor.requestfilter", ""); // [NO-ANDROID] [DEFAULT]
+
 /// Prevent logging URLs in Reader errors
 pref("reader.errors.includeURLs", false); // [DEFAULT - Android/Thunderbird]
 
 /// Prevent WebDriver from overriding preferences by default
 // https://searchfox.org/firefox-main/rev/82e2435f/remote/doc/Prefs.md#41
 pref("remote.prefs.recommended", false);
+
+/// Significantly reduce input history [NO-ANDROID]
+pref("devtools.webconsole.inputHistoryCount", 10); // [NO-ANDROID] [DEFEAULT: 300]
 
 /// Set Browser/Error Console scope to "Multiprocess" instead of "Parent process only" by default [NO-ANDROID]
 // https://searchfox.org/firefox-main/rev/82e2435f/devtools/client/webconsole/webconsole-ui.js#47 [NO-ANDROID]
@@ -2938,7 +3006,6 @@ pref("extensions.logging.enabled", false); // [DEFAULT]
 /// Disable pacing requests
 // https://codeberg.org/celenity/Phoenix/issues/84
 pref("network.http.pacing.requests.enabled", false);
-
 
 
 /// Enable Advanced Vector Extensions (AVX)
@@ -3049,12 +3116,6 @@ pref("app.update.langpack.enabled", true); // [NO-ANDROID] [DEFAULT]
 pref("intl.multilingual.downloadEnabled", true); // [NO-ANDROID] [DEFAULT - non-Developer/Nightly]
 pref("intl.multilingual.enabled", true); // [NO-ANDROID] [DEFAULT - non-Developer/Nightly]
 
-/// Allow local machine learning by default
-// This is done locally, and supports legitimate functionality
-// We don't actually enable/install any AI models/functionality by default
-pref("browser.ml.enable", true); // [DEFAULT]
-pref("extensions.ml.enabled", true); // [DEFAULT]
-
 /// Allow Picture-in-Picture on all websites, even if they try to block it...
 pref("media.videocontrols.picture-in-picture.respect-disablePictureInPicture", false);
 
@@ -3143,7 +3204,7 @@ pref("nimbus.debug", true); // [HIDDEN - non-Firefox Desktop]
 pref("nimbus.validation.enabled", false); // [HIDDEN - non-Firefox Desktop]
 
 
-/// Expose hidden UI preferences in the about:config [NO-ANDROID]
+/// Expose hidden UI preferences at about:config [NO-ANDROID]
 // https://searchfox.org/firefox-main/rev/82e2435f/widget/nsXPLookAndFeel.cpp#87 [NO-ANDROID]
 // https://searchfox.org/firefox-main/rev/82e2435f/widget/LookAndFeel.h#48 [NO-ANDROID]
 pref("ui.hideCursorWhileTyping", 1); // [NO-ANDROID] [HIDDEN] [DEFAULT]
@@ -3482,13 +3543,13 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2025.11.27.1", locked);
+pref("mail.dove.version", "2025.12.23.1", locked);
 
 /// Add custom branding at `about:support`
-pref("app.support.vendor", "Dove: 2025.11.27.1", locked); // [HIDDEN]
+pref("app.support.vendor", "Dove: 2025.12.23.1 | Phoenix: 2025.12.23.1"); // [HIDDEN]
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.11.27.1 💜", locked); // [HIDDEN]
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2025.12.23.1 💜", locked); // [HIDDEN]
 pref("distribution.id", "default", locked); // [HIDDEN]
 pref("distribution.version", "default", locked); // [HIDDEN]
 
@@ -3911,6 +3972,11 @@ pref("mail.dove.status", "010");
 pref("devtools.remote.adb.extensionID", "");
 pref("devtools.remote.adb.extensionURL", "");
 
+/// Disable the Audio Output Devices API
+// https://developer.mozilla.org/docs/Web/API/Audio_Output_Devices_API
+pref("media.setsinkid.enabled", false);
+pref("permissions.default.speaker", 2); // [HIDDEN] - 0: Always ask, 2: Block
+
 /// Disable DRM/EME
 pref("media.eme.encrypted-media-encryption-scheme.enabled", false);
 pref("media.eme.hdcp-policy-check.enabled", false);
@@ -3932,6 +3998,23 @@ pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
 pref("browser.translations.simulateUnsupportedEngine", true);
 
+/// Disable media control
+// https://searchfox.org/firefox-main/source/dom/media/mediacontrol/MediaControlKeyManager.cpp
+// https://support.mozilla.org/kb/control-audio-or-video-playback-your-keyboard
+pref("media.hardwaremediakeys.enabled", false);
+
+/// Disable Media Source Extensions
+// This API is used to support advanced media playback (ex. adaptive streaming) via JavaScript
+// https://wikipedia.org/wiki/Media_Source_Extensions
+// https://developer.mozilla.org/docs/Web/API/Media_Source_Extensions_API
+// https://www.w3.org/TR/media-source/
+// https://docs.webkit.org/Deep%20Dive/Modules/MediaSourceExtensions.html
+pref("media.mediasource.enabled", false);
+pref("media.mediasource.experimental.enabled", false); // [DEFAULT]
+pref("media.mediasource.mp4.enabled", false);
+pref("media.mediasource.vp9.enabled", false);
+pref("media.mediasource.webm.enabled", false);
+
 /// Disable Narrator
 // Broken on Thunderbird
 pref("narrate.enabled", false);
@@ -3940,9 +4023,19 @@ pref("narrate.enabled", false);
 // Broken on Thunderbird
 pref("reader.parse-on-load.enabled", false);
 
-/// Disable SVG
-// https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox+svg
-pref("svg.disabled", true);
+/// Disable the Web Audio API
+// https://developer.mozilla.org/docs/Web/API/Web_Audio_API
+// We don't want/meed audio or the capabilities exposed by this...
+pref("dom.webaudio.enabled", false);
+
+/// Disable the WebCodecs API
+// This API provides low-level access to platform media codecs
+// https://developer.mozilla.org/docs/Web/API/WebCodecs_API
+// https://w3c.github.io/webcodecs/#security-considerations
+// https://w3c.github.io/webcodecs/#privacy-considerations
+pref("dom.media.webcodecs.enabled", false);
+pref("dom.media.webcodecs.h265.enabled", false); // [DEFAULT - non-Nightly]
+pref("dom.media.webcodecs.image-decoder.enabled", false);
 
 /// Disable WebRTC
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=webrtc
@@ -3975,6 +4068,7 @@ pref("signon.firefoxRelay.terms_of_service_url", "");
 // We only want to use the password manager here for ex. saving log-ins to email providers - we don't want/need it trying to interact with webpages
 // and we don't need anything with addresses/credit cards/etc.
 pref("extensions.formautofill.addresses.capture.enabled", false);
+pref("extensions.formautofill.addresses.experiments.enabled", false); // [DEFAULT]
 pref("extensions.formautofill.addresses.supported", "off");
 pref("extensions.formautofill.addresses.supportedCountries", "");
 pref("extensions.formautofill.creditCards.hideui", true); // [HIDDEN] https://searchfox.org/firefox-release/rev/9d94f5e3/toolkit/components/formautofill/FormAutofill.sys.mjs#29
@@ -4009,6 +4103,9 @@ pref("extensions.abuseReport.enabled", true);
 // REQUIRED FOR UBLOCK ORIGIN
 pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
 
+/// Allow uBird (uBlock Origin builds for Thunderbird) to run on restricted/quarantined domains by default
+pref("extensions.quarantineIgnoredByUser.uBird@celenity.dev", true);
+
 /// Allow unprivileged extensions to use experimental APIs
 // Required for ex. CardBook, also used by DKIM Verifier
 // https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
@@ -4027,6 +4124,9 @@ pref("extensions.getAddons.compatOverides.url", "");
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#25
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#76
 pref("extensions.alternativeAddonSearch.url", "");
+
+/// Ensure uBird (uBlock Origin builds for Thunderbird) can access all containers by default (if installed)
+pref("extensions.userContextIsolation.uBird@celenity.dev.restricted", "[]"); // [HIDDEN]
 
 /// Ensure we do not try to fetch browser mappings
 // This is used for mapping Chrome extensions with Firefox ones, as part of browser migration
@@ -4108,6 +4208,10 @@ pref("mail.dove.status", "015");
 /// Disable automatic collection of email addresses for Thunderbird's Address Book
 pref("mail.collect_email_address_outgoing", false);
 
+/// Disable clipboard events
+// https://developer.mozilla.org/docs/Web/API/ClipboardEvent
+pref("dom.event.clipboardevents.enabled", false);
+
 /// Disable Geolocation
 // https://browserleaks.com/geo
 pref("geo.prompt.open_system_prefs", false); // Ensure users aren't prompted to open settings and enable Geolocation - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
@@ -4161,6 +4265,8 @@ pref("mail.dove.status", "016");
 
 /// Always warn users before launching other apps
 pref("mail.external_protocol_requires_permission", true);
+pref("network.protocol-handler.warn-external.http", true);
+pref("network.protocol-handler.warn-external.https", true);
 
 
 /// Enable built-in phishing protection
@@ -4201,6 +4307,27 @@ pref("app.use_without_mail_account", true);
 /// Disable back-up of bookmarks
 // (Likely unused, but defined here, so we can set anyways)
 pref("browser.bookmarks.max_backups", 0);
+
+/// Disable context menu events
+// This prevents websites from hijacking the right click/context menu
+// I can't imagine a legitimate use case for this for our purposes...
+// https://developer.mozilla.org/docs/Web/API/Element/contextmenu_event
+pref("dom.event.contextmenu.enabled", false);
+
+/// Disable the Firefox "AI" (Local machine learning) Runtime
+// https://firefox-source-docs.mozilla.org/toolkit/components/ml/index.html
+// On desktop, we need to keep this enabled, as it's required for certain legitimate functionality,
+// such as PDF.js alt text image generation
+// But, on Thunderbird, the legitimate features aren't implemented, so we can disable it entirely
+// Note that, even when this is enabled,
+// we don't actually enable/install any AI models/functionality by default
+pref("browser.ml.enable", false);
+
+/// Disable the inference content process
+// https://searchfox.org/firefox-main/rev/20a1fb35/dom/docs/ipc/process_model.rst#184
+// This is used for AI/machine learning, as well as Firefox Translations,
+// which we disable and aren't supported here
+pref("dom.ipc.processCount.inference", 0);
 
 /// Disable Picture-in-Picture
 // Likely unused, and unwanted for our use case
@@ -4252,6 +4379,13 @@ pref("browser.fixup.alternate.suffix", "");
 pref("browser.fixup.typo.scheme", false); // [HIDDEN]
 pref("browser.urlbar.dnsResolveFullyQualifiedNames", false); // [HIDDEN]
 pref("security.bad_cert_domain_error.url_fix_enabled", false); // https://searchfox.org/firefox-main/rev/82e2435f/docshell/base/nsDocShell.cpp#6251
+
+/// Enable audio focus management
+// This prevents multiple audio controllers from playing at the same time
+// (So, ex. - if you have multiple tabs open and playing audio at the same time, this only allows the most recent tab to play audio)
+// https://searchfox.org/firefox-main/rev/5a5b3741/dom/media/mediacontrol/AudioFocusManager.cpp#41
+// Ideally, we don't want audio at all - this at least restricts it
+pref("media.audioFocus.management", true);
 
 /// Enable native support for Microsoft Exchange Web Services, instead of recommending and requiring third party add-ons (like Owl)
 pref("experimental.mail.ews.enabled", true); // https://searchfox.org/comm-central/rev/3a9b412a/mailnews/mailnews.js#1137

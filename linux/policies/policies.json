@@ -909,6 +909,15 @@
           "locale"
         ]
       },
+      "uBird@celenity.dev": {
+        "installation_mode": "normal_installed",
+        "install_url": "https://gitlab.com/celenityy/uBird/-/raw/main/outputs/uBird_latest.xpi",
+        "private_browsing": true
+      },
+      "uBlock0@raymondhill.net": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "We're now using our own builds with our own add-on ID, so we need to ensure this is removed. uBlock Origin no longer offers official builds for Thunderbird anyways either."
+      },
       "{12a1584b-2123-473d-8752-e82e74e3cb1b}": {
         "blocked_install_message": "NestedQuote Remover: https://addons.thunderbird.net/addon/nestedquote-remover/",
         "private_browsing": true
@@ -1930,12 +1939,6 @@
       "@eddie.outlookcalendar.qa": {
         "blocked_install_message": "Outlook Calendar - Quick Access: https://addons.thunderbird.net/addon/outlook-calendar-quick-access/",
         "private_browsing": true
-      },
-      "uBlock0@raymondhill.net": {
-        "blocked_install_message": "uBlock Origin: https://github.com/gorhill/uBlock",
-        "installation_mode": "normal_installed",
-        "install_url": "file:///etc/thunderbird/dove/assets/uBlock.xpi",
-        "private_browsing": true
       }
     },
     "Cookies": {
@@ -1968,7 +1971,7 @@
     },
     "3rdparty": {
       "Extensions": {
-        "uBlock0@raymondhill.net": {
+        "uBird@celenity.dev": {
           "adminSettings": {
             "assetsBootstrapLocation": "https://gitlab.com/celenityy/Dove/-/raw/pages/uBlock/assets.json"
           }
