@@ -27,7 +27,7 @@ export dove_osx_intel_dir="$dove_dir/macos-intel"
 export dove_windows_dir="$dove_dir/windows"
 
 # Python
-export PIP_ENV="build/pyenv"
+export PIP_ENV="$dove_dir/build/pyenv"
 
 # Use GNU Sed on macOS instead of the built-in sed, due to differences in syntax
 if [[ "$OSTYPE" == "darwin"* ]]; then

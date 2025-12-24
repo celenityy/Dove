@@ -1,5 +1,5 @@
 .DS_Store
-/external/autoconfig
+/external/
 /linux/assets/autoconfig
 /linux-flatpak/assets/autoconfig
 /macos/assets/autoconfig
