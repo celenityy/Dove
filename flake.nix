@@ -115,6 +115,7 @@
 
                 export phoenix_dir=${phoenix}
                 export autoconfig_dir=${autoconfig}
+                USING_NIX_FLAKE=1
                 patchShebangs ./build/*.sh
 
                 ./build/build.sh
