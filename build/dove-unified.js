@@ -270,6 +270,9 @@ pref("browser.chrome.favicons", false);
 pref("browser.chrome.guess_favicon", false);
 pref("browser.chrome.site_icons", false);
 
+/// Disable frecency
+pref("places.frecency.unvisitedBookmarkBonus", 0); // [HIDDEN]
+
 /// Disable logging chat history [CHAT]
 // https://stackoverflow.com/questions/32155137/how-to-disable-chat-history-in-mozilla-thunderbird
 pref("purple.logging.log_chats", false); // [CHAT]
