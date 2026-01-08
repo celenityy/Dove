@@ -2,7 +2,7 @@
 // And so, it was told that the Phoenix shall be followed by a Dove; one of great strength and great beauty, to help carry out its conquest.
 
 //
-// Copyright (C) 2024-2025 celenity
+// Copyright (C) 2024-2026 celenity
 //
 // This file is part of Dove.
 //
