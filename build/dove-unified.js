@@ -482,6 +482,9 @@ pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
 pref("browser.translations.simulateUnsupportedEngine", true);
 
+/// Disable GMP decoding
+pref("media.gmp.decoder.enabled", false);
+
 /// Disable media control
 // https://searchfox.org/firefox-main/source/dom/media/mediacontrol/MediaControlKeyManager.cpp
 // https://support.mozilla.org/kb/control-audio-or-video-playback-your-keyboard
