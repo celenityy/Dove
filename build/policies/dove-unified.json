@@ -4,7 +4,7 @@
             "Extensions": {
                 "uBird@celenity.dev": {
                     "adminSettings": {
-                        "assetsBootstrapLocation": "https://gitlab.com/celenityy/Dove/-/raw/pages/uBlock/assets.json"
+                        "assetsBootstrapLocation": "https://gitlab.com/celenityy/assets/-/raw/pages/ublock/dove/assets.json"
                     }
                 },
                 "dkim_verifier@pl": {
