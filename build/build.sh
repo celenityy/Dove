@@ -9,7 +9,7 @@ pushd external/autoconfig
 rm -vrf *
 
 # Set-up pip venv
-if [[ -v USING_NIX_FLAKE ]]; then
+if [[ -z "${USING_NIX_FLAKE+x}" ]]; then
     python -m venv "$PIP_ENV"
     source "$PIP_ENV/bin/activate"
     pip install --upgrade pip
