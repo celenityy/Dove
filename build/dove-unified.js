@@ -887,6 +887,9 @@ pref("browser.fixup.typo.scheme", false); // [HIDDEN]
 pref("browser.urlbar.dnsResolveFullyQualifiedNames", false); // [HIDDEN]
 pref("security.bad_cert_domain_error.url_fix_enabled", false); // https://searchfox.org/firefox-main/rev/82e2435f/docshell/base/nsDocShell.cpp#6251
 
+/// Do not attempt to resume background video playback upon tab hover
+pref("media.resume-background-video-on-tabhover", false);
+
 /// Enable audio focus management
 // This prevents multiple audio controllers from playing at the same time
 // (So, ex. - if you have multiple tabs open and playing audio at the same time, this only allows the most recent tab to play audio)
