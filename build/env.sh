@@ -6,10 +6,10 @@ if [ -z ${phoenix_dir+x} ]; then
 fi
 
 # Version of Dove you'd like to build
-export DOVE_VERSION=2025.12.23.1
+export DOVE_VERSION=2026.01.21.1
 
 # Version of Phoenix that we'd like to use
-export PHOENIX_VERSION=2025.12.23.1
+export PHOENIX_VERSION=2026.01.21.1
 
 # Where `Dove` (this repo) is located
 export dove_dir=$(dirname $(dirname "$(realpath "$0")"))
