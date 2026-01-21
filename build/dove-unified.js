@@ -472,8 +472,6 @@ pref("media.gmp-widevinecdm-l1.visible", false);
 pref("media.ffmpeg.enabled", false);
 pref("media.ffmpeg.encoder.enabled", false); // [DEFAULT]
 pref("media.ffmpeg.vaapi.enabled", false); // [DEFAULT]
-pref("media.rdd-ffmpeg.enabled", false);
-pref("media.utility-ffmpeg.enabled", false);
 
 /// Disable Firefox Translations
 // The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings,so it's useless :/
