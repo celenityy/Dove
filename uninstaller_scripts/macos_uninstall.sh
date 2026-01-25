@@ -1,6 +1,8 @@
 #!/bin/zsh
 
-## Functions
+set -euo pipefail
+
+# Functions
 echo_red_text() {
 	echo -e "\033[31m$1\033[0m"
 }
@@ -11,151 +13,166 @@ echo_green_text() {
 
 error_fn() {
 	echo
-	echo -e "\033[31mSomething went wrong! The script failed.\033[0m"
-	echo -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
+	echo_red_text "\033[31mSomething went wrong! The script failed.\033[0m"
+	echo_red_text "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
 	echo
 	exit 1
 }
 
-## Downloaded files save in /tmp
-cd /tmp
+# launchctl
+DOVE_UNINSTALL_LAUNCHCTL='/bin/launchctl'
+
+# open
+DOVE_UNINSTALL_OPEN='/usr/bin/open'
+
+# rm
+DOVE_UNINSTALL_RM='/bin/rm -f'
+
+# sleep
+DOVE_UNINSTALL_SLEEP='/bin/sleep'
+
+# sudo
+DOVE_UNINSTALL_SUDO='/usr/bin/sudo'
+
+# Save temporary files/downloads to /tmp
+DOVE_UNINSTALL_TEMP='/tmp'
+
+pushd "${DOVE_UNINSTALL_TEMP}"
 
 echo_green_text "Welcome to the Dove Uninstaller for macOS!"
 echo_red_text "Sorry to see you go :("
 echo_red_text "Before proceeding: You MUST grant your Terminal the 'App Management' permission by navigating to 'System Settings' -> 'Privacy & Security' -> 'App Management'"
 echo_red_text "You are strongly recommended to revoke the 'App Management' permission once you are done."
 echo_green_text "If you are unable/unwilling to grant your Terminal this permission, you can remove the files manually as laid out here: https://dove.celenity.dev#manual-installation."
-/bin/sleep 5
-/usr/bin/open /System/Applications/'System Settings'.app
-/bin/sleep 5
+"${DOVE_UNINSTALL_SLEEP}" 5
+"${DOVE_UNINSTALL_OPEN}" /System/Applications/'System Settings'.app
+"${DOVE_UNINSTALL_SLEEP}" 5
 echo_red_text "Press enter to continue."
 read
 
 ## Uninstall Dove
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
-echo
-
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
-echo
-
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
-echo
-
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
-echo
-
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
-echo
-
-echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
-echo
-
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
-echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
 echo
 
 echo_green_text "Unloading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
-/bin/launchctl unload /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+"${DOVE_UNINSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
 echo
 
 echo_green_text "Removing dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
-sudo /bin/rm -f /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
 echo
 
 echo_green_text "Removing the /Library/celenity/Dove directory..."
-sudo /bin/rm -rf /Library/celenity/Dove || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" -r /Library/celenity/Dove || error_fn
 echo
 
 echo_green_text "Removing org.mozilla.thunderbird.plist..."
-sudo /bin/rm -f /Library/Preferences/org.mozilla.thunderbird.plist || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/Preferences/org.mozilla.thunderbird.plist || error_fn
 echo
-sudo /bin/rm -f "${HOME}/Library/Preferences/org.mozilla.thunderbird.plist" || error_fn
+"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" "${HOME}/Library/Preferences/org.mozilla.thunderbird.plist" || error_fn
 echo
 
 echo -e ""
@@ -171,11 +188,11 @@ case ${DEVICETYPE} in
 		echo
 
         echo_green_text "Unloading dev.celenity.dove.apply.plist..."
-		sudo /bin/launchctl unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_LAUNCHCTL}" unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
 		echo
 
 		echo_green_text "Removing dev.celenity.dove.apply.plist..."
-		sudo /bin/rm -f /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
 		echo
 		;;
 
@@ -185,11 +202,11 @@ case ${DEVICETYPE} in
 		echo
 
 		echo_green_text "Unloading dev.celenity.dove.apply.intel.plist..."
-		sudo /bin/launchctl unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_LAUNCHCTL}" unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
 		echo
 
 		echo_green_text "Removing dev.celenity.dove.apply.intel.plist..."
-		sudo /bin/rm -f /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
 		echo
 		;;
 esac
@@ -203,21 +220,21 @@ read "LOCATION?Please enter your selection: "
 case ${LOCATION} in
 	"system" | "System" | "SYSTEM" | 1)
         echo_green_text "Removing dove.js..."
-        sudo /bin/rm -f /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
+        "${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
         echo
 
         echo_green_text "Removing dove.cfg..."
-        sudo /bin/rm -f /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
+        "${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
         echo
 		;;
 
 	"user" | "User" | "USER" | 2)
 		echo_green_text "Removing dove.js..."
-        /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
+        "${DOVE_UNINSTALL_RM}" "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
         echo
 
         echo_green_text "Removing dove.cfg..."
-        /bin/rm -f "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
+        "${DOVE_UNINSTALL_RM}" "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
         echo
 		;;
 esac
@@ -240,11 +257,13 @@ case ${RESULT} in
 			;;
 esac
 
+popd
+
 echo_red_text "You must now revoke the 'App Management' permission from your Terminal by navigating to 'System Settings' -> 'Privacy & Security' -> 'App Management'"
 echo_green_text "PLEASE SELECT 'Later' WHEN IT ASKS YOU TO QUIT AND RE-OPEN YOUR TERMINAL..."
-/bin/sleep 5
-/usr/bin/open /System/Applications/'System Settings'.app
-/bin/sleep 5
+"${DOVE_UNINSTALL_SLEEP}" 5
+"${DOVE_UNINSTALL_OPEN}" /System/Applications/'System Settings'.app
+"${DOVE_UNINSTALL_SLEEP}" 5
 echo_green_text "Press enter to continue once you are finished."
 read
 
@@ -252,8 +271,8 @@ echo_green_text "Thanks for giving Dove a shot. Sorry to see you go :(."
 echo_green_text "Please leave feedback on how we can improve! https://dove.celenity.dev/issues"
 
 echo_red_text "Your system will now reboot to finalize your uninstallation."
-/bin/sleep 5
+"${DOVE_UNINSTALL_SLEEP}" 5
 echo_green_text "Press enter to continue."
 read
 
-sudo /sbin/reboot
+"${DOVE_UNINSTALL_SUDO}" /sbin/reboot
