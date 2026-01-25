@@ -1,326 +1,509 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -e
+set -euo pipefail
+
+# Functions
+echo_red_text() {
+	echo -e "\033[31m$1\033[0m"
+}
+
+echo_green_text() {
+	echo -e "\033[32m$1\033[0m"
+}
+
+error_fn() {
+	echo
+	echo_red_text -e "\033[31mSomething went wrong! The script failed.\033[0m"
+	echo_red_text -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
+	echo
+	exit 1
+}
 
 # Welcome to the Dove Unified build script!
 # This script should be ran from inside the directory where you store Dove, not directly from the 'archives' or `build` folder...
 
-source "$dove_dir/build/env.sh"
+# Set-up our environment
+bash -x $(dirname $0)/env.sh || error_fn
+echo
+source $(dirname $0)/env.sh || error_fn
+echo
 
-export DOVE_LICENSE="COPYING.txt"
-export DOVE_README="README.md"
+# Include version info
+source "${DOVE_VERSIONS}" || error_fn
+echo
 
-export PHOENIX_UNIFIED_PREFS="$phoenix_dir/build/phoenix-unified.js"
-export DOVE_UNIFIED_PREFS="build/dove-unified.js"
+mkdir -vp "${DOVE_TEMP}/policies" || error_fn
+echo
 
-export DOVE_LINUX_FLATPAK_PREFS="linux-flatpak/defaults/pref/dove.js"
-export DOVE_LINUX_PREFS="linux/defaults/pref/dove.js"
-export DOVE_OSX_INTEL_PREFS="unused/macos-intel/dove.js"
-export DOVE_OSX_PREFS="unused/macos/dove.js"
-export DOVE_WINDOWS_PREFS="unused/windows/dove.js"
+DOVE_LICENSE="${DOVE_ROOT}/COPYING.txt"
+DOVE_README="${DOVE_ROOT}/README.md"
 
-export DOVE_BOOTSTRAP="build/dove-bootstrap.js"
+PHOENIX_UNIFIED_PREFS="${DOVE_PHOENIX}/build/phoenix-unified.js"
+DOVE_UNIFIED_PREFS="${DOVE_BUILD}/dove-unified.js"
 
-export DOVE_OSX_BOOTSTRAP="macos/defaults/pref/dove.js"
-export DOVE_OSX_INTEL_BOOTSTRAP="macos-intel/defaults/pref/dove.js"
-export DOVE_WINDOWS_BOOTSTRAP="windows/defaults/pref/dove.js"
+DOVE_LINUX_FLATPAK_PREFS="${DOVE_LINUX_FLATPAK_DIR}/defaults/pref/dove.js"
+DOVE_LINUX_PREFS="${DOVE_LINUX_DIR}/defaults/pref/dove.js"
+DOVE_OSX_INTEL_PREFS="${DOVE_UNUSED}/macos-intel/dove.js"
+DOVE_OSX_PREFS="${DOVE_UNUSED}/macos/dove.js"
+DOVE_WINDOWS_PREFS="${DOVE_UNUSED}/windows/dove.js"
 
-export DOVE_USER_PREF_CFG="build/dove-user-pref.cfg"
+DOVE_BOOTSTRAP="${DOVE_BUILD}/dove-bootstrap.js"
 
-export DOVE_LINUX_FLATPAK_USER_PREF_CFG="linux-flatpak/dove.cfg"
-export DOVE_LINUX_USER_PREF_CFG="linux/dove.cfg"
+DOVE_OSX_BOOTSTRAP="${DOVE_OSX_DIR}/defaults/pref/dove.js"
+DOVE_OSX_INTEL_BOOTSTRAP="${DOVE_OSX_INTEL_DIR}/defaults/pref/dove.js"
+DOVE_WINDOWS_BOOTSTRAP="${DOVE_WINDOWS_DIR}/defaults/pref/dove.js"
 
-export DOVE_LINUX_CFG="unused/linux/dove.cfg"
-export DOVE_LINUX_FLATPAK_CFG="unused/linux-flatpak/dove.cfg"
-export DOVE_OSX_CFG="macos/macos/dove.cfg"
-export DOVE_OSX_INTEL_CFG="macos-intel/dove.cfg"
-export DOVE_WINDOWS_CFG="windows/dove.cfg"
+DOVE_USER_PREF_CFG="${DOVE_BUILD}/dove-user-pref.cfg"
 
-export PHOENIX_EXTENDED_UNIFIED_PREFS="$phoenix_dir/build/phoenix-extended-unified.js"
+DOVE_LINUX_FLATPAK_USER_PREF_CFG="${DOVE_LINUX_FLATPAK_DIR}/dove.cfg"
+DOVE_LINUX_USER_PREF_CFG="${DOVE_LINUX_DIR}/dove.cfg"
 
-export PHOENIX_UNIFIED_POLICIES="$phoenix_dir/build/policies/phoenix-unified.json"
+DOVE_LINUX_CFG="${DOVE_UNUSED}/linux/dove.cfg"
+DOVE_LINUX_FLATPAK_CFG="${DOVE_UNUSED}/linux-flatpak/dove.cfg"
+DOVE_OSX_CFG="${DOVE_OSX_DIR}/macos/dove.cfg"
+DOVE_OSX_INTEL_CFG="${DOVE_OSX_INTEL_DIR}/dove.cfg"
+DOVE_WINDOWS_CFG="${DOVE_WINDOWS_DIR}/dove.cfg"
 
-export PHOENIX_BLOCKLIST_POLICIES="$phoenix_dir/build/policies/blocklist.json"
-export PHOENIX_COOKIES_POLICIES="$phoenix_dir/build/policies/cookies.json"
+PHOENIX_EXTENDED_UNIFIED_PREFS="${DOVE_PHOENIX}/build/phoenix-extended-unified.js"
 
-export PHOENIX_UNIFIED_LINUX_FLATPAK_POLICIES="$phoenix_dir/build/policies/phoenix-linux-flatpak-unified.json"
-export PHOENIX_UNIFIED_LINUX_POLICIES="$phoenix_dir/build/policies/phoenix-linux-unified.json"
-export PHOENIX_UNIFIED_LINUX_NONFLATPAK_POLICIES="$phoenix_dir/build/policies/phoenix-linux-non-flatpak-unified.json"
-export PHOENIX_UNIFIED_OSX_INTEL_POLICIES="$phoenix_dir/build/policies/phoenix-osx-intel-unified.json"
-export PHOENIX_UNIFIED_OSX_POLICIES="$phoenix_dir/build/policies/phoenix-osx-unified.json"
-export PHOENIX_UNIFIED_OSX_SILICON_POLICIES="$phoenix_dir/build/policies/phoenix-osx-silicon-unified.json"
-export PHOENIX_UNIFIED_WINDOWS_POLICIES="$phoenix_dir/build/policies/phoenix-windows-unified.json"
+PHOENIX_UNIFIED_POLICIES="${DOVE_PHOENIX}/build/policies/phoenix-unified.json"
 
-export DOVE_UNIFIED_POLICIES="build/policies/dove-unified.json"
+PHOENIX_BLOCKLIST_POLICIES="${DOVE_PHOENIX}/build/policies/blocklist.json"
+PHOENIX_COOKIES_POLICIES="${DOVE_PHOENIX}/build/policies/cookies.json"
 
-export DOVE_UNIFIED_LINUX_FLATPAK_POLICIES="build/policies/dove-linux-flatpak.json"
-export DOVE_UNIFIED_LINUX_NONFLATPAK_POLICIES="build/policies/dove-linux-nonflatpak.json"
-export DOVE_UNIFIED_LINUX_POLICIES="build/policies/dove-linux.json"
-export DOVE_UNIFIED_OSX_INTEL_POLICIES="build/policies/dove-osx-intel.json"
-export DOVE_UNIFIED_OSX_POLICIES="build/policies/dove-osx.json"
-export DOVE_UNIFIED_OSX_SILICON_POLICIES="build/policies/dove-osx-silicon.json"
-export DOVE_UNIFIED_WINDOWS_POLICIES="build/policies/dove-windows.json"
+PHOENIX_UNIFIED_LINUX_FLATPAK_POLICIES="${DOVE_PHOENIX}/build/policies/phoenix-linux-flatpak-unified.json"
+PHOENIX_UNIFIED_LINUX_POLICIES="${DOVE_PHOENIX}/build/policies/phoenix-linux-unified.json"
+PHOENIX_UNIFIED_LINUX_NONFLATPAK_POLICIES="${DOVE_PHOENIX}/build/policies/phoenix-linux-non-flatpak-unified.json"
+PHOENIX_UNIFIED_OSX_INTEL_POLICIES="${DOVE_PHOENIX}/build/policies/phoenix-osx-intel-unified.json"
+PHOENIX_UNIFIED_OSX_POLICIES="${DOVE_PHOENIX}/build/policies/phoenix-osx-unified.json"
+PHOENIX_UNIFIED_OSX_SILICON_POLICIES="${DOVE_PHOENIX}/build/policies/phoenix-osx-silicon-unified.json"
+PHOENIX_UNIFIED_WINDOWS_POLICIES="${DOVE_PHOENIX}/build/policies/phoenix-windows-unified.json"
 
-export DOVE_POLICIES="unused/policies/dove.json"
+DOVE_UNIFIED_POLICIES="${DOVE_BUILD}/policies/dove-unified.json"
 
-export DOVE_LINUX_FLATPAK_POLICIES="linux-flatpak/policies/policies.json"
-export DOVE_LINUX_POLICIES="linux/policies/policies.json"
-export DOVE_WINDOWS_POLICIES="windows/distribution/policies.json"
+DOVE_UNIFIED_LINUX_FLATPAK_POLICIES="${DOVE_BUILD}/policies/dove-linux-flatpak.json"
+DOVE_UNIFIED_LINUX_NONFLATPAK_POLICIES="${DOVE_BUILD}/policies/dove-linux-nonflatpak.json"
+DOVE_UNIFIED_LINUX_POLICIES="${DOVE_BUILD}/policies/dove-linux.json"
+DOVE_UNIFIED_OSX_INTEL_POLICIES="${DOVE_BUILD}/policies/dove-osx-intel.json"
+DOVE_UNIFIED_OSX_POLICIES="${DOVE_BUILD}/policies/dove-osx.json"
+DOVE_UNIFIED_OSX_SILICON_POLICIES="${DOVE_BUILD}/policies/dove-osx-silicon.json"
+DOVE_UNIFIED_WINDOWS_POLICIES="${DOVE_BUILD}/policies/dove-windows.json"
 
-export DOVE_OSX_INTEL_POLICIES_JSON="unused/macos-intel/policies.json"
-export DOVE_OSX_INTEL_POLICIES_PLIST="macos-intel/org.mozilla.thunderbird.plist"
-export DOVE_OSX_POLICIES_JSON="unused/macos/policies.json"
-export DOVE_OSX_POLICIES_PLIST="macos/macos/org.mozilla.thunderbird.plist"
+DOVE_POLICIES="${DOVE_UNUSED}/policies/dove.json"
 
-mkdir -vp /tmp/dove
+DOVE_LINUX_FLATPAK_POLICIES="${DOVE_LINUX_FLATPAK_DIR}/policies/policies.json"
+DOVE_LINUX_POLICIES="${DOVE_LINUX_DIR}/policies/policies.json"
+DOVE_WINDOWS_POLICIES="${DOVE_WINDOWS_DIR}/distribution/policies.json"
+
+DOVE_OSX_INTEL_POLICIES_JSON="${DOVE_UNUSED}/macos-intel/policies.json"
+DOVE_OSX_INTEL_POLICIES_PLIST="${DOVE_OSX_INTEL_DIR}/org.mozilla.thunderbird.plist"
+DOVE_OSX_POLICIES_JSON="${DOVE_UNUSED}/macos/policies.json"
+DOVE_OSX_POLICIES_PLIST="${DOVE_OSX_DIR}/macos/org.mozilla.thunderbird.plist"
 
 # GNU/LINUX
+if [ "${DOVE_LINUX}" == 1 ]; then
+    echo_green_text 'Building Dove for Linux...'
+    mkdir -vp "${DOVE_LINUX_DIR}/defaults/pref" || error_fn
+    echo
+    mkdir -vp "${DOVE_LINUX_DIR}/etc/profile.d" || error_fn
+    echo
+    mkdir -vp "${DOVE_LINUX_DIR}/policies" || error_fn
+    echo
 
-# Copy license
-cp -vf "$DOVE_LICENSE" "$dove_linux_dir"/
+    # Copy license
+    cp -vf "${DOVE_LICENSE}" "${DOVE_LINUX_DIR}/" || error_fn
+    echo
 
-# Copy README
-cp -vf "$DOVE_README" "$dove_linux_dir"/
+    # Copy README
+    cp -vf "${DOVE_README}" "${DOVE_LINUX_DIR}/" || error_fn
+    echo
 
-# Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_linux_dir"/assets/autoconfig/*
-mkdir -vp "$dove_linux_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig "$dove_linux_dir"/assets/
+    # Copy Thunderbird's autoconfiguration files
+    rm -vrf "${DOVE_LINUX_DIR}/assets/autoconfig/*" || error_fn
+    echo
+    mkdir -vp "${DOVE_LINUX_DIR}/assets/autoconfig/v1.1" || error_fn
+    echo
+    cp -vrf "${DOVE_AUTOCONFIG_OUTPUT}" "${DOVE_LINUX_DIR}/assets/" || error_fn
+    echo
 
-# Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_USER_PREF_CFG" > "$DOVE_LINUX_USER_PREF_CFG"
-echo "Created $DOVE_LINUX_USER_PREF_CFG"
+    # Copy environment variables
+    cp "${DOVE_BUILD}/linux/etc/profile.d/dove-env-overrides.sh" "${DOVE_LINUX_DIR}/etc/profile.d/dove-env-overrides.sh" || error_fn
+    echo
 
-# Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [NO-MAIL], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-MAIL|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$PHOENIX_UNIFIED_PREFS" > /tmp/dove/linux-temp1.js
-echo "Created /tmp/dove/linux-temp1.js"
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_USER_PREF_CFG}" > "${DOVE_LINUX_USER_PREF_CFG}" || error_fn
+    echo
+    echo "Created ${DOVE_LINUX_USER_PREF_CFG}"
 
-# Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [NO-MAIL], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-MAIL|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$PHOENIX_EXTENDED_UNIFIED_PREFS" > /tmp/dove/linux-temp2.js
-echo "Created /tmp/dove/linux-temp2.js"
+    # Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [NO-MAIL], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-MAIL|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${PHOENIX_UNIFIED_PREFS}" > "${DOVE_TEMP}/linux-temp1.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/linux-temp1.js"
 
-# Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_UNIFIED_PREFS" > /tmp/dove/linux-temp3.js
-echo "Created /tmp/dove/linux-temp3.js"
+    grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-MAIL|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${PHOENIX_EXTENDED_UNIFIED_PREFS}" > "${DOVE_TEMP}/linux-temp2.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/linux-temp2.js"
 
-cat /tmp/dove/linux-temp1.js /tmp/dove/linux-temp2.js /tmp/dove/linux-temp3.js > "$DOVE_LINUX_PREFS"
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_UNIFIED_PREFS}" > "${DOVE_TEMP}/linux-temp3.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/linux-temp3.js"
 
-python3 build/convert.py "$DOVE_LINUX_PREFS" "$DOVE_LINUX_CFG"
+    cat "${DOVE_TEMP}/linux-temp1.js" "${DOVE_TEMP}/linux-temp2.js" "${DOVE_TEMP}/linux-temp3.js" > "${DOVE_LINUX_PREFS}" || error_fn
+    echo
 
-# Update the version
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_CFG"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_PREFS"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_USER_PREF_CFG"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_LINUX_CFG"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_LINUX_PREFS"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_LINUX_USER_PREF_CFG"
+    python3 "${DOVE_BUILD}/convert.py" "${DOVE_LINUX_PREFS}" "${DOVE_LINUX_CFG}" || error_fn
+    echo
+
+    # Update the version
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_LINUX_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_LINUX_PREFS}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_LINUX_USER_PREF_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_LINUX_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_LINUX_PREFS}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_LINUX_USER_PREF_CFG}" || error_fn
+    echo
+fi
 
 # GNU/LINUX (FLATPAK)
+if [ "${DOVE_LINUX_FLATPAK}" == 1 ]; then
+    echo_green_text 'Building Dove for Linux (Flatpak)...'
+    mkdir -vp "${DOVE_LINUX_FLATPAK_DIR}/defaults/pref" || error_fn
+    echo
+    mkdir -vp "${DOVE_LINUX_FLATPAK_DIR}/policies" || error_fn
+    echo
 
-# Copy license
-cp -vf "$DOVE_LICENSE" "$dove_linux_flatpak_dir"/
+    # Copy license
+    cp -vf "${DOVE_LICENSE}" "${DOVE_LINUX_FLATPAK_DIR}/" || error_fn
+    echo
 
-# Copy README
-cp -vf "$DOVE_README" "$dove_linux_flatpak_dir"/
+    # Copy README
+    cp -vf "${DOVE_README}" "${DOVE_LINUX_FLATPAK_DIR}/" || error_fn
+    echo
 
-# Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_linux_flatpak_dir"/assets/autoconfig/*
-mkdir -vp "$dove_linux_flatpak_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig "$dove_linux_flatpak_dir"/assets/
+    # Copy Thunderbird's autoconfiguration files
+    rm -vrf "${DOVE_LINUX_FLATPAK_DIR}/assets/autoconfig/*" || error_fn
+    echo
+    mkdir -vp "${DOVE_LINUX_FLATPAK_DIR}/assets/autoconfig/v1.1" || error_fn
+    echo
+    cp -vrf "${DOVE_AUTOCONFIG_OUTPUT}" "${DOVE_LINUX_FLATPAK_DIR}/assets/" || error_fn
+    echo
 
-# Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_USER_PREF_CFG" > "$DOVE_LINUX_FLATPAK_USER_PREF_CFG"
-echo "Created $DOVE_LINUX_FLATPAK_USER_PREF_CFG"
+    # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_USER_PREF_CFG}" > "${DOVE_LINUX_FLATPAK_USER_PREF_CFG}" || error_fn
+    echo
+    echo "Created ${DOVE_LINUX_FLATPAK_USER_PREF_CFG}"
 
-# Remove lines containing [ANDROID-ONLY], [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [NO-MAIL], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'ANDROID-ONLY|INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NO-MAIL|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$PHOENIX_UNIFIED_PREFS" > /tmp/dove/linux-flatpak-temp1.js
-echo "Created /tmp/dove/linux-flatpak-temp1.js"
+    # Remove lines containing [ANDROID-ONLY], [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [NO-MAIL], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'ANDROID-ONLY|INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NO-MAIL|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${PHOENIX_UNIFIED_PREFS}" > "${DOVE_TEMP}/linux-flatpak-temp1.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/linux-flatpak-temp1.js"
 
-# Remove lines containing [ANDROID-ONLY], [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [NO-MAIL], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'ANDROID-ONLY|INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NO-MAIL|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$PHOENIX_EXTENDED_UNIFIED_PREFS" > /tmp/dove/linux-flatpak-temp2.js
-echo "Created /tmp/dove/linux-flatpak-temp2.js"
+    grep -vE 'ANDROID-ONLY|INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NO-MAIL|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${PHOENIX_EXTENDED_UNIFIED_PREFS}" > "${DOVE_TEMP}/linux-flatpak-temp2.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/linux-flatpak-temp2.js"
 
-# Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_UNIFIED_PREFS" > /tmp/dove/linux-flatpak-temp3.js
-echo "Created /tmp/dove/linux-flatpak-temp3.js"
+    # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_UNIFIED_PREFS}" > "${DOVE_TEMP}/linux-flatpak-temp3.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/linux-flatpak-temp3.js"
 
-cat /tmp/dove/linux-flatpak-temp1.js /tmp/dove/linux-flatpak-temp2.js /tmp/dove/linux-flatpak-temp3.js > "$DOVE_LINUX_FLATPAK_PREFS"
+    cat "${DOVE_TEMP}/linux-flatpak-temp1.js" "${DOVE_TEMP}/linux-flatpak-temp2.js" "${DOVE_TEMP}/linux-flatpak-temp3.js" > "${DOVE_LINUX_FLATPAK_PREFS}" || error_fn
+    echo
 
-python3 build/convert.py "$DOVE_LINUX_FLATPAK_PREFS" "$DOVE_LINUX_FLATPAK_CFG"
+    python3 "${DOVE_BUILD}/convert.py" "${DOVE_LINUX_FLATPAK_PREFS}" "${DOVE_LINUX_FLATPAK_CFG}" || error_fn
+    echo
 
-# Update the version
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_FLATPAK_CFG"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_FLATPAK_PREFS"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_LINUX_FLATPAK_USER_PREF_CFG"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_LINUX_FLATPAK_CFG"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_LINUX_FLATPAK_PREFS"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_LINUX_FLATPAK_USER_PREF_CFG"
+    # Update the version
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_LINUX_FLATPAK_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_LINUX_FLATPAK_PREFS}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_LINUX_FLATPAK_USER_PREF_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_LINUX_FLATPAK_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_LINUX_FLATPAK_PREFS}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_LINUX_FLATPAK_USER_PREF_CFG}" || error_fn
+    echo
+fi
 
-# MACOS
+# OS X
+if [ "${DOVE_OSX}" == 1 ]; then
+    echo_green_text 'Building Dove for OS X...'
+    mkdir -vp "${DOVE_OSX_DIR}/defaults/pref" || error_fn
+    echo
+    mkdir -vp "${DOVE_OSX_DIR}/macos" || error_fn
+    echo
 
-# Copy license
-cp -vf "$DOVE_LICENSE" "$dove_osx_dir"/
+    # Copy license
+    cp -vf "${DOVE_LICENSE}" "${DOVE_OSX_DIR}/" || error_fn
+    echo
 
-# Copy README
-cp -vf "$DOVE_README" "$dove_osx_dir"/
+    # Copy README
+    cp -vf "${DOVE_README}" "${DOVE_OSX_DIR}/" || error_fn
+    echo
 
-# Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_osx_dir"/assets/autoconfig/*
-mkdir -vp "$dove_osx_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig "$dove_osx_dir"/assets/
+    # Copy Thunderbird's autoconfiguration files
+    rm -vrf "${DOVE_OSX_DIR}/assets/autoconfig/*" || error_fn
+    echo
+    mkdir -vp "${DOVE_OSX_DIR}/assets/autoconfig/v1.1" || error_fn
+    echo
+    cp -vrf "${DOVE_AUTOCONFIG_OUTPUT}" "${DOVE_OSX_DIR}/assets/" || error_fn
+    echo
 
-# Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
-grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_OSX_BOOTSTRAP"
-echo "Created $DOVE_OSX_BOOTSTRAP"
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "${DOVE_BOOTSTRAP}" > "${DOVE_OSX_BOOTSTRAP}" || error_fn
+    echo
+    echo "Created ${DOVE_OSX_BOOTSTRAP}"
 
-# Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-MAIL], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
-grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-MAIL|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "$PHOENIX_UNIFIED_PREFS" > /tmp/dove/osx-temp1.js
-echo "Created /tmp/dove/osx-temp1.js"
+    # Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-MAIL], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-MAIL|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "${PHOENIX_UNIFIED_PREFS}" > "${DOVE_TEMP}/osx-temp1.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/osx-temp1.js"
 
-# Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-MAIL], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
-grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-MAIL|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "$PHOENIX_EXTENDED_UNIFIED_PREFS" > /tmp/dove/osx-temp2.js
-echo "Created /tmp/dove/osx-temp2.js"
+    grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-MAIL|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "${PHOENIX_EXTENDED_UNIFIED_PREFS}" > "${DOVE_TEMP}/osx-temp2.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/osx-temp2.js"
 
-# Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
-grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "$DOVE_UNIFIED_PREFS" > /tmp/dove/osx-temp3.js
-echo "Created /tmp/dove/osx-temp3.js"
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "${DOVE_UNIFIED_PREFS}" > "${DOVE_TEMP}/osx-temp3.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/osx-temp3.js"
 
-cat /tmp/dove/osx-temp1.js /tmp/dove/osx-temp2.js /tmp/dove/osx-temp3.js > "$DOVE_OSX_PREFS"
+    cat "${DOVE_TEMP}/osx-temp1.js" "${DOVE_TEMP}/osx-temp2.js" "${DOVE_TEMP}/osx-temp3.js" > "${DOVE_OSX_PREFS}" || error_fn
+    echo
 
-python3 build/convert.py "$DOVE_OSX_PREFS" /tmp/dove/dove-osx-tmp.cfg
+    python3 "${DOVE_BUILD}/convert.py" "${DOVE_OSX_PREFS}" "${DOVE_TEMP}/dove-osx-tmp.cfg" || error_fn
+    echo
 
-# Add "user" prefs
-cat /tmp/dove/dove-osx-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_OSX_CFG"
+    # Add "user" prefs
+    cat "${DOVE_TEMP}/dove-osx-tmp.cfg" "${DOVE_USER_PREF_CFG}" > "${DOVE_OSX_CFG}" || error_fn
+    echo
 
-# Update the version
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_BOOTSTRAP"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_CFG"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_PREFS"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_OSX_BOOTSTRAP"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_OSX_CFG"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_OSX_PREFS"
+    # Update the version
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_OSX_BOOTSTRAP}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_OSX_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_OSX_PREFS}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_OSX_BOOTSTRAP}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_OSX_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_OSX_PREFS}" || error_fn
+    echo
+fi
 
-# MACOS (INTEL)
+# OS X (INTEL)
+if [ "${DOVE_OSX_INTEL}" == 1 ]; then
+    echo_green_text 'Building Dove for OS X (Intel)...'
+    mkdir -vp "${DOVE_OSX_INTEL_DIR}/defaults/pref" || error_fn
+    echo
 
-# Copy license
-cp -vf "$DOVE_LICENSE" "$dove_osx_intel_dir"/
+    # Copy license
+    cp -vf "${DOVE_LICENSE}" "${DOVE_OSX_INTEL_DIR}/" || error_fn
+    echo
 
-# Copy README
-cp -vf "$DOVE_README" "$dove_osx_intel_dir"/
+    # Copy README
+    cp -vf "${DOVE_README}" "${DOVE_OSX_INTEL_DIR}/" || error_fn
+    echo
 
-# Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_osx_intel_dir"/assets/autoconfig/*
-mkdir -vp "$dove_osx_intel_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig "$dove_osx_intel_dir"/assets/
+    # Copy Thunderbird's autoconfiguration files
+    rm -vrf "${DOVE_OSX_INTEL_DIR}/assets/autoconfig/*" || error_fn
+    echo
+    mkdir -vp "${DOVE_OSX_INTEL_DIR}/assets/autoconfig/v1.1" || error_fn
+    echo
+    cp -vrf "${DOVE_AUTOCONFIG_OUTPUT}" "${DOVE_OSX_INTEL_DIR}/assets/" || error_fn
+    echo
 
-# Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_OSX_INTEL_BOOTSTRAP"
-echo "Created $DOVE_OSX_INTEL_BOOTSTRAP"
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_BOOTSTRAP}" > "${DOVE_OSX_INTEL_BOOTSTRAP}" || error_fn
+    echo
+    echo "Created ${DOVE_OSX_INTEL_BOOTSTRAP}"
 
-# Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-MAIL], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-MAIL|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$PHOENIX_UNIFIED_PREFS" > /tmp/dove/osx-intel-temp1.js
-echo "Created /tmp/dove/osx-intel-temp1.js"
+    # Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-MAIL], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-MAIL|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${PHOENIX_UNIFIED_PREFS}" > "${DOVE_TEMP}/osx-intel-temp1.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/osx-intel-temp1.js"
 
-# Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-MAIL], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-MAIL|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$PHOENIX_EXTENDED_UNIFIED_PREFS" > /tmp/dove/osx-intel-temp2.js
-echo "Created /tmp/dove/osx-intel-temp2.js"
+    grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-MAIL|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${PHOENIX_EXTENDED_UNIFIED_PREFS}" > "${DOVE_TEMP}/osx-intel-temp2.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/osx-intel-temp2.js"
 
-# Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-grep -vE 'FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "$DOVE_UNIFIED_PREFS" > /tmp/dove/osx-intel-temp3.js
-echo "Created /tmp/dove/osx-intel-temp3.js"
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_UNIFIED_PREFS}" > "${DOVE_TEMP}/osx-intel-temp3.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/osx-intel-temp3.js"
 
-cat /tmp/dove/osx-intel-temp1.js /tmp/dove/osx-intel-temp2.js /tmp/dove/osx-intel-temp3.js > "$DOVE_OSX_INTEL_PREFS"
+    cat "${DOVE_TEMP}/osx-intel-temp1.js" "${DOVE_TEMP}/osx-intel-temp2.js" "${DOVE_TEMP}/osx-intel-temp3.js" > "${DOVE_OSX_INTEL_PREFS}" || error_fn
+    echo
 
-python3 build/convert.py "$DOVE_OSX_INTEL_PREFS" /tmp/dove/dove-osx-intel-tmp.cfg
+    python3 "${DOVE_BUILD}/convert.py" "${DOVE_OSX_INTEL_PREFS}" "${DOVE_TEMP}/dove-osx-intel-tmp.cfg" || error_fn
+    echo
 
-# Add "user" prefs
-cat /tmp/dove/dove-osx-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_OSX_INTEL_CFG"
+    # Add "user" prefs
+    cat "${DOVE_TEMP}/dove-osx-tmp.cfg" "${DOVE_USER_PREF_CFG}" > "${DOVE_OSX_INTEL_CFG}" || error_fn
+    echo
 
-# Update the version
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_INTEL_BOOTSTRAP"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_INTEL_CFG"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_OSX_INTEL_PREFS"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_OSX_INTEL_BOOTSTRAP"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_OSX_INTEL_CFG"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_OSX_INTEL_PREFS"
+    # Update the version
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_OSX_INTEL_BOOTSTRAP}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_OSX_INTEL_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_OSX_INTEL_PREFS}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_OSX_INTEL_BOOTSTRAP}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_OSX_INTEL_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_OSX_INTEL_PREFS}" || error_fn
+    echo
+fi
 
 # WINDOWS
+if [ "${DOVE_WINDOWS}" == 1 ]; then
+    echo_green_text 'Building Dove for Windows...'
+    mkdir -vp "${DOVE_WINDOWS_DIR}/defaults/pref" || error_fn
+    echo
+    mkdir -vp "${DOVE_WINDOWS_DIR}/distribution" || error_fn
+    echo
 
-# Copy license
-cp -vf "$DOVE_LICENSE" "$dove_windows_dir"/
+    # Copy license
+    cp -vf "${DOVE_LICENSE}" "${DOVE_WINDOWS_DIR}/" || error_fn
+    echo
 
-# Copy README
-cp -vf "$DOVE_README" "$dove_windows_dir"/
+    # Copy README
+    cp -vf "${DOVE_README}" "${DOVE_WINDOWS_DIR}/" || error_fn
+    echo
 
-# Copy Thunderbird's autoconfiguration files
-rm -vrf "$dove_windows_dir"/assets/autoconfig/*
-mkdir -vp "$dove_windows_dir"/assets/autoconfig/v1.1
-cp -vrf external/autoconfig "$dove_windows_dir"/assets/
+    # Copy Thunderbird's autoconfiguration files
+    rm -vrf "${DOVE_WINDOWS_DIR}/assets/autoconfig/*" || error_fn
+    echo
+    mkdir -vp "${DOVE_WINDOWS_DIR}/assets/autoconfig/v1.1" || error_fn
+    echo
+    cp -vrf "${DOVE_AUTOCONFIG_OUTPUT}" "${DOVE_WINDOWS_DIR}/assets/" || error_fn
+    echo
 
-# Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
-grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "$DOVE_BOOTSTRAP" > "$DOVE_WINDOWS_BOOTSTRAP"
-echo "Created $DOVE_WINDOWS_BOOTSTRAP"
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "${DOVE_BOOTSTRAP}" > "${DOVE_WINDOWS_BOOTSTRAP}" || error_fn
+    echo
+    echo "Created ${DOVE_WINDOWS_BOOTSTRAP}"
 
-# Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-MAIL], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
-grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-MAIL|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "$PHOENIX_UNIFIED_PREFS" > /tmp/dove/windows-temp1.js
-echo "Created /tmp/dove/windows-temp1.js"
+    # Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-MAIL], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
+    grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-MAIL|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "${PHOENIX_UNIFIED_PREFS}" > "${DOVE_TEMP}/windows-temp1.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/windows-temp1.js"
 
-# Remove lines containing [ANDROID-ONLY], [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-MAIL], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
-grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-MAIL|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "$PHOENIX_EXTENDED_UNIFIED_PREFS" > /tmp/dove/windows-temp2.js
-echo "Created /tmp/dove/windows-temp2.js"
+    grep -vE 'ANDROID-ONLY|FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-MAIL|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "${PHOENIX_EXTENDED_UNIFIED_PREFS}" > "${DOVE_TEMP}/windows-temp2.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/windows-temp2.js"
 
-# Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
-grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "$DOVE_UNIFIED_PREFS" > /tmp/dove/windows-temp3.js
-echo "Created /tmp/dove/windows-temp3.js"
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "${DOVE_UNIFIED_PREFS}" > "${DOVE_TEMP}/windows-temp3.js" || error_fn
+    echo
+    echo "Created ${DOVE_TEMP}/windows-temp3.js"
 
-cat /tmp/dove/windows-temp1.js /tmp/dove/windows-temp2.js /tmp/dove/windows-temp3.js > "$DOVE_WINDOWS_PREFS"
+    cat "${DOVE_TEMP}/windows-temp1.js" "${DOVE_TEMP}/windows-temp2.js" "${DOVE_TEMP}/windows-temp3.js" > "${DOVE_WINDOWS_PREFS}" || error_fn
+    echo
 
-python3 build/convert.py "$DOVE_WINDOWS_PREFS" /tmp/dove/dove-windows-tmp.cfg
+    python3 "${DOVE_BUILD}/convert.py" "${DOVE_WINDOWS_PREFS}" "${DOVE_TEMP}/dove-windows-tmp.cfg" || error_fn
+    echo
 
-# Add "user" prefs
-cat /tmp/dove/dove-windows-tmp.cfg "$DOVE_USER_PREF_CFG" > "$DOVE_WINDOWS_CFG"
+    # Add "user" prefs
+    cat "${DOVE_TEMP}/dove-windows-tmp.cfg" "${DOVE_USER_PREF_CFG}" > "${DOVE_WINDOWS_CFG}" || error_fn
+    echo
 
-# Update the version
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_WINDOWS_BOOTSTRAP"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_WINDOWS_CFG"
-$SED -i "s|{DOVE_VERSION}|$DOVE_VERSION|" "$DOVE_WINDOWS_PREFS"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_WINDOWS_BOOTSTRAP"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_WINDOWS_CFG"
-$SED -i "s|{PHOENIX_VERSION}|$PHOENIX_VERSION|" "$DOVE_WINDOWS_PREFS"
+    # Update the version
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_WINDOWS_BOOTSTRAP}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_WINDOWS_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_WINDOWS_PREFS}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_WINDOWS_BOOTSTRAP}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_WINDOWS_CFG}" || error_fn
+    echo
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_WINDOWS_PREFS}" || error_fn
+    echo
+fi
 
 # POLICIES
+jq -s '.[0] * .[1]' "${PHOENIX_UNIFIED_POLICIES}" "${PHOENIX_BLOCKLIST_POLICIES}" > "${DOVE_TEMP}/policies/temp1.json" || error_fn
+echo
+jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp1.json" "${PHOENIX_COOKIES_POLICIES}" > "${DOVE_TEMP}/policies/temp2.json" || error_fn
+echo
+jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp2.json" "${DOVE_UNIFIED_POLICIES}" > "${DOVE_POLICIES}" || error_fn
+echo
 
-jq -s '.[0] * .[1]' "$PHOENIX_UNIFIED_POLICIES" "$PHOENIX_BLOCKLIST_POLICIES" > /tmp/dove/temp1.json
+# (This is used by both Linux and Flatpak)
+if [ "${DOVE_LINUX}" == 1 ] || [ "${DOVE_LINUX_FLATPAK}" == 1 ]; then
+    jq -s '.[0] * .[1]' "${DOVE_POLICIES}" "${PHOENIX_UNIFIED_LINUX_POLICIES}" > "${DOVE_TEMP}/policies/temp3.json" || error_fn
+    echo
+fi
 
-jq -s '.[0] * .[1]' /tmp/dove/temp1.json "$PHOENIX_COOKIES_POLICIES" > /tmp/dove/temp2.json
+if [ "${DOVE_LINUX}" == 1 ]; then
+    echo_green_text 'Building Dove policies for Linux...'
 
-jq -s '.[0] * .[1]' /tmp/dove/temp2.json "$DOVE_UNIFIED_POLICIES" > "$DOVE_POLICIES"
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp3.json" "${PHOENIX_UNIFIED_LINUX_NONFLATPAK_POLICIES}" > "${DOVE_TEMP}/policies/temp4.json" || error_fn
+    echo
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp4.json" "${DOVE_UNIFIED_LINUX_NONFLATPAK_POLICIES}" > "${DOVE_LINUX_POLICIES}" || error_fn
+    echo
+fi
 
-jq -s '.[0] * .[1]' "$DOVE_POLICIES" "$PHOENIX_UNIFIED_LINUX_POLICIES" > /tmp/dove/temp3.json
+if [ "${DOVE_LINUX_FLATPAK}" == 1 ]; then
+    echo_green_text 'Building Dove policies for Linux (Flatpak)...'
 
-jq -s '.[0] * .[1]' /tmp/dove/temp3.json "$PHOENIX_UNIFIED_LINUX_FLATPAK_POLICIES" > /tmp/dove/temp4.json
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp3.json" "${PHOENIX_UNIFIED_LINUX_FLATPAK_POLICIES}" > "${DOVE_TEMP}/policies/temp5.json" || error_fn
+    echo
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp5.json" "${DOVE_UNIFIED_LINUX_FLATPAK_POLICIES}" > "${DOVE_LINUX_FLATPAK_POLICIES}" || error_fn
+    echo
+fi
 
-jq -s '.[0] * .[1]' /tmp/dove/temp4.json "$DOVE_UNIFIED_LINUX_FLATPAK_POLICIES" > "$DOVE_LINUX_FLATPAK_POLICIES"
+# (This is used by both OS X and OS X Intel)
+if [ "${DOVE_OSX}" == 1 ] || [ "${DOVE_OSX_INTEL}" == 1 ]; then
+    jq -s '.[0] * .[1]' "${DOVE_POLICIES}" "${PHOENIX_UNIFIED_OSX_POLICIES}" > "${DOVE_TEMP}/policies/temp6.json" || error_fn
+    echo
+fi
 
-jq -s '.[0] * .[1]' /tmp/dove/temp3.json "$PHOENIX_UNIFIED_LINUX_NONFLATPAK_POLICIES" > /tmp/dove/temp5.json
+if [ "${DOVE_OSX}" == 1 ]; then
+    echo_green_text 'Building Dove policies for OS X...'
 
-jq -s '.[0] * .[1]' /tmp/dove/temp5.json "$DOVE_UNIFIED_LINUX_NONFLATPAK_POLICIES" > "$DOVE_LINUX_POLICIES"
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp6.json" "${PHOENIX_UNIFIED_OSX_SILICON_POLICIES}" > "${DOVE_TEMP}/policies/temp7.json" || error_fn
+    echo
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp7.json" "${DOVE_UNIFIED_OSX_SILICON_POLICIES}" > "${DOVE_OSX_POLICIES_JSON}" || error_fn
+    echo
+    python3 "${DOVE_BUILD}/convert_json_to_plist.py" "${DOVE_OSX_POLICIES_JSON}" "${DOVE_OSX_POLICIES_PLIST}" || error_fn
+    echo
+fi
 
-jq -s '.[0] * .[1]' "$DOVE_POLICIES" "$PHOENIX_UNIFIED_OSX_POLICIES" > /tmp/dove/temp6.json
+if [ "${DOVE_OSX_INTEL}" == 1 ]; then
+    echo_green_text 'Building Dove policies for OS X (Intel)..'
 
-jq -s '.[0] * .[1]' /tmp/dove/temp6.json "$PHOENIX_UNIFIED_OSX_SILICON_POLICIES" > /tmp/dove/temp7.json
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp6.json" "${PHOENIX_UNIFIED_OSX_INTEL_POLICIES}" > "${DOVE_TEMP}/policies/temp8.json" || error_fn
+    echo
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp8.json" "${DOVE_UNIFIED_OSX_INTEL_POLICIES}" > "${DOVE_OSX_INTEL_POLICIES_JSON}" || error_fn
+    echo
+    python3 "${DOVE_BUILD}/convert_json_to_plist.py" "${DOVE_OSX_INTEL_POLICIES_JSON}" "${DOVE_OSX_INTEL_POLICIES_PLIST}" || error_fn
+    echo
+fi
 
-jq -s '.[0] * .[1]' /tmp/dove/temp7.json "$DOVE_UNIFIED_OSX_SILICON_POLICIES" > "$DOVE_OSX_POLICIES_JSON"
+if [ "${DOVE_WINDOWS}" == 1 ]; then
+    echo_green_text 'Building Dove policies for Windows...'
 
-jq -s '.[0] * .[1]' /tmp/dove/temp6.json "$PHOENIX_UNIFIED_OSX_INTEL_POLICIES" > /tmp/dove/temp8.json
+    jq -s '.[0] * .[1]' "${DOVE_POLICIES}" "${PHOENIX_UNIFIED_WINDOWS_POLICIES}" > "${DOVE_TEMP}/policies/temp9.json" || error_fn
+    echo
+    jq -s '.[0] * .[1]' "${DOVE_TEMP}/policies/temp9.json" "${DOVE_UNIFIED_WINDOWS_POLICIES}" > "${DOVE_WINDOWS_POLICIES}" || error_fn
+    echo
+fi
 
-jq -s '.[0] * .[1]' /tmp/dove/temp8.json "$DOVE_UNIFIED_OSX_INTEL_POLICIES" > "$DOVE_OSX_INTEL_POLICIES_JSON"
-
-jq -s '.[0] * .[1]' "$DOVE_POLICIES" "$PHOENIX_UNIFIED_WINDOWS_POLICIES" > /tmp/dove/temp9.json
-
-jq -s '.[0] * .[1]' /tmp/dove/temp9.json "$DOVE_UNIFIED_WINDOWS_POLICIES" > "$DOVE_WINDOWS_POLICIES"
-
-rm -vrf /tmp/dove
-
-python3 build/convert_json_to_plist.py "$DOVE_OSX_INTEL_POLICIES_JSON" "$DOVE_OSX_INTEL_POLICIES_PLIST" 
-python3 build/convert_json_to_plist.py "$DOVE_OSX_POLICIES_JSON" "$DOVE_OSX_POLICIES_PLIST"
+rm -rf "${DOVE_TEMP}/" || error_fn
+echo

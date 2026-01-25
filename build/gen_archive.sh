@@ -1,6 +1,23 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -e
+set -euo pipefail
+
+# Functions
+echo_red_text() {
+	echo -e "\033[31m$1\033[0m"
+}
+
+echo_green_text() {
+	echo -e "\033[32m$1\033[0m"
+}
+
+error_fn() {
+	echo
+	echo_red_text -e "\033[31mSomething went wrong! The script failed.\033[0m"
+	echo_red_text -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
+	echo
+	exit 1
+}
 
 # This is a basic script used to create the .zip files you see in the 'archives' directory.
 # We could just clone the entire source code - though lots of of it are completely unnecessary for packaging.
@@ -8,60 +25,92 @@ set -e
 
 # Script should be ran from inside the directory where you store Dove, not directly from the 'archives' or `build` folder...
 
-echo_green_text() {
-	echo -e "\033[32m$1\033[0m"
-}
+# Set-up our environment
+bash -x $(dirname $0)/env.sh || error_fn
+echo
+source $(dirname $0)/env.sh || error_fn
+echo
 
-rm -rf archives/*
+rm -rf "${DOVE_ARCHIVES}/*" || error_fn
+echo
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    /usr/sbin/dot_clean -mv "$dove_linux_dir"
+# dot_clean for OS X
+DOVE_DOT_CLEAN='/usr/sbin/dot_clean -mv'
+
+# zip
+DOVE_ZIP='zip -r -FS'
+
+if [ "${DOVE_LINUX}" == 1 ]; then
+    if [[ "${DOVE_OS}" == 'osx' ]]; then
+        ${DOVE_DOT_CLEAN} "${DOVE_LINUX_DIR}" || error_fn
+        echo
+    fi
+
+    pushd "${DOVE_LINUX_DIR}" || error_fn
+    echo
+    echo_green_text "Creating ${DOVE_ARCHIVES}/dove-linux.zip..."
+    ${DOVE_ZIP} "${DOVE_ARCHIVES}/dove-linux.zip" * || error_fn
+    echo
+    popd || error_fn
+    echo
 fi
 
-cd "$dove_linux_dir"
+if [ "${DOVE_LINUX_FLATPAK}" == 1 ]; then
+    if [[ "${DOVE_OS}" == 'osx' ]]; then
+        ${DOVE_DOT_CLEAN} "${DOVE_LINUX_FLATPAK_DIR}" || error_fn
+        echo
+    fi
 
-echo_green_text "Creating archives/dove-linux.zip..."
-
-zip -r -FS "$dove_dir/archives/dove-linux.zip" *
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    /usr/sbin/dot_clean -mv "$dove_linux_flatpak_dir"
+    pushd "${DOVE_LINUX_FLATPAK_DIR}" || error_fn
+    echo
+    echo_green_text "Creating ${DOVE_ARCHIVES}/dove-flatpak.zip..."
+    ${DOVE_ZIP} "${DOVE_ARCHIVES}/dove-flatpak.zip" * || error_fn
+    echo
+    popd || error_fn
+    echo
 fi
 
-cd "$dove_linux_flatpak_dir"
+if [ "${DOVE_OSX}" == 1 ]; then
+    if [[ "${DOVE_OS}" == 'osx' ]]; then
+        ${DOVE_DOT_CLEAN} "${DOVE_OSX_DIR}" || error_fn
+        echo
+    fi
 
-echo_green_text "Creating archives/dove-flatpak.zip..."
-
-zip -r -FS "$dove_dir/archives/dove-flatpak.zip" *
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    /usr/sbin/dot_clean -mv "$dove_osx_dir"
+    pushd "${DOVE_OSX_DIR}" || error_fn
+    echo
+    echo_green_text "Creating ${DOVE_ARCHIVES}/dove-osx.zip..."
+    ${DOVE_ZIP} "${DOVE_ARCHIVES}/dove-osx.zip" * -x 'Library/*' || error_fn
+    echo
+    popd || error_fn
+    echo
 fi
 
-cd "$dove_osx_dir"
+if [ "${DOVE_OSX_INTEL}" == 1 ]; then
+    if [[ "${DOVE_OS}" == 'osx' ]]; then
+        ${DOVE_DOT_CLEAN} "${DOVE_OSX_INTEL_DIR}" || error_fn
+        echo
+    fi
 
-echo_green_text "Creating archives/dove-osx.zip..."
-
-zip -r -FS "$dove_dir/archives/dove-osx.zip" * -x 'Library/*'
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    /usr/sbin/dot_clean -mv "$dove_osx_intel_dir"
+    pushd "${DOVE_OSX_INTEL_DIR}" || error_fn
+    echo
+    echo_green_text "Creating ${DOVE_ARCHIVES}/dove-osx-intel.zip..."
+    ${DOVE_ZIP} "${DOVE_ARCHIVES}/dove-osx-intel.zip" * -x 'Library/*' || error_fn
+    echo
+    popd || error_fn
+    echo
 fi
 
-cd "$dove_osx_intel_dir"
+if [ "${DOVE_WINDOWS}" == 1 ]; then
+    if [[ "${DOVE_OS}" == 'osx' ]]; then
+        ${DOVE_DOT_CLEAN} "${DOVE_WINDOWS_DIR}" || error_fn
+        echo
+    fi
 
-echo_green_text "Creating archives/dove-osx-intel.zip..."
-
-zip -r -FS "$dove_dir/archives/dove-osx-intel.zip" * -x 'Library/*'
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    /usr/sbin/dot_clean -mv "$dove_windows_dir"
+    pushd "${DOVE_WINDOWS_DIR}" || error_fn
+    echo
+    echo_green_text "Creating ${DOVE_ARCHIVES}/dove-windows.zip..."
+    ${DOVE_ZIP} "${DOVE_ARCHIVES}/dove-windows.zip" * || error_fn
+    echo
+    popd || error_fn
+    echo
 fi
-
-cd "$dove_windows_dir"
-
-echo_green_text "Creating archives/dove-windows.zip..."
-
-zip -r -FS "$dove_dir/archives/dove-windows.zip" *
-
-cd "$dove_dir"

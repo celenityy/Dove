@@ -1,40 +1,63 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -eu
+set -euo pipefail
 
-source build/env.sh
-
-mkdir -vp external/autoconfig
-pushd external/autoconfig
-rm -vrf *
-
-# Set-up pip venv
-if [[ -z "${USING_NIX_FLAKE+x}" ]]; then
-    python -m venv "$PIP_ENV"
-    source "$PIP_ENV/bin/activate"
-    pip install --upgrade pip
-    pip install lxml
-fi
-
-build_autoconfig() {
-    cp "${autoconfig_dir}/LICENSE" ./LICENSE.txt
-    mkdir v1.1
-    python ${autoconfig_dir}/tools/convert.py -d v1.1 -a ${autoconfig_dir}/ispdb/*.xml
+# Functions
+echo_red_text() {
+	echo -e "\033[31m$1\033[0m"
 }
 
-if [[ -n "${autoconfig_dir-}" ]]; then
-    echo "Using Thunderbird's autoconfiguration database (ISPDB) repository from ${autoconfig_dir}" 
-    build_autoconfig
-else 
-    echo "Downloading Thunderbird's autoconfiguration database (ISPDB) repository"
-    curl --doh-cert-status --no-insecure --no-proxy-insecure --no-sessionid --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --proto -all,https --proto-default https --proto-redir -all,https --show-error -sSL https://github.com/thunderbird/autoconfig/archive/refs/heads/prod.tar.gz | tar zxvf -
-    autoconfig_dir=./autoconfig-prod
-    build_autoconfig
-    rm -r autoconfig-prod
+echo_green_text() {
+	echo -e "\033[32m$1\033[0m"
+}
+
+error_fn() {
+	echo
+	echo_red_text -e "\033[31mSomething went wrong! The script failed.\033[0m"
+	echo_red_text -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
+	echo
+	exit 1
+}
+
+# Set-up our environment
+bash -x $(dirname $0)/env.sh || error_fn
+echo
+source $(dirname $0)/env.sh || error_fn
+echo
+
+# Set-up pip venv
+if [ "${DOVE_NIX_FLAKE}" != 1 ]; then
+    python -m venv "${DOVE_PIP_DIR}" || error_fn
+    echo
+    source "${DOVE_PIP_ENV}" || error_fn
+    echo
+    pip install --upgrade pip || error_fn
+    echo
+    pip install lxml || error_fn
+    echo
 fi
 
-popd
+mkdir -vp "${DOVE_AUTOCONFIG_OUTPUT}" || error_fn
+echo
 
-cd "$dove_dir"
+pushd "${DOVE_AUTOCONFIG_OUTPUT}" || error_fn
+echo
+rm -vrf * || error_fn
+echo
+cp "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_AUTOCONFIG_OUTPUT}/LICENSE.txt" || error_fn
+echo
+mkdir -vp "${DOVE_AUTOCONFIG_OUTPUT}/v1.1" || error_fn
+echo
+python "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_AUTOCONFIG_OUTPUT}/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml || error_fn
+echo
+popd || error_fn
+echo
 
-./build/fly.sh && ./build/gen_archive.sh
+pushd "${DOVE_ROOT}" || error_fn
+echo
+bash -x "${DOVE_BUILD}/fly.sh" || error_fn
+echo
+bash -x "${DOVE_BUILD}/gen_archive.sh" || error_fn
+echo
+popd || error_fn
+echo

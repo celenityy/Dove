@@ -113,9 +113,9 @@
               buildPhase = ''
                 runHook preBuild
 
-                export phoenix_dir=${phoenix}
-                export autoconfig_dir=${autoconfig}
-                export USING_NIX_FLAKE=1
+                export DOVE_AUTOCONFIG=${autoconfig}
+                export DOVE_PHOENIX=${phoenix}
+                export DOVE_NIX_FLAKE=1
                 patchShebangs ./build/*.sh
 
                 ./build/build.sh
