@@ -128,11 +128,13 @@ fi
 DOVE_LINUX_ONLY_DEFAULT=0
 if [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
     export DOVE_LINUX_ONLY="${DOVE_LINUX_ONLY_DEFAULT}"
-    export DOVE_ALL=0
 fi
 if [ "${DOVE_LINUX_ONLY}" == 1 ]; then
-    export DOVE_ALL=0
     export DOVE_LINUX=1
+    export DOVE_LINUX_FLATPAK=0
+    export DOVE_OSX=0
+    export DOVE_OSX_INTEL=0
+    export DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for Linux (Flatpak)
@@ -141,8 +143,11 @@ if [[ -z "${DOVE_LINUX_FLATPAK_ONLY+x}" ]]; then
     export DOVE_LINUX_FLATPAK_ONLY="${DOVE_LINUX_FLATPAK_ONLY_DEFAULT}"
 fi
 if [ "${DOVE_LINUX_FLATPAK_ONLY}" == 1 ]; then
-    export DOVE_ALL=0
     export DOVE_LINUX_FLATPAK=1
+    export DOVE_LINUX=0
+    export DOVE_OSX=0
+    export DOVE_OSX_INTEL=0
+    export DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for OS X
@@ -151,8 +156,11 @@ if [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
     export DOVE_OSX_ONLY="${DOVE_OSX_ONLY_DEFAULT}"
 fi
 if [ "${DOVE_OSX_ONLY}" == 1 ]; then
-    export DOVE_ALL=0
     export DOVE_OSX=1
+    export DOVE_LINUX=0
+    export DOVE_LINUX_FLATPAK=0
+    export DOVE_OSX_INTEL=0
+    export DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for OS X (Intel)
@@ -161,8 +169,11 @@ if [[ -z "${DOVE_OSX_INTEL_ONLY+x}" ]]; then
     export DOVE_OSX_INTEL_ONLY="${DOVE_OSX_INTEL_ONLY_DEFAULT}"
 fi
 if [ "${DOVE_OSX_INTEL_ONLY}" == 1 ]; then
-    export DOVE_ALL=0
     export DOVE_OSX_INTEL=1
+    export DOVE_LINUX=0
+    export DOVE_LINUX_FLATPAK=0
+    export DOVE_OSX=0
+    export DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for Windows
@@ -171,21 +182,11 @@ if [[ -z "${DOVE_WINDOWS_ONLY+x}" ]]; then
     export DOVE_WINDOWS_ONLY="${DOVE_WINDOWS_ONLY_DEFAULT}"
 fi
 if [ "${DOVE_WINDOWS_ONLY}" == 1 ]; then
-    export DOVE_ALL=0
     export DOVE_WINDOWS=1
-fi
-
-# Whether we're building Dove for all platforms (Default)
-DOVE_ALL_DEFAULT=1
-if [[ -z "${DOVE_ALL+x}" ]]; then
-    export DOVE_ALL="${DOVE_ALL_DEFAULT}"
-fi
-if [ "${DOVE_ALL}" == 1 ]; then
-    export DOVE_LINUX=1
-    export DOVE_LINUX_FLATPAK=1
-    export DOVE_OSX=1
-    export DOVE_OSX_INTEL=1
-    export DOVE_WINDOWS=1
+    export DOVE_LINUX=0
+    export DOVE_LINUX_FLATPAK=0
+    export DOVE_OSX=0
+    export DOVE_OSX_INTEL=0
 fi
 
 # Whether we're building Dove for Linux (Default)
