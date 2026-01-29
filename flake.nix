@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     phoenix = {
-      url = "git+https://gitlab.com/celenityy/Phoenix";
+      url = "git+https://gitlab.com/celenityy/Phoenix?ref=pages";
       flake = false;
     };
     autoconfig = {
