@@ -475,6 +475,7 @@ pref("media.ffmpeg.vaapi.enabled", false); // [DEFAULT]
 
 /// Disable Firefox Translations
 // The code is technically present in Thunderbird (ex. `about:translations` is accessible...), but it currently doesn't seem possible to actually download any language models from Remote Settings,so it's useless :/
+pref("browser.ai.control.translations", "blocked");
 pref("browser.translations.automaticallyPopup", false);
 pref("browser.translations.enable", false); // [DEFAULT]
 pref("browser.translations.select.enable", false); // [DEFAULT]
