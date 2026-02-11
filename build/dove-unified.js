@@ -266,6 +266,10 @@ pref("places.history.enabled", false);
 /// Disable disk cache
 pref("mail.imap.use_disk_cache2", false);
 
+/// Disable the display of "recent" directories in the folder picker
+// https://searchfox.org/comm-central/rev/19254da8/mailnews/mailnews.js#194
+pref("mail.folder_widget.max_recent", 0);
+
 /// Disable favicons
 pref("browser.chrome.favicons", false);
 pref("browser.chrome.guess_favicon", false);
