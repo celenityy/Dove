@@ -263,7 +263,7 @@ pref("mail.dove.status", "005");
 /// Disable browsing history
 pref("places.history.enabled", false);
 
-/// Disable disk caching
+/// Disable disk cache
 pref("mail.imap.use_disk_cache2", false);
 
 /// Disable favicons
@@ -792,6 +792,10 @@ pref("rss.display.html_as", 3);
 pref("mail.dove.status", "017");
 
 /*** 018 MISC. ***/
+
+/// Allow mailboxes larger than 4GB
+// https://searchfox.org/comm-central/rev/19254da8/mailnews/mailnews.js#138
+pref("mailnews.allowMboxOver4GB", true); // [DEFAULT]
 
 /// Allow users to override Oauth provider details for Microsoft Exchange Web Services by default
 pref("experimental.mail.ews.overrideOAuth.enabled", true);
