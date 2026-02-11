@@ -211,6 +211,13 @@ pref("purple.conversations.im.send_read", false); // [CHAT]
 pref("mailnews.headers.sendUserAgent", false);
 pref("mailnews.headers.useMinimalUserAgent", true); // [DEFENSE IN DEPTH] [DEFAULT]
 
+/// Disable submission of IMAP RFC 2971 ID info
+// https://datatracker.ietf.org/doc/html/rfc2971
+// Used for analytics/data collection by design:
+// "The ID extension to the Internet Message Access Protocol - Version4rev1(IMAP4rev1) protocol allows the server and client to exchange identification information on their implementation in order to make bug reports and usage statistics more complete."
+// https://searchfox.org/comm-central/rev/19254da8/mailnews/mailnews.js#548
+pref("mail.server.default.send_client_info", false);
+
 /// Prevent leaking local IP addresses with emails via EHLO/HELO
 // https://blog.plee.me/2014/11/mozilla-thunderbird-changing-the-ehlo-helo-value-in-the-received-header-for-outgoing-mail/
 pref("mail.smtpserver.default.hello_argument", "[127.0.0.1]"); // [HIDDEN]
