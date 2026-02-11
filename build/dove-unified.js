@@ -813,6 +813,7 @@ pref("mailnews.downloadToTempFile", false, locked);
 /// Sanitize HTML content
 // https://www.bucksch.org/1/projects/mozilla/108153/
 pref("mail.html_sanitize.drop_conditional_css", true); // [DEFAULT]
+pref("mail.spam.display.sanitize", true); // [DEFAULT] Always sanitize HTML for junk messages: https://searchfox.org/comm-central/rev/19254da8/mailnews/mailnews.js#645
 pref("mailnews.display.html_as", 3);
 pref("rss.display.html_as", 3);
 
