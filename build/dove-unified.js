@@ -449,6 +449,10 @@ pref("mail.dove.status", "009");
 
 /*** 010 UI ***/
 
+/// Enable the menu item to display a message body as all body parts
+// (Located at View > Message body as > All body parts)
+pref("mailnews.display.show_all_body_parts_menu", true);
+
 /// Show email information + headers
 pref("mail.show_headers", 2);
 pref("mailnews.display.date_senders_timezone", true); // Displays timezone of sender
