@@ -3,15 +3,15 @@
 set -euo pipefail
 
 # Functions
-echo_red_text() {
+function echo_red_text() {
 	echo -e "\033[31m$1\033[0m"
 }
 
-echo_green_text() {
+function echo_green_text() {
 	echo -e "\033[32m$1\033[0m"
 }
 
-error_fn() {
+function error_fn() {
 	echo
 	echo_red_text -e "\033[31mSomething went wrong! The script failed.\033[0m"
 	echo_red_text -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"

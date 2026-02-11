@@ -55,6 +55,24 @@ source "${DOVE_ENV_HELPERS}"
 # Version info
 export DOVE_VERSIONS="${DOVE_BUILD}/versions.sh"
 
+# Should we create a log file for build.sh? (Default)
+DOVE_LOG_BUILD_DEFAULT=1
+if [[ -z "${DOVE_LOG_BUILD+x}" ]]; then
+    export DOVE_LOG_BUILD="${DOVE_LOG_BUILD_DEFAULT}"
+fi
+
+# Should we create a log file for get_sources.sh? (Default)
+DOVE_LOG_SOURCES_DEFAULT=1
+if [[ -z "${DOVE_LOG_SOURCES+x}" ]]; then
+    export DOVE_LOG_SOURCES="${DOVE_LOG_SOURCES_DEFAULT}"
+fi
+
+# Directory where we should store log files (if logging is desired)
+DOVE_LOG_DIR_DEFAULT="${DOVE_BUILD}/logs"
+if [[ -z "${DOVE_LOG_DIR+x}" ]]; then
+    export DOVE_LOG_DIR="${DOVE_LOG_DIR_DEFAULT}"
+fi
+
 # Dove outputs directory
 DOVE_OUTPUTS_DEFAULT="${DOVE_BUILD}/outputs"
 if [[ -z "${DOVE_OUTPUTS+x}" ]]; then
