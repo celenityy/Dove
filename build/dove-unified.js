@@ -788,6 +788,11 @@ pref("mail.external_protocol_requires_permission", true);
 pref("network.protocol-handler.warn-external.http", true);
 pref("network.protocol-handler.warn-external.https", true);
 
+/// Disable chat functionality by default
+// Provides attack surface reduction, and disabling chat allows us to improve security in other areas (ex. we can fully disable WASM)
+// I also doubt this is widely used by our users
+pref("mail.chat.enabled", false);
+
 /// Enable built-in phishing protection
 // https://support.mozilla.org/kb/thunderbirds-scam-detection
 pref("mail.phishing.detection.disallow_form_actions", true); // [DEFAULT]
