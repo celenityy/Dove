@@ -767,13 +767,6 @@ pref("mail.external_protocol_requires_permission", true);
 pref("network.protocol-handler.warn-external.http", true);
 pref("network.protocol-handler.warn-external.https", true);
 
-/// Disable insecure NTLMv1 [LINUX-ONLY]
-// Fedora's Thunderbird package overrides this to `true`... :/ [LINUX-ONLY]
-// https://www.janbambas.cz/ntlm-v1-and-firefox/ [LINUX-ONLY]
-// https://bugzilla.mozilla.org/show_bug.cgi?id=828183 [LINUX-ONLY]
-// https://bugzilla.redhat.com/show_bug.cgi?id=1110291 [LINUX-ONLY]
-pref("network.negotiate-auth.allow-insecure-ntlm-v1", false); // [LINUX-ONLY] [HIDDEN] [DEFAULT]
-
 /// Enable built-in phishing protection
 // https://support.mozilla.org/kb/thunderbirds-scam-detection
 pref("mail.phishing.detection.disallow_form_actions", true); // [DEFAULT]
@@ -781,18 +774,13 @@ pref("mail.phishing.detection.enabled", true); // [DEFAULT]
 pref("mail.phishing.detection.ipaddresses", true); // [DEFAULT]
 pref("mail.phishing.detection.mismatched_hosts", true); // [DEFAULT]
 
-/// Enable mozilla::pkix certificate verification [LINUX-ONLY]
-// Fedora's Thunderbird package overrides this to `false`... :/ [LINUX-ONLY]
-// https://wiki.mozilla.org/SecurityEngineering/mozpkix-testing [LINUX-ONLY]
-pref("security.use_mozillapkix_verification", true); // [LINUX-ONLY] [HIDDEN] [DEFAULT]
-
 /// Limit classes that can process incoming data
 // Enables a blocklist to avoid HTML, inline images, and other unknown content types
 // https://searchfox.org/comm-central/source/mailnews/mailnews.js#728
 pref("mailnews.display.disallow_mime_handlers", 3);
 pref("rss.display.disallow_mime_handlers", 3);
 
-/// Prevent 3rd party software from intercepting & analyzing emails
+/// Prevent 3rd party software from intercepting and analyzing emails
 // This is the "Allow Antivirus clients to quarantine individual incoming messages" option within Privacy & Security settings
 // https://searchfox.org/comm-central/rev/2713116a/mail/components/preferences/privacy.inc.xhtml#372
 pref("mailnews.downloadToTempFile", false, locked);
