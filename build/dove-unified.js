@@ -280,6 +280,7 @@ pref("mail.dove.status", "005");
 pref("places.history.enabled", false);
 
 /// Disable disk cache
+// https://searchfox.org/comm-central/rev/19254da8/mailnews/mailnews.js#1072
 pref("mail.imap.use_disk_cache2", false);
 
 /// Disable the display of "recent" directories in the folder picker
