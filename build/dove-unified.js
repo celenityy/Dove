@@ -308,10 +308,6 @@ pref("browser.sessionhistory.max_entries", 0); // [HIDDEN]
 pref("browser.sessionstore.debug.no_auto_updates", true);
 pref("browser.sessionstore.restore_windows_to_virtual_desktop", false);
 
-/// Disable taskbar lists [WINDOWS-ONLY]
-pref("mail.taskbar.lists.enabled", false); // [WINDOWS-ONLY]
-pref("mail.taskbar.lists.tasks.enabled", false); // [WINDOWS-ONLY]
-
 /// Prevent permission manager from writing to disk
 pref("permissions.memory_only", true); // [HIDDEN]
 
@@ -1010,6 +1006,10 @@ pref("mail.SpellCheckBeforeSend", true);
 /// Enable the new Account Hub by default
 pref("mail.accounthub.addressbook.enabled", true);
 pref("mail.accounthub.enabled", true);
+
+/// Enable taskbar lists/tasks by default [WINDOWS-ONLY]
+pref("mail.taskbar.lists.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("mail.taskbar.lists.tasks.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
 
 /// Hide Title Bar by default
 pref("mail.tabs.drawInTitlebar", true); // [DEFAULT]
