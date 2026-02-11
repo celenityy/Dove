@@ -793,6 +793,10 @@ pref("network.protocol-handler.warn-external.https", true);
 // I also doubt this is widely used by our users
 pref("mail.chat.enabled", false);
 
+/// Disable WebAssembly for extensions/trusted principals
+// NOTE: This is required for chat functionality
+pref("javascript.options.wasm_trustedprincipals", false);
+
 /// Enable built-in phishing protection
 // https://support.mozilla.org/kb/thunderbirds-scam-detection
 pref("mail.phishing.detection.disallow_form_actions", true); // [DEFAULT]
