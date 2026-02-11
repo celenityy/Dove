@@ -829,6 +829,10 @@ pref("experimental.mail.ews.overrideOAuth.enabled", true);
 /// Allow using Thunderbird without a configured email account
 pref("app.use_without_mail_account", true);
 
+/// Always add the file extension (.eml) when forwarding attachments
+// https://searchfox.org/comm-central/rev/19254da8/mailnews/mailnews.js#720
+pref("mail.forward_add_extension", true); // [DEFAULT]
+
 /// Disable back-up of bookmarks
 // (Likely unused, but defined here, so we can set anyways)
 pref("browser.bookmarks.max_backups", 0);
