@@ -247,7 +247,8 @@ pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv
 // and here: https://codeberg.org/celenity/Phoenix/wiki/Extended.md#fingerprinting
 // We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
 // We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
-pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
+// (We're setting -EfficientCanvasRandomization for now to work-around an upstream bug that prevents randomization from applying everywhere as expected: https://bugzilla.mozilla.org/show_bug.cgi?id=2013976)
+pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-EfficientCanvasRandomization,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
 
 /// Set FPP granular overrides
 // This currently:
