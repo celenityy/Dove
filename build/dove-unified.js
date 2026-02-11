@@ -695,6 +695,8 @@ pref("mail.dove.status", "015");
 /*** 016 MISC. PRIVACY ***/
 
 /// Disable automatic collection of email addresses for Thunderbird's Address Book
+pref("mail.collect_email_address_incoming", false); // [DEFAULT]
+pref("mail.collect_email_address_newsgroup", false); // [DEFAULT]
 pref("mail.collect_email_address_outgoing", false);
 
 /// Disable clipboard events
