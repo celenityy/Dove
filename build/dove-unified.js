@@ -107,7 +107,7 @@ pref("mail.cloud_files.enabled", false);
 // https://searchfox.org/comm-central/source/mail/components/inappnotifications/docs/index.md
 pref("mail.inappnotifications.blog_enabled", false, locked); // [NIGHTLY] Surveys
 pref("mail.inappnotifications.donation_enabled", false, locked); // [NIGHTLY] Donation prompts/fundraisers
-pref("mail.inappnotifications.enabled", false); // [DEFAULT - non-Nightly]
+pref("mail.inappnotifications.enabled", false);
 pref("mail.inappnotifications.message_enabled", false); // [NIGHTLY] Updates
 
 /// Disable onboarding
