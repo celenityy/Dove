@@ -811,15 +811,6 @@ pref("browser.bookmarks.max_backups", 0);
 // https://developer.mozilla.org/docs/Web/API/Element/contextmenu_event
 pref("dom.event.contextmenu.enabled", false);
 
-/// Disable the Firefox "AI" (Local machine learning) Runtime
-// https://firefox-source-docs.mozilla.org/toolkit/components/ml/index.html
-// On desktop, we need to keep this enabled, as it's required for certain legitimate functionality,
-// such as PDF.js alt text image generation
-// But, on Thunderbird, the legitimate features aren't implemented, so we can disable it entirely
-// Note that, even when this is enabled,
-// we don't actually enable/install any AI models/functionality by default
-pref("browser.ml.enable", false);
-
 /// Disable the inference content process
 // https://searchfox.org/firefox-main/rev/20a1fb35/dom/docs/ipc/process_model.rst#184
 // This is used for AI/machine learning, as well as Firefox Translations,
