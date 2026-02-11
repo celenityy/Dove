@@ -175,6 +175,15 @@ pref("mail.dove.status", "003");
 
 /*** 004 INFORMATION LEAKAGE ***/
 
+/// Disable CLIENTID
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1565379
+// https://searchfox.org/comm-central/rev/19254da8/mailnews/mailnews.js#499
+// https://searchfox.org/comm-central/rev/19254da8/mailnews/mailnews.js#496
+pref("mail.server.default.clientid", ""); // [DEFAULT]
+pref("mail.server.default.clientidEnabled", false); // [DEFAULT]
+pref("mail.smtpserver.default.clientid", ""); // [DEFAULT]
+pref("mail.smtpserver.default.clientidEnabled", false); // [DEFAULT]
+
 /// Disable reporting chat idle status [CHAT]
 pref("messenger.status.reportIdle", false); // [CHAT]
 
