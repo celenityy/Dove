@@ -19,7 +19,7 @@ if [ "${DOVE_LOG_SOURCES}" == 1 ]; then
     # Ensure our log directory exists
     mkdir -vp "${DOVE_LOG_DIR}"
 
-    bash -x "${DOVE_BUILD}/get_sources.sh" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
+    bash -x "${DOVE_BUILD}/get_sources-dove.sh" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
 else
-    bash -x "${DOVE_BUILD}/get_sources.sh"
+    bash -x "${DOVE_BUILD}/get_sources-dove.sh"
 fi
