@@ -2,11 +2,6 @@
 
 set -euo pipefail
 
-# Functions
-function echo_red_text() {
-	echo -e "\033[31m$1\033[0m"
-}
-
 if [[ -z "${DOVE_FROM_SOURCES+x}" ]]; then
     echo_red_text "ERROR: Do not call get_sources-dove.sh directly. Instead, use get_sources.sh." >&1
     exit 1

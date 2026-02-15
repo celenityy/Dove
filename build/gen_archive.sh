@@ -2,23 +2,6 @@
 
 set -euo pipefail
 
-# Functions
-function echo_red_text() {
-	echo -e "\033[31m$1\033[0m"
-}
-
-function echo_green_text() {
-	echo -e "\033[32m$1\033[0m"
-}
-
-function error_fn() {
-	echo
-	echo_red_text -e "\033[31mSomething went wrong! The script failed.\033[0m"
-	echo_red_text -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
-	echo
-	exit 1
-}
-
 # This is a basic script used to create the .zip files you see in the 'archives' directory.
 # We could just clone the entire source code - though lots of of it are completely unnecessary for packaging.
 # This creates a slim .zip file only containing what we actually need.

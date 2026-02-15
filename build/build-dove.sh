@@ -2,23 +2,6 @@
 
 set -euo pipefail
 
-# Functions
-function echo_red_text() {
-	echo -e "\033[31m$1\033[0m"
-}
-
-function echo_green_text() {
-	echo -e "\033[32m$1\033[0m"
-}
-
-function error_fn() {
-	echo
-	echo_red_text -e "\033[31mSomething went wrong! The script failed.\033[0m"
-	echo_red_text -e "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
-	echo
-	exit 1
-}
-
 if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
     echo_red_text 'ERROR: Do not call build-dove.sh directly. Instead, use build.sh.' >&1
     exit 1
