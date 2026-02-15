@@ -1083,6 +1083,12 @@
         "InAppNotification": {
             "DonationEnabled": false,
             "SurveyEnabled": false
+        },
+        "Preferences": {
+            "mail.dove.applied.policies": {
+                "Status": "locked",
+                "Value": true
+            }
         }
     }
 }

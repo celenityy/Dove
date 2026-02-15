@@ -1050,3 +1050,4 @@ pref("general.config.obscure_value", 0); // [LINUX-ONLY]
 pref("mail.dove.status", "020"); // [LINUX-ONLY]
 
 pref("mail.dove.status", "successfully applied :D", locked);
+pref("mail.dove.applied.cfg", true, locked);
