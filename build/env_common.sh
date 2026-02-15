@@ -236,3 +236,7 @@ DOVE_WINDOWS_DEFAULT=1
 if [[ -z "${DOVE_WINDOWS+x}" ]]; then
     export DOVE_WINDOWS="${DOVE_WINDOWS_DEFAULT}"
 fi
+
+# Set our external environment variables
+DOVE_ENV_EXTERNAL="${DOVE_BUILD}/env_external.sh"
+source "${DOVE_ENV_EXTERNAL}"
