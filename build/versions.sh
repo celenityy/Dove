@@ -1,5 +1,5 @@
 
-DOVE_VERSION='2026.01.21.1'
+DOVE_VERSION='2026.02.16.1'
 
 # Phoenix
 ## https://gitlab.com/celenityy/Phoenix

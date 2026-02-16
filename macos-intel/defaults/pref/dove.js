@@ -5,3 +5,5 @@ pref("general.config.sandbox_enabled", true, locked);
 
 pref("general.config.filename", "dove.cfg");
 pref("general.config.obscure_value", 0);
+
+pref("mail.dove.applied.prefs", true, locked);
