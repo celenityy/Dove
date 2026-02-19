@@ -127,7 +127,7 @@ sudo apt install dove-flatpak
 
 **<details><summary>Fedora</summary>**
 
- Before installing Phoenix, you'll first need to add [celenity's COPR repo](https://copr.fedorainfracloud.org/coprs/celenity/copr/):
+ Before installing Dove, you'll first need to add [celenity's COPR repo](https://copr.fedorainfracloud.org/coprs/celenity/copr/):
 
  ```sh
  sudo dnf copr enable celenity/copr
