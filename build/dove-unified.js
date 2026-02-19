@@ -531,6 +531,14 @@ pref("narrate.enabled", false);
 // Broken on Thunderbird
 pref("reader.parse-on-load.enabled", false);
 
+/// Disable shared memory and atomics (for JavaScript/WASM)
+// Helps mitigate against Spectre-like attacks
+// NOTE: This breaks Firefox Translations - which is fine here because we don't support it
+// https://jsschools.com/web_dev/webassemblys-shared-memory-unleash-desktop-level/
+// https://searchfox.org/firefox-main/rev/52e25e8b/js/src/shell/js.cpp#12887
+// https://searchfox.org/firefox-main/rev/52e25e8b/js/moz.configure#798
+pref("javascript.options.shared_memory", false);
+
 /// Disable the Web Audio API
 // https://developer.mozilla.org/docs/Web/API/Web_Audio_API
 // We don't want/meed audio or the capabilities exposed by this...
