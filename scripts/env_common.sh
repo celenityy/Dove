@@ -28,6 +28,15 @@ if [[ -z "${DOVE_NIX+x}" ]]; then
     export DOVE_NIX="${DOVE_NIX_DEFAULT}"
 fi
 
+# Nix flakes should only build their respective platform
+if [ "${DOVE_NIX}" == 1 ]; then
+    if [ "${DOVE_OS}" == 'osx' ]; then
+        export DOVE_OSX_ONLY=1
+    else
+        export DOVE_LINUX_ONLY=1
+    fi
+fi
+
 # Version info
 export DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
 
