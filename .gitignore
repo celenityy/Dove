@@ -1,17 +1,18 @@
 .DS_Store
-/build/env_local.sh
+/build/autoconfig/
 /build/logs/
 /build/outputs/
 /build/pyenv/
 /build/tmp/
 /env_override.sh
 /external/
+/scripts/env_local.sh
 /wip/
 
 /linux/assets/autoconfig
 /linux-flatpak/assets/autoconfig
-/macos/assets/autoconfig
-/macos-intel/assets/autoconfig
+/osx/assets/autoconfig
+/osx-intel/assets/autoconfig
 /windows/assets/autoconfig
 
 # nix build

@@ -145,6 +145,7 @@ pref("asanreporter.clientid", "unknown", locked); // [HIDDEN - non-MOZ_ASAN_REPO
 pref("asanreporter.loglevel", 70); // [HIDDEN]
 pref("breakpad.reportURL", "", locked);
 pref("browser.crashReports.crashPull", false, locked); // [DEFAULT] Do not request crash reports for background processes from users https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/crash-reports-ondemand/changeset?_expected=0
+pref("browser.crashReports.onDemand", false, locked); // Supercedes "browser.crashReports.crashPull" - see details above
 pref("browser.crashReports.requestedNeverShowAgain", true, locked); // Do not request crash reports for background processes from users https://searchfox.org/firefox-main/source/toolkit/components/crashes/RemoteSettingsCrashPull.sys.mjs
 pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false, locked); // [NO-ANDROID] [HIDDEN - Thunderbird] [DEFAULT]
 pref("browser.crashReports.unsubmittedCheck.enabled", false, locked); // [NO-ANDROID] [HIDDEN - Thunderbird] [DEFAULT - non-Nightly]
@@ -1580,13 +1581,6 @@ pref("image.jxl.enabled", false); // [DEFAULT]
 /// Disable MathML
 // https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=mathml 
 pref("mathml.disabled", true);
-
-/// Disable shared memory and atomics (for JavaScript/WASM)
-// Helps mitigate against Spectre-like attacks
-// https://jsschools.com/web_dev/webassemblys-shared-memory-unleash-desktop-level/
-// https://searchfox.org/firefox-main/rev/52e25e8b/js/src/shell/js.cpp#12887
-// https://searchfox.org/firefox-main/rev/52e25e8b/js/moz.configure#798
-pref("javascript.options.shared_memory", false);
 
 /// Disable shared memory allocation from the parent process to content processes
 // https://searchfox.org/firefox-main/rev/dc1c78e9/modules/libpref/init/StaticPrefList.yaml#9130
@@ -4172,6 +4166,14 @@ pref("narrate.enabled", false);
 // Broken on Thunderbird
 pref("reader.parse-on-load.enabled", false);
 
+/// Disable shared memory and atomics (for JavaScript/WASM)
+// Helps mitigate against Spectre-like attacks
+// NOTE: This breaks Firefox Translations - which is fine here because we don't support it
+// https://jsschools.com/web_dev/webassemblys-shared-memory-unleash-desktop-level/
+// https://searchfox.org/firefox-main/rev/52e25e8b/js/src/shell/js.cpp#12887
+// https://searchfox.org/firefox-main/rev/52e25e8b/js/moz.configure#798
+pref("javascript.options.shared_memory", false);
+
 /// Disable the Web Audio API
 // https://developer.mozilla.org/docs/Web/API/Web_Audio_API
 // We don't want/meed audio or the capabilities exposed by this...
@@ -4418,6 +4420,11 @@ pref("network.protocol-handler.warn-external.https", true);
 // Provides attack surface reduction, and disabling chat allows us to improve security in other areas (ex. we can fully disable WASM)
 // I also doubt this is widely used by our users
 pref("mail.chat.enabled", false);
+
+/// Disable WASM-Baseline JIT
+// We disable WASM in all contexts, so we don't need to keep this enabled
+// Phoenix disables the other JITs
+pref("javascript.options.wasm_baselinejit", false);
 
 /// Disable WebAssembly for extensions/trusted principals
 // NOTE: This is required for chat functionality
