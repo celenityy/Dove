@@ -15,13 +15,7 @@ echo
 
 # Set-up pip venv
 if [ "${DOVE_NIX}" != 1 ]; then
-    python -m venv "${DOVE_PIP_DIR}" || error_fn
-    echo
     source "${DOVE_PIP_ENV}" || error_fn
-    echo
-    pip install --upgrade pip || error_fn
-    echo
-    pip install lxml || error_fn
     echo
 fi
 

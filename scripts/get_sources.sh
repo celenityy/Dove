@@ -6,6 +6,13 @@ set -euo pipefail
 bash -x $(dirname $0)/env.sh
 source $(dirname $0)/env.sh
 
+# Set up target parameters
+if [[ -z "${1+x}" ]]; then
+    target='all'
+else
+    target=$(echo "${1}" | "${DOVE_AWK}" '{print tolower($0)}')
+fi
+
 # Get sources
 export DOVE_FROM_SOURCES=1
 if [ "${DOVE_LOG_SOURCES}" == 1 ]; then
@@ -19,7 +26,7 @@ if [ "${DOVE_LOG_SOURCES}" == 1 ]; then
     # Ensure our log directory exists
     mkdir -vp "${DOVE_LOG_DIR}"
 
-    bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
+    bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
 else
-    bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh"
+    bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}"
 fi

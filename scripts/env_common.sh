@@ -120,6 +120,16 @@ if [[ -z "${DOVE_LOG_DIR+x}" ]]; then
     export DOVE_LOG_DIR="${DOVE_LOG_DIR_DEFAULT}"
 fi
 
+# GNU awk
+if [[ "${DOVE_OS}" == 'osx' ]]; then
+    DOVE_AWK_DEFAULT='gawk'
+else
+    DOVE_AWK_DEFAULT='awk'
+fi
+if [[ -z "${DOVE_AWK+x}" ]]; then
+    export DOVE_AWK="${DOVE_AWK_DEFAULT}"
+fi
+
 # GNU sed
 if [[ "${DOVE_OS}" == 'osx' ]]; then
     DOVE_SED_DEFAULT='gsed'
