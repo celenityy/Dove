@@ -1,9 +1,5 @@
 .DS_Store
-/build/autoconfig/
-/build/logs/
-/build/outputs/
-/build/pyenv/
-/build/tmp/
+/build/
 /env_override.sh
 /external/
 /scripts/env_local.sh
