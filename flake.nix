@@ -36,7 +36,7 @@
           {
             options.programs.thunderbird.dove = {
               enable =
-                lib.mkEnableOption "Enable privacy & security hardening of Thunderbird using the Dove configs"
+                lib.mkEnableOption "Enable privacy and security hardening of Thunderbird using the Dove configs"
                 // {
                   default = true;
                 };
@@ -115,11 +115,11 @@
 
                 export DOVE_AUTOCONFIG=${autoconfig}
                 export DOVE_PHOENIX=${phoenix}
-                export DOVE_NIX_FLAKE=1
-                patchShebangs ./build/*.sh
+                export DOVE_NIX=1
+                patchShebangs ./scripts/*.sh
 
-                ./build/build.sh
-                sed -i '/general.config.filename/d' build/dove-unified.js
+                ./scripts/build.sh
+                sed -i '/general.config.filename/d' build-resources/dove-unified.js
 
                 runHook postBuild
               '';
@@ -130,8 +130,8 @@
                 ${
                   if stdenvNoCC.isDarwin then
                     ''
-                      cp macos/* $out/
-                      cp -r macos/assets $out/assets
+                      cp osx/* $out/
+                      cp -r osx/assets $out/assets
                     ''
                   else
                     ''
@@ -139,8 +139,8 @@
                       cp -r linux/assets $out/assets
                     ''
                 }
-                install -Dm644 linux/README.md $out/share/doc/dove/README.md
-                install -Dm644 linux/COPYING.txt $out/share/doc/dove/COPYING.txt
+                install -Dm644 README.md $out/share/doc/dove/README.md
+                install -Dm644 COPYING.txt $out/share/doc/dove/COPYING.txt
 
                 runHook postInstall
               '';

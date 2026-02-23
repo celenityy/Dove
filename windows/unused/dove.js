@@ -61,26 +61,21 @@ pref("browser.phoenix.version", "2026.02.16.1", locked);
 
 Unspecified = This preference should be set EVERYWHERE
 
-[FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (Flatpak)
-[LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
+[WINDOWS-ONLY] = This preference should ONLY be set for Windows
 
 [NO-ANDROID] = This preference should be set everywhere, EXCEPT for Android
+[NO-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (Flatpak)
+[NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
 [NO-NON-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (non-Flatpak)
 [NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
 [NO-INTEL-OSX] = This preference should be set everywhere, EXCEPT for macOS on Intel
 [NO-SILICON-OSX] = This preference should be set everywhere, EXCEPT for macOS on Apple Silicon
-[NO-WINDOWS] = This preference should be set everywhere, EXCEPT for Windows
 
 */
 
 /*** BRANDING ***/
 
 
-/// Distribution ID and version must be set for `distribution.about` to display [LINUX-ONLY]
-// `default` matches Mozilla's stock/default value - setting this to anything else could potentially compromise privacy (as this value is shared with Mozilla via the browser update endpoint) [LINUX-ONLY]
-// For now, we only want to set these on Linux - since Mozilla offers EME-free builds on macOS and Windows that use different values here - so it's unclear how they'd interact [LINUX-ONLY]
-pref("distribution.id", "default", locked); // [LINUX-ONLY] [HIDDEN]
-pref("distribution.version", "default", locked); // [LINUX-ONLY] [HIDDEN]
 
 /*** 000: ABOUT:CONFIG ***/
 
@@ -247,6 +242,9 @@ pref("toolkit.telemetry.user_characteristics_ping.uuid", "", locked); // [DEFAUL
 pref("urlclassifier.features.emailtracking.datacollection.allowlistTables", "", locked); // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/components/url-classifier/SafeBrowsing.sys.mjs#264
 pref("urlclassifier.features.emailtracking.datacollection.blocklistTables", "", locked); // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/components/url-classifier/SafeBrowsing.sys.mjs#264
 
+/// Disable Default Browser Agent [WINDOWS-ONLY]
+// https://firefox-source-docs.mozilla.org/toolkit/mozapps/defaultagent/default-browser-agent/index.html [WINDOWS-ONLY]
+pref("default-browser-agent.enabled", false, locked); // [WINDOWS-ONLY]
 
 /// Disable Experiments/Studies
 // (Shield/Nimbus/Normandy)
@@ -873,6 +871,8 @@ pref("browser.restoreWindowState.disabled", true);
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/components/sessionstore/docs/utils.rst#20
 pref("browser.sessionstore.interval", 60000); // 1 minute
 
+/// Prevent automatically starting Firefox and restoring session after reboot [WINDOWS-ONLY]
+pref("toolkit.winRegisterApplicationRestart", false); // [WINDOWS-ONLY] [HIDDEN - Thunderbird]
 
 /// Prevent clearing cookies by default
 
@@ -1317,6 +1317,7 @@ pref("browser.phoenix.status", "010");
 // https://bugzilla.mozilla.org/show_bug.cgi?id=500983
 // https://bugzilla.mozilla.org/show_bug.cgi?id=500983#c7
 // https://superuser.com/questions/169303/why-are-my-browsers-suddenly-configured-to-use-a-proxy
+// BITS usage currently requires 5 (default) https://searchfox.org/firefox-main/rev/ba7a7a320649794a9948b32156f5b438fef5ce7a/toolkit/mozapps/update/UpdateService.sys.mjs#861 [WINDOWS-ONLY]
 // The proxy type. See nsIProtocolProxyService.idl
 //    PROXYCONFIG_DIRECT   = 0
 //    PROXYCONFIG_MANUAL   = 1
@@ -1443,6 +1444,9 @@ pref("media.eme.require-app-approval", true); // [DEFAULT - Android] https://bug
 /// https://developers.google.com/widevine/drm/overview
 /// NOTE: Widevine on Desktop requires Gecko Media Plugins (GMP) - which we also disable by default, see below
 
+//// Disable the Microsoft PlayReady CDM by default (if EME is enabled) [WINDOWS-ONLY]
+/// https://learn.microsoft.com/playready/overview/overview [WINDOWS-ONLY]
+pref("media.eme.playready.enabled", false); // [WINDOWS-ONLY]
 
 /// Disable Gecko Media Plugins (GMP)
 // This is currently only used for DRM and OpenH264 (both of which we disable)
@@ -1479,7 +1483,6 @@ pref("media.gmp.log.level", 70); // [HIDDEN] Limits logging to fatal only
 // https://searchfox.org/firefox-main/source/toolkit/content/gmp-sources/openh264.json
 pref("media.ffmpeg.allow-openh264", false); // [DEFAULT - Nightly]
 pref("media.gmp-gmpopenh264.enabled", false);
-pref("media.gmp-gmpopenh264.provider.enabled", false); // [LINUX-ONLY] RedHat/Fedora-specific
 pref("media.gmp-gmpopenh264.visible", false); // Don't display in UI/`about:addons`
 pref("media.webrtc.hw.h264.enabled", true); // [DEFAULT - Android] Enables H264 hardware decoding https://bugzilla.mozilla.org/show_bug.cgi?id=1717679
 
@@ -1500,6 +1503,7 @@ pref("media.rdd-process.enabled", true); // [NO-ANDROID] [DEFAULT - non-Android]
 pref("media.rdd-vorbis.enabled", true); // [DEFAULT - non-Android]
 pref("media.rdd-vpx.enabled", true); // [DEFAULT - non-Android]
 pref("media.rdd-wav.enabled", true); // [DEFAULT - non-Android]
+pref("media.rdd-wmf.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
 
 /// Enable hardware/platform media decoding
 // https://searchfox.org/firefox-main/source/dom/media/platforms/PDMFactory.cpp
@@ -1532,9 +1536,6 @@ pref("media.gmp.encoder.multithreaded", true);
 /// If GMP is enabled (via `media.gmp-manager.updateEnabled`), ensure that installed plug-ins are visible/exposed in `about:addons`
 pref("media.gmp-provider.enabled", true); // [DEFAULT - non-Thunderbird]
 
-/// Sandbox GMP [LINUX-ONLY]
-// https://searchfox.org/firefox-main/rev/82e2435f/dom/media/gmp/GMPServiceParent.cpp#1039 [LINUX-ONLY]
-pref("media.gmp.insecure.allow", false); // [LINUX-ONLY] [DEFAULT]
 
 /// Use the more confined utility process for media decoding
 // https://firefox-source-docs.mozilla.org/dom/ipc/process_model.html#data-decoder-rdd-process
@@ -2030,6 +2031,10 @@ pref("browser.phoenix.status", "017");
 // https://searchfox.org/firefox-main/rev/82e2435f/dom/system/NetworkGeolocationProvider.sys.mjs#18
 pref("geo.provider.network.logging.enabled", false); // [HIDDEN] [DEFAULT] 
 
+/// Disable Microsoft Location Services [WINDOWS-ONLY]
+// https://searchfox.org/firefox-main/rev/82e2435f/dom/geolocation/Geolocation.cpp#769 [WINDOWS-ONLY]
+pref("geo.prompt.open_system_prefs", false); // [WINDOWS-ONLY] Ensure users aren't prompted to open settings and enable it - https://searchfox.org/firefox-main/rev/82e2435f/modules/libpref/init/StaticPrefList.yaml#6616
+pref("geo.provider.ms-windows-location", false); // [WINDOWS-ONLY]
 
 /// Disable Mozilla's GeoIP/Region Service
 // Prevents Firefox from monitoring the user's region/general location
@@ -2059,10 +2064,6 @@ pref("geo.provider.use_mls", false); // [HIDDEN] [DEFAULT]
 // https://searchfox.org/firefox-main/rev/82e2435f/dom/system/NetworkGeolocationProvider.sys.mjs#69
 pref("geo.provider.network.debug.requestCache.enabled", true); // [HIDDEN] [DEFAULT]
 
-/// Prevent unconditionally providing high location accuracy [LINUX-ONLY]
-// By default, Firefox provides all websites with high location accuracy, even if they don't request it... [LINUX-ONLY]
-// https://searchfox.org/firefox-main/rev/82e2435f/dom/system/linux/GeoclueLocationProvider.cpp#308 [LINUX-ONLY]
-pref("geo.provider.geoclue.always_high_accuracy", false); // [LINUX-ONLY]
 
 /// Set BeaconDB as the default network geolocation provider
 // Default is Google :/
@@ -2353,6 +2354,10 @@ pref("dom.security.credentialmanagement.identity.enabled", false); // [DEFAULT -
 pref("dom.security.credentialmanagement.identity.heavyweight.enabled", false); // [DEFAULT - non-Nightly]
 pref("dom.security.credentialmanagement.identity.lightweight.enabled", false); // [DEFAULT]
 
+/// Disable Microsoft's Cloud Clipboard/Clipboard History [WINDOWS-ONLY]
+// https://docs.microsoft.com/windows/win32/dataxchg/clipboard-formats#cloud-clipboard-and-clipboard-history-formats [WINDOWS-ONLY]
+// https://searchfox.org/firefox-main/rev/82e2435f/widget/windows/nsClipboard.cpp#323 [WINDOWS-ONLY]
+pref("clipboard.copyPrivateDataToClipboardCloudOrHistory", false); // [WINDOWS-ONLY] [DEFAULT]
 
 /// Disable Native Messaging
 // This functionality is used to allow browser extensions to communicate with external apps/programs
@@ -2362,7 +2367,6 @@ pref("dom.security.credentialmanagement.identity.lightweight.enabled", false); /
 // https://searchfox.org/firefox-main/rev/af0f713f/toolkit/components/extensions/NativeMessaging.sys.mjs#12
 pref("webextensions.native-messaging.max-input-message-bytes", 0); // [HIDDEN] [DEFAULT: 1048576]
 pref("webextensions.native-messaging.max-output-message-bytes", 0); // [HIDDEN] [DEFAULT: -1, but, to override: set to 2147483647]
-pref("widget.use-xdg-desktop-portal.native-messaging", 0); // [LINUX-ONLY] [DEFAULT] For Flatpak/Snap https://searchfox.org/firefox-main/source/toolkit/components/extensions/docs/native-messaging-portal-design.rst
 
 /// Disable Reporting API
 // PRIVACY: Fingerprinting concerns, used for analytics by design
@@ -2692,9 +2696,6 @@ pref("dom.ipc.keepProcessesAlive.privilegedabout", 0);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1447393
 pref("dom.ipc.keepProcessesAlive.web", 0); // [HIDDEN - non-Android] [DEFAULT - non-Android]
 
-/// Disable GNOME Integration [LINUX-ONLY]
-// https://searchfox.org/firefox-main/rev/82e2435f/browser/components/shell/nsGNOMEShellService.cpp#77 [LINUX-ONLY]
-pref("browser.gnome-search-provider.enabled", false); // [LINUX-ONLY] [HIDDEN]
 
 /// Disable Navigator Media Objects & getUserMedia Support in insecure contexts
 // https://developer.mozilla.org/docs/Web/API/Navigator/mediaDevices
@@ -2702,17 +2703,31 @@ pref("browser.gnome-search-provider.enabled", false); // [LINUX-ONLY] [HIDDEN]
 pref("media.devices.insecure.enabled", false); // [DEFAULT]
 pref("media.getusermedia.insecure.enabled", false); // [DEFAULT]
 
+/// Disable Win32k System Calls [WINDOWS-ONLY]
+// https://security.googleblog.com/2016/10/disclosing-vulnerabilities-to-protect.html [WINDOWS-ONLY]
+// https://docs.google.com/document/d/1gJDlk-9xkh6_8M_awrczWCaUuyr0Zd2TKjNBCiPO_G4/edit [WINDOWS-ONLY]
+pref("security.sandbox.content.win32k-disable", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("security.sandbox.gmp.win32k-disable", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("security.sandbox.socket.win32k-disable", true); // [WINDOWS-ONLY] [DEFAULT]
 
 /// Do not allow additional ports by default
 // This is just to expose the preference via the `about:config`
 pref("network.security.ports.banned.override", ""); // [HIDDEN] [DEFAULT]
 
+/// Enable Arbitrary Code Guard (ACG) [WINDOWS-ONLY]
+// https://medium.com/@boutnaru/the-windows-security-journey-acg-arbitrary-code-guard-74b08a8bd1e5 [WINDOWS-ONLY]
+pref("security.sandbox.gmp.acg.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("security.sandbox.rdd.acg.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("security.sandbox.utility-wmf.acg.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
 
+/// Enable Code Integrity Guard (CIG) for pre-spawn [WINDOWS-ONLY]
+// https://medium.com/@boutnaru/the-windows-security-journey-cig-code-integrity-guard-7e410c8d2304 [WINDOWS-ONLY]
+pref("security.sandbox.cig.prespawn.enabled", true); // [WINDOWS-ONLY] [DEFAULT - Nightly]
 
 /// Enable content process sandboxing [NO-ANDROID]
 // These are especially useful for ex. Thunderbird, which seems to disable sandboxing by default... [NO-ANDROID]
 // Sandboxing is obviously critical from a security perspective as well, so doesn't hurt IMO to explicitly enable here [NO-ANDROID]
-pref("security.sandbox.content.level", 6); // [LINUX-ONLY] [DEFAULT] https://searchfox.org/firefox-main/rev/82e2435f/browser/app/profile/firefox.js#1596
+pref("security.sandbox.content.level", 9); // [WINDOWS-ONLY] [DEFAULT] https://searchfox.org/firefox-main/rev/82e2435f/browser/app/profile/firefox.js#1555
 
 /// Enable the Cross-Origin-Embedder Policy Header
 // https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy
@@ -2761,6 +2776,13 @@ pref("gfx.webrender.all", true);
 // https://github.com/WICG/sanitizer-api
 pref("dom.security.sanitizer.enabled", true); // [DEFAULT]
 
+/// Enable Shadow Stacks [WINDOWS-ONLY]
+// https://wikipedia.org/wiki/Shadow_stack [WINDOWS-ONLY]
+pref("security.sandbox.gmp.shadow-stack.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("security.sandbox.gpu.shadow-stack.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("security.sandbox.rdd.shadow-stack.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("security.sandbox.socket.shadow-stack.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
+//pref("security.sandbox.content.shadow-stack.enabled", false); // [WINDOWS-ONLY] [DEFAULT] https://codeberg.org/celenity/Phoenix/issues/110
 
 /// Enable socket process sandboxing
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1608558
@@ -2851,8 +2873,6 @@ pref("media.cubeb.sandbox", true); // [DEFAULT]
 /// Use a separate content process for `file://` URLs
 pref("browser.tabs.remote.separateFileUriProcess", true); // [DEFAULT - non-Android]
 
-/// Warn on unprivileged namespaces [LINUX-ONLY]
-pref("security.sandbox.warn_unprivileged_namespaces", true); // [LINUX-ONLY] [DEFAULT]
 
 /// Yes, this is a real pref... 
 // https://searchfox.org/firefox-main/rev/82e2435f/js/xpconnect/src/nsXPConnect.cpp#1167
@@ -3172,6 +3192,10 @@ pref("javascript.options.wasm_relaxed_simd", true); // [DEFAULT]
 // `gfx.webrender.compositor.force-enabled` can be used to forcefully enable this acceleration, regardless of platform support
 pref("gfx.webrender.compositor", true); // [DEFAULT - macOS/Windows]
 
+/// Enable Window Occlusion [WINDOWS-ONLY]
+// https://chromeenterprise.google/policies/#WindowOcclusionEnabled [WINDOWS-ONLY]
+// https://searchfox.org/firefox-main/rev/82e2435f/gfx/thebes/gfxPlatform.cpp#3271 [WINDOWS-ONLY]
+pref("widget.windows.window_occlusion_tracking.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
 
 /// Increase buffering for video playback
 // This doesn't apply to videos delivered via Media Source Extensions
@@ -3536,8 +3560,6 @@ pref("autoadmin.failover_to_cached", true); // [NO-ANDROID]
 pref("autoadmin.offline_failover", true); // [NO-ANDROID]
 pref("autoadmin.refresh_interval", 60); // [NO-ANDROID]
 
-/// Enable support for custom/specialized configs... [NO-ANDROID] [NO-OSX] [NO-WINDOWS]
-pref("general.config.obscure_value", 0); // [NO-ANDROID] [NO-OSX] [NO-WINDOWS]
 
 pref("browser.phoenix.status", "033"); // [NO-ANDROID]
 
@@ -3574,15 +3596,15 @@ pref("browser.phoenix.applied.cfg", true, locked);
 
 Unspecified = This preference should be set EVERYWHERE
 
-[FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (Flatpak)
-[LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
+[WINDOWS-ONLY] = This preference should ONLY be set for Windows
 
 [NO-ANDROID] = This preference should be set everywhere, EXCEPT for Android
+[NO-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (Flatpak)
+[NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
 [NO-NON-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (non-Flatpak)
 [NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
 [NO-INTEL-OSX] = This preference should be set everywhere, EXCEPT for macOS on Intel
 [NO-SILICON-OSX] = This preference should be set everywhere, EXCEPT for macOS on Apple Silicon
-[NO-WINDOWS] = This preference should be set everywhere, EXCEPT for Windows
 
 */
 
@@ -3696,14 +3718,14 @@ pref("distribution.version", "default", locked); // [HIDDEN]
 
 Unspecified = This preference should be set EVERYWHERE
 
-[LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
-[FLATPAK-LINUX-ONLY] = This preference should ONLY be set for GNU/Linux (Flatpak)
+[WINDOWS-ONLY] = This preference should ONLY be set for Windows
 
+[NO-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (Flatpak)
+[NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
 [NO-NON-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (non-Flatpak)
 [NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
 [NO-INTEL-OSX] = This preference should be set everywhere, EXCEPT for macOS on Intel
 [NO-SILICON-OSX] = This preference should be set everywhere, EXCEPT for macOS on Apple Silicon
-[NO-WINDOWS] = This preference should be set everywhere, EXCEPT for Windows
 
 */
 
@@ -4193,6 +4215,10 @@ pref("dom.media.webcodecs.image-decoder.enabled", false);
 // https://x.com/GrapheneOS/status/1728921946396725618
 pref("media.peerconnection.enabled", false);
 
+/// Disable Windows Media Foundation Media Engine [WINDOWS-ONLY]
+// By default, it's enabled for protected content (DRM) [WINDOWS-ONLY]
+// https://learn.microsoft.com/windows/win32/medfound/about-the-media-foundation-sdk [WINDOWS-ONLY]
+pref("media.wmf.media-engine.enabled", 0); // [WINDOWS-ONLY]
 
 pref("mail.dove.status", "011");
 
@@ -4368,9 +4394,7 @@ pref("dom.event.clipboardevents.enabled", false);
 pref("geo.prompt.open_system_prefs", false); // Ensure users aren't prompted to open settings and enable Geolocation - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
-pref("geo.provider.use_geoclue", false); // [LINUX-ONLY]
 pref("network.wifi.scanning_period", 0);
-pref("widget.use-xdg-desktop-portal.location", 0); // [LINUX-ONLY]
 
 /// Disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo [CHAT]
 // https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
@@ -4383,6 +4407,9 @@ pref("chat.prpls.prpl-yahoo.disable", true); // [DEFAULT] [CHAT]
 /// Disable OS file indexing/search integration for email by default
 pref("searchintegration.enable", false);
 
+/// Disable Windows file indexing for email by default [WINDOWS-ONLY]
+pref("mail.winsearch.enable", false); // [WINDOWS-ONLY] [DEFAULT]
+pref("mail.winsearch.firstRunDone", true); // [WINDOWS-ONLY]
 
 /// Do not try to submit unrecognized search/URL strings to the default search engine
 pref("keyword.enabled", false);
@@ -4391,7 +4418,7 @@ pref("keyword.enabled", false);
 // By default, these are typically fetched remotely from here: https://autoconfig.thunderbird.net/v1.1/
 // Using these locally improves privacy by avoiding the unwanted network activity/potential leakage, and improves performance/responsiveness
 // https://wiki.mozilla.org/Thunderbird:Autoconfiguration
-pref("mailnews.auto_config_url", "file:///app/etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [FLATPAK-LINUX-ONLY]
+pref("mailnews.auto_config_url", "file:///C:/Dove/assets/autoconfig/v1.1/"); // [WINDOWS-ONLY]
 
 /// Prevent calendar from extracting data from emails by default
 pref("calendar.extract.service.enabled", false); // [DEFAULT]
@@ -4649,6 +4676,9 @@ pref("mail.SpellCheckBeforeSend", true);
 pref("mail.accounthub.addressbook.enabled", true);
 pref("mail.accounthub.enabled", true);
 
+/// Enable taskbar lists/tasks by default [WINDOWS-ONLY]
+pref("mail.taskbar.lists.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
+pref("mail.taskbar.lists.tasks.enabled", true); // [WINDOWS-ONLY] [DEFAULT]
 
 /// Hide Title Bar by default
 pref("mail.tabs.drawInTitlebar", true); // [DEFAULT]
@@ -4670,14 +4700,8 @@ pref("mail.wrap_long_lines", true); // [DEFAULT]
 
 pref("mail.dove.status", "019");
 
-/*** 020 SPECIALIZED/CUSTOM CONFIGS [LINUX-ONLY] ***/
 
-/// Enable support for custom/specialized configs... [LINUX-ONLY]
-pref("general.config.filename", "dove.cfg"); // [LINUX-ONLY]
-pref("general.config.vendor", "dove"); // [LINUX-ONLY]
-pref("general.config.obscure_value", 0); // [LINUX-ONLY]
 
-pref("mail.dove.status", "020"); // [LINUX-ONLY]
 
 pref("mail.dove.status", "successfully applied :D", locked);
 pref("mail.dove.applied.cfg", true, locked);
