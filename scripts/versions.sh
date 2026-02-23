@@ -3,7 +3,7 @@ DOVE_VERSION='2026.02.16.1'
 
 # Phoenix
 ## https://gitlab.com/celenityy/Phoenix
-PHOENIX_COMMIT='fb849223310ad14bf6e8f7a66c7c3440e8a86f16'
+PHOENIX_COMMIT='8be514ba3f7afd81ead37f873419265ef76e71b2'
 PHOENIX_VERSION='2026.02.16.1'
 
 # Thunderbird Autoconfiguration Database (ISPDB)
