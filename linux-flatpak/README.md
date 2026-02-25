@@ -1,6 +1,6 @@
 # Dove
 <p align="center">
-    <img src="assets/dove.png"
+    <img src="build-resources/assets/dove.png"
         alt="Dove"
         height="200">
 </p>

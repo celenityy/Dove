@@ -1,10 +1,10 @@
 
-DOVE_VERSION='2026.02.16.1'
+DOVE_VERSION='2026.02.24.1'
 
 # Phoenix
 ## https://gitlab.com/celenityy/Phoenix
-PHOENIX_COMMIT='8be514ba3f7afd81ead37f873419265ef76e71b2'
-PHOENIX_VERSION='2026.02.16.1'
+PHOENIX_COMMIT='4514418a570603f7ae0670ad1f42371345ffff45'
+PHOENIX_VERSION='2026.02.23.1'
 
 # Thunderbird Autoconfiguration Database (ISPDB)
 ## https://github.com/thunderbird/autoconfig

@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2026.02.16.1", locked);
+pref("browser.phoenix.version", "2026.02.23.1", locked);
 
 /* INDEX 
 
@@ -3657,13 +3657,13 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2026.02.16.1", locked);
+pref("mail.dove.version", "2026.02.24.1", locked);
 
 /// Add custom branding at `about:support`
-pref("app.support.vendor", "Dove: 2026.02.16.1 | Phoenix: 2026.02.16.1"); // [HIDDEN]
+pref("app.support.vendor", "Dove: 2026.02.24.1 | Phoenix: 2026.02.23.1"); // [HIDDEN]
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2026.02.16.1 💜", locked); // [HIDDEN]
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2026.02.24.1 💜", locked); // [HIDDEN]
 pref("distribution.id", "default", locked); // [HIDDEN]
 pref("distribution.version", "default", locked); // [HIDDEN]
 
