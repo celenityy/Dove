@@ -32,7 +32,7 @@ elif [ "${target}" == 'pip' ]; then
     #  Get + set-up pip
     DOVE_GET_SOURCE_PIP=1
 else
-    # If no argument is specified (or argument is set to "all"), just build everything
+    # If no argument is specified (or argument is set to "all"), just get everything
     DOVE_GET_SOURCE_AUTOCONFIG=1
     DOVE_GET_SOURCE_LXML=1
     DOVE_GET_SOURCE_PHOENIX=1
