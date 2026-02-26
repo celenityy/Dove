@@ -3,11 +3,11 @@
     "autoconfig": {
       "flake": false,
       "locked": {
-        "lastModified": 1757930665,
-        "narHash": "sha256-6fD1BwA5zuM38rvYn7EHSkJQc7BpsHxUBMwVueMoch4=",
+        "lastModified": 1771930362,
+        "narHash": "sha256-phTO75u5rqMvFrrNjBecfvPpLyojJvkCDWHkNFU5jK8=",
         "owner": "thunderbird",
         "repo": "autoconfig",
-        "rev": "c2bf7ddd3b14e4964c59a08d940cb374a1ff433d",
+        "rev": "ddd01002de8a037df2bed395059799bb185f5052",
         "type": "github"
       },
       "original": {
@@ -19,11 +19,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1760878510,
-        "narHash": "sha256-K5Osef2qexezUfs0alLvZ7nQFTGS9DL2oTVsIXsqLgs=",
+        "lastModified": 1771848320,
+        "narHash": "sha256-0MAd+0mun3K/Ns8JATeHT1sX28faLII5hVLq0L3BdZU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5e2a59a5b1a82f89f2c7e598302a9cacebb72a67",
+        "rev": "2fc6539b481e1d2569f25f8799236694180c0993",
         "type": "github"
       },
       "original": {
@@ -36,15 +36,16 @@
     "phoenix": {
       "flake": false,
       "locked": {
-        "lastModified": 1760549742,
-        "narHash": "sha256-xK9/E/QseE+NtMGr9Nam3HL/BR+LhvSRoUedKTpdJzw=",
-        "ref": "refs/heads/pages",
-        "rev": "fef92d55ee713f0707826282631aa83c69f2a98e",
-        "revCount": 2203,
+        "lastModified": 1771882219,
+        "narHash": "sha256-BSRt0nJOQYNVekar3y+eYerf8ELK8CC+m+sXJQ1hd5c=",
+        "ref": "pages",
+        "rev": "f972da120b774a1975f9584624402d783a66d722",
+        "revCount": 2702,
         "type": "git",
         "url": "https://gitlab.com/celenityy/Phoenix"
       },
       "original": {
+        "ref": "pages",
         "type": "git",
         "url": "https://gitlab.com/celenityy/Phoenix"
       }
@@ -53,33 +54,7 @@
       "inputs": {
         "autoconfig": "autoconfig",
         "nixpkgs": "nixpkgs",
-        "phoenix": "phoenix",
-        "uBlock": "uBlock",
-        "uBlockLicense": "uBlockLicense"
-      }
-    },
-    "uBlock": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-apTUnEFKtlJ8IN3P6qyR7oTt1PEKqgrRsqnYb0dY0bI=",
-        "type": "file",
-        "url": "https://github.com/celenityy/uBlock/releases/download/1.67.0/uBlock0_1.67.0.thunderbird.xpi"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/celenityy/uBlock/releases/download/1.67.0/uBlock0_1.67.0.thunderbird.xpi"
-      }
-    },
-    "uBlockLicense": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-71NFmXtf5LPg5MDrW6Tzz+rrdMGXzWGEZo1zBtfx9r8=",
-        "type": "file",
-        "url": "https://github.com/celenityy/uBlock/raw/refs/heads/1.67.0/LICENSE.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/celenityy/uBlock/raw/refs/heads/1.67.0/LICENSE.txt"
+        "phoenix": "phoenix"
       }
     }
   },
