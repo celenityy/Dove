@@ -62,7 +62,7 @@ Dove currently provides official support for:
 
 * **Arch Linux**
 * **Debian (& derivatives...)**
-* **Fedora Linux** *(39-41)*
+* **Fedora Linux** *(39-43)*
 * **NixOS**
 * **Flatpak** *(System)*
 * **macOS**
