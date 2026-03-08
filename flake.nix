@@ -112,9 +112,11 @@
               ];
               buildPhase = ''
                 runHook preBuild
-
+                
+                export DOVE_PHOENIX="$PWD/phoenix"
                 export DOVE_AUTOCONFIG=${autoconfig}
-                export DOVE_PHOENIX=${phoenix}
+                cp --no-preserve=mode -r ${phoenix} "$DOVE_PHOENIX"
+                
                 export DOVE_NIX=1
                 patchShebangs ./scripts/*.sh
 
