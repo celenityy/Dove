@@ -31,12 +31,20 @@ elif [ "${target}" == 'phoenix' ]; then
 elif [ "${target}" == 'pip' ]; then
     #  Get + set-up pip
     DOVE_GET_SOURCE_PIP=1
-else
+elif [ "${target}" == 'all' ]; then
     # If no argument is specified (or argument is set to "all"), just get everything
     DOVE_GET_SOURCE_AUTOCONFIG=1
     DOVE_GET_SOURCE_LXML=1
     DOVE_GET_SOURCE_PHOENIX=1
     DOVE_GET_SOURCE_PIP=1
+else
+    echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
+    echo 'All: all (Default)'
+    echo 'lxml: lxml'
+    echo 'Phoenix: phoenix'
+    echo 'pip: pip'
+    echo 'Thunderbird Autoconfiguration Database: autoconfig'
+    exit 1
 fi
 
 # Include version info
