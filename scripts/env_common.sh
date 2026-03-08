@@ -150,13 +150,25 @@ if [[ -z "${DOVE_TAR+x}" ]]; then
     export DOVE_TAR="${DOVE_TAR_DEFAULT}"
 fi
 
+# lxml
+DOVE_LXML_DEFAULT="${DOVE_EXTERNAL}/lxml"
+if [[ -z "${DOVE_LXML+x}" ]]; then
+    export DOVE_LXML="${DOVE_LXML_DEFAULT}"
+fi
+
 # Phoenix
 DOVE_PHOENIX_DEFAULT="${DOVE_EXTERNAL}/phoenix"
 if [[ -z "${DOVE_PHOENIX+x}" ]]; then
     export DOVE_PHOENIX="${DOVE_PHOENIX_DEFAULT}"
 fi
 
-# Python (pip)
+# pip
+DOVE_PIP_DEFAULT="${DOVE_EXTERNAL}/pip"
+if [[ -z "${DOVE_PIP+x}" ]]; then
+    export DOVE_PIP="${DOVE_PIP_DEFAULT}"
+fi
+
+# Python (pip) environment
 DOVE_PIP_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
 if [[ -z "${DOVE_PIP_DIR+x}" ]]; then
     export DOVE_PIP_DIR="${DOVE_PIP_DIR_DEFAULT}"

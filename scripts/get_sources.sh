@@ -13,6 +13,12 @@ else
     target=$(echo "${1}" | "${DOVE_AWK}" '{print tolower($0)}')
 fi
 
+if [[ -z "${2+x}" ]]; then
+    mode='download'
+else
+    mode=$(echo "${2}" | "${DOVE_AWK}" '{print tolower($0)}')
+fi
+
 # Get sources
 export DOVE_FROM_SOURCES=1
 if [ "${DOVE_LOG_SOURCES}" == 1 ]; then
@@ -26,7 +32,7 @@ if [ "${DOVE_LOG_SOURCES}" == 1 ]; then
     # Ensure our log directory exists
     mkdir -vp "${DOVE_LOG_DIR}"
 
-    bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
+    bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}" "${mode}" > >(tee -a "${SOURCES_LOG_FILE}") 2>&1
 else
-    bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}"
+    bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}" "${mode}"
 fi
