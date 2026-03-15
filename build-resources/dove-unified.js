@@ -619,17 +619,21 @@ pref("mail.dove.status", "012");
 /// Allow reporting malicious add-ons/themes to Mozilla
 pref("extensions.abuseReport.enabled", true);
 
-/// Always allow installing "incompatible" add-ons
-// REQUIRED FOR UBLOCK ORIGIN
-pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
+/// Allow ATN-XPIHandler to run on restricted/quarantined domains by default
+// (Necessary for it to access addons.thunderbird.net)
+pref("extensions.quarantineIgnoredByUser.atn-xpihandler@celenity.dev", true); // [HIDDEN]
 
 /// Allow uBird (uBlock Origin builds for Thunderbird) to run on restricted/quarantined domains by default
-pref("extensions.quarantineIgnoredByUser.uBird@celenity.dev", true);
+pref("extensions.quarantineIgnoredByUser.uBird@celenity.dev", true); // [HIDDEN]
 
 /// Allow unprivileged extensions to use experimental APIs
 // Required for ex. CardBook, also used by DKIM Verifier
 // https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
 pref("extensions.experiments.enabled", true); // [DEFAULT]
+
+/// Always allow installing "incompatible" add-ons
+// REQUIRED FOR UBLOCK ORIGIN
+pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
 
 /// Block Cardbook (if installed) and DKIM Verifier from accessing restricted/quarantined domains
 // https://support.mozilla.org/kb/quarantined-domains
@@ -639,6 +643,18 @@ pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 /// Disable compatibility overrides
 // https://mozilla.github.io/addons-server/topics/api/v3_legacy/addons.html#compat-override
 pref("extensions.getAddons.compatOverides.url", "");
+
+/// Disable installation of add-ons by default
+// NOTE: Thunderbird doesn't prompt to re-enable this when mozAddonManager is enabled
+// We disable mozAddonManager though, so not a problem for us
+pref("xpinstall.enabled", false); // [HIDDEN]
+
+/// Disable mozAddonManager
+// This usually breaks add-on installation,
+// but we're using the ATN-XPIHandler add-on to fix it
+// For details, see https://codeberg.org/celenity/atn-xpihandler
+pref("extensions.webapi.enabled", false);
+pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 
 /// Disable recommendations for alternatives to legacy add-ons
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#25
@@ -653,21 +669,6 @@ pref("extensions.userContextIsolation.uBird@celenity.dev.restricted", "[]"); // 
 // https://mozilla.github.io/addons-server/topics/api/addons.html#browser-mappings
 // ex. https://services.addons.mozilla.org/api/v5/addons/browser-mappings/?browser=chrome
 pref("extensions.getAddons.browserMappings.url", ""); // [HIDDEN]
-
-/// Re-enable installation of add-ons by default
-// Unfortunately, Thunderbird doesn't prompt to re-enable this when mozAddonManager is enabled
-// (which we sadly need to enable to support installation of add-ons from `addons.thunderbird.net` for the time-being)
-pref("xpinstall.enabled", true); // [HIDDEN] [DEFAULT]
-
-/// Re-enable mozAddonManager
-// mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
-// It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
-// But, unfortunately, due to the removal of InstallTrigger, this is the only way to install add-ons from `addons.thunderbird.net` ATM.
-// I need to investigate finding another solution, but, for now, unfortunately: we'll re-enable this.
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
-pref("extensions.webapi.enabled", true); // [DEFAULT]
-pref("privacy.resistFingerprinting.block_mozAddonManager", false); // [DEFAULT]
 
 /// Update AMO API
 // Default is still v3, which has been deprecated for quite some time...
