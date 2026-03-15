@@ -411,8 +411,9 @@ pref("network.http.referer.trimmingPolicy", 2);
 pref("network.http.sendRefererHeader", 0);
 
 /// Enable + hard-fail OCSP revocation checks
-// We unfortunately still need this, since CRLite is currently broken on Thunderbird for users not using Firefox's Remote Settings instance (/ the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable)
+// We unfortunately still need this, since CRLite is currently broken on Thunderbird for users not using Firefox's Remote Settings instance (which requires setting the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable for non-Nightly builds)
 // We need to find a way to set that variable for Thunderbird by default - and once we do (or, ideally, once Mozilla actually fixes CRLite for Thunderbird...), I'll remove this - but we'll keep for now due to that reason
+// NOTE: We do have checks in `dove-user-pref.cfg` to disable OCSP (the following prefs) if the Remote Settings instance is set correctly
 // https://wikipedia.org/wiki/Online_Certificate_Status_Protocol
 // https://github.com/arkenfox/user.js/issues/1576
 pref("security.OCSP.enabled", 1); // [DEFAULT]
