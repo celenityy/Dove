@@ -250,21 +250,12 @@ pref("mail.dove.status", "004");
 // https://developer.mozilla.org/docs/Web/CSS/@media/video-dynamic-range
 pref("layout.css.video-dynamic-range.allows-high", false); // [DEFAULT - Windows]
 
-/// Freeze user agent to protect against fingerprinting
-// As explained below, we can't use the standard RFP/FPP 'HttpUserAgent' & 'NavigatorUserAgent` targets, as Thunderbird lies and pretends to be Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
-// Until Thunderbird fixes this upstream, we'll spoof it ourselves
-// This matches what Firefox's RFP/FPP targets use (only difference being we switch out Firefox for Thunderbird)
-// We'll keep platform always spoofed to Windows - since we block JS by default, can be useful (and I can't see this causing weird issues like we see on Firefox...)
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1950775
-pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Thunderbird/140.0"); // [HIDDEN]
-
 /// Harden FPP
 // As explained here: https://codeberg.org/celenity/Phoenix/wiki/Features#fingerprinting
 // and here: https://codeberg.org/celenity/Phoenix/wiki/Extended.md#fingerprinting
-// We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
 // We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 // (We're setting -EfficientCanvasRandomization for now to work-around an upstream bug that prevents randomization from applying everywhere as expected: https://bugzilla.mozilla.org/show_bug.cgi?id=2013976)
-pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-EfficientCanvasRandomization,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
+pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-EfficientCanvasRandomization,-FrameRate");
 
 /// Set FPP granular overrides
 // This currently:
