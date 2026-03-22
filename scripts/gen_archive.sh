@@ -18,10 +18,10 @@ rm -rf "${DOVE_ARCHIVES}/*" || error_fn
 echo
 
 # dot_clean for OS X
-DOVE_DOT_CLEAN='/usr/sbin/dot_clean -mv'
+readonly DOVE_DOT_CLEAN='/usr/sbin/dot_clean -mv'
 
 # zip
-DOVE_ZIP='zip -r -FS'
+readonly DOVE_ZIP='zip -r -FS'
 
 if [ "${DOVE_LINUX}" == 1 ]; then
     if [[ "${DOVE_OS}" == 'osx' ]]; then

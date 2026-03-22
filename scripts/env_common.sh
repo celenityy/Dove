@@ -8,7 +8,7 @@
 
 # If variables are defined with a custom `env_override.sh` file (located at the root project directory), let's use those
 ## These need to be set first, to ensure that they don't interfere with certain variables
-DOVE_ENV_OVERRIDE="${DOVE_ROOT}/env_override.sh"
+readonly DOVE_ENV_OVERRIDE="${DOVE_ROOT}/env_override.sh"
 if [[ -f "${DOVE_ENV_OVERRIDE}" ]]; then
     source "${DOVE_ENV_OVERRIDE}"
 fi
@@ -16,14 +16,14 @@ fi
 # Dove
 
 # Scripts directory
-export DOVE_SCRIPTS="${DOVE_ROOT}/scripts"
+readonly export DOVE_SCRIPTS="${DOVE_ROOT}/scripts"
 
 # Set our platform, OS, and architecture
-export DOVE_ENV_HELPERS="${DOVE_SCRIPTS}/env_helpers.sh"
+readonly export DOVE_ENV_HELPERS="${DOVE_SCRIPTS}/env_helpers.sh"
 source "${DOVE_ENV_HELPERS}"
 
 # Whether we're being invoked from a Nix flake
-DOVE_NIX_DEFAULT=0
+readonly DOVE_NIX_DEFAULT=0
 if [[ -z "${DOVE_NIX+x}" ]]; then
     export DOVE_NIX="${DOVE_NIX_DEFAULT}"
 fi
@@ -38,13 +38,13 @@ if [ "${DOVE_NIX}" == 1 ]; then
 fi
 
 # Version info
-export DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
+readonly export DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
 
 # Archives directory
-export DOVE_ARCHIVES="${DOVE_ROOT}/archives"
+readonly export DOVE_ARCHIVES="${DOVE_ROOT}/archives"
 
 # Build directory
-DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"
+readonly DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"
 if [[ -z "${DOVE_BUILD+x}" ]]; then
     if [ "${DOVE_NIX}" == 1 ]; then
         # Nix needs to use /tmp here, see https://codeberg.org/celenity/Dove/issues/59
@@ -58,16 +58,16 @@ fi
 export DOVE_TEMP="${DOVE_BUILD}/tmp"
 
 # Build resources directory
-export DOVE_BUILD_RESOURCES="${DOVE_ROOT}/build-resources"
+readonly export DOVE_BUILD_RESOURCES="${DOVE_ROOT}/build-resources"
 
 # External sources directory
-export DOVE_EXTERNAL="${DOVE_ROOT}/external"
+readonly export DOVE_EXTERNAL="${DOVE_ROOT}/external"
 
 # External downloads/resources directory
-export DOVE_DOWNLOADS="${DOVE_EXTERNAL}/downloads"
+readonly export DOVE_DOWNLOADS="${DOVE_EXTERNAL}/downloads"
 
 # Dove outputs directory
-DOVE_OUTPUTS_DEFAULT="${DOVE_ROOT}"
+readonly DOVE_OUTPUTS_DEFAULT="${DOVE_ROOT}"
 if [[ -z "${DOVE_OUTPUTS+x}" ]]; then
     export DOVE_OUTPUTS="${DOVE_OUTPUTS_DEFAULT}"
 fi
@@ -103,13 +103,13 @@ if [[ -z "${DOVE_WINDOWS_OUTPUTS+x}" ]]; then
 fi
 
 # Should we create a log file for build.sh? (Default)
-DOVE_LOG_BUILD_DEFAULT=1
+readonly DOVE_LOG_BUILD_DEFAULT=1
 if [[ -z "${DOVE_LOG_BUILD+x}" ]]; then
     export DOVE_LOG_BUILD="${DOVE_LOG_BUILD_DEFAULT}"
 fi
 
 # Should we create a log file for get_sources.sh? (Default)
-DOVE_LOG_SOURCES_DEFAULT=1
+readonly DOVE_LOG_SOURCES_DEFAULT=1
 if [[ -z "${DOVE_LOG_SOURCES+x}" ]]; then
     export DOVE_LOG_SOURCES="${DOVE_LOG_SOURCES_DEFAULT}"
 fi
@@ -122,9 +122,9 @@ fi
 
 # GNU awk
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-    DOVE_AWK_DEFAULT='gawk'
+    readonly DOVE_AWK_DEFAULT='gawk'
 else
-    DOVE_AWK_DEFAULT='awk'
+    readonly DOVE_AWK_DEFAULT='awk'
 fi
 if [[ -z "${DOVE_AWK+x}" ]]; then
     export DOVE_AWK="${DOVE_AWK_DEFAULT}"
@@ -132,9 +132,9 @@ fi
 
 # GNU sed
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-    DOVE_SED_DEFAULT='gsed'
+    readonly DOVE_SED_DEFAULT='gsed'
 else
-    DOVE_SED_DEFAULT='sed'
+    readonly DOVE_SED_DEFAULT='sed'
 fi
 if [[ -z "${DOVE_SED+x}" ]]; then
     export DOVE_SED="${DOVE_SED_DEFAULT}"
@@ -142,28 +142,28 @@ fi
 
 # GNU tar
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-    DOVE_TAR_DEFAULT='gtar'
+    readonly DOVE_TAR_DEFAULT='gtar'
 else
-    DOVE_TAR_DEFAULT='tar'
+    readonly DOVE_TAR_DEFAULT='tar'
 fi
 if [[ -z "${DOVE_TAR+x}" ]]; then
     export DOVE_TAR="${DOVE_TAR_DEFAULT}"
 fi
 
 # lxml
-DOVE_LXML_DEFAULT="${DOVE_EXTERNAL}/lxml"
+readonly DOVE_LXML_DEFAULT="${DOVE_EXTERNAL}/lxml"
 if [[ -z "${DOVE_LXML+x}" ]]; then
     export DOVE_LXML="${DOVE_LXML_DEFAULT}"
 fi
 
 # Phoenix
-DOVE_PHOENIX_DEFAULT="${DOVE_EXTERNAL}/phoenix"
+readonly DOVE_PHOENIX_DEFAULT="${DOVE_EXTERNAL}/phoenix"
 if [[ -z "${DOVE_PHOENIX+x}" ]]; then
     export DOVE_PHOENIX="${DOVE_PHOENIX_DEFAULT}"
 fi
 
 # pip
-DOVE_PIP_DEFAULT="${DOVE_EXTERNAL}/pip"
+readonly DOVE_PIP_DEFAULT="${DOVE_EXTERNAL}/pip"
 if [[ -z "${DOVE_PIP+x}" ]]; then
     export DOVE_PIP="${DOVE_PIP_DEFAULT}"
 fi
@@ -176,20 +176,20 @@ fi
 export DOVE_PIP_ENV="${DOVE_PIP_DIR}/bin/activate"
 
 # Thunderbird Autoconfiguration Database (ISPDB)
-DOVE_AUTOCONFIG_DEFAULT="${DOVE_EXTERNAL}/autoconfig"
+readonly DOVE_AUTOCONFIG_DEFAULT="${DOVE_EXTERNAL}/autoconfig"
 if [[ -z "${DOVE_AUTOCONFIG+x}" ]]; then
     export DOVE_AUTOCONFIG="${DOVE_AUTOCONFIG_DEFAULT}"
 fi
 
 # If curl flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
-DOVE_CURL_FLAGS_OVERRIDE_DEFAULT=0
+readonly DOVE_CURL_FLAGS_OVERRIDE_DEFAULT=0
 if [[ -z "${DOVE_CURL_FLAGS_OVERRIDE+x}" ]]; then
     export DOVE_CURL_FLAGS_OVERRIDE="${DOVE_CURL_FLAGS_OVERRIDE_DEFAULT}"
 fi
 
 # curl flags
-DOVE_CURL_FLAGS_DEFAULT='-q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose'
+readonly DOVE_CURL_FLAGS_DEFAULT='-q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose'
 if [[ -z "${DOVE_CURL_FLAGS+x}" ]]; then
     export DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT}"
 elif [[ "${DOVE_CURL_FLAGS_OVERRIDE}" == 1 ]]; then
@@ -199,7 +199,7 @@ else
 fi
 
 # Whether we're ONLY building Dove for Linux
-DOVE_LINUX_ONLY_DEFAULT=0
+readonly DOVE_LINUX_ONLY_DEFAULT=0
 if [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
     export DOVE_LINUX_ONLY="${DOVE_LINUX_ONLY_DEFAULT}"
 fi
@@ -212,7 +212,7 @@ if [ "${DOVE_LINUX_ONLY}" == 1 ]; then
 fi
 
 # Whether we're ONLY building Dove for Linux (Flatpak)
-DOVE_LINUX_FLATPAK_ONLY_DEFAULT=0
+readonly DOVE_LINUX_FLATPAK_ONLY_DEFAULT=0
 if [[ -z "${DOVE_LINUX_FLATPAK_ONLY+x}" ]]; then
     export DOVE_LINUX_FLATPAK_ONLY="${DOVE_LINUX_FLATPAK_ONLY_DEFAULT}"
 fi
@@ -225,7 +225,7 @@ if [ "${DOVE_LINUX_FLATPAK_ONLY}" == 1 ]; then
 fi
 
 # Whether we're ONLY building Dove for OS X
-DOVE_OSX_ONLY_DEFAULT=0
+readonly DOVE_OSX_ONLY_DEFAULT=0
 if [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
     export DOVE_OSX_ONLY="${DOVE_OSX_ONLY_DEFAULT}"
 fi
@@ -238,7 +238,7 @@ if [ "${DOVE_OSX_ONLY}" == 1 ]; then
 fi
 
 # Whether we're ONLY building Dove for OS X (Intel)
-DOVE_OSX_INTEL_ONLY_DEFAULT=0
+readonly DOVE_OSX_INTEL_ONLY_DEFAULT=0
 if [[ -z "${DOVE_OSX_INTEL_ONLY+x}" ]]; then
     export DOVE_OSX_INTEL_ONLY="${DOVE_OSX_INTEL_ONLY_DEFAULT}"
 fi
@@ -251,7 +251,7 @@ if [ "${DOVE_OSX_INTEL_ONLY}" == 1 ]; then
 fi
 
 # Whether we're ONLY building Dove for Windows
-DOVE_WINDOWS_ONLY_DEFAULT=0
+readonly DOVE_WINDOWS_ONLY_DEFAULT=0
 if [[ -z "${DOVE_WINDOWS_ONLY+x}" ]]; then
     export DOVE_WINDOWS_ONLY="${DOVE_WINDOWS_ONLY_DEFAULT}"
 fi
@@ -264,35 +264,35 @@ if [ "${DOVE_WINDOWS_ONLY}" == 1 ]; then
 fi
 
 # Whether we're building Dove for Linux (Default)
-DOVE_LINUX_DEFAULT=1
+readonly DOVE_LINUX_DEFAULT=1
 if [[ -z "${DOVE_LINUX+x}" ]]; then
     export DOVE_LINUX="${DOVE_LINUX_DEFAULT}"
 fi
 
 # Whether we're building Dove for Linux (Flatpak) (Default)
-DOVE_LINUX_FLATPAK_DEFAULT=1
+readonly DOVE_LINUX_FLATPAK_DEFAULT=1
 if [[ -z "${DOVE_LINUX_FLATPAK+x}" ]]; then
     export DOVE_LINUX_FLATPAK="${DOVE_LINUX_FLATPAK_DEFAULT}"
 fi
 
 # Whether we're building Dove for OS X (Default)
-DOVE_OSX_DEFAULT=1
+readonly DOVE_OSX_DEFAULT=1
 if [[ -z "${DOVE_OSX+x}" ]]; then
     export DOVE_OSX="${DOVE_OSX_DEFAULT}"
 fi
 
 # Whether we're building Dove for OS X (Intel) (Default)
-DOVE_OSX_INTEL_DEFAULT=1
+readonly DOVE_OSX_INTEL_DEFAULT=1
 if [[ -z "${DOVE_OSX_INTEL+x}" ]]; then
     export DOVE_OSX_INTEL="${DOVE_OSX_INTEL_DEFAULT}"
 fi
 
 # Whether we're building Dove for Windows (Default)
-DOVE_WINDOWS_DEFAULT=1
+readonly DOVE_WINDOWS_DEFAULT=1
 if [[ -z "${DOVE_WINDOWS+x}" ]]; then
     export DOVE_WINDOWS="${DOVE_WINDOWS_DEFAULT}"
 fi
 
 # Set our external environment variables
-DOVE_ENV_EXTERNAL="${DOVE_SCRIPTS}/env_external.sh"
+readonly DOVE_ENV_EXTERNAL="${DOVE_SCRIPTS}/env_external.sh"
 source "${DOVE_ENV_EXTERNAL}"
