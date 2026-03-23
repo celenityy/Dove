@@ -53,3 +53,16 @@ export PHOENIX_LINUX_FLATPAK="${DOVE_LINUX_FLATPAK}"
 export PHOENIX_OSX="${DOVE_OSX}"
 export PHOENIX_OSX_INTEL="${DOVE_OSX_INTEL}"
 export PHOENIX_WINDOWS="${DOVE_WINDOWS}"
+
+# Python
+## https://docs.python.org/3/using/cmdline.html#environment-variables
+
+## Disable JIT
+readonly export PYTHON_JIT=0
+readonly export PYTHON_PERF_JIT_SUPPORT=0
+
+## Disable remote debugging
+readonly export PYTHON_DISABLE_REMOTE_DEBUG=1
+
+## Enable performance optimizations
+readonly export PYTHONOPTIMIZE=1
