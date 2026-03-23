@@ -16,109 +16,141 @@ fi
 # Dove
 
 # Scripts directory
-readonly export DOVE_SCRIPTS="${DOVE_ROOT}/scripts"
+readonly DOVE_SCRIPTS="${DOVE_ROOT}/scripts"
+export DOVE_SCRIPTS
 
 # Set our platform, OS, and architecture
-readonly export DOVE_ENV_HELPERS="${DOVE_SCRIPTS}/env_helpers.sh"
+readonly DOVE_ENV_HELPERS="${DOVE_SCRIPTS}/env_helpers.sh"
+export DOVE_ENV_HELPERS
 source "${DOVE_ENV_HELPERS}"
 
 # Whether we're being invoked from a Nix flake
 readonly DOVE_NIX_DEFAULT=0
 if [[ -z "${DOVE_NIX+x}" ]]; then
-    export DOVE_NIX="${DOVE_NIX_DEFAULT}"
+    readonly DOVE_NIX="${DOVE_NIX_DEFAULT}"
+else
+    readonly DOVE_NIX="${DOVE_NIX}"
 fi
-
-# Nix flakes should only build their respective platform
-if [ "${DOVE_NIX}" == 1 ]; then
-    if [ "${DOVE_OS}" == 'osx' ]; then
-        export DOVE_OSX_ONLY=1
-    else
-        export DOVE_LINUX_ONLY=1
-    fi
-fi
+export DOVE_NIX
 
 # Version info
-readonly export DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
+readonly DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
+export DOVE_VERSIONS
 
 # Archives directory
-readonly export DOVE_ARCHIVES="${DOVE_ROOT}/archives"
+readonly DOVE_ARCHIVES="${DOVE_ROOT}/archives"
+export DOVE_ARCHIVES
 
 # Build directory
 readonly DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"
 if [[ -z "${DOVE_BUILD+x}" ]]; then
     if [ "${DOVE_NIX}" == 1 ]; then
         # Nix needs to use /tmp here, see https://codeberg.org/celenity/Dove/issues/59
-        export DOVE_BUILD='/tmp/dove/build'
+        readonly DOVE_BUILD='/tmp/dove/build'
     else
-        export DOVE_BUILD="${DOVE_BUILD_DEFAULT}"
+        readonly DOVE_BUILD="${DOVE_BUILD_DEFAULT}"
     fi
+else
+    readonly DOVE_BUILD="${DOVE_BUILD}"
 fi
+export DOVE_BUILD
 
 # Temporary build directory
-export DOVE_TEMP="${DOVE_BUILD}/tmp"
+readonly DOVE_TEMP="${DOVE_BUILD}/tmp"
+export DOVE_TEMP
 
 # Build resources directory
-readonly export DOVE_BUILD_RESOURCES="${DOVE_ROOT}/build-resources"
+readonly DOVE_BUILD_RESOURCES="${DOVE_ROOT}/build-resources"
+export DOVE_BUILD_RESOURCES
 
 # External sources directory
-readonly export DOVE_EXTERNAL="${DOVE_ROOT}/external"
+readonly DOVE_EXTERNAL="${DOVE_ROOT}/external"
+export DOVE_EXTERNAL
 
 # External downloads/resources directory
-readonly export DOVE_DOWNLOADS="${DOVE_EXTERNAL}/downloads"
+readonly DOVE_DOWNLOADS="${DOVE_EXTERNAL}/downloads"
+export DOVE_DOWNLOADS
 
 # Dove outputs directory
 readonly DOVE_OUTPUTS_DEFAULT="${DOVE_ROOT}"
 if [[ -z "${DOVE_OUTPUTS+x}" ]]; then
-    export DOVE_OUTPUTS="${DOVE_OUTPUTS_DEFAULT}"
+    readonly DOVE_OUTPUTS="${DOVE_OUTPUTS_DEFAULT}"
+else
+    readonly DOVE_OUTPUTS="${DOVE_OUTPUTS}"
 fi
+export DOVE_OUTPUTS
 
 # Linux outputs directory
-DOVE_LINUX_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/linux"
+readonly DOVE_LINUX_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/linux"
 if [[ -z "${DOVE_LINUX_OUTPUTS+x}" ]]; then
-    export DOVE_LINUX_OUTPUTS="${DOVE_LINUX_OUTPUTS_DEFAULT}"
+    readonly DOVE_LINUX_OUTPUTS="${DOVE_LINUX_OUTPUTS_DEFAULT}"
+else
+    readonly DOVE_LINUX_OUTPUTS="${DOVE_LINUX_OUTPUTS}"
 fi
+export DOVE_LINUX_OUTPUTS
 
 ## Linux (Flatpak) outputs directory
-DOVE_LINUX_FLATPAK_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/linux-flatpak"
+readonly DOVE_LINUX_FLATPAK_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/linux-flatpak"
 if [[ -z "${DOVE_LINUX_FLATPAK_OUTPUTS+x}" ]]; then
-    export DOVE_LINUX_FLATPAK_OUTPUTS="${DOVE_LINUX_FLATPAK_OUTPUTS_DEFAULT}"
+    readonly DOVE_LINUX_FLATPAK_OUTPUTS="${DOVE_LINUX_FLATPAK_OUTPUTS_DEFAULT}"
+else
+    readonly DOVE_LINUX_FLATPAK_OUTPUTS="${DOVE_LINUX_FLATPAK_OUTPUTS}"
 fi
+export DOVE_LINUX_FLATPAK_OUTPUTS
 
 # OS X outputs directory
-DOVE_OSX_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/osx"
+readonly DOVE_OSX_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/osx"
 if [[ -z "${DOVE_OSX_OUTPUTS+x}" ]]; then
-    export DOVE_OSX_OUTPUTS="${DOVE_OSX_OUTPUTS_DEFAULT}"
+    readonly DOVE_OSX_OUTPUTS="${DOVE_OSX_OUTPUTS_DEFAULT}"
+else
+    readonly DOVE_OSX_OUTPUTS="${DOVE_OSX_OUTPUTS}"
 fi
+export DOVE_OSX_OUTPUTS
 
 ## OS X (Intel) outputs directory
-DOVE_OSX_INTEL_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/osx-intel"
+readonly DOVE_OSX_INTEL_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/osx-intel"
 if [[ -z "${DOVE_OSX_INTEL_OUTPUTS+x}" ]]; then
-    export DOVE_OSX_INTEL_OUTPUTS="${DOVE_OSX_INTEL_OUTPUTS_DEFAULT}"
+    readonly DOVE_OSX_INTEL_OUTPUTS="${DOVE_OSX_INTEL_OUTPUTS_DEFAULT}"
+else
+    readonly DOVE_OSX_INTEL_OUTPUTS="${DOVE_OSX_INTEL_OUTPUTS}"
 fi
+export DOVE_OSX_INTEL_OUTPUTS
 
 # Windows outputs directory
-DOVE_WINDOWS_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/windows"
+readonly DOVE_WINDOWS_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/windows"
 if [[ -z "${DOVE_WINDOWS_OUTPUTS+x}" ]]; then
-    export DOVE_WINDOWS_OUTPUTS="${DOVE_WINDOWS_OUTPUTS_DEFAULT}"
+    readonly DOVE_WINDOWS_OUTPUTS="${DOVE_WINDOWS_OUTPUTS_DEFAULT}"
+else
+    readonly DOVE_WINDOWS_OUTPUTS="${DOVE_WINDOWS_OUTPUTS}"
 fi
+export DOVE_WINDOWS_OUTPUTS
 
 # Should we create a log file for build.sh? (Default)
 readonly DOVE_LOG_BUILD_DEFAULT=1
 if [[ -z "${DOVE_LOG_BUILD+x}" ]]; then
-    export DOVE_LOG_BUILD="${DOVE_LOG_BUILD_DEFAULT}"
+    readonly DOVE_LOG_BUILD="${DOVE_LOG_BUILD_DEFAULT}"
+else
+    readonly DOVE_LOG_BUILD="${DOVE_LOG_BUILD}"
 fi
+export DOVE_LOG_BUILD
 
 # Should we create a log file for get_sources.sh? (Default)
 readonly DOVE_LOG_SOURCES_DEFAULT=1
 if [[ -z "${DOVE_LOG_SOURCES+x}" ]]; then
-    export DOVE_LOG_SOURCES="${DOVE_LOG_SOURCES_DEFAULT}"
+    readonly DOVE_LOG_SOURCES="${DOVE_LOG_SOURCES_DEFAULT}"
+else
+    readonly DOVE_LOG_SOURCES="${DOVE_LOG_SOURCES}"
 fi
+export DOVE_LOG_SOURCES
 
 # Directory where we should store log files (if logging is desired)
-DOVE_LOG_DIR_DEFAULT="${DOVE_BUILD}/logs"
+readonly DOVE_LOG_DIR_DEFAULT="${DOVE_BUILD}/logs"
 if [[ -z "${DOVE_LOG_DIR+x}" ]]; then
-    export DOVE_LOG_DIR="${DOVE_LOG_DIR_DEFAULT}"
+    readonly DOVE_LOG_DIR="${DOVE_LOG_DIR_DEFAULT}"
+else
+    readonly DOVE_LOG_DIR="${DOVE_LOG_DIR}"
 fi
+export DOVE_LOG_DIR
 
 # GNU awk
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -127,8 +159,11 @@ else
     readonly DOVE_AWK_DEFAULT='awk'
 fi
 if [[ -z "${DOVE_AWK+x}" ]]; then
-    export DOVE_AWK="${DOVE_AWK_DEFAULT}"
+    readonly DOVE_AWK="${DOVE_AWK_DEFAULT}"
+else
+    readonly DOVE_AWK="${DOVE_AWK}"
 fi
+export DOVE_AWK
 
 # GNU sed
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -137,8 +172,11 @@ else
     readonly DOVE_SED_DEFAULT='sed'
 fi
 if [[ -z "${DOVE_SED+x}" ]]; then
-    export DOVE_SED="${DOVE_SED_DEFAULT}"
+    readonly DOVE_SED="${DOVE_SED_DEFAULT}"
+else
+    readonly DOVE_SED="${DOVE_SED}"
 fi
+export DOVE_SED
 
 # GNU tar
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -147,26 +185,38 @@ else
     readonly DOVE_TAR_DEFAULT='tar'
 fi
 if [[ -z "${DOVE_TAR+x}" ]]; then
-    export DOVE_TAR="${DOVE_TAR_DEFAULT}"
+    readonly DOVE_TAR="${DOVE_TAR_DEFAULT}"
+else
+    readonly DOVE_TAR="${DOVE_TAR}"
 fi
+export DOVE_TAR
 
 # lxml
 readonly DOVE_LXML_DEFAULT="${DOVE_EXTERNAL}/lxml"
 if [[ -z "${DOVE_LXML+x}" ]]; then
-    export DOVE_LXML="${DOVE_LXML_DEFAULT}"
+    readonly DOVE_LXML="${DOVE_LXML_DEFAULT}"
+else
+    readonly DOVE_LXML="${DOVE_LXML}"
 fi
+export DOVE_LXML
 
 # Phoenix
 readonly DOVE_PHOENIX_DEFAULT="${DOVE_EXTERNAL}/phoenix"
 if [[ -z "${DOVE_PHOENIX+x}" ]]; then
-    export DOVE_PHOENIX="${DOVE_PHOENIX_DEFAULT}"
+    readonly DOVE_PHOENIX="${DOVE_PHOENIX_DEFAULT}"
+else
+    readonly DOVE_PHOENIX="${DOVE_PHOENIX}"
 fi
+export DOVE_PHOENIX
 
 # pip
 readonly DOVE_PIP_DEFAULT="${DOVE_EXTERNAL}/pip"
 if [[ -z "${DOVE_PIP+x}" ]]; then
-    export DOVE_PIP="${DOVE_PIP_DEFAULT}"
+    readonly DOVE_PIP="${DOVE_PIP_DEFAULT}"
+else
+    readonly DOVE_PIP="${DOVE_PIP}"
 fi
+export DOVE_PIP
 
 # Python
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -175,135 +225,190 @@ else
     readonly DOVE_PYTHON_DEFAULT='/usr/bin/python'
 fi
 if [[ -z "${DOVE_PYTHON+x}" ]]; then
-    export DOVE_PYTHON="${DOVE_PYTHON_DEFAULT}"
+    readonly DOVE_PYTHON="${DOVE_PYTHON_DEFAULT}"
+else
+    readonly DOVE_PYTHON="${DOVE_PYTHON}"
 fi
+export DOVE_PYTHON
 
 # Python (pip) environment
-DOVE_PIP_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
+readonly DOVE_PIP_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
 if [[ -z "${DOVE_PIP_DIR+x}" ]]; then
-    export DOVE_PIP_DIR="${DOVE_PIP_DIR_DEFAULT}"
+    readonly DOVE_PIP_DIR="${DOVE_PIP_DIR_DEFAULT}"
+else
+    readonly DOVE_PIP_DIR="${DOVE_PIP_DIR}"
 fi
-export DOVE_PIP_ENV="${DOVE_PIP_DIR}/bin/activate"
-export DOVE_PIP_EXEC="${DOVE_PIP_DIR}/bin/pip"
+readonly DOVE_PIP_ENV="${DOVE_PIP_DIR}/bin/activate"
+readonly DOVE_PIP_EXEC="${DOVE_PIP_DIR}/bin/pip"
+export DOVE_PIP_DIR
+export DOVE_PIP_ENV
+export DOVE_PIP_EXEC
 
 # Thunderbird Autoconfiguration Database (ISPDB)
 readonly DOVE_AUTOCONFIG_DEFAULT="${DOVE_EXTERNAL}/autoconfig"
 if [[ -z "${DOVE_AUTOCONFIG+x}" ]]; then
-    export DOVE_AUTOCONFIG="${DOVE_AUTOCONFIG_DEFAULT}"
+    readonly DOVE_AUTOCONFIG="${DOVE_AUTOCONFIG_DEFAULT}"
+else
+    readonly DOVE_AUTOCONFIG="${DOVE_AUTOCONFIG}"
 fi
+export DOVE_AUTOCONFIG
 
 # If curl flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
 readonly DOVE_CURL_FLAGS_OVERRIDE_DEFAULT=0
 if [[ -z "${DOVE_CURL_FLAGS_OVERRIDE+x}" ]]; then
-    export DOVE_CURL_FLAGS_OVERRIDE="${DOVE_CURL_FLAGS_OVERRIDE_DEFAULT}"
+    readonly DOVE_CURL_FLAGS_OVERRIDE="${DOVE_CURL_FLAGS_OVERRIDE_DEFAULT}"
+else
+    readonly DOVE_CURL_FLAGS_OVERRIDE="${DOVE_CURL_FLAGS_OVERRIDE}"
 fi
+export DOVE_CURL_FLAGS_OVERRIDE
 
 # curl flags
 readonly DOVE_CURL_FLAGS_DEFAULT='-q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose'
 if [[ -z "${DOVE_CURL_FLAGS+x}" ]]; then
-    export DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT}"
+    readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT}"
 elif [[ "${DOVE_CURL_FLAGS_OVERRIDE}" == 1 ]]; then
-    export DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS}"
+    readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS}"
 else
-    export DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT} ${DOVE_CURL_FLAGS}"
+    readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT} ${DOVE_CURL_FLAGS}"
 fi
+export DOVE_CURL_FLAGS
 
 # Whether we're ONLY building Dove for Linux
 readonly DOVE_LINUX_ONLY_DEFAULT=0
-if [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
-    export DOVE_LINUX_ONLY="${DOVE_LINUX_ONLY_DEFAULT}"
+if [ "${DOVE_NIX}" == 1 ] && [ "${DOVE_OS}" != 'osx' ]; then
+    # Nix flakes should only build their respective platform
+    readonly DOVE_LINUX_ONLY=1
+elif [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
+    readonly DOVE_LINUX_ONLY="${DOVE_LINUX_ONLY_DEFAULT}"
+else
+    readonly DOVE_LINUX_ONLY="${DOVE_LINUX_ONLY}"
 fi
+export DOVE_LINUX_ONLY
 if [ "${DOVE_LINUX_ONLY}" == 1 ]; then
-    export DOVE_LINUX=1
-    export DOVE_LINUX_FLATPAK=0
-    export DOVE_OSX=0
-    export DOVE_OSX_INTEL=0
-    export DOVE_WINDOWS=0
+    DOVE_LINUX=1
+    DOVE_LINUX_FLATPAK=0
+    DOVE_OSX=0
+    DOVE_OSX_INTEL=0
+    DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for Linux (Flatpak)
 readonly DOVE_LINUX_FLATPAK_ONLY_DEFAULT=0
 if [[ -z "${DOVE_LINUX_FLATPAK_ONLY+x}" ]]; then
-    export DOVE_LINUX_FLATPAK_ONLY="${DOVE_LINUX_FLATPAK_ONLY_DEFAULT}"
+    readonly DOVE_LINUX_FLATPAK_ONLY="${DOVE_LINUX_FLATPAK_ONLY_DEFAULT}"
+else
+    readonly DOVE_LINUX_FLATPAK_ONLY="${DOVE_LINUX_FLATPAK_ONLY}"
 fi
+export DOVE_LINUX_FLATPAK_ONLY
 if [ "${DOVE_LINUX_FLATPAK_ONLY}" == 1 ]; then
-    export DOVE_LINUX_FLATPAK=1
-    export DOVE_LINUX=0
-    export DOVE_OSX=0
-    export DOVE_OSX_INTEL=0
-    export DOVE_WINDOWS=0
+    DOVE_LINUX_FLATPAK=1
+    DOVE_LINUX=0
+    DOVE_OSX=0
+    DOVE_OSX_INTEL=0
+    DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for OS X
 readonly DOVE_OSX_ONLY_DEFAULT=0
-if [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
-    export DOVE_OSX_ONLY="${DOVE_OSX_ONLY_DEFAULT}"
+if [ "${DOVE_NIX}" == 1 ] && [ "${DOVE_OS}" == 'osx' ]; then
+    # Nix flakes should only build their respective platform
+    readonly DOVE_OSX_ONLY=1
+elif [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
+    readonly DOVE_OSX_ONLY="${DOVE_OSX_ONLY_DEFAULT}"
+else
+    readonly DOVE_OSX_ONLY="${DOVE_OSX_ONLY}"
 fi
+export DOVE_OSX_ONLY
 if [ "${DOVE_OSX_ONLY}" == 1 ]; then
-    export DOVE_OSX=1
-    export DOVE_LINUX=0
-    export DOVE_LINUX_FLATPAK=0
-    export DOVE_OSX_INTEL=0
-    export DOVE_WINDOWS=0
+    DOVE_OSX=1
+    DOVE_LINUX=0
+    DOVE_LINUX_FLATPAK=0
+    DOVE_OSX_INTEL=0
+    DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for OS X (Intel)
 readonly DOVE_OSX_INTEL_ONLY_DEFAULT=0
 if [[ -z "${DOVE_OSX_INTEL_ONLY+x}" ]]; then
-    export DOVE_OSX_INTEL_ONLY="${DOVE_OSX_INTEL_ONLY_DEFAULT}"
+    readonly DOVE_OSX_INTEL_ONLY="${DOVE_OSX_INTEL_ONLY_DEFAULT}"
+else
+    readonly DOVE_OSX_INTEL_ONLY="${DOVE_OSX_INTEL_ONLY}"
 fi
+export DOVE_OSX_INTEL_ONLY
 if [ "${DOVE_OSX_INTEL_ONLY}" == 1 ]; then
-    export DOVE_OSX_INTEL=1
-    export DOVE_LINUX=0
-    export DOVE_LINUX_FLATPAK=0
-    export DOVE_OSX=0
-    export DOVE_WINDOWS=0
+    DOVE_OSX_INTEL=1
+    DOVE_LINUX=0
+    DOVE_LINUX_FLATPAK=0
+    DOVE_OSX=0
+    DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for Windows
 readonly DOVE_WINDOWS_ONLY_DEFAULT=0
 if [[ -z "${DOVE_WINDOWS_ONLY+x}" ]]; then
-    export DOVE_WINDOWS_ONLY="${DOVE_WINDOWS_ONLY_DEFAULT}"
+    readonly DOVE_WINDOWS_ONLY="${DOVE_WINDOWS_ONLY_DEFAULT}"
+else
+    readonly DOVE_WINDOWS_ONLY="${DOVE_WINDOWS_ONLY}"
 fi
+export DOVE_WINDOWS_ONLY
 if [ "${DOVE_WINDOWS_ONLY}" == 1 ]; then
-    export DOVE_WINDOWS=1
-    export DOVE_LINUX=0
-    export DOVE_LINUX_FLATPAK=0
-    export DOVE_OSX=0
-    export DOVE_OSX_INTEL=0
+    DOVE_WINDOWS=1
+    DOVE_LINUX=0
+    DOVE_LINUX_FLATPAK=0
+    DOVE_OSX=0
+    DOVE_OSX_INTEL=0
 fi
 
 # Whether we're building Dove for Linux (Default)
 readonly DOVE_LINUX_DEFAULT=1
 if [[ -z "${DOVE_LINUX+x}" ]]; then
-    export DOVE_LINUX="${DOVE_LINUX_DEFAULT}"
+    readonly DOVE_LINUX="${DOVE_LINUX_DEFAULT}"
+else
+    readonly DOVE_LINUX="${DOVE_LINUX}"
 fi
+export DOVE_LINUX
 
 # Whether we're building Dove for Linux (Flatpak) (Default)
 readonly DOVE_LINUX_FLATPAK_DEFAULT=1
 if [[ -z "${DOVE_LINUX_FLATPAK+x}" ]]; then
-    export DOVE_LINUX_FLATPAK="${DOVE_LINUX_FLATPAK_DEFAULT}"
+    readonly DOVE_LINUX_FLATPAK="${DOVE_LINUX_FLATPAK_DEFAULT}"
+else
+    readonly DOVE_LINUX_FLATPAK="${DOVE_LINUX_FLATPAK}"
 fi
+export DOVE_LINUX_FLATPAK
 
 # Whether we're building Dove for OS X (Default)
 readonly DOVE_OSX_DEFAULT=1
 if [[ -z "${DOVE_OSX+x}" ]]; then
-    export DOVE_OSX="${DOVE_OSX_DEFAULT}"
+    readonly DOVE_OSX="${DOVE_OSX_DEFAULT}"
+else
+    readonly DOVE_OSX="${DOVE_OSX}"
 fi
+export DOVE_OSX
 
 # Whether we're building Dove for OS X (Intel) (Default)
 readonly DOVE_OSX_INTEL_DEFAULT=1
 if [[ -z "${DOVE_OSX_INTEL+x}" ]]; then
-    export DOVE_OSX_INTEL="${DOVE_OSX_INTEL_DEFAULT}"
+    readonly DOVE_OSX_INTEL="${DOVE_OSX_INTEL_DEFAULT}"
+else
+    readonly DOVE_OSX_INTEL="${DOVE_OSX_INTEL}"
 fi
+export DOVE_OSX_INTEL
 
 # Whether we're building Dove for Windows (Default)
 readonly DOVE_WINDOWS_DEFAULT=1
 if [[ -z "${DOVE_WINDOWS+x}" ]]; then
-    export DOVE_WINDOWS="${DOVE_WINDOWS_DEFAULT}"
+    readonly DOVE_WINDOWS="${DOVE_WINDOWS_DEFAULT}"
+else
+    readonly DOVE_WINDOWS="${DOVE_WINDOWS}"
 fi
+export DOVE_WINDOWS
 
 # Set our external environment variables
 readonly DOVE_ENV_EXTERNAL="${DOVE_SCRIPTS}/env_external.sh"
 source "${DOVE_ENV_EXTERNAL}"
+
+# We've now set our environment variables...
+readonly DOVE_SET_ENVS=1
+export DOVE_SET_ENVS

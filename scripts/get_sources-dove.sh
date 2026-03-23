@@ -2,17 +2,16 @@
 
 set -euo pipefail
 
-# Set-up our environment
-bash -x $(dirname $0)/env.sh
-source $(dirname $0)/env.sh
-
 if [[ -z "${DOVE_FROM_SOURCES+x}" ]]; then
     echo_red_text "ERROR: Do not call get_sources-dove.sh directly. Instead, use get_sources.sh." >&1
     exit 1
 fi
 
-target="$1"
-mode="$2"
+# Set-up our environment
+source $(dirname $0)/env.sh
+
+readonly target="$1"
+readonly mode="$2"
 
 # Set-up target parameters
 DOVE_GET_SOURCE_AUTOCONFIG=0
@@ -22,22 +21,22 @@ DOVE_GET_SOURCE_PIP=0
 
 if [ "${target}" == 'autoconfig' ]; then
     # Get Thunderbird's Autoconfiguration Database (ISPDB)
-    DOVE_GET_SOURCE_AUTOCONFIG=1
+    readonly DOVE_GET_SOURCE_AUTOCONFIG=1
 elif [ "${target}" == 'lxml' ]; then
     # Get lxml
-    DOVE_GET_SOURCE_LXML=1
+    readonly DOVE_GET_SOURCE_LXML=1
 elif [ "${target}" == 'phoenix' ]; then
     # Get Phoenix
-    DOVE_GET_SOURCE_PHOENIX=1
+    readonly DOVE_GET_SOURCE_PHOENIX=1
 elif [ "${target}" == 'pip' ]; then
     #  Get + set-up pip
-    DOVE_GET_SOURCE_PIP=1
+    readonly DOVE_GET_SOURCE_PIP=1
 elif [ "${target}" == 'all' ]; then
     # If no argument is specified (or argument is set to "all"), just get everything
-    DOVE_GET_SOURCE_AUTOCONFIG=1
-    DOVE_GET_SOURCE_LXML=1
-    DOVE_GET_SOURCE_PHOENIX=1
-    DOVE_GET_SOURCE_PIP=1
+    readonly DOVE_GET_SOURCE_AUTOCONFIG=1
+    readonly DOVE_GET_SOURCE_LXML=1
+    readonly DOVE_GET_SOURCE_PHOENIX=1
+    readonly DOVE_GET_SOURCE_PIP=1
 else
     echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
     echo 'All: all (Default)'
@@ -52,7 +51,7 @@ fi
 ## we're also updating their checksums
 DOVE_GET_SOURCE_CHECKSUM_UPDATE=0
 if [ "${mode}" == 'checksum-update' ]; then
-    DOVE_GET_SOURCE_CHECKSUM_UPDATE=1
+    readonly DOVE_GET_SOURCE_CHECKSUM_UPDATE=1
 elif [ "${mode}" != 'download' ]; then
     echo_red_text "ERROR: Invalid mode: ${mode}\n You must enter one of the following:"
     echo 'Download: download (Default)'
@@ -65,9 +64,9 @@ source "${DOVE_VERSIONS}"
 
 # Function to automate updating SHA512sums of dependencies
 function update_sha512sum() {
-    old_sha512sum="$1"
-    new_sha512sum="$2"
-    file="$3"
+    local readonly old_sha512sum="$1"
+    local readonly new_sha512sum="$2"
+    local readonly file="$3"
 
     if [ "${old_sha512sum}" == "${AUTOCONFIG_SHA512SUM}" ]; then
         echo_red_text 'Updating SHA512sum for Thunderbird Autoconfiguration Database...'
@@ -91,10 +90,10 @@ function update_sha512sum() {
 }
 
 function validate_sha512sum() {
-    expected_sha512sum="$1"
-    file="$2"
+    local readonly expected_sha512sum="$1"
+    local readonly file="$2"
 
-    local_sha512sum=$(sha512sum "${file}" | "${DOVE_AWK}" '{print $1}')
+    local readonly local_sha512sum=$(sha512sum "${file}" | "${DOVE_AWK}" '{print $1}')
 
     if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]; then
         update_sha512sum "${expected_sha512sum}" "${local_sha512sum}" "${file}"
@@ -114,9 +113,9 @@ function validate_sha512sum() {
 }
 
 function clone_repo() {
-    url="$1"
-    path="$2"
-    revision="$3"
+    local readonly url="$1"
+    local readonly path="$2"
+    local readonly revision="$3"
 
     if [[ "${url}" == "" ]]; then
         echo_red_text "ERROR: URL missing for clone"
@@ -155,8 +154,8 @@ function clone_repo() {
 }
 
 function download() {
-    local url="$1"
-    local filepath="$2"
+    local readonly url="$1"
+    local readonly filepath="$2"
 
     if [[ "${url}" == "" ]]; then
         echo_red_text "ERROR: URL is required (file: '${filepath}')"
@@ -183,9 +182,9 @@ function download() {
 
 # Extract archives
 function extract() {
-    local archive_path="$1"
-    local target_path="$2"
-    local temp_repo_name="$3"
+    local readonly archive_path="$1"
+    local readonly target_path="$2"
+    local readonly temp_repo_name="$3"
 
     if ! [[ -f "${archive_path}" ]]; then
         echo_red_text "ERROR: Archive '${archive_path}' does not exist!"
@@ -220,16 +219,16 @@ function extract() {
             ;;
     esac
 
-    local top_input_dir=$(ls "${DOVE_EXTERNAL}/temp/${temp_repo_name}")
+    local readonly top_input_dir=$(ls "${DOVE_EXTERNAL}/temp/${temp_repo_name}")
     cp -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}/${top_input_dir}"/ "${target_path}"
     rm -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
 }
 
 function download_and_extract() {
-    local repo_name="$1"
-    local url="$2"
-    local path="$3"
-    local expected_sha512sum="$4"
+    local readonly repo_name="$1"
+    local readonly url="$2"
+    local readonly path="$3"
+    local readonly expected_sha512sum="$4"
 
     if [[ -d "${path}" ]]; then
         echo_red_text "'${path}' already exists"
@@ -243,18 +242,18 @@ function download_and_extract() {
         fi
     fi
 
-    local extension
+    local readonly extension
     if [[ "${url}" =~ \.tar\.xz$ ]]; then
-        extension=".tar.xz"
+        local readonly extension=".tar.xz"
     elif [[ "${url}" =~ \.tar\.gz$ ]]; then
-        extension=".tar.gz"
+        local readonly extension=".tar.gz"
     elif [[ "${url}" =~ \.tar\.zst$ ]]; then
-        extension=".tar.zst"
+        local readonly extension=".tar.zst"
     else
-        extension=".zip"
+        local readonly extension=".zip"
     fi
 
-    local repo_archive="${DOVE_DOWNLOADS}/${repo_name}${extension}"
+    local readonly repo_archive="${DOVE_DOWNLOADS}/${repo_name}${extension}"
 
     download "${url}" "${repo_archive}"
 

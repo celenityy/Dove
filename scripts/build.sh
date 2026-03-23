@@ -3,13 +3,17 @@
 set -euo pipefail
 
 # Set-up our environment
-bash -x $(dirname $0)/env.sh
+if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
+    bash -x $(dirname $0)/env.sh || error_fn
+    echo
+fi
 source $(dirname $0)/env.sh
 
 # Build Dove
-export DOVE_FROM_BUILD=1
+readonly DOVE_FROM_BUILD=1
+export DOVE_FROM_BUILD
 if [ "${DOVE_LOG_BUILD}" == 1 ]; then
-    BUILD_LOG_FILE="${DOVE_LOG_DIR}/build.log"
+    readonly BUILD_LOG_FILE="${DOVE_LOG_DIR}/build.log"
 
     # If the log file already exists, remove it
     if [ -f "${BUILD_LOG_FILE}" ]; then

@@ -2,12 +2,15 @@
 
 set -euo pipefail
 
+if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
+    echo_red_text 'ERROR: Do not call fly.sh directly. Instead, use build.sh.' >&1
+    exit 1
+fi
+
 # Welcome to the Dove Unified build script!
 # This script should be ran AFTER building Phoenix, from the ROOT of the Dove repo
 
 # Set-up our environment
-bash -x $(dirname $0)/env.sh || error_fn
-echo
 source $(dirname $0)/env.sh || error_fn
 echo
 

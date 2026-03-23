@@ -3,26 +3,30 @@
 set -euo pipefail
 
 # Set-up our environment
-bash -x $(dirname $0)/env.sh
+if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
+    bash -x $(dirname $0)/env.sh || error_fn
+    echo
+fi
 source $(dirname $0)/env.sh
 
 # Set up target parameters
 if [[ -z "${1+x}" ]]; then
-    target='all'
+    readonly target='all'
 else
-    target=$(echo "${1}" | "${DOVE_AWK}" '{print tolower($0)}')
+    readonly target=$(echo "${1}" | "${DOVE_AWK}" '{print tolower($0)}')
 fi
 
 if [[ -z "${2+x}" ]]; then
-    mode='download'
+    readonly mode='download'
 else
-    mode=$(echo "${2}" | "${DOVE_AWK}" '{print tolower($0)}')
+    readonly mode=$(echo "${2}" | "${DOVE_AWK}" '{print tolower($0)}')
 fi
 
 # Get sources
-export DOVE_FROM_SOURCES=1
+readonly DOVE_FROM_SOURCES=1
+export DOVE_FROM_SOURCES
 if [ "${DOVE_LOG_SOURCES}" == 1 ]; then
-    SOURCES_LOG_FILE="${DOVE_LOG_DIR}/get_sources.log"
+    readonly SOURCES_LOG_FILE="${DOVE_LOG_DIR}/get_sources.log"
 
     # If the log file already exists, remove it
     if [ -f "${SOURCES_LOG_FILE}" ]; then
