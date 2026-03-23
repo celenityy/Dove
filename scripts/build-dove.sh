@@ -77,7 +77,9 @@ cp "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_BUILD}/autoconfig/LICENSE.txt" || error_
 echo
 mkdir -p "${DOVE_BUILD}/autoconfig/v1.1" || error_fn
 echo
-python "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml || error_fn
+# Using DOVE_PYTHON here results in a "ModuleNotFoundError: No module named 'lxml'" error,
+## so we can't use it directly here
+"${DOVE_PIP_DIR}/bin/python" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml || error_fn
 echo
 popd || error_fn
 echo

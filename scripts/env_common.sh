@@ -168,12 +168,23 @@ if [[ -z "${DOVE_PIP+x}" ]]; then
     export DOVE_PIP="${DOVE_PIP_DEFAULT}"
 fi
 
+# Python
+if [[ "${DOVE_OS}" == 'osx' ]]; then
+    readonly DOVE_PYTHON_DEFAULT='/opt/homebrew/bin/python'
+else
+    readonly DOVE_PYTHON_DEFAULT='/usr/bin/python'
+fi
+if [[ -z "${DOVE_PYTHON+x}" ]]; then
+    export DOVE_PYTHON="${DOVE_PYTHON_DEFAULT}"
+fi
+
 # Python (pip) environment
 DOVE_PIP_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
 if [[ -z "${DOVE_PIP_DIR+x}" ]]; then
     export DOVE_PIP_DIR="${DOVE_PIP_DIR_DEFAULT}"
 fi
 export DOVE_PIP_ENV="${DOVE_PIP_DIR}/bin/activate"
+export DOVE_PIP_EXEC="${DOVE_PIP_DIR}/bin/pip"
 
 # Thunderbird Autoconfiguration Database (ISPDB)
 readonly DOVE_AUTOCONFIG_DEFAULT="${DOVE_EXTERNAL}/autoconfig"

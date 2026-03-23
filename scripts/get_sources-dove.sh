@@ -298,7 +298,7 @@ function get_lxml() {
 
     source "${DOVE_PIP_ENV}"
     echo_red_text 'Installing lxml...'
-    pip install "${DOVE_LXML}"
+    "${DOVE_PIP_EXEC}" install "${DOVE_LXML}"
     echo_green_text 'SUCCESS: Set-up lxml'
 }
 
@@ -321,7 +321,7 @@ function get_pip() {
     fi
 
     echo_red_text 'Creating pip environment...'
-    python3.9 -m venv "${DOVE_PIP_DIR}"
+    "${DOVE_PYTHON}" -m venv "${DOVE_PIP_DIR}"
 
     echo_red_text 'Downloading pip...'
     download_and_extract 'pip' "https://github.com/pypa/pip/archive/${PIP_COMMIT}.tar.gz" "${DOVE_PIP}" "${PIP_SHA512SUM}"
@@ -334,7 +334,7 @@ function get_pip() {
 
     source "${DOVE_PIP_ENV}"
     echo_red_text 'Installing pip...'
-    pip install "${DOVE_PIP}"
+    "${DOVE_PIP_EXEC}" install "${DOVE_PIP}"
     echo_green_text "SUCCESS: Set-up pip environment at ${DOVE_PIP_DIR}"
 }
 
