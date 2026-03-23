@@ -93,6 +93,10 @@ export PHOENIX_OSX
 export PHOENIX_OSX_INTEL
 export PHOENIX_WINDOWS
 
+## Disable build logging, as it's redundant with our own build log
+readonly PHOENIX_LOG_BUILD=0
+export PHOENIX_LOG_BUILD
+
 # Python
 ## https://docs.python.org/3/using/cmdline.html#environment-variables
 
