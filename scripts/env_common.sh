@@ -221,6 +221,10 @@ export DOVE_PIP
 # Python
 if [[ "${DOVE_OS}" == 'osx' ]]; then
     readonly DOVE_PYTHON_DEFAULT='/opt/homebrew/bin/python'
+elif [[ "${DOVE_NIX}" == 1 ]]; then
+    ## Dove doesn't need to set a specific Python path, see discussion at https://codeberg.org/celenity/Dove/issues/59
+    ## and https://codeberg.org/celenity/Phoenix/issues/252
+    readonly DOVE_PYTHON_DEFAULT='python'
 else
     readonly DOVE_PYTHON_DEFAULT='/usr/bin/python'
 fi
