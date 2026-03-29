@@ -17,7 +17,8 @@ readonly mode="$2"
 DOVE_GET_SOURCE_AUTOCONFIG=0
 DOVE_GET_SOURCE_LXML=0
 DOVE_GET_SOURCE_PHOENIX=0
-DOVE_GET_SOURCE_PIP=0
+DOVE_GET_SOURCE_PYTHON=0
+DOVE_GET_SOURCE_UV=0
 
 if [ "${target}" == 'autoconfig' ]; then
     # Get Thunderbird's Autoconfiguration Database (ISPDB)
@@ -28,22 +29,27 @@ elif [ "${target}" == 'lxml' ]; then
 elif [ "${target}" == 'phoenix' ]; then
     # Get Phoenix
     readonly DOVE_GET_SOURCE_PHOENIX=1
-elif [ "${target}" == 'pip' ]; then
-    #  Get + set-up pip
-    readonly DOVE_GET_SOURCE_PIP=1
+elif [ "${target}" == 'python' ]; then
+    #  Get Python
+    readonly DOVE_GET_SOURCE_PYTHON=1
+elif [ "${target}" == 'uv' ]; then
+    # Get + set-up uv
+    readonly DOVE_GET_SOURCE_UV=1
 elif [ "${target}" == 'all' ]; then
     # If no argument is specified (or argument is set to "all"), just get everything
     readonly DOVE_GET_SOURCE_AUTOCONFIG=1
     readonly DOVE_GET_SOURCE_LXML=1
     readonly DOVE_GET_SOURCE_PHOENIX=1
-    readonly DOVE_GET_SOURCE_PIP=1
+    readonly DOVE_GET_SOURCE_PYTHON=1
+    readonly DOVE_GET_SOURCE_UV=1
 else
     echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
     echo 'All: all (Default)'
     echo 'lxml: lxml'
     echo 'Phoenix: phoenix'
-    echo 'pip: pip'
+    echo 'Python: python'
     echo 'Thunderbird Autoconfiguration Database: autoconfig'
+    echo 'uv: uv'
     exit 1
 fi
 
@@ -80,10 +86,38 @@ function update_sha512sum() {
         echo_red_text 'Updating SHA512sum for Phoenix...'
         "${DOVE_SED}" -i -e "s|PHOENIX_SHA512SUM='.*'|PHOENIX_SHA512SUM='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Phoenix'
-    elif [ "${old_sha512sum}" == "${PIP_SHA512SUM}" ]; then
-        echo_red_text 'Updating SHA512sum for pip...'
-        "${DOVE_SED}" -i -e "s|PIP_SHA512SUM='.*'|PIP_SHA512SUM='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
-        echo_green_text 'SUCCESS: Updated SHA512sum for pip'
+    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_LINUX_ARM64}" ]; then
+        echo_red_text 'Updating SHA512sum for Python (Linux - ARM64)...'
+        "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_LINUX_ARM64='.*'|PYTHON_SHA512SUM_LINUX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Python (Linux - ARM64)'
+    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_LINUX_X86_64}" ]; then
+        echo_red_text 'Updating SHA512sum for Python (Linux - x86_64)...'
+        "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_LINUX_X86_64='.*'|PYTHON_SHA512SUM_LINUX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Python (Linux - x86_64)'
+    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_OSX_ARM64}" ]; then
+        echo_red_text 'Updating SHA512sum for Python (OS X - ARM64)...'
+        "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_OSX_ARM64='.*'|PYTHON_SHA512SUM_OSX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Python (OS X - ARM64)'
+    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_OSX_X86_64}" ]; then
+        echo_red_text 'Updating SHA512sum for Python (OS X - x86_64)...'
+        "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_OSX_X86_64='.*'|PYTHON_SHA512SUM_OSX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for Python (OS X - x86_64)'
+    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_ARM64}" ]; then
+        echo_red_text 'Updating SHA512sum for uv (Linux - ARM64)...'
+        "${DOVE_SED}" -i -e "s|UV_SHA512SUM_LINUX_ARM64='.*'|UV_SHA512SUM_LINUX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for uv (Linux - ARM64)'
+    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_X86_64}" ]; then
+        echo_red_text 'Updating SHA512sum for uv (Linux - x86_64)...'
+        "${DOVE_SED}" -i -e "s|UV_SHA512SUM_LINUX_X86_64='.*'|UV_SHA512SUM_LINUX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for uv (Linux - x86_64)'
+    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_OSX_ARM64}" ]; then
+        echo_red_text 'Updating SHA512sum for uv (OS X - ARM64)...'
+        "${DOVE_SED}" -i -e "s|UV_SHA512SUM_OSX_ARM64='.*'|UV_SHA512SUM_OSX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for uv (OS X - ARM64)'
+    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_OSX_X86_64}" ]; then
+        echo_red_text 'Updating SHA512sum for uv (OS X - x86_64)...'
+        "${DOVE_SED}" -i -e "s|UV_SHA512SUM_OSX_X86_64='.*'|UV_SHA512SUM_OSX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for uv (OS X - x86_64)'
     fi
 
     rm "${file}"
@@ -281,23 +315,17 @@ function get_autoconfig() {
 
 # Get lxml
 function get_lxml() {
-    if  [ ! -d "${DOVE_PIP_DIR}" ] || [ ! -f "${DOVE_PIP_ENV}" ]; then
-        echo_red_text "ERROR: You tried to download lxml, but you don't have a pip environment set-up yet."
+    if  [ ! -d "${DOVE_UV_DIR}" ] || [ ! -f "${DOVE_PYENV}" ]; then
+        echo_red_text "ERROR: You tried to download lxml, but you don't have a uv environment set-up yet."
         exit 1
     fi
 
     echo_red_text "Downloading lxml..."
     download_and_extract 'lxml' "https://github.com/lxml/lxml/archive/${LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${LXML_SHA512SUM}"
 
-    # For the pip install to work, we need to initialize a Git repository
-    ## The Git repository isn't already created, due to our method of downloading and verifying the archive
-    pushd "${DOVE_LXML}"
-    git init
-    popd
-
-    source "${DOVE_PIP_ENV}"
+    source "${DOVE_PYENV}"
     echo_red_text 'Installing lxml...'
-    "${DOVE_PIP_EXEC}" install "${DOVE_LXML}"
+    "${DOVE_UV}" pip install --strict "${DOVE_LXML}"
     echo_green_text 'SUCCESS: Set-up lxml'
 }
 
@@ -308,42 +336,113 @@ function get_phoenix() {
     echo_green_text "SUCCESS: Set-up Phoenix at ${DOVE_PHOENIX}"
 }
 
-# Get + set-up pip
-function get_pip() {
-    if [[ -d "${DOVE_PIP_DIR}" ]]; then
-        echo_red_text "The pip environment is already set-up at ${DOVE_PIP_DIR}"
-        read -p "Do you want to re-create it? [y/N] " -n 1 -r
-        echo
-        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-            rm -rf "${DOVE_PIP_DIR}" "${DOVE_PIP}"
+# Get Python
+function get_python() {
+    # Set our platform
+    if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+        local readonly PYTHON_PLATFORM='apple-darwin'
+    else
+        local readonly PYTHON_PLATFORM='unknown-linux-gnu'
+    fi
+
+    # Set our platform architecture
+    if [ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]; then
+        local readonly PYTHON_ARCH='aarch64'
+    else
+        local readonly PYTHON_ARCH='x86_64'
+    fi
+
+    # Set our checksum to verify
+    if [ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]; then
+        if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+            local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_OSX_ARM64}"
+        else
+            local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_LINUX_ARM64}"
+        fi
+    else
+        if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+            local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_OSX_X86_64}"
+        else
+            local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_LINUX_X86_64}"
         fi
     fi
 
-    echo_red_text 'Creating pip environment...'
-    "${DOVE_PYTHON}" -m venv "${DOVE_PIP_DIR}"
+    echo_red_text 'Downloading Python...'
+    download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
 
-    echo_red_text 'Downloading pip...'
-    download_and_extract 'pip' "https://github.com/pypa/pip/archive/${PIP_COMMIT}.tar.gz" "${DOVE_PIP}" "${PIP_SHA512SUM}"
+    # Validate SHA512sum
+    validate_sha512sum "${PYTHON_SHA512SUM}" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
 
-    # For the pip install to work, we need to initialize a Git repository
-    ## The Git repository isn't already created, due to our method of downloading and verifying the archive
-    pushd "${DOVE_PIP}"
-    git init
-    popd
+    echo_green_text "SUCCESS: Downloaded Python to ${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+}
 
-    source "${DOVE_PIP_ENV}"
-    echo_red_text 'Installing pip...'
-    "${DOVE_PIP_EXEC}" install "${DOVE_PIP}"
-    echo_green_text "SUCCESS: Set-up pip environment at ${DOVE_PIP_DIR}"
+# Get + set-up uv
+function get_uv() {
+    if  [ ! -d "${DOVE_PYTHON_DIR}" ]; then
+        echo_red_text "ERROR: You tried to download uv, but you don't have Python downloaded yet."
+        exit 1
+    fi
+
+    if [[ -d "${DOVE_PYENV_DIR}" ]]; then
+        echo_red_text "The uv environment is already set-up at ${DOVE_PYENV_DIR}"
+        read -p "Do you want to re-create it? [y/N] " -n 1 -r
+        echo
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+            rm -rf "${DOVE_PYENV_DIR}" "${DOVE_UV_DIR}" "${DOVE_UV_LOCAL}"
+        fi
+    fi
+
+    # Set our platform
+    if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+        local readonly UV_PLATFORM='apple-darwin'
+    else
+        local readonly UV_PLATFORM='unknown-linux-gnu'
+    fi
+
+    # Set our platform architecture
+    if [ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]; then
+        local readonly UV_ARCH='aarch64'
+    else
+        local readonly UV_ARCH='x86_64'
+    fi
+
+    # Set our checksum to verify
+    if [ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]; then
+        if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+            local readonly UV_SHA512SUM="${UV_SHA512SUM_OSX_ARM64}"
+        else
+            local readonly UV_SHA512SUM="${UV_SHA512SUM_LINUX_ARM64}"
+        fi
+    else
+        if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+            local readonly UV_SHA512SUM="${UV_SHA512SUM_OSX_X86_64}"
+        else
+            local readonly UV_SHA512SUM="${UV_SHA512SUM_LINUX_X86_64}"
+        fi
+    fi
+
+    echo_red_text 'Downloading uv...'
+    download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${UV_ARCH}-${UV_PLATFORM}.tar.gz" "${DOVE_UV_DIR}" "${UV_SHA512SUM}"
+
+    echo_red_text 'Installing Python...'
+    "${DOVE_UV}" python install "${PYTHON_VERSION}"
+
+    echo_red_text 'Creating uv environment...'
+    "${DOVE_UV}" venv "${DOVE_PYENV_DIR}"
+    echo_green_text "SUCCESS: Set-up uv environment at ${DOVE_PYENV_DIR}"
 }
 
 if [ "${DOVE_GET_SOURCE_AUTOCONFIG}" == 1 ]; then
     get_autoconfig
 fi
 
-# This needs to run before we get lxml
-if [ "${DOVE_GET_SOURCE_PIP}" == 1 ]; then
-    get_pip
+# These need to run before we get lxml
+if [ "${DOVE_GET_SOURCE_PYTHON}" == 1 ]; then
+    get_python
+fi
+
+if [ "${DOVE_GET_SOURCE_UV}" == 1 ]; then
+    get_uv
 fi
 
 if [ "${DOVE_GET_SOURCE_LXML}" == 1 ]; then

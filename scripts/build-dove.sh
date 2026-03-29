@@ -11,9 +11,9 @@ fi
 source $(dirname $0)/env.sh || error_fn
 echo
 
-# Set-up pip venv
+# Set-up Python venv
 if [ "${DOVE_NIX}" != 1 ]; then
-    source "${DOVE_PIP_ENV}" || error_fn
+    source "${DOVE_PYENV}" || error_fn
     echo
 fi
 
@@ -75,14 +75,7 @@ cp "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_BUILD}/autoconfig/LICENSE.txt" || error_
 echo
 mkdir -p "${DOVE_BUILD}/autoconfig/v1.1" || error_fn
 echo
-# Using DOVE_PYTHON here results in a "ModuleNotFoundError: No module named 'lxml'" error,
-## so we can't use it directly here
-# Set-up pip venv
-if [ "${DOVE_NIX}" != 1 ]; then
-    "${DOVE_PIP_DIR}/bin/python" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml || error_fn
-else
-    "python" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml || error_fn
-fi
+"${DOVE_PYTHON}" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml || error_fn
 echo
 popd || error_fn
 echo

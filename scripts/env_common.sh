@@ -209,24 +209,28 @@ else
 fi
 export DOVE_PHOENIX
 
-# pip
-readonly DOVE_PIP_DEFAULT="${DOVE_EXTERNAL}/pip"
-if [[ -z "${DOVE_PIP+x}" ]]; then
-    readonly DOVE_PIP="${DOVE_PIP_DEFAULT}"
-else
-    readonly DOVE_PIP="${DOVE_PIP}"
-fi
-export DOVE_PIP
-
 # Python
-if [[ "${DOVE_OS}" == 'osx' ]]; then
-    readonly DOVE_PYTHON_DEFAULT='/opt/homebrew/bin/python'
-elif [[ "${DOVE_NIX}" == 1 ]]; then
-    ## Dove doesn't need to set a specific Python path, see discussion at https://codeberg.org/celenity/Dove/issues/59
+readonly DOVE_PYTHON_DIR_DEFAULT="${DOVE_EXTERNAL}/python"
+if [[ -z "${DOVE_PYTHON_DIR+x}" ]]; then
+    readonly DOVE_PYTHON_DIR="${DOVE_PYTHON_DIR_DEFAULT}"
+fi
+export DOVE_PYTHON_DIR
+
+# Python (UV) environment
+readonly DOVE_PYENV_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
+if [[ -z "${DOVE_PYENV_DIR+x}" ]]; then
+    readonly DOVE_PYENV_DIR="${DOVE_PYENV_DIR_DEFAULT}"
+fi
+readonly DOVE_PYENV="${DOVE_PYENV_DIR}/bin/activate"
+export DOVE_PYENV
+export DOVE_PYENV_DIR
+
+if [[ "${DOVE_NIX}" == 1 ]]; then
+    ## Nix doesn't want/need to set a specific Python path, see discussion at https://codeberg.org/celenity/Dove/issues/59
     ## and https://codeberg.org/celenity/Phoenix/issues/252
     readonly DOVE_PYTHON_DEFAULT='python'
 else
-    readonly DOVE_PYTHON_DEFAULT='/usr/bin/python'
+    readonly DOVE_PYTHON_DEFAULT="${DOVE_PYENV_DIR}/bin/python"
 fi
 if [[ -z "${DOVE_PYTHON+x}" ]]; then
     readonly DOVE_PYTHON="${DOVE_PYTHON_DEFAULT}"
@@ -235,18 +239,37 @@ else
 fi
 export DOVE_PYTHON
 
-# Python (pip) environment
-readonly DOVE_PIP_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
-if [[ -z "${DOVE_PIP_DIR+x}" ]]; then
-    readonly DOVE_PIP_DIR="${DOVE_PIP_DIR_DEFAULT}"
-else
-    readonly DOVE_PIP_DIR="${DOVE_PIP_DIR}"
+# UV
+DOVE_UV_DIR_DEFAULT="${DOVE_EXTERNAL}/uv"
+if [[ -z "${DOVE_UV_DIR+x}" ]]; then
+    export DOVE_UV_DIR="${DOVE_UV_DIR_DEFAULT}"
 fi
-readonly DOVE_PIP_ENV="${DOVE_PIP_DIR}/bin/activate"
-readonly DOVE_PIP_EXEC="${DOVE_PIP_DIR}/bin/pip"
-export DOVE_PIP_DIR
-export DOVE_PIP_ENV
-export DOVE_PIP_EXEC
+export DOVE_UV="${DOVE_UV_DIR}/uv"
+export DOVE_UV_LOCAL="${DOVE_BUILD}/uv"
+
+# UV (local directory)
+DOVE_UV_LOCAL_DEFAULT="${DOVE_BUILD}/uv"
+if [[ -z "${DOVE_UV_LOCAL+x}" ]]; then
+    export DOVE_UV_LOCAL="${DOVE_UV_LOCAL_DEFAULT}"
+fi
+
+# UV cache
+DOVE_UV_CACHE_DEFAULT="${DOVE_UV_LOCAL}/cache"
+if [[ -z "${DOVE_UV_CACHE+x}" ]]; then
+    export DOVE_UV_CACHE="${DOVE_UV_CACHE_DEFAULT}"
+fi
+
+# UV Python directory
+DOVE_UV_PYTHON_DEFAULT="${DOVE_UV_LOCAL}/python"
+if [[ -z "${DOVE_UV_PYTHON+x}" ]]; then
+    export DOVE_UV_PYTHON="${DOVE_UV_PYTHON_DEFAULT}"
+fi
+
+# UV tools
+DOVE_UV_TOOLS_DEFAULT="${DOVE_UV_LOCAL}/tools"
+if [[ -z "${DOVE_UV_TOOLS+x}" ]]; then
+    export DOVE_UV_TOOLS="${DOVE_UV_TOOLS_DEFAULT}"
+fi
 
 # Thunderbird Autoconfiguration Database (ISPDB)
 readonly DOVE_AUTOCONFIG_DEFAULT="${DOVE_EXTERNAL}/autoconfig"
