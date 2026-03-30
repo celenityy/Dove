@@ -63,12 +63,14 @@
                 environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/pref/dove.js";
                 environment.etc."thunderbird/dove/assets".source = "${pkgs.dove}/assets";
                 environment.variables = {
+                    DOVE_HOST_NIX = 1;
                     MOZ_CRASHREPORTER = "";
                     MOZ_CRASHREPORTER_DISABLE = 1;
                     MOZ_CRASHREPORTER_NO_REPORT = 1;
                     MOZ_CRASHREPORTER_URL = "data;";
                     MOZ_DISABLE_ASAN_REPORTER = 1;
                     MOZ_ENABLE_WAYLAND = 1;
+                    PHOENIX_HOST_NIX = 1;
                     SSLKEYLOGFILE = "";
                 };
                 programs.thunderbird.policies =

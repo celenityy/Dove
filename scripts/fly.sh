@@ -233,6 +233,7 @@ if [ "${DOVE_OSX}" == 1 ]; then
     cp -rf "${DOVE_BUILD_RESOURCES}/osx-shared/Library/LaunchAgents" "${DOVE_OSX_OUTPUTS}/Library/"
 
     cp -rf "${DOVE_BUILD_RESOURCES}/osx/Library/celenity/Dove" "${DOVE_OSX_OUTPUTS}/Library/celenity/"
+    cp -rf "${DOVE_BUILD_RESOURCES}/osx/Library/LaunchAgents/" "${DOVE_OSX_OUTPUTS}/Library/LaunchAgents/"
     cp -rf "${DOVE_BUILD_RESOURCES}/osx/Library/LaunchDaemons" "${DOVE_OSX_OUTPUTS}/Library/"
 
     # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
@@ -275,6 +276,7 @@ if [ "${DOVE_OSX_INTEL}" == 1 ]; then
     cp -rf "${DOVE_BUILD_RESOURCES}/osx-shared/Library/LaunchAgents" "${DOVE_OSX_INTEL_OUTPUTS}/Library/"
 
     cp -rf "${DOVE_BUILD_RESOURCES}/osx-intel/Library/celenity/Dove" "${DOVE_OSX_INTEL_OUTPUTS}/Library/celenity/"
+    cp -rf "${DOVE_BUILD_RESOURCES}/osx-intel/Library/LaunchAgents/" "${DOVE_OSX_INTEL_OUTPUTS}/Library/LaunchAgents/"
     cp -rf "${DOVE_BUILD_RESOURCES}/osx-intel/Library/LaunchDaemons" "${DOVE_OSX_INTEL_OUTPUTS}/Library/"
 
     # Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]

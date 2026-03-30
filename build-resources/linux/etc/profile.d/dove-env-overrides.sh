@@ -13,6 +13,12 @@
 # Environment variables for GNU/Linux distros that further harden Thunderbird for Dove
 # Also impacts other Mozilla software (like Firefox)
 
+# Set our host platform
+readonly DOVE_HOST_PLATFORM='linux'
+readonly PHOENIX_HOST_PLATFORM='linux'
+export DOVE_HOST_PLATFORM
+export PHOENIX_HOST_PLATFORM
+
 # Disable Mozilla's ASan Crash Reporter
 ## https://searchfox.org/firefox-main/rev/409e9501/toolkit/xre/nsEmbedFunctions.cpp#260
 ## https://firefox-source-docs.mozilla.org/tools/sanitizer/asan_nightly.html
