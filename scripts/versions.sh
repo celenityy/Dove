@@ -1,5 +1,5 @@
 
-readonly DOVE_VERSION='2026.02.24.1'
+readonly DOVE_VERSION='2026.03.30.1'
 
 # Sources
 
@@ -12,8 +12,8 @@ readonly PHOENIX_VERSION='2026.02.23.1'
 # Thunderbird Autoconfiguration Database (ISPDB)
 ## https://github.com/thunderbird/autoconfig
 ### (This commit corresponds to the latest in the `prod` branch: https://github.com/thunderbird/autoconfig/tree/prod)
-readonly AUTOCONFIG_COMMIT='0b057784c59efa6a4446506c3421abb545cfff60'
-readonly AUTOCONFIG_SHA512SUM='f01ce7e0cc77099487f3a0693b72b4811523a4ad4207b3608d6353da2a0fcd0594472ad0c95378a89a6d6e047df380b687cb56467a2a4ad8acb2ed89ecb0de45'
+readonly AUTOCONFIG_COMMIT='a5cb63085b774825d5901c18bda83c8398a4012c'
+readonly AUTOCONFIG_SHA512SUM='e20f3c8a024d74127549fbd6a37ac1821e2b217b54a36a5343f6226074e23dbf4a5081ef5832f989998d413e6213d2e490ba2ead851fa3ec93bf83e505f7cbb4'
 
 # Tools
 
