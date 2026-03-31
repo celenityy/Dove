@@ -754,6 +754,17 @@
 			<key>private_browsing</key>
 			<true/>
 		</dict>
+		<key>atn-xpihandler@celenity.dev</key>
+		<dict>
+			<key>blocked_install_message</key>
+			<string>ATN-XPIHandler: https://addons.thunderbird.net/addon/atn-xpihandler/</string>
+			<key>install_url</key>
+			<string>https://addons.thunderbird.net/thunderbird/downloads/latest/atn-xpihandler/latest.xpi</string>
+			<key>installation_mode</key>
+			<string>normal_installed</string>
+			<key>private_browsing</key>
+			<true/>
+		</dict>
 		<key>autoMarkFolderRead.silvester@addons.thunderbird.net</key>
 		<dict>
 			<key>blocked_install_message</key>
@@ -2517,6 +2528,8 @@
 		</dict>
 		<key>uBird@celenity.dev</key>
 		<dict>
+			<key>blocked_install_message</key>
+			<string>uBird: https://addons.thunderbird.net/addon/ubird/</string>
 			<key>install_url</key>
 			<string>https://gitlab.com/celenityy/uBird/-/raw/main/outputs/uBird_latest.xpi</string>
 			<key>installation_mode</key>

@@ -765,7 +765,20 @@
           "locale"
         ]
       },
+      "atn-xpihandler@celenity.dev": {
+        "blocked_install_message": "ATN-XPIHandler: https://addons.thunderbird.net/addon/atn-xpihandler/",
+        "installation_mode": "normal_installed",
+        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/atn-xpihandler/latest.xpi",
+        "private_browsing": true
+      },
+      "dkim_verifier@pl": {
+        "blocked_install_message": "DKIM Verifier: https://addons.thunderbird.net/addon/dkim-verifier/",
+        "installation_mode": "normal_installed",
+        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
+        "private_browsing": true
+      },
       "uBird@celenity.dev": {
+        "blocked_install_message": "uBird: https://addons.thunderbird.net/addon/ubird/",
         "installation_mode": "normal_installed",
         "install_url": "https://gitlab.com/celenityy/uBird/-/raw/main/outputs/uBird_latest.xpi",
         "private_browsing": true
@@ -1096,12 +1109,6 @@
       },
       "DisplayMailUserAgent-T@Toshi_": {
         "blocked_install_message": "Display Mail User Agent T: https://addons.thunderbird.net/addon/display-mail-user-agent-t/",
-        "private_browsing": true
-      },
-      "dkim_verifier@pl": {
-        "blocked_install_message": "DKIM Verifier: https://addons.thunderbird.net/addon/dkim-verifier/",
-        "installation_mode": "normal_installed",
-        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
         "private_browsing": true
       },
       "dropbox-cloudfile@darktrojan.net": {

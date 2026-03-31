@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2026.02.23.1", locked);
+pref("browser.phoenix.version", "2026.03.30.1", locked);
 
 /* INDEX 
 
@@ -373,8 +373,8 @@ pref("toolkit.shopping.ohttpRelayURL", "");
 // https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-allowlist/changeset?_expected=0
 // https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/fxrelay-denylist/changeset?_expected=0
 // https://searchfox.org/firefox-main/rev/c82adde5/toolkit/components/satchel/integrations/FirefoxRelay.sys.mjs#42
-pref("signon.firefoxRelay.allowListRemoteSettingsCollection", ""); // [HIDDEN]
-pref("signon.firefoxRelay.denyListRemoteSettingsCollection", ""); // [HIDDEN]
+pref("signon.firefoxRelay.allowListRemoteSettingsCollection", ""); // [HIDDEN] [DEFAULT: fxrelay-allowlist]
+pref("signon.firefoxRelay.denyListRemoteSettingsCollection", ""); // [HIDDEN] [DEFAULT: fxrelay-denylist]
 
 /// Disable fetching Password Manager rules remotely by default
 // (Used for identifying password forms on websites)
@@ -394,6 +394,12 @@ pref("app.update.background.messaging.targeting.snapshot.intervalSec", -1); // [
 /// Disable Firefox Relay by default
 pref("signon.firefoxRelay.feature", "disabled"); // [HIDDEN - Thunderbird]
 
+
+/// Disable import of Mozilla's default protocol handlers
+// (ex. Gmail, Outlook, and friends)
+// https://searchfox.org/firefox-main/rev/881a9b31/uriloader/exthandler/ExtHandlerService.sys.mjs#94
+// https://searchfox.org/firefox-main/rev/881a9b31/uriloader/exthandler/HandlerList.sys.mjs
+pref("gecko.handlerService.defaultHandlersVersion", 2147483647, locked); // [HIDDEN]
 
 /// Disable "Interest-based Content Relevance Ranking and Personalization"
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1886207
@@ -667,6 +673,7 @@ pref("layout.css.prefers-color-scheme.content-override", 1);
 
 
 
+
 /// Harden FPP (which we enable at `003` above) to match RFP with a few exceptions...
 // This also improves security - Attack Surface Reduction, reduced timer precision
 // List of targets: https://searchfox.org/firefox-main/source/toolkit/components/resistfingerprinting/RFPTargets.inc
@@ -677,6 +684,7 @@ pref("layout.css.prefers-color-scheme.content-override", 1);
 // We could set this to 1 to only allow base system fonts - but this is already covered by FPP/RFP. So if one disables RFP/FPP or adds an override, I think it's reasonable to allow fonts from language packs - as that may be the reason they've disabled it. I see no reason to ever expose user-installed fonts though.
 // https://searchfox.org/firefox-main/rev/82e2435f/modules/libpref/init/StaticPrefList.yaml#10128
 pref("layout.css.font-visibility", 2);
+
 
 /// Prevent enumeration of media devices
 // Exceptions can be set via the `media.devices.enumerate.legacy.allowlist` pref
@@ -946,7 +954,7 @@ pref("security.warn_submit_secure_to_insecure", true); // [DEFAULT]
 // AFAICT this functionality is quite obscure, use is seemingly nonexistent outside of very specific environments (ex. enterprise/government).
 // Those who do actually use this functionality may also not want the browser to automatically import/expose these certificates, as they have many other uses.
 // These certificates can also still be imported in browser settings anyways, so those who do need to use this functionality still can that way.
-// So I no reason to leave this enabled by default - disabling it reduces attack surface and gives more control to users.
+// So, I see no reason to leave this enabled by default - disabling it reduces attack surface and gives more control to users.
 // (For reference, Tor Browser also disables this)
 // https://blog.mozilla.org/security/2020/04/14/expanding-client-certificates-in-firefox-75/
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1637807
@@ -1035,6 +1043,30 @@ pref("security.remote_settings.crlite_filters.enabled", true); // [DEFAULT - non
 // https://wikipedia.org/wiki/Delegated_credential
 pref("security.tls.enable_delegated_credentials", true); // [DEFAULT]
 
+/// Enable HTTPS-First
+// This is a less-aggressive alternative to HTTPS-Only Mode
+// Sets the browser to attempt to use HTTPS for connections first, but silently fall-back if HTTPS is unavailable
+// Used if HTTPS-Only Mode is disabled
+// https://support.mozilla.org/kb/https-first
+pref("dom.security.https_first", true); // [DEFAULT]
+pref("dom.security.https_first_add_exception_on_failure", false); // Prevent automatically exempting domains, so that HTTPS-First is always tried no matter what
+pref("dom.security.https_first_for_custom_ports", true);
+pref("dom.security.https_first_for_local_addresses", true);
+pref("dom.security.https_first_for_unknown_suffixes", true);
+pref("dom.security.https_first_pbm", true); // [DEFAULT]
+pref("dom.security.https_first_schemeless", true); // [DEFAULT]
+
+/// Enable HTTPS-Only Mode
+// Enforces the use of HTTPS for connections, and warns the user if HTTPS is unavailable
+// https://support.mozilla.org/kb/https-only-prefs
+// NOTE: Locked on Desktop due to being a critical privacy and security feature,
+// but we won't lock it for Android/Thunderbird, as it's unfortunately not possible to add exceptions there
+// https://gitlab.com/ironfox-oss/IronFox/-/issues/48
+pref("dom.security.https_only_mode", true);
+pref("dom.security.https_only_mode.upgrade_local", true); // Enforce HTTPS-Only Mode for local requests
+pref("dom.security.https_only_mode_pbm", true);
+pref("dom.security.https_only_mode_error_page_user_suggestions", true); // Show suggestions when an HTTPS page can not be found - ex. if 'example.com' is insecure, the browser may suggest trying to connect to 'www.example.com' instead
+
 /// Enable MITM Detection
 // https://github.com/arkenfox/user.js/issues/740
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1529643
@@ -1048,7 +1080,7 @@ pref("security.ssl.enable_ocsp_must_staple", true); // [DEFAULT]
 pref("security.ssl.enable_ocsp_stapling", true); // [DEFAULT]
 
 /// Enable Post Quantum Key Agreement (Kyber)
-pref("media.webrtc.enable_pq_dtls", true); // [DEFAULT]
+pref("media.webrtc.enable_pq_dtls", true); // [DEFAULT] [ESR]
 pref("media.webrtc.enable_pq_hybrid_kex", true); // [DEFAULT]
 pref("media.webrtc.send_mlkem_keyshare", true); // [DEFAULT]
 pref("network.http.http3.enable_kyber", true); // [DEFAULT]
@@ -1069,25 +1101,6 @@ pref("security.cert_pinning.enforcement_level", 2);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1576790
 pref("security.tls.hello_downgrade_check", true); // [DEFAULT]
 
-/// Enforce using HTTPS as much as possible
-pref("dom.securecontext.allowlist", ""); // [HIDDEN] [DEFAULT] https://searchfox.org/firefox-main/rev/82e2435f/dom/security/nsMixedContentBlocker.cpp#270
-pref("dom.security.https_first", true);
-pref("dom.security.https_first_for_custom_ports", true); // [DEFAULT] DEFENSE IN DEPTH
-pref("dom.security.https_first_for_local_addresses", true);
-pref("dom.security.https_first_for_unknown_suffixes", true);
-pref("dom.security.https_first_pbm", true); // [DEFAULT]
-pref("dom.security.https_first_schemeless", true);
-pref("dom.security.https_only_mode", true);
-pref("dom.security.https_only_mode.upgrade_local", true);
-pref("dom.security.https_only_mode_pbm", true);
-pref("security.mixed_content.block_active_content", true);
-pref("security.mixed_content.block_display_content", false); // [DEFAULT] Unnecessary with the "security.mixed_content.upgrade_display_content" pref - "security.mixed_content.upgrade_display_content" tries to upgrade mixed content by default and still blocks it if fails, this pref ("security.mixed_content.block_display_content") just blocks all mixed content entirely, causing unnecessary breakage for users. https://github.com/mozilla/policy-templates/issues/1141
-pref("security.mixed_content.block_object_subrequest", true);
-pref("security.mixed_content.upgrade_display_content", true);
-pref("security.mixed_content.upgrade_display_content.audio", true); // [DEFAULT]
-pref("security.mixed_content.upgrade_display_content.image", true); // [DEFAULT]
-pref("security.mixed_content.upgrade_display_content.video", true); // [DEFAULT]
-
 /// Ensure that the browser omits credentials when making network requests by default
 // https://searchfox.org/firefox-main/rev/4dad4a9a/modules/libpref/init/StaticPrefList.yaml#13568
 pref("network.fetch.systemDefaultsToOmittingCredentials", true); // [DEFAULT]
@@ -1095,9 +1108,6 @@ pref("network.fetch.systemDefaultsToOmittingCredentials", true); // [DEFAULT]
 /// Ensure we use the HSTS preload list
 // https://searchfox.org/firefox-main/rev/82e2435f/security/manager/ssl/nsSiteSecurityService.cpp#799
 pref("network.stricttransportsecurity.preloadlist", true); // [DEFAULT]
-
-/// If HTTPS-Only Mode is disabled in favor of HTTPS-First, prevent automatically exempting domains (to ensure we always try HTTPS first...)
-pref("dom.security.https_first_add_exception_on_failure", false);
 
 /// Only allow certificate error exceptions per-session
 pref("security.certerrors.permanentOverride", false); // [HIDDEN - Android/Thunderbird]
@@ -1113,9 +1123,13 @@ pref("security.ssl.require_safe_negotiation", true);
 /// Show detailed information on insecure warning pages
 pref("browser.xul.error_pages.expert_bad_cert", true);
 
-/// Show suggestions when an HTTPS page can not be found 
-// Ex. If 'example.com' isn't secure, it may suggest 'www.example.com'
-pref("dom.security.https_only_mode_error_page_user_suggestions", true);
+/// Upgrade Mixed Content
+// These pertain to handling insecure (HTTP) content in secure (HTTPS) contexts
+// https://blog.mozilla.org/security/2024/06/05/firefox-will-upgrade-more-mixed-content-in-version-127/
+pref("dom.securecontext.allowlist", ""); // [HIDDEN] [DEFAULT] This can be used for adding exceptions: https://searchfox.org/firefox-main/rev/82e2435f/dom/security/nsMixedContentBlocker.cpp#270
+pref("security.mixed_content.block_active_content", true); // [DEFAULT - non-Thunderbird]
+pref("security.mixed_content.block_display_content", false); // [DEFAULT] Unnecessary with the "security.mixed_content.upgrade_display_content" pref - that pref tries to upgrade mixed content by default and still blocks it if fails, this pref just blocks all mixed content entirely, causing unnecessary breakage for users: https://github.com/mozilla/policy-templates/issues/1141
+pref("security.mixed_content.upgrade_display_content", true); // [DEFAULT]
 
 pref("browser.phoenix.status", "007");
 
@@ -1138,9 +1152,9 @@ pref("network.dns.disablePrefetch", true);
 pref("network.dns.disablePrefetchFromHTTPS", true);
 pref("network.dns.prefetch_via_proxy", false); // [DEFAULT]
 pref("network.http.speculative-parallel-limit", 0); // [DEFAULT - Thunderbird]
-pref("network.predictor.enable-hover-on-ssl", false); // [DEFAULT]
-pref("network.predictor.enable-prefetch", false); // [DEFAULT]
-pref("network.predictor.enabled", false);
+pref("network.predictor.enable-hover-on-ssl", false); // [DEFAULT] https://searchfox.org/firefox-main/rev/3c918058/docshell/base/nsDocShell.cpp#14207
+pref("network.predictor.enable-prefetch", false); // [NO-ANDROID] [ESR] [DEFAULT]
+pref("network.predictor.enabled", false); // [NO-ANDROID] [ESR]
 pref("network.prefetch-next", false);
 
 /// Disable Preconnect
@@ -1227,8 +1241,10 @@ pref("doh-rollout.provider-list", '[{"uri":"https://dns.quad9.net/dns-query","UI
 
 /// Disable DoH Connectivity Checks
 pref("network.connectivity-service.DNS_HTTPS.domain", "");
-pref("network.trr.confirmationNS", "skip");
+pref("network.trr.attempt-when-retrying-confirmation", true); // Ensure we always attempt to use DoH no matter what, regardless of the confirmation connectivity check https://searchfox.org/firefox-main/rev/e535ba2b/netwerk/dns/TRRService.cpp#286
+pref("network.trr.confirmationNS", "skip"); // https://searchfox.org/firefox-main/rev/e535ba2b/netwerk/dns/TRRService.cpp#273
 pref("network.trr.skip-check-for-blocked-host", true); // https://searchfox.org/firefox-main/rev/82e2435f/netwerk/dns/TRRService.cpp#1062
+pref("network.trr.wait-for-confirmation", false); // [DEFAULT] Ensure we always attempt to use DoH no matter what, regardless of the confirmation connectivity check https://searchfox.org/firefox-main/rev/e535ba2b/netwerk/dns/TRRService.cpp#282
 
 /// Disable EDNS Client Subnet (ECS) to prevent leaking general location data to authoritative DNS servers...
 // https://wikipedia.org/wiki/EDNS_Client_Subnet
@@ -1438,6 +1454,8 @@ pref("media.autoplay.blocking_policy", 1);
 // On Android: want to use EME at all? Set `media.eme.enabled` to `true` (Do NOT touch `media.eme.require-app-approval`), and enable your preferred CDM below (Currently Android only supports Widevine)
 pref("media.eme.enabled", false);
 pref("media.eme.require-app-approval", true); // [DEFAULT - Android] https://bugzilla.mozilla.org/show_bug.cgi?id=1620102 https://searchfox.org/firefox-main/rev/82e2435f/dom/media/eme/MediaKeySystemAccessPermissionRequest.h#17
+pref("media.eme.require-app-approval.prompt.testing", true); // [HIDDEN] https://searchfox.org/firefox-main/rev/881a9b31/dom/media/eme/MediaKeySystemAccessPermissionRequest.h#21
+pref("media.eme.require-app-approval.prompt.testing.allow", false); // [HIDDEN] https://searchfox.org/firefox-main/rev/881a9b31/dom/media/eme/MediaKeySystemAccessPermissionRequest.h#21
 
 //// Disable the Google Widevine CDM by default (if EME is enabled)
 /// https://developers.google.com/widevine/drm/overview
@@ -1987,6 +2005,7 @@ pref("browser.ai.control.linkPreviewKeyPoints", "blocked");
 pref("browser.ai.control.pdfjsAltText", "blocked");
 pref("browser.ai.control.sidebarChatbot", "blocked");
 pref("browser.ai.control.smartTabGroups", "blocked");
+pref("browser.ai.control.smartWindow", "blocked");
 
 /// Allow managing models from `about:addons`
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/mozapps/extensions/internal/ModelHubProvider.sys.mjs#18
@@ -2027,8 +2046,8 @@ pref("browser.phoenix.status", "017");
 
 /// Disable logging network geolocation requests by default
 // This is already Firefox's default setting - but setting it here exposes it in the `about:config` since it's hidden
-// https://searchfox.org/firefox-main/rev/82e2435f/dom/system/NetworkGeolocationProvider.sys.mjs#18
-pref("geo.provider.network.logging.enabled", false); // [HIDDEN] [DEFAULT] 
+// https://searchfox.org/firefox-main/rev/83d1a08db47b91a4d53341a799745caac9c38bde/dom/system/NetworkGeolocationProvider.sys.mjs#18
+pref("geo.provider.network.loglevel", "Off"); // [HIDDEN] [DEFAULT] 
 
 
 /// Disable Mozilla's GeoIP/Region Service
@@ -2183,6 +2202,11 @@ pref("browser.safebrowsing.provider.google5.reportPhishMistakeURL", "https://saf
 //// Similar behavior also appears to happen when you report a URL to Safe Browsing
 pref("browser.safebrowsing.reportPhishURL", "https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=");
 
+/// Disable extra logging by default
+// These are currently the default values, but we can set them here to expose at about:config
+pref("browser.safebrowsing.debug", false); // [DEFAULT]
+pref("browser.safebrowsing.realTime.debug", false); // [HIDDEN] [DEFAULT] [NIGHTLY] https://searchfox.org/firefox-main/rev/83d1a08d/toolkit/components/url-classifier/RealTimeRequestSimulator.cpp#31
+
 /// Disable the legacy (v2.2) Safe Browsing API
 // https://code.google.com/archive/p/google-safe-browsing/wikis/Protocolv2Spec.wiki
 // Has been nonfunctional since October 2018
@@ -2191,6 +2215,21 @@ pref("browser.safebrowsing.reportPhishURL", "https://safebrowsing.google.com/saf
 pref("browser.safebrowsing.provider.google.advisoryName", "Google Safe Browsing (Legacy)"); // Label it so it's clearly distinguishable if it is ever enabled for whatever reason...
 pref("browser.safebrowsing.provider.google.lists", "disabled");
 pref("browser.safebrowsing.provider.google.lists.default", "goog-badbinurl-shavar,goog-downloadwhite-digest256,goog-phish-shavar,googpub-phish-shavar,goog-malware-shavar,goog-unwanted-shavar"); // [HIDDEN] This pref does nothing, just makes it easier for users to re-enable this Safe Browsing provider if desired by copying and pasting the value of this pref as the value for `browser.safebrowsing.provider.google.lists`
+
+/// Disable Real Time Mode (1) (2) [NIGHTLY]
+// This sets Safe Browsing to use Local List Mode instead (3)
+// Real Time Mode results in hashes for every URL being submitted to Google,
+// while Local List Mode works more like V4 and only submits hashes if there's a match with the local threat list
+// 1: https://developers.google.com/safe-browsing/reference/Real.Time.Mode
+// 2: https://bugzilla.mozilla.org/show_bug.cgi?id=2010020
+// 3: https://developers.google.com/safe-browsing/reference/Local.List.Mode
+pref("browser.safebrowsing.realTime.enabled", false); // [DEFAULT - non-Nightly]
+
+/// Disable the Real Time Request Simulator (1) (2) [NIGHTLY]
+// This is just used for data collection/telemetry and testing...
+// 1: https://phabricator.services.mozilla.com/D280931
+// 2: https://bugzilla.mozilla.org/show_bug.cgi?id=2010022
+pref("browser.safebrowsing.realTime.simulation.enabled", false); // [DEFAULT - non-Nightly]
 
 /// Enable an additional plug-in blocklist from Mozilla
 pref("urlclassifier.blockedTable", "moztest-block-simple,mozplugin-block-digest256"); // [DEFAULT - Nightly]
@@ -2353,15 +2392,25 @@ pref("dom.security.credentialmanagement.identity.enabled", false); // [DEFAULT -
 pref("dom.security.credentialmanagement.identity.heavyweight.enabled", false); // [DEFAULT - non-Nightly]
 pref("dom.security.credentialmanagement.identity.lightweight.enabled", false); // [DEFAULT]
 
+/// Disable File System Access API
+// NOTE: This is required for local machine learning (/AI) models - see https://codeberg.org/celenity/Phoenix/issues/151 for details
+// PRIVACY: Currently not supported in Private Browsing mode, so disabling this helps prevent sites from detecting if a user is in Private Browsing: https://bugzilla.mozilla.org/show_bug.cgi?id=1366318#c13
+// SECURITY: Attack Surface Reduction
+// This API also has other general privacy and security concerns, but Mozilla has acknowledged those and seems to only be implementing a subset of the functionality: https://developer.mozilla.org/docs/Web/API/File_System_API#browser_compatibility - so I'm definitely open to reconsidering this in the future if its use becomes widespread and/or the behavior is made consistent in Private Browsing
+// https://developer.mozilla.org/docs/Web/API/File_System_API
+pref("dom.fs.enabled", false);
+
 
 /// Disable Native Messaging
 // This functionality is used to allow browser extensions to communicate with external apps/programs
 // Naturally, this raises various privacy and security concerns
+// NOTE: Android requires native messaging for certain functionality - ex. it's used for obtaining favicons, sync, etc.
+// So we won't disable it by default there, but we'll set it to the defaults to expose at `about:config`
 // https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Native_messaging
 // https://developer.chrome.com/docs/extensions/develop/concepts/native-messaging
 // https://searchfox.org/firefox-main/rev/af0f713f/toolkit/components/extensions/NativeMessaging.sys.mjs#12
-pref("webextensions.native-messaging.max-input-message-bytes", 0); // [HIDDEN] [DEFAULT: 1048576]
-pref("webextensions.native-messaging.max-output-message-bytes", 0); // [HIDDEN] [DEFAULT: -1, but, to override: set to 2147483647]
+pref("webextensions.native-messaging.max-input-message-bytes", 0); // [NO-ANDROID] [HIDDEN] [DEFAULT: 1048576]
+pref("webextensions.native-messaging.max-output-message-bytes", 0); // [NO-ANDROID] [HIDDEN] [DEFAULT: -1, but, to override: set to 2147483647]
 pref("widget.use-xdg-desktop-portal.native-messaging", 0); // [LINUX-ONLY] [DEFAULT] For Flatpak/Snap https://searchfox.org/firefox-main/source/toolkit/components/extensions/docs/native-messaging-portal-design.rst
 
 /// Disable Reporting API
@@ -2436,6 +2485,11 @@ pref("permissions.default.localhost", 0); // [NO-ANDROID] [DEFAULT] Blocks websi
 // https://blog.mozilla.org/mozilla/messaging-layer-security-is-now-an-internet-standard/
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1876002
 pref("dom.origin-trials.mls.state", 1);
+
+/// Enable unused permission expiration
+// Automatically removes permissions that haven't been used recently
+// Improves privacy and security by resetting no longer necessary/possibly unwanted permissions
+pref("permissions.expireUnused.enabled", true); // [DEFAULT - Nightly]
 
 /// Prevent exposing XPCOM Components.interfaces to websites
 // PRIVACY: Fingerprinting concerns
@@ -2892,6 +2946,12 @@ pref("network.offline-mirrors-connectivity", false); // [DEFAULT]
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1889130
 pref("network.socket.ip_addr_any.disabled", true); // [DEFAULT]
 
+/// Disable profiler integration/icons at about:processes
+// Improves UI/UX - we don't really support the Gecko Profiler
+// Also useful for hardened forks that remove the Gecko Profiler entirely (ex. IronFox)
+// https://searchfox.org/firefox-main/rev/83d1a08d/modules/libpref/init/all.js#3722
+pref("toolkit.aboutProcesses.showProfilerIcons", false);
+
 /// Disable WebVTT Testing Events
 // https://searchfox.org/firefox-main/rev/82e2435f/dom/media/webvtt/HTMLTrackElement.cpp#530
 pref("media.webvtt.testing.events", false); // [DEFAULT]
@@ -2981,6 +3041,11 @@ pref("devtools.editor.autoclosebrackets", false); // [NO-ANDROID]
 
 /// Disable editor onboarding [NO-ANDROID]
 pref("devtools.webconsole.input.editorOnboarding", false); // [NO-ANDROID]
+
+/// Disable gecko-trace
+// https://searchfox.org/firefox-main/rev/83d1a08d/toolkit/components/gecko-trace/GeckoTrace.cpp#251
+// https://searchfox.org/firefox-main/rev/83d1a08d/modules/libpref/init/StaticPrefList.yaml#18411
+pref("toolkit.gecko-trace.enable", false); // [DEFAULT]
 
 /// Disable JS dump()
 // https://searchfox.org/firefox-main/rev/82e2435f/modules/libpref/init/all.js#602
@@ -3278,6 +3343,10 @@ pref("print.more-settings.open", true);
 
 
 
+/// Display supported media codecs/capabilities at `about:support` by default
+// https://searchfox.org/firefox-release/rev/70f5597c/toolkit/content/aboutSupport.js#1044
+pref("media.mediacapabilities.from-database", true); // [DEFAULT - Nightly]
+
 
 /// Enable autoscrolling by default
 pref("apz.autoscroll.enabled", true); // [DEFAULT]
@@ -3381,6 +3450,12 @@ pref("app.update.badgeWaitTime", 0); // [NO-ANDROID] Immediately show badge on h
 pref("app.update.notifyDuringDownload", true); // [NO-ANDROID] Ensure that users are notified when an update is downloaded
 pref("app.update.promptWaitTime", 0); // [NO-ANDROID] Immediately prompt users to update when an update is ready
 
+/// (Attempt to) Allow background browser updates without BITS [NO-ANDROID]
+// (For info on BITS: https://bugzilla.mozilla.org/show_bug.cgi?id=1540193) [NO-ANDROID]
+// NOTE: This only appears to work in automation, and doesn't apply outside of Windows, but doesn't hurt to set here [NO-ANDROID]
+// https://searchfox.org/firefox-main/rev/881a9b31/toolkit/mozapps/update/UpdateService.sys.mjs#6414 [NO-ANDROID]
+pref("app.update.background.allowDownloadsWithoutBITS", true); // [NO-ANDROID] [HIDDEN]
+
 /// Automatically update extensions by default
 pref("extensions.systemAddon.update.enabled", true); // [DEFAULT] https://searchfox.org/firefox-main/rev/82e2435f/toolkit/mozapps/extensions/AddonManager.sys.mjs#1317
 pref("extensions.systemAddon.update.url", "https://aus5.mozilla.org/update/3/SystemAddons/%VERSION%/%BUILD_ID%/%BUILD_TARGET%/%LOCALE%/%CHANNEL%/%OS_VERSION%/%DISTRIBUTION%/%DISTRIBUTION_VERSION%/update.xml"); // [HIDDEN - Thunderbird] [DEFAULT - non-Thunderbird]
@@ -3399,6 +3474,15 @@ pref("extensions.update.interval", 3600);
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/mozapps/extensions/internal/AddonUpdateChecker.sys.mjs#66
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/mozapps/extensions/internal/XPIDatabase.sys.mjs#2707
 pref("extensions.checkUpdateSecurity", true); // [HIDDEN] [DEFAULT]
+
+/// Ensure that another browser instance isn't running before applying browser updates
+// (This is the default, but it's usually hidden, so this exposes it at `about:config`, as it can be useful to disable in certain cases)
+// https://searchfox.org/firefox-main/rev/0ea834f7/toolkit/mozapps/update/UpdateService.sys.mjs#436
+pref("app.update.checkOnlyInstance.enabled", true); // [HIDDEN] [DEFAULT]
+
+/// Ensure we do not throttle background update checks
+// This typically occurs after the browser hasn't been used for a set number of days (ex. 2 weeks)
+pref("app.update.background.checkPolicy.throttleEnabled", false); // [HIDDEN] [DEFAULT - ESR]
 
 /// Sync with Remote Settings hourly, rather than the default of only once a day
 // This is used for delivering lots of security-critical databases (Ex. CRLite/revocation checks, malicious add-on blocklists, etc...)
@@ -3657,13 +3741,13 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2026.02.24.1", locked);
+pref("mail.dove.version", "2026.03.30.1", locked);
 
 /// Add custom branding at `about:support`
-pref("app.support.vendor", "Dove: 2026.02.24.1 | Phoenix: 2026.02.23.1"); // [HIDDEN]
+pref("app.support.vendor", "Dove: 2026.03.30.1 | Phoenix: 2026.03.30.1"); // [HIDDEN]
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2026.02.24.1 💜", locked); // [HIDDEN]
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2026.03.30.1 💜", locked); // [HIDDEN]
 pref("distribution.id", "default", locked); // [HIDDEN]
 pref("distribution.version", "default", locked); // [HIDDEN]
 
@@ -3885,21 +3969,12 @@ pref("mail.dove.status", "004");
 // https://developer.mozilla.org/docs/Web/CSS/@media/video-dynamic-range
 pref("layout.css.video-dynamic-range.allows-high", false); // [DEFAULT - Windows]
 
-/// Freeze user agent to protect against fingerprinting
-// As explained below, we can't use the standard RFP/FPP 'HttpUserAgent' & 'NavigatorUserAgent` targets, as Thunderbird lies and pretends to be Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
-// Until Thunderbird fixes this upstream, we'll spoof it ourselves
-// This matches what Firefox's RFP/FPP targets use (only difference being we switch out Firefox for Thunderbird)
-// We'll keep platform always spoofed to Windows - since we block JS by default, can be useful (and I can't see this causing weird issues like we see on Firefox...)
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1950775
-pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Thunderbird/140.0"); // [HIDDEN]
-
 /// Harden FPP
 // As explained here: https://codeberg.org/celenity/Phoenix/wiki/Features#fingerprinting
 // and here: https://codeberg.org/celenity/Phoenix/wiki/Extended.md#fingerprinting
-// We're adding -HttpUserAgent & -NavigatorUserAgent (compared to standard Phoenix Extended) because they try to report that we're Firefox, which ex. breaks the ATN (and it's unfortunately not currently possible to set granular overrides here: https://bugzilla.mozilla.org/show_bug.cgi?id=1968080)
 // We're removing -CanvasExtractionBeforeUserInputIsBlocked as Thunderbird simply doesn't support these permission prompts for canvas data extraction...
 // (We're setting -EfficientCanvasRandomization for now to work-around an upstream bug that prevents randomization from applying everywhere as expected: https://bugzilla.mozilla.org/show_bug.cgi?id=2013976)
-pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-EfficientCanvasRandomization,-FrameRate,-HttpUserAgent,-NavigatorUserAgent");
+pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-EfficientCanvasRandomization,-FrameRate");
 
 /// Set FPP granular overrides
 // This currently:
@@ -4055,8 +4130,9 @@ pref("network.http.referer.trimmingPolicy", 2);
 pref("network.http.sendRefererHeader", 0);
 
 /// Enable + hard-fail OCSP revocation checks
-// We unfortunately still need this, since CRLite is currently broken on Thunderbird for users not using Firefox's Remote Settings instance (/ the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable)
+// We unfortunately still need this, since CRLite is currently broken on Thunderbird for users not using Firefox's Remote Settings instance (which requires setting the `MOZ_REMOTE_SETTINGS_DEVTOOLS` environment variable for non-Nightly builds)
 // We need to find a way to set that variable for Thunderbird by default - and once we do (or, ideally, once Mozilla actually fixes CRLite for Thunderbird...), I'll remove this - but we'll keep for now due to that reason
+// NOTE: We do have checks in `dove-user-pref.cfg` to disable OCSP (the following prefs) if the Remote Settings instance is set correctly
 // https://wikipedia.org/wiki/Online_Certificate_Status_Protocol
 // https://github.com/arkenfox/user.js/issues/1576
 pref("security.OCSP.enabled", 1); // [DEFAULT]
@@ -4250,17 +4326,21 @@ pref("mail.dove.status", "012");
 /// Allow reporting malicious add-ons/themes to Mozilla
 pref("extensions.abuseReport.enabled", true);
 
-/// Always allow installing "incompatible" add-ons
-// REQUIRED FOR UBLOCK ORIGIN
-pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
+/// Allow ATN-XPIHandler to run on restricted/quarantined domains by default
+// (Necessary for it to access addons.thunderbird.net)
+pref("extensions.quarantineIgnoredByUser.atn-xpihandler@celenity.dev", true); // [HIDDEN]
 
 /// Allow uBird (uBlock Origin builds for Thunderbird) to run on restricted/quarantined domains by default
-pref("extensions.quarantineIgnoredByUser.uBird@celenity.dev", true);
+pref("extensions.quarantineIgnoredByUser.uBird@celenity.dev", true); // [HIDDEN]
 
 /// Allow unprivileged extensions to use experimental APIs
 // Required for ex. CardBook, also used by DKIM Verifier
 // https://searchfox.org/mozilla-central/source/toolkit/components/extensions/docs/basics.rst#142
 pref("extensions.experiments.enabled", true); // [DEFAULT]
+
+/// Always allow installing "incompatible" add-ons
+// REQUIRED FOR UBLOCK ORIGIN
+pref("extensions.strictCompatibility", false, locked); //  [DEFAULT - Nightly]
 
 /// Block Cardbook (if installed) and DKIM Verifier from accessing restricted/quarantined domains
 // https://support.mozilla.org/kb/quarantined-domains
@@ -4270,6 +4350,18 @@ pref("extensions.quarantineIgnoredByUser.dkim_verifier@pl", false); // [DEFAULT]
 /// Disable compatibility overrides
 // https://mozilla.github.io/addons-server/topics/api/v3_legacy/addons.html#compat-override
 pref("extensions.getAddons.compatOverides.url", "");
+
+/// Disable installation of add-ons by default
+// NOTE: Thunderbird doesn't prompt to re-enable this when mozAddonManager is enabled
+// We disable mozAddonManager though, so not a problem for us
+pref("xpinstall.enabled", false); // [HIDDEN]
+
+/// Disable mozAddonManager
+// This usually breaks add-on installation,
+// but we're using the ATN-XPIHandler add-on to fix it
+// For details, see https://codeberg.org/celenity/atn-xpihandler
+pref("extensions.webapi.enabled", false);
+pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 
 /// Disable recommendations for alternatives to legacy add-ons
 // https://searchfox.org/comm-central/rev/3a9b412a/mail/base/content/aboutAddonsExtra.js#25
@@ -4284,21 +4376,6 @@ pref("extensions.userContextIsolation.uBird@celenity.dev.restricted", "[]"); // 
 // https://mozilla.github.io/addons-server/topics/api/addons.html#browser-mappings
 // ex. https://services.addons.mozilla.org/api/v5/addons/browser-mappings/?browser=chrome
 pref("extensions.getAddons.browserMappings.url", ""); // [HIDDEN]
-
-/// Re-enable installation of add-ons by default
-// Unfortunately, Thunderbird doesn't prompt to re-enable this when mozAddonManager is enabled
-// (which we sadly need to enable to support installation of add-ons from `addons.thunderbird.net` for the time-being)
-pref("xpinstall.enabled", true); // [HIDDEN] [DEFAULT]
-
-/// Re-enable mozAddonManager
-// mozAddonManager has various privacy (fingerprinting) and security (added attack surface) concerns.
-// It also bypasses the permission prompt to install add-ons, and prevents add-ons (like uBlock Origin) from working on `addons.thunderbird.net`.
-// But, unfortunately, due to the removal of InstallTrigger, this is the only way to install add-ons from `addons.thunderbird.net` ATM.
-// I need to investigate finding another solution, but, for now, unfortunately: we'll re-enable this.
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1952390#c4
-// https://bugzilla.mozilla.org/show_bug.cgi?id=1384330
-pref("extensions.webapi.enabled", true); // [DEFAULT]
-pref("privacy.resistFingerprinting.block_mozAddonManager", false); // [DEFAULT]
 
 /// Update AMO API
 // Default is still v3, which has been deprecated for quite some time...
