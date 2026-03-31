@@ -79,7 +79,7 @@ echo_green_text "Loading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to 644..."
-sudo chmod =v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+sudo chmod -v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
