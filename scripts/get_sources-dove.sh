@@ -2,13 +2,16 @@
 
 set -euo pipefail
 
+# Set-up our environment
+source $(dirname $0)/env.sh
+
+# Include utilities
+source "${DOVE_UTILS}"
+
 if [[ -z "${DOVE_FROM_SOURCES+x}" ]]; then
     echo_red_text "ERROR: Do not call get_sources-dove.sh directly. Instead, use get_sources.sh." >&1
     exit 1
 fi
-
-# Set-up our environment
-source $(dirname $0)/env.sh
 
 readonly target="$1"
 readonly mode="$2"
@@ -22,26 +25,26 @@ DOVE_GET_SOURCE_UV=0
 
 if [ "${target}" == 'autoconfig' ]; then
     # Get Thunderbird's Autoconfiguration Database (ISPDB)
-    readonly DOVE_GET_SOURCE_AUTOCONFIG=1
+    DOVE_GET_SOURCE_AUTOCONFIG=1
 elif [ "${target}" == 'lxml' ]; then
     # Get lxml
-    readonly DOVE_GET_SOURCE_LXML=1
+    DOVE_GET_SOURCE_LXML=1
 elif [ "${target}" == 'phoenix' ]; then
     # Get Phoenix
-    readonly DOVE_GET_SOURCE_PHOENIX=1
+    DOVE_GET_SOURCE_PHOENIX=1
 elif [ "${target}" == 'python' ]; then
     #  Get Python
-    readonly DOVE_GET_SOURCE_PYTHON=1
+    DOVE_GET_SOURCE_PYTHON=1
 elif [ "${target}" == 'uv' ]; then
     # Get + set-up uv
-    readonly DOVE_GET_SOURCE_UV=1
+    DOVE_GET_SOURCE_UV=1
 elif [ "${target}" == 'all' ]; then
     # If no argument is specified (or argument is set to "all"), just get everything
-    readonly DOVE_GET_SOURCE_AUTOCONFIG=1
-    readonly DOVE_GET_SOURCE_LXML=1
-    readonly DOVE_GET_SOURCE_PHOENIX=1
-    readonly DOVE_GET_SOURCE_PYTHON=1
-    readonly DOVE_GET_SOURCE_UV=1
+    DOVE_GET_SOURCE_AUTOCONFIG=1
+    DOVE_GET_SOURCE_LXML=1
+    DOVE_GET_SOURCE_PHOENIX=1
+    DOVE_GET_SOURCE_PYTHON=1
+    DOVE_GET_SOURCE_UV=1
 else
     echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
     echo 'All: all (Default)'
@@ -52,18 +55,24 @@ else
     echo 'uv: uv'
     exit 1
 fi
+readonly DOVE_GET_SOURCE_AUTOCONFIG
+readonly DOVE_GET_SOURCE_LXML
+readonly DOVE_GET_SOURCE_PHOENIX
+readonly DOVE_GET_SOURCE_PYTHON
+readonly DOVE_GET_SOURCE_UV
 
 # If the 'checksum-update' argument is specified, in addition to downloading the dependencies as usual,
 ## we're also updating their checksums
 DOVE_GET_SOURCE_CHECKSUM_UPDATE=0
 if [ "${mode}" == 'checksum-update' ]; then
-    readonly DOVE_GET_SOURCE_CHECKSUM_UPDATE=1
+    DOVE_GET_SOURCE_CHECKSUM_UPDATE=1
 elif [ "${mode}" != 'download' ]; then
     echo_red_text "ERROR: Invalid mode: ${mode}\n You must enter one of the following:"
     echo 'Download: download (Default)'
     echo 'Download + update checksums: checksum-update'
     exit 1
 fi
+readonly DOVE_GET_SOURCE_CHECKSUM_UPDATE
 
 # Include version info
 source "${DOVE_VERSIONS}"

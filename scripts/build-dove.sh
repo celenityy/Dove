@@ -2,14 +2,16 @@
 
 set -euo pipefail
 
+# Set-up our environment
+source $(dirname $0)/env.sh
+
+# Include utilities
+source "${DOVE_UTILS}"
+
 if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
     echo_red_text 'ERROR: Do not call build-dove.sh directly. Instead, use build.sh.' >&1
     exit 1
 fi
-
-# Set-up our environment
-source $(dirname $0)/env.sh || error_fn
-echo
 
 # Set-up Python venv
 if [ "${DOVE_NIX}" != 1 ]; then
