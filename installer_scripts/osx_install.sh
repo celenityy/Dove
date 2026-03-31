@@ -19,23 +19,8 @@ error_fn() {
 	exit 1
 }
 
-# curl flags
-DOVE_INSTALL_CURL_FLAGS='-q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose'
-
-# chmod
-DOVE_INSTALL_CHMOD='/bin/chmod -v'
-
-# cp
-DOVE_INSTALL_CP='/bin/cp'
-
-# curl
-DOVE_INSTALL_CURL="curl ${DOVE_INSTALL_CURL_FLAGS} -O -sSL"
-
 # launchctl
 DOVE_INSTALL_LAUNCHCTL='/bin/launchctl'
-
-# ln
-DOVE_INSTALL_LN='/bin/ln -s'
 
 # mkdir
 DOVE_INSTALL_MKDIR='/bin/mkdir -vp'
@@ -78,15 +63,15 @@ brew update && brew upgrade --force --verbose || error_fn
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
-"${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist" || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER.plist to 644..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+sudo chmod -v 644 dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.MOZ_CRASHREPORTER.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.MOZ_CRASHREPORTER.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
+sudo cp dev.celenity.dove.env.MOZ_CRASHREPORTER.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER.plist || error_fn
 echo
 
 echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
@@ -94,15 +79,15 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-"${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist" || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist to 644..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+sudo chmod -v 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
+sudo cp dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist || error_fn
 echo
 
 echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..."
@@ -110,15 +95,15 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_DISABLE.plist..
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-"${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist" || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist to 644..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+sudo chmod -v 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
+sudo cp dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist || error_fn
 echo
 
 echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist..."
@@ -126,15 +111,15 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_NO_REPORT.plist
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-"${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist" || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist to 644..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+sudo chmod -v 644 dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
+sudo cp dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist || error_fn
 echo
 
 echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
@@ -142,15 +127,15 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_CRASHREPORTER_URL.plist..."
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
-"${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist" || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist to 644..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+sudo chmod -v 644 dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist to /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
+sudo cp dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist /Library/LaunchAgents/dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist || error_fn
 echo
 
 echo_green_text "Loading dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..."
@@ -158,15 +143,15 @@ echo_green_text "Loading dev.celenity.dove.env.MOZ_DISABLE_ASAN_REPORTER.plist..
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
-"${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-shared/Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.SSLKEYLOGFILE.plist" || error_fn
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.SSLKEYLOGFILE.plist to 644..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+sudo chmod -v 644 dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.SSLKEYLOGFILE.plist to /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.SSLKEYLOGFILE.plist /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+sudo cp dev.celenity.dove.env.SSLKEYLOGFILE.plist /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
 echo
 
 echo_green_text "Loading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
@@ -174,11 +159,11 @@ echo_green_text "Loading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
 echo
 
 echo_green_text "Creating /Library/celenity/Dove directory..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_MKDIR}" /Library/celenity/Dove || error_fn
+sudo mkdir -vp /Library/celenity/Dove || error_fn
 echo
 
 echo_green_text "Changing permissions of Library/celenity/Dove to 744..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 744 /Library/celenity/Dove || error_fn
+sudo chmod -v 744 /Library/celenity/Dove || error_fn
 echo
 
 echo -e ""
@@ -194,36 +179,27 @@ case ${DEVICETYPE} in
 		echo
 
         echo_green_text "Downloading dove-apply.sh..."
-		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx/Library/celenity/Dove/dove-apply.sh || error_fn
+		curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx/Library/celenity/Dove/dove-apply.sh -o "${DOVE_INSTALL_TEMP}/dove-apply.sh" || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dove-apply.sh to 744..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 744 dove-apply.sh || error_fn
+		sudo chmod -v 744 dove-apply.sh || error_fn
 		echo
 
 		echo_green_text "Copying dove-apply.sh to /Library/celenity/Dove/dove-apply.sh..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
-		echo
-		echo_green_text "Copying dove-apply.sh to /Library/celenity/Dove/dove-apply.sh..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
+		sudo cp dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
 		echo
 
 		echo_green_text "Downloading dev.celenity.dove.apply.plist..."
-		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx/Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx/Library/LaunchDaemons/dev.celenity.dove.apply.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.apply.plist" || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.apply.plist || error_fn
-		echo
-		echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.apply.plist || error_fn
+		sudo chmod -v 644 dev.celenity.dove.apply.plist || error_fn
 		echo
 
 		echo_green_text "Copying dev.celenity.dove.apply.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.plist..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
-		echo
-		echo_green_text "Copying dev.celenity.dove.apply.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.plist..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+		sudo cp dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
 		echo
 
 		echo_green_text "Loading dev.celenity.dove.apply.plist..."
@@ -231,15 +207,15 @@ case ${DEVICETYPE} in
 		echo
 
         echo_green_text "Downloading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx/Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+        curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx/Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist" || error_fn
         echo
 
         echo_green_text "Changing permissions of dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist to 644..."
-        "${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+        sudo chmod -v 644 dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
         echo
 
         echo_green_text "Copying dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+        sudo cp dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
         echo
 
         echo_green_text "Loading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
@@ -247,15 +223,15 @@ case ${DEVICETYPE} in
         echo
 
         echo_green_text "Downloading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+        curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist" || error_fn
         echo
 
         echo_green_text "Changing permissions of dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to 644..."
-        "${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+        sudo chmod -v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
         echo
 
         echo_green_text "Copying dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+        sudo cp dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
         echo
 
         echo_green_text "Loading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
@@ -275,19 +251,19 @@ case ${DEVICETYPE} in
 				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_XATTR}" /Applications/Thunderbird.app
 
 				echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_MKDIR}" /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+				sudo mkdir -vp /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
 				echo
 
 				echo_green_text "Changing permissions of /Applications/Thunderbird.app/Contents/Resources/defaults/pref to 755..."
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" -R 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+				sudo chmod -v -R 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
 				echo
 
 				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_LS}" /opt/homebrew/opt/dove/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
+				sudo ln -s /opt/homebrew/opt/dove/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
 				echo
 
 				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/macos/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_LS}" /opt/homebrew/opt/dove/macos/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
+				sudo ln -s /opt/homebrew/opt/dove/macos/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
 				echo
 				;;
 
@@ -297,15 +273,15 @@ case ${DEVICETYPE} in
 				"${DOVE_INSTALL_XATTR}" "${HOME}/Applications/Thunderbird.app"
 
 				echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-				"${DOVE_INSTALL_MKDIR}" "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
+				mkdir -vp "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
 				echo
 
 				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
-				"${DOVE_INSTALL_LS}" /opt/homebrew/opt/dove/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
+				ln -s /opt/homebrew/opt/dove/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
 				echo
 
 				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/macos/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
-				"${DOVE_INSTALL_LS}" /opt/homebrew/opt/dove/macos/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
+				ln -s /opt/homebrew/opt/dove/macos/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
 				echo
 				;;
 		esac
@@ -317,27 +293,27 @@ case ${DEVICETYPE} in
 		echo
 
 		echo_green_text "Downloading dove-apply-intel.sh..."
-		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx-intel/Library/celenity/Dove/dove-apply-intel.sh || error_fn
+		curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx-intel/Library/celenity/Dove/dove-apply-intel.sh -o "${DOVE_INSTALL_TEMP}/dove-apply-intel.sh" || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dove-apply-intel.sh to 744..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 744 dove-apply-intel.sh || error_fn
+		sudo chmod -v 744 dove-apply-intel.sh || error_fn
 		echo
 
 		echo_green_text "Copying dove-apply-intel.sh to /Library/celenity/Dove/dove-apply-intel.sh..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dove-apply-intel.sh /Library/celenity/Dove/dove-apply-intel.sh || error_fn
+		sudo cp dove-apply-intel.sh /Library/celenity/Dove/dove-apply-intel.sh || error_fn
 		echo
 
 		echo_green_text "Downloading dev.celenity.dove.apply.intel.plist..."
-		curl --cert-status -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx-intel/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx-intel/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.apply.intel.plist" || error_fn
 		echo
 
 		echo_green_text "Changing permissions of dev.celenity.dove.apply.intel.plist to 644..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.apply.intel.plist || error_fn
+		sudo chmod -v 644 dev.celenity.dove.apply.intel.plist || error_fn
 		echo
 
 		echo_green_text "Copying dev.celenity.dove.apply.intel.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.apply.intel.plist /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+		sudo cp dev.celenity.dove.apply.intel.plist /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
 		echo
 
 		echo_green_text "Loading dev.celenity.dove.apply.intel.plist..."
@@ -345,15 +321,15 @@ case ${DEVICETYPE} in
 		echo
 
         echo_green_text "Downloading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+        curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist -o "${DOVE_INSTALL_TEMP}/DOVE_HOST_PLATFORM.plist" || error_fn
         echo
 
         echo_green_text "Changing permissions of dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist to 644..."
-        "${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+        sudo chmod -v 644 dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
         echo
 
         echo_green_text "Copying dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+        sudo cp dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
         echo
 
         echo_green_text "Loading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
@@ -361,15 +337,15 @@ case ${DEVICETYPE} in
         echo
 
         echo_green_text "Downloading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+        curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist" || error_fn
         echo
 
         echo_green_text "Changing permissions of dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to 644..."
-        "${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+        sudo chmod -v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
         echo
 
         echo_green_text "Copying dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+        sudo cp dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
         echo
 
         echo_green_text "Loading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
@@ -389,19 +365,19 @@ case ${DEVICETYPE} in
 				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_XATTR}" /Applications/Thunderbird.app
 
 				echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_MKDIR}" /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+				sudo mkdir -vp /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
 				echo
 
 				echo_green_text "Changing permissions of /Applications/Thunderbird.app/Contents/Resources/defaults/pref to 755..."
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" -R 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+				sudo chmod -v -R 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
 				echo
 
 				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_LS}" /usr/local/opt/dove-intel/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
+				sudo ln -s /usr/local/opt/dove-intel/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
 				echo
 
 				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_LS}" /usr/local/opt/dove-intel/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
+				sudo ln -s /usr/local/opt/dove-intel/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
 				echo
 				;;
 
@@ -411,15 +387,15 @@ case ${DEVICETYPE} in
 				"${DOVE_INSTALL_XATTR}" "${HOME}/Applications/Thunderbird.app"
 
 				echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-				"${DOVE_INSTALL_MKDIR}" "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
+				mkdir -vp "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
 				echo
 
 				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
-				"${DOVE_INSTALL_LS}" /usr/local/opt/dove-intel/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
+				ln -s /usr/local/opt/dove-intel/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
 				echo
 
 				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
-				"${DOVE_INSTALL_LS}" /usr/local/opt/dove-intel/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
+				ln -s /usr/local/opt/dove-intel/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
 				echo
 				;;
 		esac

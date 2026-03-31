@@ -19,18 +19,6 @@ error_fn() {
 	exit 1
 }
 
-# curl flags
-DOVE_INSTALL_CURL_FLAGS='-q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose'
-
-# chmod
-DOVE_INSTALL_CHMOD='/bin/chmod -v'
-
-# cp
-DOVE_INSTALL_CP='/bin/cp'
-
-# curl
-DOVE_INSTALL_CURL="curl ${DOVE_INSTALL_CURL_FLAGS} -O -sSL"
-
 # launchctl
 DOVE_INSTALL_LAUNCHCTL='/bin/launchctl'
 
@@ -59,31 +47,31 @@ read "DEVICETYPE?Please enter your selection: "
 case ${DEVICETYPE} in
 	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
         echo_green_text "Downloading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx/Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+        curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx/Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist" || error_fn
         echo
 
 		echo_green_text "Downloading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+        curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist" || error_fn
         echo
 		;;
 
 	"intel" | "Intel" | "INTEL" | 2)
         echo_green_text "Downloading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+        curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist" || error_fn
         echo
 
 		echo_green_text "Downloading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_CURL}" https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+        curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --tlsv1.2 --trace-time --user-agent "" --verbose -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/build-resources/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist -o "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist" || error_fn
         echo
         ;;
 esac
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist to 644..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+sudo chmod -v 644 dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+sudo cp dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
 echo
 
 echo_green_text "Loading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
@@ -91,11 +79,11 @@ echo_green_text "Loading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
 echo
 
 echo_green_text "Changing permissions of dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to 644..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CHMOD}" 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+sudo chmod =v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
 echo
 
 echo_green_text "Copying dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_CP}" dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+sudo cp dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
 echo
 
 echo_green_text "Loading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
