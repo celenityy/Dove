@@ -63,7 +63,7 @@
             "uBird@celenity.dev": {
                 "blocked_install_message": "uBird: https://addons.thunderbird.net/addon/ubird/",
                 "installation_mode": "normal_installed",
-                "install_url": "https://gitlab.com/celenityy/uBird/-/raw/main/outputs/uBird_latest.xpi",
+                "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/ubird/latest.xpi",
                 "private_browsing": true
             },
             "uBlock0@raymondhill.net": {
