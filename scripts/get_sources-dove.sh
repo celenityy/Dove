@@ -319,30 +319,39 @@ function download_and_extract() {
 function get_autoconfig() {
     echo_red_text 'Downloading Thunderbird Autoconfiguration Database (ISPDB)...'
     download_and_extract 'autoconfig' "https://github.com/thunderbird/autoconfig/archive/${AUTOCONFIG_COMMIT}.tar.gz" "${DOVE_AUTOCONFIG}" "${AUTOCONFIG_SHA512SUM}"
-    echo_green_text "SUCCESS: Set-up Thunderbird Autoconfiguration Database (ISPDB) at ${DOVE_AUTOCONFIG}"
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+        echo_green_text "SUCCESS: Set-up Thunderbird Autoconfiguration Database (ISPDB) at ${DOVE_AUTOCONFIG}"
+    fi
 }
 
 # Get lxml
 function get_lxml() {
-    if  [ ! -d "${DOVE_UV_DIR}" ] || [ ! -f "${DOVE_PYENV}" ]; then
-        echo_red_text "ERROR: You tried to download lxml, but you don't have a uv environment set-up yet."
-        exit 1
+    # If all we're doing is updating the checksum, we don't care if the environment is prepared
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+        if  [ ! -d "${DOVE_UV_DIR}" ] || [ ! -f "${DOVE_PYENV}" ]; then
+            echo_red_text "ERROR: You tried to download lxml, but you don't have a uv environment set-up yet."
+            exit 1
+        fi
     fi
 
     echo_red_text "Downloading lxml..."
     download_and_extract 'lxml' "https://github.com/lxml/lxml/archive/${LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${LXML_SHA512SUM}"
 
-    source "${DOVE_PYENV}"
-    echo_red_text 'Installing lxml...'
-    "${DOVE_UV}" pip install --strict "${DOVE_LXML}"
-    echo_green_text 'SUCCESS: Set-up lxml'
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+        source "${DOVE_PYENV}"
+        echo_red_text 'Installing lxml...'
+        "${DOVE_UV}" pip install --strict "${DOVE_LXML}"
+        echo_green_text 'SUCCESS: Set-up lxml'
+    fi
 }
 
 # Get Phoenix
 function get_phoenix() {
     echo_red_text 'Downloading Phoenix...'
     download_and_extract 'phoenix' "https://gitlab.com/celenityy/Phoenix/-/archive/${PHOENIX_COMMIT}/Phoenix-${PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${PHOENIX_SHA512SUM}"
-    echo_green_text "SUCCESS: Set-up Phoenix at ${DOVE_PHOENIX}"
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+        echo_green_text "SUCCESS: Set-up Phoenix at ${DOVE_PHOENIX}"
+    fi
 }
 
 # Get Python
@@ -376,28 +385,57 @@ function get_python() {
         fi
     fi
 
-    echo_red_text 'Downloading Python...'
-    download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]; then
+        echo_red_text 'Downloading Python (Linux - ARM64)...'
+        download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
 
-    # Validate SHA512sum
-    validate_sha512sum "${PYTHON_SHA512SUM}" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+        # "Validate" (Update) SHA512sum
+        validate_sha512sum "${PYTHON_SHA512SUM_LINUX_ARM64}" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
 
-    echo_green_text "SUCCESS: Downloaded Python to ${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+        echo_red_text 'Downloading Python (Linux - x86_64)...'
+        download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+
+        # "Validate" (Update) SHA512sum
+        validate_sha512sum "${PYTHON_SHA512SUM_LINUX_X86_64}" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+
+        echo_red_text 'Downloading Python (OS X - ARM64)...'
+        download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz"
+
+        # "Validate" (Update) SHA512sum
+        validate_sha512sum "${PYTHON_SHA512SUM_OSX_ARM64}" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz"
+
+        echo_red_text 'Downloading Python (OS X - x86_64)...'
+        download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz"
+
+        # "Validate" (Update) SHA512sum
+        validate_sha512sum "${PYTHON_SHA512SUM_OSX_X86_64}" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz"
+    else
+        echo_red_text 'Downloading Python...'
+        download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+
+        # Validate SHA512sum
+        validate_sha512sum "${PYTHON_SHA512SUM}" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+
+        echo_green_text "SUCCESS: Downloaded Python to ${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+    fi
 }
 
 # Get + set-up uv
 function get_uv() {
-    if  [ ! -d "${DOVE_PYTHON_DIR}" ]; then
-        echo_red_text "ERROR: You tried to download uv, but you don't have Python downloaded yet."
-        exit 1
-    fi
+    # If all we're doing is updating the checksum, we don't care if the environment is prepared
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+        if  [ ! -d "${DOVE_PYTHON_DIR}" ]; then
+            echo_red_text "ERROR: You tried to download uv, but you don't have Python downloaded yet."
+            exit 1
+        fi
 
-    if [[ -d "${DOVE_PYENV_DIR}" ]]; then
-        echo_red_text "The uv environment is already set-up at ${DOVE_PYENV_DIR}"
-        read -p "Do you want to re-create it? [y/N] " -n 1 -r
-        echo
-        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-            rm -rf "${DOVE_PYENV_DIR}" "${DOVE_UV_DIR}" "${DOVE_UV_LOCAL}"
+        if [[ -d "${DOVE_PYENV_DIR}" ]]; then
+            echo_red_text "The uv environment is already set-up at ${DOVE_PYENV_DIR}"
+            read -p "Do you want to re-create it? [y/N] " -n 1 -r
+            echo
+            if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+                rm -rf "${DOVE_PYENV_DIR}" "${DOVE_UV_DIR}" "${DOVE_UV_LOCAL}"
+            fi
         fi
     fi
 
@@ -430,15 +468,29 @@ function get_uv() {
         fi
     fi
 
-    echo_red_text 'Downloading uv...'
-    download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${UV_ARCH}-${UV_PLATFORM}.tar.gz" "${DOVE_UV_DIR}" "${UV_SHA512SUM}"
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]; then
+        echo_red_text 'Downloading uv (Linux - ARM64)...'
+        download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-aarch64-unknown-linux-gnu.tar.gz" "${DOVE_UV_DIR}" "${UV_SHA512SUM_LINUX_ARM64}"
 
-    echo_red_text 'Installing Python...'
-    "${DOVE_UV}" python install "${PYTHON_VERSION}"
+        echo_red_text 'Downloading uv (Linux - x86_64)...'
+        download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz" "${DOVE_UV_DIR}" "${UV_SHA512SUM_LINUX_X86_64}"
 
-    echo_red_text 'Creating uv environment...'
-    "${DOVE_UV}" venv "${DOVE_PYENV_DIR}"
-    echo_green_text "SUCCESS: Set-up uv environment at ${DOVE_PYENV_DIR}"
+        echo_red_text 'Downloading uv (OS X - ARM64)...'
+        download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-aarch64-apple-darwin.tar.gz" "${DOVE_UV_DIR}" "${UV_SHA512SUM_OSX_ARM64}"
+
+        echo_red_text 'Downloading uv (OS X - x86_64)...'
+        download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-apple-darwin.tar.gz" "${DOVE_UV_DIR}" "${UV_SHA512SUM_OSX_X86_64}"
+    else
+        echo_red_text 'Downloading uv...'
+        download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${UV_ARCH}-${UV_PLATFORM}.tar.gz" "${DOVE_UV_DIR}" "${UV_SHA512SUM}"
+
+        echo_red_text 'Installing Python...'
+        "${DOVE_UV}" python install "${PYTHON_VERSION}"
+
+        echo_red_text 'Creating uv environment...'
+        "${DOVE_UV}" venv "${DOVE_PYENV_DIR}"
+        echo_green_text "SUCCESS: Set-up uv environment at ${DOVE_PYENV_DIR}"
+    fi
 }
 
 if [ "${DOVE_GET_SOURCE_AUTOCONFIG}" == 1 ]; then
