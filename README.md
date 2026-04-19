@@ -613,9 +613,8 @@ Huge thank you to the following projects & individuals for making Dove possible.
 	- ⚖️ [GPL-3.0-or-later](https://github.com/gorhill/uBlock/blob/master/LICENSE.txt)
 	- Pre-installed extension - provides content blocking
 
-- **[Quad9](https://quad9.net/)**
-	- 🪪 [Quad9 Team](https://quad9.net/about/team/)
-	- 💸 [Donate](https://www.quad9.net/donate/)
+- **[Mullvad DNS](https://mullvad.net/help/dns-over-https-and-dns-over-tls)**
+	- 🪪 [Mullvad VPN AB](https://mullvad.net/about)
 	- Default DNS Over HTTPS Resolver
 
 And of course...

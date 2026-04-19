@@ -14,7 +14,7 @@
                     "display.favicon.show": true,
                     "display.keySecure": true,
                     "dkim.enable": true,
-                    "dns.nameserver": "9.9.9.9",
+                    "dns.nameserver": "194.242.2.4",
                     "error.algorithm.rsa.weakKeyLength.treatAs": 1,
                     "error.algorithm.sign.rsa-sha1.treatAs": 1,
                     "error.detailedReasons": true,
