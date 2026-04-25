@@ -723,7 +723,9 @@ pref("mail.collect_email_address_outgoing", false);
 
 /// Disable clipboard events
 // https://developer.mozilla.org/docs/Web/API/ClipboardEvent
+pref("dom.allow_cut_copy", false); // `cut` and `copy` https://searchfox.org/firefox-main/rev/62066911/dom/base/Document.cpp#6157
 pref("dom.event.clipboardevents.enabled", false);
+pref("dom.execCommand.paste.enabled", false); // `paste` https://searchfox.org/firefox-main/rev/62066911/dom/base/Document.cpp#6151
 
 /// Disable Geolocation
 // https://browserleaks.com/geo
