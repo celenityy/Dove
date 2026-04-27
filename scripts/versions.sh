@@ -18,11 +18,11 @@ readonly AUTOCONFIG_SHA512SUM='e20f3c8a024d74127549fbd6a37ac1821e2b217b54a36a534
 # Tools
 
 ## lxml
-### Version: 6.0.4
+### Version: 6.1.0
 ### https://github.com/lxml/lxml
-### (This commit corresponds to https://github.com/lxml/lxml/releases/tag/lxml-6.0.4)
-readonly LXML_COMMIT='1fd1d6bc300bcd9a41def810c5fc3223811b579e'
-readonly LXML_SHA512SUM='e104131f94995112941404b07180e812ec62625f0b92f27a04e4e6f32803f40803dc2dbf4d8c4540b7a36cff982bca406c45ae87b89973aff1c696f874432f4c'
+### (This commit corresponds to https://github.com/lxml/lxml/releases/tag/lxml-6.1.0)
+readonly LXML_COMMIT='43722f4402afa48b7890a96ce012eb0b9b1af5be'
+readonly LXML_SHA512SUM='361581690be1597cd3177355442b0bbff6f01cc65f4c65b06fbdaf7b9ce15402661a586c25d48d5961bdc32577ad1596656a2c79c1ac52a1f5fd8e4be073b9d9'
 
 ## Python
 ### https://github.com/astral-sh/python-build-standalone
