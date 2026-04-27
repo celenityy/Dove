@@ -179,6 +179,7 @@ export UV_UNMANAGED_INSTALL="${DOVE_UV_DIR}"
 
 ## Prevent using the system Python
 export UV_MANAGED_PYTHON=1
+export UV_PYTHON_NO_REGISTRY=1
 export UV_SYSTEM_PYTHON='false'
 
 ## Python
