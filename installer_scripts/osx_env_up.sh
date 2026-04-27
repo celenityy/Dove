@@ -14,7 +14,7 @@ echo_green_text() {
 error_fn() {
 	echo
 	echo_red_text "Something went wrong! The script failed."
-	echo_red_text "Please report this (with the output message) to https://phoenix.celenity.dev/issues"
+	echo_red_text "Please report this (with the output message) to https://dove.celenity.dev/issues"
 	echo
 	exit 1
 }

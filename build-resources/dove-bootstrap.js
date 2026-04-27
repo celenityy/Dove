@@ -3,7 +3,8 @@
 
 pref("general.config.sandbox_enabled", true, locked);
 
-pref("general.config.filename", "dove.cfg");
-pref("general.config.obscure_value", 0);
+pref("general.config.filename", "dove.cfg", locked);
+pref("general.config.obscure_value", 0, locked);
+pref("general.config.vendor", "dove", locked);
 
 pref("mail.dove.applied.prefs", true, locked);

@@ -60,12 +60,20 @@ if [[ -f "${DOVE_OSX_INTEL_OUTPUTS}/policies.json" ]]; then
 fi
 
 if [[ -f "${DOVE_TEMP}/prefs/dove-linux.cfg" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-linux.cfg" "${DOVE_LINUX_OUTPUTS}/unused/dove.cfg" || error_fn
+    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_LINUX_OUTPUTS}/unused/dove-user-pref.cfg" || error_fn
+    echo
+
+    cat "${DOVE_TEMP}/prefs/dove-linux.cfg" "${DOVE_LINUX_OUTPUTS}/unused/dove-user-pref.cfg" > "${DOVE_LINUX_OUTPUTS}/dove.cfg" || error_fn
     echo
 fi
 
 if [[ -f "${DOVE_TEMP}/prefs/dove-linux-flatpak.cfg" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-linux-flatpak.cfg" "${DOVE_LINUX_FLATPAK_OUTPUTS}/unused/dove.cfg" || error_fn
+    # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
+    grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_LINUX_FLATPAK_OUTPUTS}/unused/dove-user-pref.cfg" || error_fn
+    echo
+
+    cat "${DOVE_TEMP}/prefs/dove-linux-flatpak.cfg" "${DOVE_LINUX_FLATPAK_OUTPUTS}/unused/dove-user-pref.cfg" > "${DOVE_LINUX_FLATPAK_OUTPUTS}/dove.cfg" || error_fn
     echo
 fi
 
@@ -97,12 +105,12 @@ if [[ -f "${DOVE_TEMP}/prefs/dove-windows.cfg" ]]; then
 fi
 
 if [[ -f "${DOVE_TEMP}/prefs/dove-linux.js" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-linux.js" "${DOVE_LINUX_OUTPUTS}/defaults/pref/dove.js" || error_fn
+    mv "${DOVE_TEMP}/prefs/dove-linux.js" "${DOVE_LINUX_OUTPUTS}/unused/dove.js" || error_fn
     echo
 fi
 
 if [[ -f "${DOVE_TEMP}/prefs/dove-linux-flatpak.js" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-linux-flatpak.js" "${DOVE_LINUX_FLATPAK_OUTPUTS}/defaults/pref/dove.js" || error_fn
+    mv "${DOVE_TEMP}/prefs/dove-linux-flatpak.js" "${DOVE_LINUX_FLATPAK_OUTPUTS}/unused/dove.js" || error_fn
     echo
 fi
 
@@ -158,9 +166,9 @@ if [ "${DOVE_LINUX}" == 1 ]; then
     echo
 
     # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_LINUX_OUTPUTS}/dove.cfg" || error_fn
+    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_BUILD_RESOURCES}/dove-bootstrap.js" > "${DOVE_LINUX_OUTPUTS}/defaults/pref/dove.js" || error_fn
     echo
-    echo "Created ${DOVE_LINUX_OUTPUTS}/dove.cfg"
+    echo "Created ${DOVE_LINUX_OUTPUTS}/defaults/pref/dove.js"
 fi
 
 # GNU/LINUX (FLATPAK)
@@ -194,9 +202,9 @@ if [ "${DOVE_LINUX_FLATPAK}" == 1 ]; then
     echo
 
     # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_LINUX_FLATPAK_OUTPUTS}/dove.cfg" || error_fn
+    grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_BUILD_RESOURCES}/dove-bootstrap.js" > "${DOVE_LINUX_FLATPAK_OUTPUTS}/defaults/pref/dove.js" || error_fn
     echo
-    echo "Created ${DOVE_LINUX_FLATPAK_OUTPUTS}/dove.cfg"
+    echo "Created ${DOVE_LINUX_FLATPAK_OUTPUTS}/defaults/pref/dove.js"
 fi
 
 # OS X

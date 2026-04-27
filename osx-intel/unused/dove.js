@@ -16,7 +16,7 @@
 // Welcome to the heart of the Phoenix.
 // This file contains preferences shared across all Phoenix configs, platforms (Desktop & Android), and Dove.
 
-pref("browser.phoenix.version", "2026.03.31.1", locked);
+pref("browser.phoenix.version", "2026.04.27.1", locked);
 
 /* INDEX 
 
@@ -325,20 +325,16 @@ pref("extensions.webservice.discoverURL", ""); // [HIDDEN - non-Thunderbird]
 // https://searchfox.org/firefox-main/source/toolkit/components/doh/DoHController.sys.mjs
 // https://searchfox.org/firefox-main/source/toolkit/components/doh/DoHHeuristics.sys.mjs
 // https://searchfox.org/firefox-main/source/netwerk/docs/dns/dns-over-https-trr.md
-pref("doh-rollout._testing", true, locked); // [HIDDEN]
+pref("doh-rollout._testing", false); // [HIDDEN] [DEFAULT]
 pref("doh-rollout.disable-heuristics", true, locked); // [HIDDEN]
 pref("doh-rollout.doneFirstRun", true, locked); // [HIDDEN]
-pref("doh-rollout.doorhanger-decision", "UIDisabled", locked); // [HIDDEN]
 pref("doh-rollout.enabled", false, locked); // [HIDDEN]
-pref("doh-rollout.mode", 5, locked); // [HIDDEN]
 pref("doh-rollout.provider-steering.enabled", false, locked); // [HIDDEN]
 pref("doh-rollout.provider-steering.provider-list", "", locked); // [HIDDEN]
 pref("doh-rollout.self-enabled", false, locked); // [HIDDEN]
 pref("doh-rollout.skipHeuristicsCheck", true, locked); // [HIDDEN]
 pref("doh-rollout.trr-selection.enabled", false, locked); // [HIDDEN]
 pref("doh-rollout.trr-selection.provider-list", "", locked); // [HIDDEN]
-pref("doh-rollout.uri", "", locked); // [HIDDEN]
-pref("network.android_doh.autoselect_enabled", false, locked); // [HIDDEN - non-Android] https://searchfox.org/firefox-main/rev/82e2435f/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntimeSettings.java#1773
 
 /// Disable DoH performance measurements
 // https://searchfox.org/firefox-main/rev/82e2435f/browser/components/BrowserGlue.sys.mjs#1155
@@ -411,8 +407,8 @@ pref("browser.promo.pin.enabled", false, locked); // [HIDDEN - Android/Thunderbi
 pref("browser.send_to_device_locales", "", locked); // [HIDDEN - Android/Thunderbird] Disables "Send to Device" email promotions https://searchfox.org/firefox-main/rev/dc1c78e9/browser/app/profile/firefox.js#2503 https://searchfox.org/firefox-main/rev/dc1c78e9/toolkit/modules/BrowserUtils.sys.mjs#789 https://searchfox.org/firefox-main/rev/dc1c78e9/browser/components/preferences/moreFromMozilla.js#273
 pref("browser.vpn_promo.disallowed_regions", "xx");
 pref("browser.vpn_promo.enabled", false, locked); // [HIDDEN - Android/Thunderbird] https://searchfox.org/firefox-main/rev/dc1c78e9/toolkit/modules/BrowserUtils.sys.mjs#692
+pref("pdfjs.enableNewBadge", false, locked); // https://searchfox.org/firefox-main/rev/cdf7090f/toolkit/components/pdfjs/content/web/viewer.mjs#9012
 pref("privacy.trackingprotection.allow_list.hasUserInteractedWithETPSettings", true, locked); // Disables nag/onboarding to configure ETP exception lists https://searchfox.org/firefox-main/rev/dc1c78e9/modules/libpref/init/all.js#3342 https://searchfox.org/firefox-main/rev/dc1c78e9/netwerk/url-classifier/UrlClassifierExceptionListService.sys.mjs#200
-
 
 
 /// Disable "Privacy-Preserving Attribution"
@@ -930,6 +926,11 @@ pref("browser.phoenix.status", "006");
 // (To expose the preference via the `about:config`)
 pref("security.certerror.hideAddException", false); // [HIDDEN] [DEFAULT]
 
+/// Always attempt to resolve HTTPS resource records, regardless of connectivity checks/other factors
+// https://searchfox.org/firefox-main/rev/62066911/netwerk/protocol/http/nsHttpChannel.cpp#987
+// https://developer.mozilla.org/docs/Glossary/HTTPS_RR
+pref("network.dns.force_use_https_rr", true);
+
 /// Always preload intermediates
 // https://wiki.mozilla.org/Security/CryptoEngineering/Intermediate_Preloading
 pref("security.remote_settings.intermediates.enabled", true); // [DEFAULT]
@@ -1056,7 +1057,7 @@ pref("dom.security.https_first_schemeless", true); // [DEFAULT]
 // https://support.mozilla.org/kb/https-only-prefs
 // NOTE: Locked on Desktop due to being a critical privacy and security feature,
 // but we won't lock it for Android/Thunderbird, as it's unfortunately not possible to add exceptions there
-// https://gitlab.com/ironfox-oss/IronFox/-/issues/48
+// https://codeberg.org/ironfox-oss/bugs/issues/48
 pref("dom.security.https_only_mode", true);
 pref("dom.security.https_only_mode.upgrade_local", true); // Enforce HTTPS-Only Mode for local requests
 pref("dom.security.https_only_mode_pbm", true);
@@ -1075,7 +1076,7 @@ pref("security.ssl.enable_ocsp_must_staple", true); // [DEFAULT]
 pref("security.ssl.enable_ocsp_stapling", true); // [DEFAULT]
 
 /// Enable Post Quantum Key Agreement (Kyber)
-pref("media.webrtc.enable_pq_dtls", true); // [DEFAULT] [ESR]
+pref("media.webrtc.enable_pq_dtls", true); // [NO-ANDROID] [ESR] [DEFAULT]
 pref("media.webrtc.enable_pq_hybrid_kex", true); // [DEFAULT]
 pref("media.webrtc.send_mlkem_keyshare", true); // [DEFAULT]
 pref("network.http.http3.enable_kyber", true); // [DEFAULT]
@@ -1090,7 +1091,16 @@ pref("network.http.prompt-temp-redirect", true);
 
 /// Enforce Strict Certificate Pinning
 // https://wiki.mozilla.org/SecurityEngineering/Public_Key_Pinning#How_to_use_pinning
-pref("security.cert_pinning.enforcement_level", 2);
+// The list of domains currently covered can be found here: https://searchfox.org/firefox-main/source/security/manager/ssl/StaticHPKPins.h
+// Some are also displayed in a prettier format here: https://searchfox.org/firefox-main/source/security/manager/tools/PreloadedHPKPins.json
+// For values/modes, see: https://searchfox.org/firefox-main/rev/19539767/security/manager/ssl/PublicKeyPinningService.cpp#32
+//    Disabled             = 0
+//    AllowUserCAMITM      = 1
+//    Strict               = 2
+//    EnforceTestMode      = 3
+// Strict excludes certain domains that Mozilla wants to collect telemetry for/labels as "testing", while EnforceTestMode
+// includes all domains/enforces everything
+pref("security.cert_pinning.enforcement_level", 3);
 
 /// Enforce TLS 1.3 downgrade protection
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1576790
@@ -1148,7 +1158,6 @@ pref("network.dns.disablePrefetchFromHTTPS", true);
 pref("network.dns.prefetch_via_proxy", false); // [DEFAULT]
 pref("network.http.speculative-parallel-limit", 0); // [DEFAULT - Thunderbird]
 pref("network.predictor.enable-hover-on-ssl", false); // [DEFAULT] https://searchfox.org/firefox-main/rev/3c918058/docshell/base/nsDocShell.cpp#14207
-pref("network.predictor.enable-prefetch", false); // [NO-ANDROID] [ESR] [DEFAULT]
 pref("network.predictor.enabled", false); // [NO-ANDROID] [ESR]
 pref("network.prefetch-next", false);
 
@@ -1217,7 +1226,6 @@ pref("browser.search.rustSelector.featureGate", true); // [DEFAULT]
 
 
 
-
 /// Notify users if their default search engine has been removed
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/components/search/SearchService.sys.mjs#2030
 pref("browser.search.removeEngineInfobar.enabled", true); // [DEFAULT]
@@ -1232,7 +1240,8 @@ pref("browser.phoenix.status", "009");
 /*** 010 DNS ***/
 
 /// Customize list of built-in DoH resolvers
-pref("doh-rollout.provider-list", '[{"uri":"https://dns.quad9.net/dns-query","UIName":"Quad9 🇨🇭","autoDefault":true},{"uri":"https://dns.adguard-dns.com/dns-query","UIName":"AdGuard 🇨🇾","autoDefault":false},{"uri":"https://unfiltered.adguard-dns.com/dns-query","UIName":"AdGuard (Unfiltered) 🇨🇾","autoDefault":false},{"uri":"https://mozilla.cloudflare-dns.com/dns-query","UIName":"Cloudflare 🇺🇸","autoDefault":false},{"uri":"https://security.cloudflare-dns.com/dns-query","UIName":"Cloudflare (Malware Protection) 🇺🇸","autoDefault":false},{"uri":"https://noads.joindns4.eu/dns-query","UIName":"DNS4EU (Ad Blocking) 🇨🇿","autoDefault":false},{"uri":"https://protective.joindns4.eu/dns-query","UIName":"DNS4EU (Protective) 🇨🇿","autoDefault":false},{"uri":"https://unfiltered.joindns4.eu/dns-query","UIName":"DNS4EU (Unfiltered) 🇨🇿","autoDefault":false},{"uri":"https://base.dns.mullvad.net/dns-query","UIName":"Mullvad (Base) 🇸🇪","autoDefault":false},{"uri":"https://dns.mullvad.net/dns-query","UIName":"Mullvad (Unfiltered) 🇸🇪","autoDefault":false},{"uri":"https://firefox.dns.nextdns.io/","UIName":"NextDNS 🇺🇸","autoDefault":false},{"uri":"https://wikimedia-dns.org/dns-query","UIName":"Wikimedia 🇺🇸","autoDefault":false}]'); // [HIDDEN]
+pref("doh-rollout.provider-list", '[{"uri":"https://base.dns.mullvad.net/dns-query","UIName":"Mullvad (Base) 🇸🇪","autoDefault":true},{"uri":"https://mozilla.cloudflare-dns.com/dns-query","UIName":"Cloudflare 🇺🇸","autoDefault":false},{"uri":"https://security.cloudflare-dns.com/dns-query","UIName":"Cloudflare (Malware Protection) 🇺🇸","autoDefault":false},{"uri":"https://noads.joindns4.eu/dns-query","UIName":"DNS4EU (Ad Blocking) 🇨🇿","autoDefault":false},{"uri":"https://protective.joindns4.eu/dns-query","UIName":"DNS4EU (Protective) 🇨🇿","autoDefault":false},{"uri":"https://unfiltered.joindns4.eu/dns-query","UIName":"DNS4EU (Unfiltered) 🇨🇿","autoDefault":false},{"uri":"https://dns.mullvad.net/dns-query","UIName":"Mullvad (Unfiltered) 🇸🇪","autoDefault":false}]'); // [HIDDEN]
+pref("network.trr.default_provider_uri", "https://base.dns.mullvad.net/dns-query"); // Set the default DoH Provider to Mullvad (Base)
 
 /// Disable DoH Connectivity Checks
 pref("network.connectivity-service.DNS_HTTPS.domain", "");
@@ -1240,6 +1249,9 @@ pref("network.trr.attempt-when-retrying-confirmation", true); // Ensure we alway
 pref("network.trr.confirmationNS", "skip"); // https://searchfox.org/firefox-main/rev/e535ba2b/netwerk/dns/TRRService.cpp#273
 pref("network.trr.skip-check-for-blocked-host", true); // https://searchfox.org/firefox-main/rev/82e2435f/netwerk/dns/TRRService.cpp#1062
 pref("network.trr.wait-for-confirmation", false); // [DEFAULT] Ensure we always attempt to use DoH no matter what, regardless of the confirmation connectivity check https://searchfox.org/firefox-main/rev/e535ba2b/netwerk/dns/TRRService.cpp#282
+
+/// Disable DoH GET
+pref("network.trr.useGET", false); // https://bugzilla.mozilla.org/show_bug.cgi?id=1699759
 
 /// Disable EDNS Client Subnet (ECS) to prevent leaking general location data to authoritative DNS servers...
 // https://wikipedia.org/wiki/EDNS_Client_Subnet
@@ -1264,8 +1276,7 @@ pref("network.notify.resolvers", false);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1672528
 pref("network.trr.allow-rfc1918", false); // [DEFAULT]
 
-/// Enable DoH without fallback & Set to Quad9 by default
-pref("network.trr.default_provider_uri", "https://dns.quad9.net/dns-query");
+/// Enable DoH without fallback by default
 pref("network.trr.mode", 3);
 
 /// Enable EncryptedClientHello
@@ -1315,6 +1326,11 @@ pref("network.trr.exclude-etc-hosts", false);
 pref("network.trr.send_accept-language_headers", false); // [DEFAULT]
 pref("network.trr.send_empty_accept-encoding_headers", true); // [DEFAULT]
 pref("network.trr.send_user-agent_headers", false); // [DEFAULT]
+
+/// Prioritize HTTP/3
+// https://searchfox.org/firefox-main/rev/62066911/netwerk/dns/nsIDNSService.idl#354
+pref("network.trr.allow_default_http3_first", true); // [DEFAULT - Nightly]
+pref("network.trr.force_http3_first", true);
 
 
 pref("browser.phoenix.status", "010");
@@ -1552,11 +1568,6 @@ pref("media.gmp-provider.enabled", true); // [DEFAULT - non-Thunderbird]
 pref("media.allow-audio-non-utility", false); // [DEFAULT - non-iOS]
 pref("media.utility-process.enabled", true); // [DEFAULT]
 
-/// Validate signature when updating GMP (if enabled)
-pref("media.gmp-manager.cert.checkAttributes", true); // [DEFAULT]
-pref("media.gmp-manager.cert.requireBuiltIn", true); // [DEFAULT]
-pref("media.gmp-manager.checkContentSignature", true); // [DEFAULT]
-
 pref("browser.phoenix.status", "013");
 
 /*** 014 ATTACK SURFACE REDUCTION ***/
@@ -1580,7 +1591,8 @@ pref("gfx.font_rendering.opentype_svg.enabled", false);
 pref("javascript.options.baselinejit", false); // Baseline Compiler
 pref("javascript.options.ion", false); // WarpMonkey
 pref("javascript.options.jithints", false); // Eager baseline hints https://bugzilla.mozilla.org/show_bug.cgi?id=1831572
-pref("javascript.options.main_process_disable_jit", true); // [DEFAULT - iOS] Disable all JITs for the (critical/especially sensitive) parent process https://searchfox.org/firefox-main/rev/1c6a8b56/xpcom/build/XPCOMInit.cpp#239 https://firefox-source-docs.mozilla.org/dom/ipc/process_model.html#parent-process
+// Disabling main process jit breaks translations https://bugzilla.mozilla.org/show_bug.cgi?id=2019140#c31
+// pref("javascript.options.main_process_disable_jit", true); // [DEFAULT - iOS] Disable all JITs for the (critical/especially sensitive) parent process https://searchfox.org/firefox-main/rev/1c6a8b56/xpcom/build/XPCOMInit.cpp#239 https://firefox-source-docs.mozilla.org/dom/ipc/process_model.html#parent-process
 pref("javascript.options.native_regexp", false); // irregexp JIT, for regex evaluation https://searchfox.org/firefox-main/rev/dc1c78e9/modules/libpref/init/StaticPrefList.yaml#8741 https://searchfox.org/firefox-main/rev/dc1c78e9/js/xpconnect/src/XPCJSContext.cpp#901
 pref("javascript.options.wasm_optimizingjit", false); // WASM-Ion (BaldrMonkey)
 
@@ -1610,6 +1622,10 @@ pref("dom.postMessage.sharedArrayBuffer.bypassCOOP_COEP.insecure.enabled", false
 // https://developer.mozilla.org/docs/Web/API/WebXR_Device_API
 pref("permissions.default.xr", 2); // [HIDDEN - Android/Thunderbird]
 
+/// Disable XSLT
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1998002
+pref("dom.xslt.enabled", false);
+
 /// If JIT (Ion/WarpMonkey) is disabled, also disable it for extensions
 // This is the default, but it's hidden - so setting it here lets us expose it...
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1599226
@@ -1627,6 +1643,9 @@ pref("signon.storeWhenAutocompleteOff", true); // [DEFAULT]
 /// Always display a `reveal password` button in `password` `<input>` types 
 // https://developer.mozilla.org/docs/Web/HTML/Element/input/password
 pref("layout.forms.reveal-password-button.enabled", true);
+
+/// Always prompt for access to "extended information" (direct attestation) of security keys
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1981587
 
 /// Crash on insecure password input [OSX-ONLY]
 pref("intl.allow-insecure-text-input", false); // [OSX-ONLY] [DEFAULT - non-Firefox release/beta/Debug] https://searchfox.org/firefox-main/rev/93aad2a6615f670b1279c229dd37f7397236131a/modules/libpref/init/all.js#3454
@@ -1771,7 +1790,7 @@ pref("xpinstall.whitelist.add", "", locked); // [HIDDEN - non-Android] [DEFAULT 
 
 /// Disable add-on sideloading
 // Only allows installing extensions from profile & application directories (Prevents extensions being installed from the system/via other software)
-// https://archive.is/DYjAM
+// https://web.archive.org/web/20220608121322/https://mike.kaply.com/2012/02/21/understanding-add-on-scopes/
 // https://support.mozilla.org/kb/deploying-firefox-with-extensions
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/mozapps/extensions/internal/AddonSettings.sys.mjs#125
 pref("extensions.autoDisableScopes", 15); // [DEFAULT - non-Thunderbird] Defense in depth, ensures sideloaded extensions are always disabled by default... (Not locked for desktop because it can be useful in certain instances, ex. for those who use impermanence)
@@ -1839,7 +1858,7 @@ pref("extensions.manifestV3.enabled", true); // [DEFAULT]
 // Mozilla's current list: https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/addons-manager-settings/changeset?_expected=0
 pref("extensions.remoteSettings.disabled", true); // [HIDDEN] Used for downloading/updating Mozilla's list https://searchfox.org/firefox-main/source/toolkit/mozapps/extensions/docs/AMRemoteSettings-overview.rst
 pref("extensions.quarantinedDomains.enabled", true); // [DEFAULT]
-pref("extensions.quarantinedDomains.list", "autoatendimento.bb.com.br,ibpf.sicredi.com.br,ibpj.sicredi.com.br,internetbanking.caixa.gov.br,www.ib12.bradesco.com.br,www2.bancobrasil.com.br,10.0.0.1,192.168.1.1,192.168.50.1,1password.ca,1password.com,1password.eu,365online.com,account.amd.com,account.apple.com,account.asus.com,account.brave.com,account.collegeboard.org,account.live.com,account.microcenter.com,account.microsoft.com,account.nordpass.com,account.proton.me,account.sony.com,account.t-mobile.com,account-api.proton.me,accounts.1password.ca,accounts.1password.com,accounts.1password.eu,accounts.ent.1password.com,accounts.fedoraproject.org,accounts.firefox.com,accounts.google.com,accounts.nintendo.com,accounts.pixiv.net,accounts.scdn.co,accounts.snapchat.com,accounts.spotify.com,acs-home-prod-login-fde-hhd4d2h9drbfg7hy.a02.azurefd.net,addons.allizom.org,addons.mozilla.org,addons.thunderbird.net,admin.google.com,adyen.com,agrd.io,agreementexpress.net,alipay.com,alipayobjects.com,alipayplus.com,amazon.syf.com,amazonpay.in,amp.pandora.com,anz.com,anz.com.au,ap.www.namecheap.com,apay-us.amazon.com,api.pnc.com,api.stripe.com,api-auth.soundcloud.com,app.1password.ca,app.1password.com,app.1password.eu,app.advancedmd.com,app.dashlane.com,app.privacy.com,app.tuta.com,appleconnect.apple.com,appleid.apple.com,appleid.cdn-apple.com,applepay.cdn-apple.com,apply.commonapp.org,apps.apple.com,apps.microsoft.com,apps.obtainium.imranr.dev,api-dashboard.search.brave.com,apt.izzysoft.de,archive.mozilla.org,archlinux.org,argenta.be,artists.soundcloud.com,artists.spotify.com,asrock.com,asrockchina.com.cn,assets.loginwithamazon.com,att-yahoo.att.net,attestation.app,aur.archlinux.org,auth.adguard.io,auth.adguardaccount.com,auth.hulu.com,auth.meta.com,auth.max.com,auth.mozilla.auth0.com,auth.openai.com,auth.services.adobe.com,auth.sharefile.io,auth.synchronybank.com,auth.uber.com,auth.wikimedia.org,auth.zennioptical.com,b.stripecdn.com,bancogalicia.com.ar,bank99.at,bankaust.com.au,bankaustria.at,bankdirekt.at,bankeasy.com,bankofamerica.com,bankofireland.com,bankvic.com.au,belfius.be,belkart.by,belveb.by,bendigobank.com.au,binance.com,binance.us,bisq.network,bitpay.com,bitwarden.com,bkash.com,bnpparibasfortis.be,bobpony.com,braintree-api.com,braintreegateway.com,brave.com,brave-browser-apk-beta.s3.brave.com,brave-browser-apk-nightly.s3.brave.com,brave-browser-apk-release.s3.brave.com,build.opensuse.org,businessaccess.citibank.citigroup.com,businessonline-boi.com,cakepay.com,cakewallet.com,calendar.proton.me,calyxos.org,cardcomplete.com,cash.app,cbaccount.collegeboard.org,cbzsecure.com,cdn.akamai.steamstatic.com,cdn.mullvad.net,cdn.plaid.com,cdn.sso.mozilla.com,cdimage.debian.org,checkout.com,checkout.stripe.com,coinspot.com.au,commbank.com.au,console.accrescent.app,console.aws.amazon.com,console.cloud.google.com,consumer.intel.com,copr.fedorainfracloud.org,creditcall.com,crelan.be,cromite.org,dash.cloudflare.com,developer.apple.com,developer.nvidia.com,discord.gg,dist.torproject.org,dl.google.com,donate.torproject.org,download.cdn.mozilla.net,download.fedoraproject.org,download.gigabyte.com,download.lineageos.org,download.mozilla.org,download-installer.cdn.mozilla.net,download-installer-origin.cdn.mozilla.net,download-origin.cdn.mozilla.net,drive.google.com,drive.proton.me,dsadata.intel.com,easybanking.unifi-digitalbanking.com,easybankint.com,ebanking.easybank.at,eff.org,ente.io,epicmychart.nychhc.org,epicmychart.optum.com,etoro.com,f-droid.org,fdroid.ironfoxoss.org,fdroid.link,fedoraproject.org,flatex.at,flathub.org,flex.okta.com,franciscanmychart.org,franklincollege.okta.com,ftp.eu.mozilla.org,ftp.mozilla.org,ftp.prod.mozaws.net,ftp.prod.mozilla.org,ftp-ssl.mozilla.org,ftp-test.mozilla.org,galicia.ar,gateway.bank,gatewaybank.bank,gatewaybank.com.au,gatewayfirst.com,gds.google.com,geogroup.okta.com,george.sparkasse.at,george-business.sparkasse.at,gfgsa.com,google-admin.corp.google.com,grapheneos.org,greasyfork.org,guardarian.com,heartland.us,heartlandpaymentsystems.com,heartlandportico.com,hellobank.be,hendrick.okta.com,hpc.freedompay.com,hsbc.com,hsbc.com.au,icard.com,id.fedoraproject.org,id.sonyentertainmentnetwork.com,id.spectrum.net,identity.corp.google.com,identity.doordash.com,identity.eset.com,identity.gtm.eset.com,identity.kde.org,identity.lego.com,identity.walmart.com,idmsa.apple.com,idmsa.apple.com.cn,idmsac.apple.com,idp.ddp.akoya.com,idp.iam.mozilla.com,iforgot.apple.com,ing.com,ing.com.au,ingwb.com,iparitet.by,itsme-id.com,js.stripe.com,kairoscope.org,kbc.be,kdrp.okta.com,keytradebank.be,klarna.com,kraken.com,laptop-updates.brave.com,lastpass.com,lineageos.org,login.aa.com,login.advancedmd.com,login.amd.com,login.aol.com,login.corp.google.com,login.disney.com,login.eset.com,login.gov,login.kroger.com,login.live.com,login.mailbox.org,login.microsoftonline.com,login.nvgs.nvidia.com,login.okta.com,login.sparkasse.at,login.tailscale.com,login.wikimedia.org,login.yahoo.com,login.yahoo.net,login.xfinity.com,login-app.advancedmd.com,login-dev.advancedmd.com,login-no1a.www.tiktok.com,login3.id.hp.com,login4.fisglobal.com,lowes.syf.com,m.stripe.com,m.stripe.network,magic.falcon-2-eu.veriff.me,magic.veriff.me,mail.proton.me,mailbox.org,marmon.okta.com,matrix.to,mblogin.verizonwireless.com,mebank.com.au,merchant-ui-api.stripe.com,microg.org,mirrorbits.lineageos.org,linuxmint.com,login.pnc.com,molly.im,monero.com,mpay24.com,msauth.net,msauthimages.net,msdl.gravesoft.dev,msftauth.net,msftauthimages.net,msp.nordpass.com,mt-bank.net,mtb.com,mullvad.net,my.collegeboard.org,my.dish.com,my.disney.com,my.eir.ie,myaccount.google.com,myaccount.microsoft.com,myaccounts.wizards.com,mychart.albanymed.org,mychart.asante.org,mychart.atlantichealth.org,mychart.austinregionalclinic.com,mychart.azacp.com,mychart.bmc.org,mychart.carolinaeasthealth.com,mychart.ccf.org,mychart.centracare.com,mychart.childrenscolorado.org,mychart.clevelandclinic.org,mychart.crmcwy.org,mychart.duly.com,mychart.ecommunity.com,mychart.hopkinsmedicine.org,mychart.inova.org,mychart.kansashealthsystem.com,mychart.lovelace.com,mychart.mainehealth.org,mychart.med.utah.edu,mychart.metrohealth.net,mychart.multicare.org,mychart.mwhc.com,mychart.nghs.com,mychart.nortonhealthcare.org,mychart.ohiohealth.com,mychart.orlandohealth.com,mychart.premierhealthpartners.org,mychart.selfregional.org,mychart.sfdph.org,mychart.sih.net,mychart.stcharleshealthcare.org,mychart.texashealth.org,mychart.tmcaz.com,mychart.uchospitals.edu,mychart.uconn.edu,mychart.uihealthcare.org,mychart.uillinois.edu,mychart.upstate.edu,mychart.urmc.rochester.edu,mychartonline.umassmemorial.org,myhealthchart.com,mysignins.microsoft.com,mysinaichicago.org,mystate.com.au,nab.com.au,nmi.com,nordaccount.com,nordpass.com,nordstrom.okta.com,noscript.net,novantmychart.org,nrc.okta.com,oauth.xfinity.com,oidc.idp.clogin.att.com,ok1static.oktacdn.com,ok2static.oktacdn.com,ok7static.oktacdn.com,okta.jumbo.com,oldsecond.com,onedrive.com,onedrive.live.com,online.citi.com,open-banking.pnc.com,openuserjs.org,outlook.com,outlook.office365.com,ow2-cqm-01.advancedmd.com,panel.nordpass.com,paritetbank.by,pass.proton.me,passwordreset.microsoftonline.com,passwords.google,passwords.google.com,patientportal.advancedmd.com,pay.amazon.co.jp,pay.amazon.co.uk,pay.amazon.com,pay.amazon.de,pay.amazon.es,pay.amazon.eu,pay.amazon.fr,pay.amazon.it,pay.google.com,pay.viasat.com,paybox.com,paybox.com.co,payconiq.be,payeezystrg.z19.web.core.windows.net,payments.amazon.com,payments-amazon.com,payoneer.com,payscout.com,paysend.com,payu.com,paywire.com,play.google.com,plex.direct,portal.corp.google.com,poste.dz,pp-wfe-100.advancedmd.com,ppixiv.org,privacybadger.org,probo.ddp.akoya.com,prod.idp.collegeboard.org,productdelivery.mozilla-backup.org,production.plaid.com,profile.theguardian.com,proton.me,protonapps.com,psendbank.com,qdoba-prod.us.auth0.com,raiffeisen.at,rb.okta.com,register.gitlab.gnome.org,register.mailbox.org,registerdisney.go.com,release.calyxinstitute.org,releases.mozilla.org,renault-bank-direkt.de,renaultbank.es,renaultbank.fr,retoswap.com,revolut.com,rh.okta.com,rpmfusion.org,secure.chase.com,secure.informaction.com,secure.login.gov,secure.myvirtua.org,secure.pnc.com,secure.sndcdn.com,secure.soundcloud.com,secure.verizon.com,secure-api.pnc.com,secure-qa.pnc.com,securelogin.synchronybank.com,secureonline.pnc.com,secureonline.yourstatebank.com,send.vis.ee,signal.org,signin.att.com,signin.aws.amazon.com,signin.costco.com,signin.ebay.com,signin-static-js.att.com,signup.ebay.com,skydrive.com,smartpay.profitstars.com,sso.canvaslms.com,sso.fachschaften.org,sso.kroger.com,sso.mozilla.com,sso.redhat.com,start.1password.ca,start.1password.com,start.1password.eu,static.adguard.com,static.adtidy.org,stgeorge.com.au,store.epicgames.com,store.nintendo.com.hk,studio.youtube.com,tam.onecampus.com,tpeweb.paybox.com,tuta.com,u.bank,ubank.bank,ubank.com.au,ubuntu.com,unbelgin.com,unionpayintl.com,unzer.com,up.com.au,us.download.nvidia.com,usaepay.com,usbank.com,vault.bitwarden.com,vault.bitwarden.eu,venmo.com,verifone.com,viewmychart.com,vpn.proton.me,wallet.google,wallet.google.com,wallet.proton.me,wero-wallet.eu,westpac.co.nz,westpac.com.au,wiki.lineageos.org,wise.com,www.365online.com,www.chase.com,www.citi.com,www.citidirect.com,www.cromite.org,www.dashlane.com,www.debian.org,www.easybank.at,www.easybanking.net,www.eff.org,www.epicgames.com,www.firefox.com,www.franciscanmychart.org,www.gigabyte.com,www.icloud.com,www.icloud.com.cn,www.intel.com,www.lineageos.org,www.linuxmint.com,www.macquarie.com.au,www.mozilla.org,www.mychart.org,www.noscript.net,www.onlinebanking.pnc.com,www.paypal.com,www.paypalobjects.com,www.pnc.com,www.privacy.com,www.privatebank.citibank.com,www.sparkasse.at,www.synchrony.com,www.synchronymastercard.com,www.thunderbird.net,www.torproject.org,www.virustotal.com,www.wintrustbank.com,www.wintrustdigitalbanking.com,www.xmrbazaar.com,www.yourstatebank.com,xmrbazaar.com");
+pref("extensions.quarantinedDomains.list", "autoatendimento.bb.com.br,ibpf.sicredi.com.br,ibpj.sicredi.com.br,internetbanking.caixa.gov.br,www.ib12.bradesco.com.br,www2.bancobrasil.com.br,10.0.0.1,192.168.1.1,192.168.50.1,1password.ca,1password.com,1password.eu,365online.com,account.amd.com,account.apple.com,account.asus.com,account.brave.com,account.collegeboard.org,account.live.com,account.microcenter.com,account.microsoft.com,account.nordpass.com,account.proton.me,account.sony.com,account.t-mobile.com,account-api.proton.me,accounts.1password.ca,accounts.1password.com,accounts.1password.eu,accounts.ent.1password.com,accounts.fedoraproject.org,accounts.firefox.com,accounts.google.com,accounts.nintendo.com,accounts.pixiv.net,accounts.scdn.co,accounts.snapchat.com,accounts.spotify.com,acs-home-prod-login-fde-hhd4d2h9drbfg7hy.a02.azurefd.net,addons.allizom.org,addons.mozilla.org,addons.thunderbird.net,admin.google.com,adyen.com,agrd.io,agreementexpress.net,alipay.com,alipayobjects.com,alipayplus.com,amazon.syf.com,amazonpay.in,amp.pandora.com,anz.com,anz.com.au,ap.www.namecheap.com,apay-us.amazon.com,api.pnc.com,api.stripe.com,api-auth.soundcloud.com,app.1password.ca,app.1password.com,app.1password.eu,app.advancedmd.com,app.dashlane.com,app.privacy.com,app.tuta.com,appleconnect.apple.com,appleid.apple.com,appleid.cdn-apple.com,applepay.cdn-apple.com,apply.commonapp.org,apps.apple.com,apps.microsoft.com,apps.obtainium.imranr.dev,api-dashboard.search.brave.com,apt.izzysoft.de,archive.mozilla.org,archlinux.org,argenta.be,artists.soundcloud.com,artists.spotify.com,asrock.com,asrockchina.com.cn,assets.loginwithamazon.com,att-yahoo.att.net,attestation.app,aur.archlinux.org,auth.adguard.io,auth.adguardaccount.com,auth.calibour.com,auth.hulu.com,auth.meta.com,auth.max.com,auth.mozilla.auth0.com,auth.openai.com,auth.services.adobe.com,auth.sharefile.io,auth.synchronybank.com,auth.uber.com,auth.wikimedia.org,auth.zennioptical.com,b.stripecdn.com,bancogalicia.com.ar,bank99.at,bankaust.com.au,bankaustria.at,bankdirekt.at,bankeasy.com,bankofamerica.com,bankofireland.com,bankvic.com.au,belfius.be,belkart.by,belveb.by,bendigobank.com.au,binance.com,binance.us,bisq.network,bitpay.com,bitwarden.com,bkash.com,bnpparibasfortis.be,bobpony.com,braintree-api.com,braintreegateway.com,brave.com,brave-browser-apk-beta.s3.brave.com,brave-browser-apk-nightly.s3.brave.com,brave-browser-apk-release.s3.brave.com,build.opensuse.org,businessaccess.citibank.citigroup.com,businessonline-boi.com,cakepay.com,cakewallet.com,calendar.proton.me,calyxos.org,cardcomplete.com,cash.app,cbaccount.collegeboard.org,cbzsecure.com,cdn.akamai.steamstatic.com,cdn.mullvad.net,cdn.plaid.com,cdn.sso.mozilla.com,cdimage.debian.org,checkout.com,checkout.stripe.com,coinspot.com.au,commbank.com.au,console.accrescent.app,console.aws.amazon.com,console.calibour.com,console.cloud.google.com,consumer.intel.com,copr.fedorainfracloud.org,creditcall.com,crelan.be,cromite.org,dash.cloudflare.com,developer.apple.com,developer.nvidia.com,discord.gg,dist.torproject.org,dl.google.com,donate.torproject.org,download.cdn.mozilla.net,download.fedoraproject.org,download.gigabyte.com,download.lineageos.org,download.mozilla.org,download-installer.cdn.mozilla.net,download-installer-origin.cdn.mozilla.net,download-origin.cdn.mozilla.net,drive.google.com,drive.proton.me,dsadata.intel.com,easybanking.unifi-digitalbanking.com,easybankint.com,ebanking.easybank.at,eff.org,ente.io,epicmychart.nychhc.org,epicmychart.optum.com,etoro.com,f-droid.org,fdroid.ironfoxoss.org,fdroid.link,fedoraproject.org,flatex.at,flathub.org,flex.okta.com,franciscanmychart.org,franklincollege.okta.com,ftp.eu.mozilla.org,ftp.mozilla.org,ftp.prod.mozaws.net,ftp.prod.mozilla.org,ftp-ssl.mozilla.org,ftp-test.mozilla.org,galicia.ar,gateway.bank,gatewaybank.bank,gatewaybank.com.au,gatewayfirst.com,gds.google.com,geogroup.okta.com,george.sparkasse.at,george-business.sparkasse.at,gfgsa.com,google-admin.corp.google.com,grapheneos.org,greasyfork.org,guardarian.com,heartland.us,heartlandpaymentsystems.com,heartlandportico.com,hellobank.be,hendrick.okta.com,hpc.freedompay.com,hsbc.com,hsbc.com.au,icard.com,id.fedoraproject.org,id.sonyentertainmentnetwork.com,id.spectrum.net,identity.corp.google.com,identity.doordash.com,identity.eset.com,identity.gtm.eset.com,identity.kde.org,identity.lego.com,identity.walmart.com,idmsa.apple.com,idmsa.apple.com.cn,idmsac.apple.com,idp.ddp.akoya.com,idp.iam.mozilla.com,iforgot.apple.com,ing.com,ing.com.au,ingwb.com,iparitet.by,ironfoxoss.org,itsme-id.com,js.stripe.com,kairoscope.org,kbc.be,kdrp.okta.com,keytradebank.be,klarna.com,kraken.com,laptop-updates.brave.com,lastpass.com,lineageos.org,login.aa.com,login.advancedmd.com,login.amd.com,login.aol.com,login.corp.google.com,login.disney.com,login.eset.com,login.gov,login.kroger.com,login.live.com,login.mailbox.org,login.microsoftonline.com,login.nvgs.nvidia.com,login.okta.com,login.sparkasse.at,login.tailscale.com,login.wikimedia.org,login.yahoo.com,login.yahoo.net,login.xfinity.com,login-app.advancedmd.com,login-dev.advancedmd.com,login-no1a.www.tiktok.com,login3.id.hp.com,login4.fisglobal.com,lowes.syf.com,m.stripe.com,m.stripe.network,magic.falcon-2-eu.veriff.me,magic.veriff.me,mail.proton.me,mailbox.org,marmon.okta.com,matrix.to,mblogin.verizonwireless.com,mebank.com.au,merchant-ui-api.stripe.com,microg.org,mirrorbits.lineageos.org,linuxmint.com,login.pnc.com,molly.im,monero.com,mpay24.com,msauth.net,msauthimages.net,msdl.gravesoft.dev,msftauth.net,msftauthimages.net,msp.nordpass.com,mt-bank.net,mtb.com,mullvad.net,my.calibour.com,my.collegeboard.org,my.dish.com,my.disney.com,my.eir.ie,myaccount.google.com,myaccount.microsoft.com,myaccounts.wizards.com,mychart.albanymed.org,mychart.asante.org,mychart.atlantichealth.org,mychart.austinregionalclinic.com,mychart.azacp.com,mychart.bmc.org,mychart.carolinaeasthealth.com,mychart.ccf.org,mychart.centracare.com,mychart.childrenscolorado.org,mychart.clevelandclinic.org,mychart.crmcwy.org,mychart.duly.com,mychart.ecommunity.com,mychart.hopkinsmedicine.org,mychart.inova.org,mychart.kansashealthsystem.com,mychart.lovelace.com,mychart.mainehealth.org,mychart.med.utah.edu,mychart.metrohealth.net,mychart.multicare.org,mychart.mwhc.com,mychart.nghs.com,mychart.nortonhealthcare.org,mychart.ohiohealth.com,mychart.orlandohealth.com,mychart.premierhealthpartners.org,mychart.selfregional.org,mychart.sfdph.org,mychart.sih.net,mychart.stcharleshealthcare.org,mychart.texashealth.org,mychart.tmcaz.com,mychart.uchospitals.edu,mychart.uconn.edu,mychart.uihealthcare.org,mychart.uillinois.edu,mychart.upstate.edu,mychart.urmc.rochester.edu,mychartonline.umassmemorial.org,myhealthchart.com,mysignins.microsoft.com,mysinaichicago.org,mystate.com.au,nab.com.au,nmi.com,nordaccount.com,nordpass.com,nordstrom.okta.com,noscript.net,novantmychart.org,nrc.okta.com,oauth.xfinity.com,oidc.idp.clogin.att.com,ok1static.oktacdn.com,ok2static.oktacdn.com,ok7static.oktacdn.com,okta.jumbo.com,oldsecond.com,onedrive.com,onedrive.live.com,online.citi.com,open-banking.pnc.com,openuserjs.org,outlook.com,outlook.office365.com,ow2-cqm-01.advancedmd.com,panel.nordpass.com,paritetbank.by,pass.proton.me,passwordreset.microsoftonline.com,passwords.google,passwords.google.com,patientportal.advancedmd.com,pay.amazon.co.jp,pay.amazon.co.uk,pay.amazon.com,pay.amazon.de,pay.amazon.es,pay.amazon.eu,pay.amazon.fr,pay.amazon.it,pay.google.com,pay.viasat.com,paybox.com,paybox.com.co,payconiq.be,payeezystrg.z19.web.core.windows.net,payments.amazon.com,payments-amazon.com,payoneer.com,payscout.com,paysend.com,payu.com,paywire.com,play.google.com,plex.direct,portal.corp.google.com,poste.dz,pp-wfe-100.advancedmd.com,ppixiv.org,privacybadger.org,probo.ddp.akoya.com,prod.idp.collegeboard.org,productdelivery.mozilla-backup.org,production.plaid.com,profile.theguardian.com,proton.me,protonapps.com,psendbank.com,qdoba-prod.us.auth0.com,raiffeisen.at,rb.okta.com,register.gitlab.gnome.org,register.mailbox.org,registerdisney.go.com,release.calyxinstitute.org,releases.celenity.dev,releases.ironfoxoss.org,releases.mozilla.org,renault-bank-direkt.de,renaultbank.es,renaultbank.fr,retoswap.com,revolut.com,rh.okta.com,rpmfusion.org,secure.chase.com,secure.informaction.com,secure.login.gov,secure.myvirtua.org,secure.pnc.com,secure.sndcdn.com,secure.soundcloud.com,secure.verizon.com,secure-api.pnc.com,secure-qa.pnc.com,securelogin.synchronybank.com,secureonline.pnc.com,secureonline.yourstatebank.com,send.vis.ee,signal.org,signin.att.com,signin.aws.amazon.com,signin.costco.com,signin.ebay.com,signin-static-js.att.com,signup.ebay.com,skydrive.com,smartpay.profitstars.com,sso.canvaslms.com,sso.fachschaften.org,sso.kroger.com,sso.mozilla.com,sso.redhat.com,start.1password.ca,start.1password.com,start.1password.eu,static.adguard.com,static.adtidy.org,stgeorge.com.au,store.epicgames.com,store.nintendo.com.hk,studio.youtube.com,tam.onecampus.com,tpeweb.paybox.com,tuta.com,u.bank,ubank.bank,ubank.com.au,ubuntu.com,unbelgin.com,unionpayintl.com,unzer.com,up.com.au,us.download.nvidia.com,usaepay.com,usbank.com,vault.bitwarden.com,vault.bitwarden.eu,venmo.com,verifone.com,viewmychart.com,vpn.proton.me,wallet.google,wallet.google.com,wallet.proton.me,wero-wallet.eu,westpac.co.nz,westpac.com.au,wiki.lineageos.org,wise.com,www.365online.com,www.chase.com,www.citi.com,www.citidirect.com,www.cromite.org,www.dashlane.com,www.debian.org,www.easybank.at,www.easybanking.net,www.eff.org,www.epicgames.com,www.firefox.com,www.franciscanmychart.org,www.gigabyte.com,www.icloud.com,www.icloud.com.cn,www.intel.com,www.lineageos.org,www.linuxmint.com,www.macquarie.com.au,www.mozilla.org,www.mychart.org,www.noscript.net,www.onlinebanking.pnc.com,www.paypal.com,www.paypalobjects.com,www.pnc.com,www.privacy.com,www.privatebank.citibank.com,www.sparkasse.at,www.synchrony.com,www.synchronymastercard.com,www.thunderbird.net,www.torproject.org,www.virustotal.com,www.wintrustbank.com,www.wintrustdigitalbanking.com,www.xmrbazaar.com,www.yourstatebank.com,xmrbazaar.com");
 pref("extensions.quarantinedDomains.uiDisabled", false); // [HIDDEN] [DEFAULT] UI
 
 /// Enable userScripts
@@ -2177,6 +2196,9 @@ pref("browser.phoenix.status", "019");
 
 /*** 020 SAFE BROWSING ***/
 
+/// Block notifications for websites on Safe Browsing lists
+pref("dom.webnotifications.block_if_on_safebrowsing", true); // [DEFAULT]
+
 /// By default, when you report a Safe Browsing false positive, it sends the URL to both Mozilla and Google (NOT PROXIED), as well as your locale to Mozilla
 // (ex. https://en-us.phish-error.mozilla.com/?url=example.org - which redirects directly to https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=example.org)
 // We can improve privacy and speed by sending the domain *only* to Google & without sending your locale to anyone
@@ -2304,6 +2326,16 @@ pref("browser.phoenix.status", "020");
 
 /*** 021 MISC. PRIVACY + SECURITY ***/
 
+/// Block background tabs from opening file pickers
+// https://searchfox.org/firefox-main/rev/62066911/modules/libpref/init/StaticPrefList.yaml#2210
+// https://searchfox.org/firefox-main/rev/62066911/docshell/base/CanonicalBrowsingContext.cpp#3705
+pref("browser.disable_pickers_background_tabs", true); // [DEFAULT]
+
+/// Block background/hidden extension pages from opening file pickers
+// https://searchfox.org/firefox-main/rev/62066911/modules/libpref/init/StaticPrefList.yaml#2216
+// https://searchfox.org/firefox-main/rev/62066911/docshell/base/CanonicalBrowsingContext.cpp#3719
+pref("browser.disable_pickers_in_hidden_extension_pages", true); // [DEFAULT - Nightly]
+
 /// Disable Accessibility Services
 // PRIVACY: Can be used to monitor users by design
 // SECURITY: Can be easily abused by bad actors, Attack Surface Reduction
@@ -2413,6 +2445,14 @@ pref("dom.reporting.featurePolicy.enabled", false); // [DEFAULT]
 pref("dom.reporting.header.enabled", false); // [DEFAULT]
 pref("dom.reporting.testing.enabled", false); // [DEFAULT]
 
+
+/// Disable Web Serial API
+// PRIVACY: Fingerprinting concerns
+// SECURITY: Attack Surface Reduction
+// https://developer.mozilla.org/docs/Web/API/Web_Serial_API
+// Toggling 'dom.webserial.enabled' itself could be fingerprintable, but setting these instead just causes the permission to be automatically denied
+pref("dom.webserial.gated", true); // [DEFAULT]
+pref("permissions.default.serial", 2); // [HIDDEN]
 
 /// Disable Web Share API
 // This API allows websites to share data directly to system applications...
@@ -2571,9 +2611,16 @@ pref("cookiebanners.service.enableGlobalRules.subFrames", true); // [DEFAULT]
 pref("network.cookie.CHIPS.enabled", true); // [DEFAULT]
 pref("network.cookie.chips.partitionLimitDryRun", false); // [DEFAULT]
 
-/// Enable Do Not Track & Global Privacy Control
-// Do Not Track is also covered by ETP Strict, pref to be removed soon...
+/// Enable Do Not Track
+// https://wikipedia.org/wiki/Do_Not_Track
+// Has legal backing in certain regions, such as Germany (1)
+// Also still respected by a surprising number of sites - including Mozilla's own
+// (ex. addons.mozilla.org disables Google Analytics if DNT is enabled)
+// 1: https://vivaldi.com/blog/do-no-track-gets-legal-backing-in-germany/
 pref("privacy.donottrackheader.enabled", true);
+
+/// Enable Global Privacy Control
+// https://globalprivacycontrol.org/
 pref("privacy.globalprivacycontrol.enabled", true);
 pref("privacy.globalprivacycontrol.functionality.enabled", true); // [DEFAULT - non-Thunderbird]
 pref("privacy.globalprivacycontrol.pbmode.enabled", true); // [DEFAULT - non-Thunderbird]
@@ -2625,8 +2672,8 @@ pref("privacy.dynamic_firstparty.limitForeign", true);
 // 0=no-referrer, 1=same-origin, 2=strict-origin-when-cross-origin (default),
 // 3=no-referrer-when-downgrade.
 // Setting to 1 currently breaks various functionality https://codeberg.org/celenity/Phoenix/pulls/228#issuecomment-10051167
-pref("network.http.referer.defaultPolicy.trackers", 2); // [DEFAULT]
-pref("network.http.referer.defaultPolicy.trackers.pbmode", 2); // [DEFAULT]
+// pref("network.http.referer.defaultPolicy.trackers", 1); // [DEFAULT]
+// pref("network.http.referer.defaultPolicy.trackers.pbmode", 1); // [DEFAULT]
 
 /// Strip tracking parameters from URLs when shared by default
 pref("privacy.query_stripping.strip_on_share.enabled", true); // [DEFAULT - non-Android/Thunderbird]
@@ -2645,7 +2692,6 @@ pref("security.default_personal_cert", "Ask Every Time", locked); // [DEFAULT]
 
 /// Apply CSP to internal browser.xhtml
 pref("security.browser_xhtml_csp.enabled", true); // [DEFAULT]
-pref("security.browser_xhtml_csp.report-only", false); // [NO-ANDROID] [ESR]
 
 /// Block privileged `about:` pages from loading remote scripts
 // https://searchfox.org/firefox-main/rev/82e2435f/dom/security/nsContentSecurityManager.cpp#1102
@@ -2825,7 +2871,6 @@ pref("security.fileuri.strict_origin_policy", true); // [DEFAULT]
 
 /// Enforce various important security-related prefs
 pref("dom.block_external_protocol_in_iframes", true); // [DEFAULT]
-pref("dom.block_external_protocol_navigation_from_sandbox", true); // [DEFAULT] [ESR]
 pref("security.all_resource_uri_content_accessible", false); // [DEFAULT]
 pref("security.allow_eval_in_parent_process", false); // [DEFAULT - non-Android/Thunderbird]
 pref("security.allow_eval_with_system_principal", false); // [DEFAULT - non-Android]
@@ -2874,12 +2919,12 @@ pref("browser.tabs.remote.enforceRemoteTypeRestrictions", true); // [DEFAULT - N
 // https://portswigger.net/web-security/csrf/bypassing-samesite-restrictions
 // https://web.dev/articles/schemeful-samesite
 pref("network.cookie.sameSite.laxByDefault", true);
+pref("network.cookie.sameSite.laxByDefaultWarningsForBeta", true); // If `network.cookie.sameSite.laxByDefault` is disabled, ensure we still display a warning in the web console
 pref("network.cookie.sameSite.noneRequiresSecure", true); // [DEFAULT]
 pref("network.cookie.sameSite.schemeful", true); // [DEFAULT - Nightly]
 
 /// Protect against MIME Exploits
 // https://www.pcmag.com/encyclopedia/term/mime-exploit
-pref("dom.workers.importScripts.enforceStrictMimeType", true); // [DEFAULT] [ESR]
 pref("network.sniff.use_extension", true); // Sniff content types based on file extensions (Default only does this for `file://` URLs)
 pref("security.block_fileuri_script_with_wrong_mime", true);
 pref("security.block_Worker_with_wrong_mime", true); // [DEFAULT]
@@ -2903,6 +2948,9 @@ pref("browser.phoenix.status", "023");
 /// Block pop-ups by default
 pref("dom.disable_open_during_load", true); // [DEFAULT - non-Thunderbird]
 
+/// Block third-party redirects by default
+pref("dom.security.framebusting_intervention.enabled", true); // [DEFAULT]
+
 
 /// Disable Captive Portal Detection & Connectivity Checks
 // Privacy & security concerns, and in general best handled by the OS.
@@ -2917,6 +2965,13 @@ pref("network.connectivity-service.IPv4.url", "");
 pref("network.connectivity-service.IPv6.url", "");
 pref("network.trr.wait-for-portal", false); // [DEFAULT] Do not wait for captive portal to enable DoH https://searchfox.org/firefox-main/rev/82e2435f/modules/libpref/init/StaticPrefList.yaml#14839
 
+
+/// Disable input (editable field) auto-zoom by default [NO-ANDROID]
+// https://bugzilla.mozilla.org/show_bug.cgi?id=834613 [NO-ANDROID]
+// https://searchfox.org/firefox-main/rev/62066911/mobile/android/geckoview/src/main/java/org/mozilla/geckoview/GeckoRuntimeSettings.java#464 [NO-ANDROID]
+// This is the default value for desktop, but it's typically hidden - so we're just setting it here to expose at `about:config` [NO-ANDROID]
+// https://searchfox.org/firefox-main/rev/62066911/dom/base/nsDOMWindowUtils.cpp#3018 [NO-ANDROID]
+pref("formhelper.autozoom", false); // [NO-ANDROID] [HIDDEN] [DEFAULT]
 
 /// Disable network connectivity status monitoring
 // (Ex. used for automatically switching between offline & online mode)
@@ -2964,6 +3019,15 @@ pref("dom.event.contextmenu.shift_suppresses_event", true); // [DEFAULT]
 /// Force pop-up windows to open in new tabs instead
 pref("browser.link.open_newwindow", 3); // [DEFAULT]
 pref("browser.link.open_newwindow.restriction", 0); // [DEFAULT - Android/Thunderbird]
+
+/// If a connection with HTTP/3 fails, allow retrying it with a different IP address
+// https://searchfox.org/firefox-main/rev/62066911/netwerk/protocol/http/ConnectionEntry.cpp#1031
+pref("network.http.http3.retry_different_ip_family", true); // [DEFAULT - Nightly]
+
+/// If a connection to a primary or back-up half-open network socket fails while the other is still connecting,
+// retry the connection with the one that is still connecting
+// https://searchfox.org/firefox-main/rev/62066911/modules/libpref/init/StaticPrefList.yaml#16190
+pref("network.http.retry_with_another_half_open", true); // [DEFAULT - Nightly]
 
 /// Limit what events can cause pop-ups
 pref("dom.popup_allowed_events", "click dblclick");
@@ -3183,10 +3247,10 @@ pref("extensions.logging.enabled", false); // [DEFAULT]
 pref("network.http.pacing.requests.enabled", false);
 
 
-/// Enable Advanced Vector Extensions (AVX) [NO-ANDROID]
-// https://wikipedia.org/wiki/Advanced_Vector_Extensions [NO-ANDROID]
-// https://www.supportyourtech.com/articles/how-to-enable-avx-support-in-windows-11-a-step-by-step-guide/ [NO-ANDROID]
-pref("javascript.options.wasm_simd_avx", true); // [DEFAULT] [NO-ANDROID]
+/// Enable Advanced Vector Extensions (AVX)
+// https://wikipedia.org/wiki/Advanced_Vector_Extensions
+// https://www.supportyourtech.com/articles/how-to-enable-avx-support-in-windows-11-a-step-by-step-guide/
+pref("javascript.options.wasm_simd_avx", true); // [DEFAULT]
 
 /// Enable Branch Hinting
 // https://github.com/WebAssembly/branch-hinting/blob/main/proposals/branch-hinting/Overview.md
@@ -3202,6 +3266,10 @@ pref("gfx.canvas.accelerated.cache-size", 4096); // Increase cache size (Default
 // https://www.smashingmagazine.com/native-css-masonry-layout-css-grid/
 // (For testing: https://codepen.io/rachelandrew/pen/wvWmZWB)
 pref("layout.css.grid-template-masonry-value.enabled", true); // [DEFAULT - Nightly/Thunderbird] 
+
+/// Enable dynamic reflow roots
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1159042
+pref("layout.dynamic-reflow-roots.enabled", true); // [DEFAULT - Nightly]
 
 /// Enable the "fetchpriority" attribute
 // https://web.dev/articles/fetch-priority
@@ -3321,6 +3389,11 @@ pref("media.webspeech.synth.dont_notify_on_error", true); // [NO-ANDROID] [HIDDE
 pref("full-screen-api.transition-duration.enter", "0 0"); // [Default = 200 200]
 pref("full-screen-api.transition-duration.leave", "0 0"); // [Default = 200 200]
 
+/// Display an icon to clear search boxes (for `search` `<input>` types)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1654288
+// https://developer.mozilla.org/docs/Web/HTML/Reference/Elements/input/search
+pref("layout.forms.input-type-search.enabled", true);
+
 /// Display "More settings" on print previews by default
 // https://searchfox.org/firefox-main/rev/643d7328/modules/libpref/init/all.js#761
 pref("print.more-settings.open", true);
@@ -3344,6 +3417,13 @@ pref("devtools.performance.aboutprofiling.has-developer-options", true);
 /// Enable display of in-process subframes at `about:processes` by default
 pref("toolkit.aboutProcesses.showAllSubframes", true);
 
+/// Enable image/table resizing (for text input) by default
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1449564
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1604144
+pref("editor.inline_table_editing.enabled_by_default", true);
+pref("editor.positioning.enabled_by_default", true);
+pref("editor.resizing.enabled_by_default", true);
+
 
 /// Enable display of thread information at `about:processes` by default
 pref("toolkit.aboutProcesses.showThreads", true); // [DEFAULT - Nightly]
@@ -3361,6 +3441,8 @@ pref("apz.overscroll.enabled", true); // [DEFAULT]
 // https://searchfox.org/firefox-main/rev/643d7328/modules/libpref/init/all.js#729
 // https://searchfox.org/firefox-main/rev/643d7328/toolkit/components/printing/content/printUtils.js#82
 pref("print.show_page_setup_menu", true);
+
+
 
 /// Enable smooth scrolling by default
 // This currently appears to be overriden by `ui.prefersReducedMotion` on Desktop
@@ -3455,6 +3537,11 @@ pref("app.update.interval", 3600); // [NO-ANDROID] (Default: 21600 (6 hours))
 // Default is once every 24 hours
 pref("extensions.update.interval", 3600);
 
+/// Check for GMP plug-in updates hourly (assuming GMP is enabled)
+// Default is once every 24 hours
+// https://searchfox.org/firefox-main/rev/d81da5ef/toolkit/modules/GMPInstallManager.sys.mjs#574
+pref("media.gmp-manager.secondsBetweenChecks", 3600); // [HIDDEN]
+
 /// Disable insecure extension updates
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/mozapps/extensions/internal/AddonUpdateChecker.sys.mjs#66
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/mozapps/extensions/internal/XPIDatabase.sys.mjs#2707
@@ -3477,6 +3564,8 @@ pref("services.settings.poll_interval", 3600);
 pref("browser.phoenix.status", "028");
 
 /*** 029 FIREFOX HOME ***/
+
+
 
 
 
@@ -3590,7 +3679,6 @@ pref("services.sync.log.appender.file.level", "Fatal"); // [NO-ANDROID]
 pref("services.sync.extension-storage.skipPercentageChance", 0); // [NO-ANDROID]
 
 
-
 pref("browser.phoenix.status", "031"); // [NO-ANDROID]
 
 
@@ -3598,15 +3686,18 @@ pref("browser.phoenix.status", "031"); // [NO-ANDROID]
 
 
 
-/*** 033 SPECIALIZED/CUSTOM CONFIGS ***/ // [NO-ANDROID]
+
+
+
+
+/*** 034 SPECIALIZED/CUSTOM CONFIGS ***/ // [NO-ANDROID]
 
 /// Configure remote AutoConfig files (if active) [NO-ANDROID]
 pref("autoadmin.failover_to_cached", true); // [NO-ANDROID]
 pref("autoadmin.offline_failover", true); // [NO-ANDROID]
 pref("autoadmin.refresh_interval", 60); // [NO-ANDROID]
 
-
-pref("browser.phoenix.status", "033"); // [NO-ANDROID]
+pref("browser.phoenix.status", "034"); // [NO-ANDROID]
 
 pref("browser.phoenix.status", "successfully applied :D", locked);
 pref("browser.phoenix.applied.cfg", true, locked);
@@ -3695,6 +3786,14 @@ pref("browser.phoenix.status.extended", "003");
 
 /*** 004 MISC. PRIVACY + SECURITY ***/
 
+/// Disable JavaScript Just-in-time Compilation (JIT) for the (critical/especially sensitive) parent process
+// https://searchfox.org/firefox-main/rev/1c6a8b56/xpcom/build/XPCOMInit.cpp#239
+// https://firefox-source-docs.mozilla.org/dom/ipc/process_model.html#parent-process
+// (This is usually set by Phoenix for all configs, but, due to it an upstream bug leading to it causing issues with Translations, we're
+// only setting it on Extended for now)
+// (For details, see: https://codeberg.org/celenity/Phoenix/issues/256 + https://codeberg.org/celenity/Phoenix/pulls/254)
+pref("javascript.options.main_process_disable_jit", true); // [DEFAULT - iOS]
+
 
 pref("browser.phoenix.status.extended", "004");
 
@@ -3724,13 +3823,13 @@ pref("browser.phoenix.status.extended", "successfully applied :D", locked);
 
 // Built from Phoenix (Extended)
 
-pref("mail.dove.version", "2026.03.31.1", locked);
+pref("mail.dove.version", "2026.04.27.1", locked);
 
 /// Add custom branding at `about:support`
-pref("app.support.vendor", "Dove: 2026.03.31.1 | Phoenix: 2026.03.31.1"); // [HIDDEN]
+pref("app.support.vendor", "Dove: 2026.04.27.1 | Phoenix: 2026.04.27.1"); // [HIDDEN]
 
 /// Add custom branding under `Thunderbird Updates` at `about:preferences#general`
-pref("distribution.about", "Dove for Mozilla Thunderbird - 2026.03.31.1 💜", locked); // [HIDDEN]
+pref("distribution.about", "Dove for Mozilla Thunderbird - 2026.04.27.1 💜", locked); // [HIDDEN]
 pref("distribution.id", "default", locked); // [HIDDEN]
 pref("distribution.version", "default", locked); // [HIDDEN]
 
@@ -4091,7 +4190,7 @@ pref("mail.dove.status", "008");
 pref("network.lna.blocking", true);
 
 /// Customize list of built-in DoH resolvers
-pref("network.trr.resolvers", '[{"url":"https://dns.quad9.net/dns-query","name":"Quad9 🇨🇭"},{"url":"https://dns.adguard-dns.com/dns-query","name":"AdGuard 🇨🇾"},{"url":"https://unfiltered.adguard-dns.com/dns-query","name":"AdGuard (Unfiltered) 🇨🇾"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare 🇺🇸"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare (Malware Protection) 🇺🇸"},{"url":"https://noads.joindns4.eu/dns-query","name":"DNS4EU (Ad Blocking) 🇨🇿"},{"url":"https://protective.joindns4.eu/dns-query","name":"DNS4EU (Protective) 🇨🇿"},{"url":"https://unfiltered.joindns4.eu/dns-query","name":"DNS4EU (Unfiltered) 🇨🇿"},{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) 🇸🇪"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad (Unfiltered) 🇸🇪"},{"url":"https://firefox.dns.nextdns.io/","name":"NextDNS 🇺🇸"},{"url":"https://wikimedia-dns.org/dns-query","name":"Wikimedia 🇺🇸"}]'); // [HIDDEN] [ESR] - Thunderbird now uses the same pref as Firefox (`doh-rollout.provider-list`), which is set by Phoenix
+pref("network.trr.resolvers", '[{"url":"https://base.dns.mullvad.net/dns-query","name":"Mullvad (Base) 🇸🇪"},{"url":"https://mozilla.cloudflare-dns.com/dns-query","name":"Cloudflare 🇺🇸"},{"url":"https://security.cloudflare-dns.com/dns-query","name":"Cloudflare (Malware Protection) 🇺🇸"},{"url":"https://noads.joindns4.eu/dns-query","name":"DNS4EU (Ad Blocking) 🇨🇿"},{"url":"https://protective.joindns4.eu/dns-query","name":"DNS4EU (Protective) 🇨🇿"},{"url":"https://unfiltered.joindns4.eu/dns-query","name":"DNS4EU (Unfiltered) 🇨🇿"},{"url":"https://dns.mullvad.net/dns-query","name":"Mullvad (Unfiltered) 🇸🇪"}]'); // [HIDDEN] [ESR] - Thunderbird now uses the same pref as Firefox (`doh-rollout.provider-list`), which is set by Phoenix
 
 /// Disable link previews
 pref("mail.compose.add_link_preview", false);
@@ -4421,7 +4520,9 @@ pref("mail.collect_email_address_outgoing", false);
 
 /// Disable clipboard events
 // https://developer.mozilla.org/docs/Web/API/ClipboardEvent
+pref("dom.allow_cut_copy", false); // `cut` and `copy` https://searchfox.org/firefox-main/rev/62066911/dom/base/Document.cpp#6157
 pref("dom.event.clipboardevents.enabled", false);
+pref("dom.execCommand.paste.enabled", false); // `paste` https://searchfox.org/firefox-main/rev/62066911/dom/base/Document.cpp#6151
 
 /// Disable Geolocation
 // https://browserleaks.com/geo
@@ -4731,9 +4832,6 @@ pref("mail.save_msg_filename_underscores_for_space", true);
 pref("mail.wrap_long_lines", true); // [DEFAULT]
 
 pref("mail.dove.status", "019");
-
-
-
 
 pref("mail.dove.status", "successfully applied :D", locked);
 pref("mail.dove.applied.cfg", true, locked);

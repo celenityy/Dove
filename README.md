@@ -379,65 +379,116 @@ curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegat
 curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ntlm --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/windows/distribution/policies.json
 ```
 
-**4:** Locate your Thunderbird installation directory. This will vary depending on your platform, you can generally find it by navigating to `Help` (Located on top bar) -> `Troubleshooting information` & checking the directory next to `Application Binary`. For example, on Fedora Linux, I see `/usr/lib64/thunderbird/thunderbird` next to `Application Binary`. This means our installation directory is `/usr/lib64/thunderbird`.
+**4:** Locate your Thunderbird installation directory. This will vary depending on your platform, you can generally find it by navigating to `Help` (Located on top bar) -> `Troubleshooting information` & checking the directory next to `Application Binary`. For example: If I see `/Users/${USER}/Applications/Thunderbird.app/Contents/MacOS/thunderbird` listed next to `Application Binary`,
+my installation directory would be: **`/Users/${USER}/Applications/Thunderbird.app`**.
 
 > [!CAUTION]
->**Unless you're on Fedora Linux, your directory will probably be different, and you should replace this path on the following steps with your actual installation directory's path.**
+>**Your directory will probably be different, and you should replace this directory on the following steps with your actual installation directory.**
 
-**5:** Move `dove.cfg` to the **root** of your installation directory. You can either drag and drop it manually, or run the following command:
+**5:**
 
-**Linux/macOS**, *assuming `/usr/lib64/thunderbird` is your installation directory*:
+**Linux**:
+
+If it does not already exist, you will want to
+create a folder named `thunderbird` located in your system's `etc` directory. 
+This will work **regardless of your distribution** - even Snaps are supported.
+You can also just run the command below:
 
 ```sh
-sudo cp dove.cfg /usr/lib64/thunderbird/dove.cfg
+sudo mkdir -p /etc/thunderbird
+```
+
+You'll also want to ensure that the folder you created has proper permissions:
+
+```sh
+sudo chmod 655 /etc/thunderbird
+```
+
+Now, copy `dove.cfg` to the `/etc/thunderbird` directory you just created. You can either drag and drop it manually, or run the following command:
+
+**NOTE**: If you have previously installed `dove.cfg` to a different location *(such as Thunderbird's installation directory)*, **please REMOVE it** to ensure any conflicts are avoided.
+
+```sh
+sudo cp dove.cfg /etc/thunderbird/dove.cfg
+```
+
+**macOS**:
+
+Copy `dove.cfg` to the **`Resources`** folder within your installation directory.
+You can either drag and drop it manually, or run the following command:
+*assuming `/Users/${USER}/Applications/Thunderbird.app` is your installation directory*
+
+```sh
+sudo cp dove.cfg /Users/${USER}/Applications/Thunderbird.app/Resources/dove.cfg
 ```
 
 **Windows**:
+
+Copy `dove.cfg` to the **root** of your installation directory. You
+can either drag and drop it manually, or run the following command:
 
 ```sh
 cp dove.cfg C:\'Program Files'\'Mozilla Thunderbird'\dove.cfg
 ```
 
-**6:** **For macOS, Windows, and Flatpak users**: If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. You can do this manually through your file explorer, or you can run the following command for your platform:
+**6:**
 
-**Flatpak/macOS**, *assuming `/usr/lib64/thunderbird` is your installation directory*:
+**Linux**:
 
-```sh
-sudo mkdir -vp /usr/lib64/thunderbird/defaults/pref
-```
-
-**Windows**:
-
-```sh
-mkdir -vp C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref
-```
-
-**For standard Linux users:** If it does not already exist, you will want to create a folder named `thunderbird` located in your system's `etc` directory. Inside this `thunderbird` folder, create a new folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. This will work **regardless of your distribution** - even Snaps are supported. You can also just run the command below:
+**6:** If it does not already exist, inside the `/etc/thunderbird` directory, create a new folder named `defaults`,
+and inside this new `defaults` folder, create another folder titled `pref`. This will work
+**regardless of your distribution** - even Snaps are supported. You can also
+just run the command below:
 
 ```sh
-sudo mkdir -vp /etc/thunderbird/defaults/pref
+sudo mkdir -p /etc/thunderbird/defaults/pref
 ```
 
-On macOS and GNU/Linux, you'll also want to ensure that the folder you created has proper permissions:
-
-**Flatpak/macOS**, *assuming `/usr/lib64/thunderbird` is your installation directory*:
-
-```sh
-sudo chmod 744 /usr/lib64/thunderbird/defaults/pref
-```
-
-**For all non-Flatpak GNU/Linux users:**
+You'll also want to ensure that the folder you created has proper permissions:
 
 ```sh
 sudo chmod 655 /etc/thunderbird/defaults/pref
 ```
 
-**7:** Move `dove.js` to the `pref` folder that you just created. You can run the following command for your platform below:
+**macOS**:
 
-**Linux/macOS**, *Assuming your installation directory is `/usr/lib64/thunderbird`*:
+If it does not already exist, inside the `Resources` directory, create a new folder named `defaults`,
+and inside this new `defaults` folder, create another folder titled `pref`.
+You can do this manually through your file explorer, or you can run the following command:
+*assuming `/Users/${USER}/Applications/Thunderbird.app` is your installation directory*
 
 ```sh
-sudo cp dove.js /usr/lib64/thunderbird/defaults/pref/dove.js
+sudo mkdir -p /Users/${USER}/Applications/Thunderbird.app/Resources/defaults/pref
+```
+
+You'll also want to ensure that the folder you created has proper permissions:
+
+```sh
+sudo chmod 744 /Users/${USER}/Applications/Thunderbird.app/Resources/defaults/pref
+```
+
+**Windows**:
+
+If it does not already exist, in the **root** of your installation directory, create a folder named `defaults`, and inside this new `defaults` folder, create another folder titled `pref`. You can do this manually through your file explorer, or you can run the following command for your platform:
+
+```sh
+mkdir -vp C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref
+```
+
+**7:** Copy `dove.js` to the `pref` folder that you just created. You can run the following command for your platform below:
+
+**Linux**:
+
+```sh
+sudo cp dove.js /etc/thunderbird/defaults/pref/dove.js
+```
+
+**macOS**:
+
+*assuming `/Users/${USER}/Applications/Thunderbird.app` is your installation directory*
+
+```sh
+sudo cp dove.js /Users/${USER}/Applications/Thunderbird.app/Resources/defaults/pref/dove.js
 ```
 
 **Windows**:
@@ -446,13 +497,9 @@ sudo cp dove.js /usr/lib64/thunderbird/defaults/pref/dove.js
 cp dove.js C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref\dove.js
 ```
 
-**For all non-Flatpak GNU/Linux users:**
+**8:**
 
-```sh
-sudo cp dove.js /etc/thunderbird/defaults/pref/dove.js
-```
-
-**8:** On Windows, in the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or you can run the following command:
+On Windows, in the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or you can run the following command:
 
 ```sh
 mkdir -vp C:\'Program Files'\'Mozilla Thunderbird'\distribution

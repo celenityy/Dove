@@ -1048,14 +1048,5 @@ pref("mail.wrap_long_lines", true); // [DEFAULT]
 
 pref("mail.dove.status", "019");
 
-/*** 020 SPECIALIZED/CUSTOM CONFIGS [LINUX-ONLY] ***/
-
-/// Enable support for custom/specialized configs... [LINUX-ONLY]
-pref("general.config.filename", "dove.cfg"); // [LINUX-ONLY]
-pref("general.config.vendor", "dove"); // [LINUX-ONLY]
-pref("general.config.obscure_value", 0); // [LINUX-ONLY]
-
-pref("mail.dove.status", "020"); // [LINUX-ONLY]
-
 pref("mail.dove.status", "successfully applied :D", locked);
 pref("mail.dove.applied.cfg", true, locked);

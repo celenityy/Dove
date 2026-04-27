@@ -61,14 +61,14 @@ pref("browser.phoenix.version", "2026.04.27.1", locked);
 
 Unspecified = This preference should be set EVERYWHERE
 
-[OSX-ONLY] = This preference should ONLY be set for macOS
-[SILICON-OSX-ONLY] = This preference should ONLY be set for macOS on Apple Silicon
+[LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
+[LINUX-NON-FLATPAK-ONLY] = This preference should ONLY be set for GNU/Linux (non-Flatpak)
 
 [NO-ANDROID] = This preference should be set everywhere, EXCEPT for Android
 [NO-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (Flatpak)
-[NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
-[NO-NON-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (non-Flatpak)
+[NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
 [NO-INTEL-OSX] = This preference should be set everywhere, EXCEPT for macOS on Intel
+[NO-SILICON-OSX] = This preference should be set everywhere, EXCEPT for macOS on Apple Silicon
 [NO-WINDOWS] = This preference should be set everywhere, EXCEPT for Windows
 
 */
@@ -76,6 +76,11 @@ Unspecified = This preference should be set EVERYWHERE
 /*** BRANDING ***/
 
 
+/// Distribution ID and version must be set for `distribution.about` to display [LINUX-ONLY]
+// `default` matches Mozilla's stock/default value - setting this to anything else could potentially compromise privacy (as this value is shared with Mozilla via the browser update endpoint) [LINUX-ONLY]
+// For now, we only want to set these on Linux - since Mozilla offers EME-free builds on macOS and Windows that use different values here - so it's unclear how they'd interact [LINUX-ONLY]
+pref("distribution.id", "default", locked); // [LINUX-ONLY] [HIDDEN]
+pref("distribution.version", "default", locked); // [LINUX-ONLY] [HIDDEN]
 
 /*** 000: ABOUT:CONFIG ***/
 
@@ -1521,7 +1526,6 @@ pref("userContent.player.click_to_play", true); // [NO-ANDROID] [HIDDEN]
 // NOTE: Required for media playback on certain sites (ex. rumble.com, x.com) when isolated content processes
 // are enabled on Android: https://bugzilla.mozilla.org/show_bug.cgi?id=1810736
 // https://phabricator.services.mozilla.com/D260149
-pref("media.rdd-applemedia.enabled", true); // [OSX-ONLY] [DEFAULT]
 pref("media.rdd-ffmpeg.enabled", true); // [DEFAULT]
 pref("media.rdd-ffvpx.enabled", true); // [DEFAULT - non-Android]
 pref("media.rdd-opus.enabled", true); // [DEFAULT - non-Android]
@@ -1561,6 +1565,9 @@ pref("media.gmp.encoder.multithreaded", true);
 /// If GMP is enabled (via `media.gmp-manager.updateEnabled`), ensure that installed plug-ins are visible/exposed in `about:addons`
 pref("media.gmp-provider.enabled", true); // [DEFAULT - non-Thunderbird]
 
+/// Sandbox GMP [LINUX-ONLY]
+// https://searchfox.org/firefox-main/rev/82e2435f/dom/media/gmp/GMPServiceParent.cpp#1039 [LINUX-ONLY]
+pref("media.gmp.insecure.allow", false); // [LINUX-ONLY] [DEFAULT]
 
 /// Use the more confined utility process for media decoding
 // https://firefox-source-docs.mozilla.org/dom/ipc/process_model.html#data-decoder-rdd-process
@@ -1647,8 +1654,6 @@ pref("layout.forms.reveal-password-button.enabled", true);
 /// Always prompt for access to "extended information" (direct attestation) of security keys
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1981587
 
-/// Crash on insecure password input [OSX-ONLY]
-pref("intl.allow-insecure-text-input", false); // [OSX-ONLY] [DEFAULT - non-Firefox release/beta/Debug] https://searchfox.org/firefox-main/rev/93aad2a6615f670b1279c229dd37f7397236131a/modules/libpref/init/all.js#3454
 
 /// Disable Autofill
 pref("signon.autofillForms", false);
@@ -2091,6 +2096,10 @@ pref("geo.provider.use_mls", false); // [HIDDEN] [DEFAULT]
 // https://searchfox.org/firefox-main/rev/82e2435f/dom/system/NetworkGeolocationProvider.sys.mjs#69
 pref("geo.provider.network.debug.requestCache.enabled", true); // [HIDDEN] [DEFAULT]
 
+/// Prevent unconditionally providing high location accuracy [LINUX-ONLY]
+// By default, Firefox provides all websites with high location accuracy, even if they don't request it... [LINUX-ONLY]
+// https://searchfox.org/firefox-main/rev/82e2435f/dom/system/linux/GeoclueLocationProvider.cpp#308 [LINUX-ONLY]
+pref("geo.provider.geoclue.always_high_accuracy", false); // [LINUX-ONLY]
 
 /// Set BeaconDB as the default network geolocation provider
 // Default is Google :/
@@ -2433,6 +2442,7 @@ pref("dom.fs.enabled", false);
 // https://searchfox.org/firefox-main/rev/af0f713f/toolkit/components/extensions/NativeMessaging.sys.mjs#12
 pref("webextensions.native-messaging.max-input-message-bytes", 0); // [NO-ANDROID] [HIDDEN] [DEFAULT: 1048576]
 pref("webextensions.native-messaging.max-output-message-bytes", 0); // [NO-ANDROID] [HIDDEN] [DEFAULT: -1, but, to override: set to 2147483647]
+pref("widget.use-xdg-desktop-portal.native-messaging", 0); // [LINUX-ONLY] [DEFAULT] For Flatpak/Snap https://searchfox.org/firefox-main/source/toolkit/components/extensions/docs/native-messaging-portal-design.rst
 
 /// Disable Reporting API
 // PRIVACY: Fingerprinting concerns, used for analytics by design
@@ -2781,6 +2791,9 @@ pref("dom.ipc.keepProcessesAlive.privilegedabout", 0);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1447393
 pref("dom.ipc.keepProcessesAlive.web", 0); // [HIDDEN - non-Android] [DEFAULT - non-Android]
 
+/// Disable GNOME Integration [LINUX-ONLY]
+// https://searchfox.org/firefox-main/rev/82e2435f/browser/components/shell/nsGNOMEShellService.cpp#77 [LINUX-ONLY]
+pref("browser.gnome-search-provider.enabled", false); // [LINUX-ONLY] [HIDDEN]
 
 /// Disable Navigator Media Objects & getUserMedia Support in insecure contexts
 // https://developer.mozilla.org/docs/Web/API/Navigator/mediaDevices
@@ -2798,7 +2811,7 @@ pref("network.security.ports.banned.override", ""); // [HIDDEN] [DEFAULT]
 /// Enable content process sandboxing [NO-ANDROID]
 // These are especially useful for ex. Thunderbird, which seems to disable sandboxing by default... [NO-ANDROID]
 // Sandboxing is obviously critical from a security perspective as well, so doesn't hurt IMO to explicitly enable here [NO-ANDROID]
-pref("security.sandbox.content.level", 3); // [OSX-ONLY] [DEFAULT] https://searchfox.org/firefox-main/rev/82e2435f/browser/app/profile/firefox.js#1567
+pref("security.sandbox.content.level", 6); // [LINUX-ONLY] [DEFAULT] https://searchfox.org/firefox-main/rev/82e2435f/browser/app/profile/firefox.js#1596
 
 /// Enable the Cross-Origin-Embedder Policy Header
 // https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy
@@ -2936,6 +2949,8 @@ pref("media.cubeb.sandbox", true); // [DEFAULT]
 /// Use a separate content process for `file://` URLs
 pref("browser.tabs.remote.separateFileUriProcess", true); // [DEFAULT - non-Android]
 
+/// Warn on unprivileged namespaces [LINUX-ONLY]
+pref("security.sandbox.warn_unprivileged_namespaces", true); // [LINUX-ONLY] [DEFAULT]
 
 /// Yes, this is a real pref... 
 // https://searchfox.org/firefox-main/rev/82e2435f/js/xpconnect/src/nsXPConnect.cpp#1167
@@ -3458,8 +3473,6 @@ pref("layout.spellcheckDefault", 2); // [NO-ANDROID]
 
 
 
-/// Ensure the escape key exits fullscreen by default... [OSX-ONLY]
-pref("browser.fullscreen.exit_on_escape", true); // [OSX-ONLY] [DEFAULT]
 
 /// Ensure users can always control Nimbus recipes
 // https://searchfox.org/firefox-main/rev/82e2435f/toolkit/components/nimbus/lib/RemoteSettingsExperimentLoader.sys.mjs#692
@@ -3504,6 +3517,7 @@ pref("services.settings.loglevel", "warn"); // [HIDDEN] [DEFAULT]
 pref("toolkit.mozprotocol.url", "about:mozilla"); // [HIDDEN]
 
 /// Toggle the menu bar with the alt key by default
+pref("ui.key.menuAccessKeyFocuses", true); // [NO-OSX] [DEFAULT - Windows/Linux]
 
 pref("browser.phoenix.status", "027");
 
@@ -3732,14 +3746,14 @@ pref("browser.phoenix.applied.cfg", true, locked);
 
 Unspecified = This preference should be set EVERYWHERE
 
-[OSX-ONLY] = This preference should ONLY be set for macOS
-[SILICON-OSX-ONLY] = This preference should ONLY be set for macOS on Apple Silicon
+[LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
+[LINUX-NON-FLATPAK-ONLY] = This preference should ONLY be set for GNU/Linux (non-Flatpak)
 
 [NO-ANDROID] = This preference should be set everywhere, EXCEPT for Android
 [NO-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (Flatpak)
-[NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
-[NO-NON-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (non-Flatpak)
+[NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
 [NO-INTEL-OSX] = This preference should be set everywhere, EXCEPT for macOS on Intel
+[NO-SILICON-OSX] = This preference should be set everywhere, EXCEPT for macOS on Apple Silicon
 [NO-WINDOWS] = This preference should be set everywhere, EXCEPT for Windows
 
 */
@@ -3862,13 +3876,13 @@ pref("distribution.version", "default", locked); // [HIDDEN]
 
 Unspecified = This preference should be set EVERYWHERE
 
-[OSX-ONLY] = This preference should ONLY be set for macOS
-[SILICON-OSX-ONLY] = This preference should ONLY be set for macOS on Apple Silicon
+[LINUX-ONLY] = This preference should ONLY be set for GNU/Linux
+[LINUX-NON-FLATPAK-ONLY] = This preference should ONLY be set for GNU/Linux (non-Flatpak)
 
 [NO-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (Flatpak)
-[NO-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux
-[NO-NON-FLATPAK-LINUX] = This preference should be set everywhere, EXCEPT for GNU/Linux (non-Flatpak)
+[NO-OSX] = This preference should be set everywhere, EXCEPT for macOS
 [NO-INTEL-OSX] = This preference should be set everywhere, EXCEPT for macOS on Intel
+[NO-SILICON-OSX] = This preference should be set everywhere, EXCEPT for macOS on Apple Silicon
 [NO-WINDOWS] = This preference should be set everywhere, EXCEPT for Windows
 
 */
@@ -4529,8 +4543,9 @@ pref("dom.execCommand.paste.enabled", false); // `paste` https://searchfox.org/f
 pref("geo.prompt.open_system_prefs", false); // Ensure users aren't prompted to open settings and enable Geolocation - https://searchfox.org/mozilla-central/rev/20fc11f1/modules/libpref/init/StaticPrefList.yaml#6406
 pref("geo.provider.network.scan", false);
 pref("geo.provider.network.url", "");
-pref("geo.provider.use_corelocation", false); // [OSX-ONLY]
+pref("geo.provider.use_geoclue", false); // [LINUX-ONLY]
 pref("network.wifi.scanning_period", 0);
+pref("widget.use-xdg-desktop-portal.location", 0); // [LINUX-ONLY]
 
 /// Disable legacy XMPP gateways for Facebook, Google, Twitter, and Yahoo [CHAT]
 // https://searchfox.org/comm-central/source/chat/chat-prefs.js#76
@@ -4539,9 +4554,6 @@ pref("chat.prpls.prpl-gtalk.disable", true); // [DEFAULT] [CHAT]
 pref("chat.prpls.prpl-twitter.disable", true); // [DEFAULT] [CHAT]
 pref("chat.prpls.prpl-yahoo.disable", true); // [DEFAULT] [CHAT]
 
-/// Disable macOS Spotlight file indexing for email by default [OSX-ONLY]
-pref("mail.spotlight.enable", false); // [OSX-ONLY] [DEFAULT]
-pref("mail.spotlight.firstRunDone", true); // [OSX-ONLY]
 
 /// Disable OS file indexing/search integration for email by default
 pref("searchintegration.enable", false);
@@ -4554,7 +4566,7 @@ pref("keyword.enabled", false);
 // By default, these are typically fetched remotely from here: https://autoconfig.thunderbird.net/v1.1/
 // Using these locally improves privacy by avoiding the unwanted network activity/potential leakage, and improves performance/responsiveness
 // https://wiki.mozilla.org/Thunderbird:Autoconfiguration
-pref("mailnews.auto_config_url", "file:///opt/homebrew/opt/dove/assets/autoconfig/v1.1/"); // [SILICON-OSX-ONLY]
+pref("mailnews.auto_config_url", "file:///etc/thunderbird/Dove/assets/autoconfig/v1.1/"); // [LINUX-NON-FLATPAK-ONLY]
 
 /// Prevent calendar from extracting data from emails by default
 pref("calendar.extract.service.enabled", false); // [DEFAULT]
