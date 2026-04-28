@@ -24,7 +24,12 @@ echo
 readonly DOVE_DOT_CLEAN='/usr/sbin/dot_clean -mv'
 
 # zip
-readonly DOVE_ZIP='zip -r -FS'
+if [ "${DOVE_NIX}" == 1 ]; then
+    readonly DOVE_ZIP='zip -r'
+    rm "${DOVE_ARCHIVES}/dove-linux.zip"
+else
+    readonly DOVE_ZIP='zip -r -FS'
+fi
 
 if [ "${DOVE_LINUX}" == 1 ]; then
     if [[ "${DOVE_OS}" == 'osx' ]]; then
