@@ -18,7 +18,7 @@
       self,
       nixpkgs,
       phoenix,
-      autoconfig
+      autoconfig,
     }:
     let
       inherit (nixpkgs) lib;
@@ -61,19 +61,20 @@
                   }
                 ];
                 environment.etc."thunderbird/defaults/pref/dove.js".source = "${pkgs.dove}/pref/dove.js";
+                environment.etc."thunderbird/dove.cfg".source = "${pkgs.dove}/dove.cfg";
                 environment.etc."thunderbird/dove/assets".source = "${pkgs.dove}/assets";
                 environment.variables = {
-                    DOVE_HOST_NIX = 1;
-                    MOZ_CRASHREPORTER = "";
-                    MOZ_CRASHREPORTER_DISABLE = 1;
-                    MOZ_CRASHREPORTER_NO_REPORT = 1;
-                    MOZ_CRASHREPORTER_URL = "data;";
-                    MOZ_DISABLE_ASAN_REPORTER = 1;
-                    MOZ_ENABLE_WAYLAND = 1;
-                    MOZ_GFX_CRASH_MOZ_CRASH = 1;
-                    MOZ_GFX_CRASH_TELEMETRY = "";
-                    PHOENIX_HOST_NIX = 1;
-                    SSLKEYLOGFILE = "";
+                  DOVE_HOST_NIX = 1;
+                  MOZ_CRASHREPORTER = "";
+                  MOZ_CRASHREPORTER_DISABLE = 1;
+                  MOZ_CRASHREPORTER_NO_REPORT = 1;
+                  MOZ_CRASHREPORTER_URL = "data;";
+                  MOZ_DISABLE_ASAN_REPORTER = 1;
+                  MOZ_ENABLE_WAYLAND = 1;
+                  MOZ_GFX_CRASH_MOZ_CRASH = 1;
+                  MOZ_GFX_CRASH_TELEMETRY = "";
+                  PHOENIX_HOST_NIX = 1;
+                  SSLKEYLOGFILE = "";
                 };
                 programs.thunderbird.policies =
                   (builtins.fromJSON (builtins.readFile "${pkgs.dove}/policies.json")).policies;
@@ -125,11 +126,11 @@
               ];
               buildPhase = ''
                 runHook preBuild
-                
+
                 export DOVE_PHOENIX="$PWD/phoenix"
                 export DOVE_AUTOCONFIG=${autoconfig}
                 cp --no-preserve=mode -r ${phoenix} "$DOVE_PHOENIX"
-                
+
                 export DOVE_NIX=1
                 patchShebangs ./scripts/*.sh
 
