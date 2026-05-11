@@ -340,7 +340,7 @@ function get_lxml() {
     if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
         source "${DOVE_PYENV}"
         echo_red_text 'Installing lxml...'
-        "${DOVE_UV}" pip install --strict "${DOVE_LXML}"
+        "${DOVE_UV}" pip install --no-editable --strict "${DOVE_LXML}"
         echo_green_text 'SUCCESS: Set-up lxml'
     fi
 }
