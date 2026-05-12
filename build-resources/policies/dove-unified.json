@@ -72,6 +72,14 @@
                 "installation_mode": "blocked",
                 "blocked_install_message": "We're now using our own builds with our own add-on ID, so we need to ensure this is removed. uBlock Origin no longer offers official builds for Thunderbird anyways either."
             },
+            "atn-xpihandler-direct@celenity.dev": {
+                "blocked_install_message": "ATN-XPIHandler (Direct): https://codeberg.org/celenity/atn-xpihandler",
+                "private_browsing": true
+            },
+            "ubird-direct@celenity.dev": {
+                "blocked_install_message": "uBird (Direct): https://codeberg.org/celenity/uBird",
+                "private_browsing": true
+            },
             "{12a1584b-2123-473d-8752-e82e74e3cb1b}": {
                 "blocked_install_message": "NestedQuote Remover: https://addons.thunderbird.net/addon/nestedquote-remover/",
                 "private_browsing": true
