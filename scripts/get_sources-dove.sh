@@ -120,7 +120,7 @@ function update_sha512sum() {
         echo_green_text 'SUCCESS: Updated SHA512sum for Python (OS X - x86_64)'
     elif [ "${old_sha512sum}" == "${S3CMD_SHA512SUM}" ]; then
         echo_red_text 'Updating SHA512sum for s3cmd...'
-        "${PHOENIX_SED}" -i -e "s|S3CMD_SHA512SUM='.*'|S3CMD_SHA512SUM='"${new_sha512sum}"'|g" "${PHOENIX_VERSIONS}"
+        "${DOVE_SED}" -i -e "s|S3CMD_SHA512SUM='.*'|S3CMD_SHA512SUM='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for s3cmd'
     elif [ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_ARM64}" ]; then
         echo_red_text 'Updating SHA512sum for uv (Linux - ARM64)...'
