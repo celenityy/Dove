@@ -16,311 +16,169 @@ if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
     exit 1
 fi
 
-# Ensure our directories exist
+# Set-up Python venv
+if [ "${DOVE_NIX}" != 1 ]; then
+    source "${DOVE_PYENV}"
+fi
+
+# Include version info
+source "${DOVE_VERSIONS}"
+
+# Begin the build...
+echo_red_text "Building Dove ${DOVE_VERSION}..."
+
+# Prepare to build Dove
+function prep_dove() {
+    cp -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg"
+
+    # Update the versions
+    "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_TEMP}/dove-parsed.cfg"
+    "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_TEMP}/dove-parsed.cfg"
+}
+
+# Build Thunderbird's autoconfiguration database
+function build_autoconfig() {
+    echo_red_text 'Building the Thunderbird autoconfiguration database...'
+    mkdir -p "${DOVE_BUILD}/autoconfig/v1.1"
+
+    pushd "${DOVE_BUILD}/autoconfig"
+    cp "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_BUILD}/autoconfig/LICENSE.txt"
+    "${DOVE_PYTHON}" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml
+    popd
+
+    echo_green_text 'SUCCESS: Built the Thunderbird autoconfiguration database'
+}
+
+# Build Phoenix
+function build_phoenix() {
+    echo_red_text 'Building Phoenix...'
+
+    pushd "${DOVE_PHOENIX}"
+    bash -x "${DOVE_PHOENIX}/scripts/build.sh"
+    popd
+
+    echo_green_text 'SUCCESS: Built Phoenix'
+}
+
+# Platform-specific build logic
+function build_dove() {
+    local readonly dove_platform="$1"
+    local readonly dove_output_dir="${DOVE_OUTPUTS}/${dove_platform}"
+
+    # Create our output directory
+    mkdir -p "${dove_output_dir}/assets/autoconfig/v1.1"
+
+    # Copy our bootstrap dove.js
+    mkdir -p "${dove_output_dir}/defaults/pref"
+    cp "${DOVE_ROOT}/dove.js" "${dove_output_dir}/defaults/pref/dove.js"
+
+    # Copy our parsed dove.cfg
+    if [ "${dove_platform}" == 'osx-silicon' ]; then
+        # To ensure installs continue working as expected, this must be placed in (and copied from)
+        ## the `macos` directory
+        local readonly dove_cfg_output_dir="${dove_output_dir}/macos"
+        local readonly phoenix_cfg_input_path="${dove_platform}/macos"
+    else
+        local readonly dove_cfg_output_dir="${dove_output_dir}"
+        local readonly phoenix_cfg_input_path="${dove_platform}"
+    fi
+    mkdir -p "${dove_cfg_output_dir}"
+    cp "${DOVE_PHOENIX}/outputs/${phoenix_cfg_input_path}/phoenix.cfg" "${dove_cfg_output_dir}/dove.cfg"
+
+    # If necessary, copy our static dove.js
+    if [ "${DOVE_STATIC_JS}" == 1 ]; then
+        cp "${DOVE_PHOENIX}/outputs/${dove_platform}/phoenix-static-${PHOENIX_VERSION}-${dove_platform}.js" "${dove_output_dir}/dove-static-${DOVE_VERSION}-${dove_platform}.js"
+    fi
+
+    # Copy icon
+    cp "${DOVE_BUILD_RESOURCES}/assets/dove.png" "${dove_output_dir}/assets/dove.png"
+
+    # Copy license
+    cp "${DOVE_ROOT}/COPYING.txt" "${dove_output_dir}/COPYING.txt"
+
+    # Copy README
+    cp "${DOVE_ROOT}/README.md" "${dove_output_dir}/README.md"
+
+    # Copy platform-specific files
+    if [ "${dove_platform}" == 'linux-nonflatpak' ]; then
+        cp -r "${DOVE_BUILD_RESOURCES}/linux/etc" "${dove_output_dir}/"
+    elif [ "${dove_platform}" == 'osx-silicon' ] || [ "${dove_platform}" == 'osx-intel' ]; then
+        cp -r "${DOVE_BUILD_RESOURCES}/osx-shared/Library" "${dove_output_dir}/"
+        cp -r "${DOVE_BUILD_RESOURCES}/${dove_platform}/Library/" "${dove_output_dir}/Library/"
+    fi
+
+    # Copy enterprise policies
+    if [ "${dove_platform}" == 'linux-nonflatpak' ] || [ "${dove_platform}" == 'linux-flatpak' ]; then
+        cp -r "${DOVE_PHOENIX}/outputs/${dove_platform}/policies" "${dove_output_dir}/"
+    elif [ "${dove_platform}" == 'osx-silicon' ]; then
+        cp "${DOVE_PHOENIX}/outputs/${dove_platform}/macos/org.mozilla.firefox.plist" "${dove_output_dir}/macos/org.mozilla.thunderbird.plist"
+    elif [ "${dove_platform}" == 'osx-intel' ]; then
+        cp "${DOVE_PHOENIX}/outputs/${dove_platform}/org.mozilla.firefox.plist" "${dove_output_dir}/org.mozilla.thunderbird.plist"
+    elif [ "${dove_platform}" == 'windows' ]; then
+        cp -r "${DOVE_PHOENIX}/outputs/${dove_platform}/distribution" "${dove_output_dir}/"
+    fi
+    
+    # For OS X, also copy the standard policies.json
+    if [ "${dove_platform}" == 'osx-silicon' ] || [ "${dove_platform}" == 'osx-intel' ]; then
+        mkdir -p "${dove_output_dir}/unused"
+        cp "${DOVE_PHOENIX}/outputs/${dove_platform}/unused/policies.json" "${dove_output_dir}/unused/policies.json"
+    fi
+
+    # Copy Thunderbird's autoconfiguration files
+    cp -vrf "${DOVE_BUILD}/autoconfig" "${dove_output_dir}/assets/"
+
+    # Finally, create our platform-specific archives
+    if [[ "${DOVE_OS}" == 'osx' ]]; then
+        /usr/sbin/dot_clean -mv "${dove_output_dir}"
+    fi
+
+    pushd "${dove_output_dir}"
+    if [ "${dove_platform}" == 'windows' ]; then
+        zip -r "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.zip" * -x '.DS_Store'
+    else
+        "${DOVE_TAR}" -cJv --no-xattrs --exclude ".DS_Store" -f "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.tar.xz" *
+    fi
+    popd
+}
+
+# Create our temporary file directory
+mkdir -p "${DOVE_TEMP}"
+
+# First, prepare our build environment
+prep_dove
+
+# Build Thunderbird's autoconfiguration Database
+build_autoconfig
+
+# Build Phoenix
+build_phoenix
+
+# Build Dove for Linux (non-Flatpak)
 if [ "${DOVE_LINUX}" == 1 ]; then
-    mkdir -vp "${DOVE_LINUX_OUTPUTS}/unused" || error_fn
-    echo
+    build_dove 'linux-nonflatpak'
 fi
+
+# Build Dove for Linux (Flatpak)
 if [ "${DOVE_LINUX_FLATPAK}" == 1 ]; then
-    mkdir -vp "${DOVE_LINUX_FLATPAK_OUTPUTS}/unused" || error_fn
-    echo
+    build_dove 'linux-flatpak'
 fi
+
+# Build Dove for OS X (Silicon)
 if [ "${DOVE_OSX}" == 1 ]; then
-    mkdir -vp "${DOVE_OSX_OUTPUTS}/unused" || error_fn
-    echo
+    build_dove 'osx-silicon'
 fi
+
+# Build Dove for OS X (Intel)
 if [ "${DOVE_OSX_INTEL}" == 1 ]; then
-    mkdir -vp "${DOVE_OSX_INTEL_OUTPUTS}/unused" || error_fn
-    echo
+    build_dove 'osx-intel'
 fi
+
+# Build Dove for Windows
 if [ "${DOVE_WINDOWS}" == 1 ]; then
-    mkdir -vp "${DOVE_WINDOWS_OUTPUTS}/unused" || error_fn
-    echo
+    build_dove 'windows'
 fi
 
-# Move files to their appropriate locations
-if [[ -f "${DOVE_OSX_OUTPUTS}/macos/org.mozilla.firefox.plist" ]]; then
-    mv "${DOVE_OSX_OUTPUTS}/macos/org.mozilla.firefox.plist" "${DOVE_OSX_OUTPUTS}/macos/org.mozilla.thunderbird.plist" || error_fn
-    echo
-fi
+echo_green_text "SUCCESS: Built Dove ${DOVE_VERSION}"
 
-if [[ -f "${DOVE_OSX_INTEL_OUTPUTS}/org.mozilla.firefox.plist" ]]; then
-    mv "${DOVE_OSX_INTEL_OUTPUTS}/org.mozilla.firefox.plist" "${DOVE_OSX_INTEL_OUTPUTS}/org.mozilla.thunderbird.plist" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_OSX_OUTPUTS}/macos/policies.json" ]]; then
-    mv "${DOVE_OSX_OUTPUTS}/macos/policies.json" "${DOVE_OSX_OUTPUTS}/unused/policies.json" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_OSX_INTEL_OUTPUTS}/policies.json" ]]; then
-    mv "${DOVE_OSX_INTEL_OUTPUTS}/policies.json" "${DOVE_OSX_INTEL_OUTPUTS}/unused/policies.json" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-linux.cfg" ]]; then
-    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_LINUX_OUTPUTS}/unused/dove-user-pref.cfg" || error_fn
-    echo
-
-    cat "${DOVE_TEMP}/prefs/dove-linux.cfg" "${DOVE_LINUX_OUTPUTS}/unused/dove-user-pref.cfg" > "${DOVE_LINUX_OUTPUTS}/dove.cfg" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-linux-flatpak.cfg" ]]; then
-    # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_LINUX_FLATPAK_OUTPUTS}/unused/dove-user-pref.cfg" || error_fn
-    echo
-
-    cat "${DOVE_TEMP}/prefs/dove-linux-flatpak.cfg" "${DOVE_LINUX_FLATPAK_OUTPUTS}/unused/dove-user-pref.cfg" > "${DOVE_LINUX_FLATPAK_OUTPUTS}/dove.cfg" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-osx.cfg" ]]; then
-    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_OSX_OUTPUTS}/unused/dove-user-pref.cfg" || error_fn
-    echo
-
-    cat "${DOVE_TEMP}/prefs/dove-osx.cfg" "${DOVE_OSX_OUTPUTS}/unused/dove-user-pref.cfg" > "${DOVE_OSX_OUTPUTS}/macos/dove.cfg" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-osx-intel.cfg" ]]; then
-    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_OSX_INTEL_OUTPUTS}/unused/dove-user-pref.cfg" || error_fn
-    echo
-
-    cat "${DOVE_TEMP}/prefs/dove-osx-intel.cfg" "${DOVE_OSX_INTEL_OUTPUTS}/unused/dove-user-pref.cfg" > "${DOVE_OSX_INTEL_OUTPUTS}/dove.cfg" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-windows.cfg" ]]; then
-    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "${DOVE_TEMP}/dove-user-pref-parsed.cfg" > "${DOVE_WINDOWS_OUTPUTS}/unused/dove-user-pref.cfg" || error_fn
-    echo
-
-    cat "${DOVE_TEMP}/prefs/dove-windows.cfg" "${DOVE_WINDOWS_OUTPUTS}/unused/dove-user-pref.cfg" > "${DOVE_WINDOWS_OUTPUTS}/dove.cfg" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-linux.js" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-linux.js" "${DOVE_LINUX_OUTPUTS}/unused/dove.js" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-linux-flatpak.js" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-linux-flatpak.js" "${DOVE_LINUX_FLATPAK_OUTPUTS}/unused/dove.js" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-osx.js" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-osx.js" "${DOVE_OSX_OUTPUTS}/unused/dove.js" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-osx-intel.js" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-osx-intel.js" "${DOVE_OSX_INTEL_OUTPUTS}/unused/dove.js" || error_fn
-    echo
-fi
-
-if [[ -f "${DOVE_TEMP}/prefs/dove-windows.js" ]]; then
-    mv "${DOVE_TEMP}/prefs/dove-windows.js" "${DOVE_WINDOWS_OUTPUTS}/unused/dove.js" || error_fn
-    echo
-fi
-
-# GNU/LINUX
-if [ "${DOVE_LINUX}" == 1 ]; then
-    echo_green_text 'Building Dove for Linux...'
-    mkdir -vp "${DOVE_LINUX_OUTPUTS}/assets" || error_fn
-    echo
-    mkdir -vp "${DOVE_LINUX_OUTPUTS}/defaults/pref" || error_fn
-    echo
-    mkdir -vp "${DOVE_LINUX_OUTPUTS}/etc/profile.d" || error_fn
-    echo
-    mkdir -vp "${DOVE_LINUX_OUTPUTS}/policies" || error_fn
-    echo
-
-    # Copy license
-    cp -vf "${DOVE_ROOT}/COPYING.txt" "${DOVE_LINUX_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy README
-    cp -vf "${DOVE_ROOT}/README.md" "${DOVE_LINUX_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy assets
-    cp "${DOVE_BUILD_RESOURCES}/assets/dove.png" "${DOVE_LINUX_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Copy Thunderbird's autoconfiguration files
-    rm -vrf "${DOVE_LINUX_OUTPUTS}/assets/autoconfig/*" || error_fn
-    echo
-    mkdir -vp "${DOVE_LINUX_OUTPUTS}/assets/autoconfig/v1.1" || error_fn
-    echo
-    cp -vrf "${DOVE_BUILD}/autoconfig" "${DOVE_LINUX_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Copy environment variables
-    cp "${DOVE_BUILD_RESOURCES}/linux/etc/profile.d/dove-env-overrides.sh" "${DOVE_LINUX_OUTPUTS}/etc/profile.d/" || error_fn
-    echo
-
-    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [NO-LINUX], [NO-NON-FLATPAK-LINUX], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|NO-LINUX|NO-NON-FLATPAK-LINUX|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_BUILD_RESOURCES}/dove-bootstrap.js" > "${DOVE_LINUX_OUTPUTS}/defaults/pref/dove.js" || error_fn
-    echo
-    echo "Created ${DOVE_LINUX_OUTPUTS}/defaults/pref/dove.js"
-fi
-
-# GNU/LINUX (FLATPAK)
-if [ "${DOVE_LINUX_FLATPAK}" == 1 ]; then
-    echo_green_text 'Building Dove for Linux (Flatpak)...'
-    mkdir -vp "${DOVE_LINUX_FLATPAK_OUTPUTS}/assets" || error_fn
-    echo
-    mkdir -vp "${DOVE_LINUX_FLATPAK_OUTPUTS}/defaults/pref" || error_fn
-    echo
-    mkdir -vp "${DOVE_LINUX_FLATPAK_OUTPUTS}/policies" || error_fn
-    echo
-
-    # Copy license
-    cp -vf "${DOVE_ROOT}/COPYING.txt" "${DOVE_LINUX_FLATPAK_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy README
-    cp -vf "${DOVE_ROOT}/README.md" "${DOVE_LINUX_FLATPAK_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy assets
-    cp "${DOVE_BUILD_RESOURCES}/assets/dove.png" "${DOVE_LINUX_FLATPAK_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Copy Thunderbird's autoconfiguration files
-    rm -vrf "${DOVE_LINUX_FLATPAK_OUTPUTS}/assets/autoconfig/*" || error_fn
-    echo
-    mkdir -vp "${DOVE_LINUX_FLATPAK_OUTPUTS}/assets/autoconfig/v1.1" || error_fn
-    echo
-    cp -vrf "${DOVE_BUILD}/autoconfig" "${DOVE_LINUX_FLATPAK_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Remove lines containing [INTEL-OSX-ONLY], [NO-FLATPAK-LINUX], [NO-LINUX], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'INTEL-OSX-ONLY|NO-FLATPAK-LINUX|NO-LINUX|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_BUILD_RESOURCES}/dove-bootstrap.js" > "${DOVE_LINUX_FLATPAK_OUTPUTS}/defaults/pref/dove.js" || error_fn
-    echo
-    echo "Created ${DOVE_LINUX_FLATPAK_OUTPUTS}/defaults/pref/dove.js"
-fi
-
-# OS X
-if [ "${DOVE_OSX}" == 1 ]; then
-    echo_green_text 'Building Dove for OS X...'
-    mkdir -vp "${DOVE_OSX_OUTPUTS}/assets" || error_fn
-    echo
-    mkdir -vp "${DOVE_OSX_OUTPUTS}/defaults/pref" || error_fn
-    echo
-    mkdir -vp "${DOVE_OSX_OUTPUTS}/Library/celenity" || error_fn
-    echo
-    mkdir -vp "${DOVE_OSX_OUTPUTS}/macos" || error_fn
-    echo
-
-    # Copy license
-    cp -vf "${DOVE_ROOT}/COPYING.txt" "${DOVE_OSX_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy README
-    cp -vf "${DOVE_ROOT}/README.md" "${DOVE_OSX_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy assets
-    cp "${DOVE_BUILD_RESOURCES}/assets/dove.png" "${DOVE_OSX_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Copy Thunderbird's autoconfiguration files
-    rm -vrf "${DOVE_OSX_OUTPUTS}/assets/autoconfig/*" || error_fn
-    echo
-    mkdir -vp "${DOVE_OSX_OUTPUTS}/assets/autoconfig/v1.1" || error_fn
-    echo
-    cp -vrf "${DOVE_BUILD}/autoconfig" "${DOVE_OSX_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Copy OS X-specific files
-    cp -rf "${DOVE_BUILD_RESOURCES}/osx-shared/Library/LaunchAgents" "${DOVE_OSX_OUTPUTS}/Library/"
-
-    cp -rf "${DOVE_BUILD_RESOURCES}/osx/Library/celenity/Dove" "${DOVE_OSX_OUTPUTS}/Library/celenity/"
-    cp -rf "${DOVE_BUILD_RESOURCES}/osx/Library/LaunchAgents/" "${DOVE_OSX_OUTPUTS}/Library/LaunchAgents/"
-    cp -rf "${DOVE_BUILD_RESOURCES}/osx/Library/LaunchDaemons" "${DOVE_OSX_OUTPUTS}/Library/"
-
-    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-OSX], [NO-SILICON-OSX], [LINUX-NON-FLATPAK-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-OSX|NO-SILICON-OSX|NON-FLATPAK-LINUX-ONLY|WINDOWS-ONLY' "${DOVE_BUILD_RESOURCES}/dove-bootstrap.js" > "${DOVE_OSX_OUTPUTS}/defaults/pref/dove.js" || error_fn
-    echo
-    echo "Created ${DOVE_OSX_OUTPUTS}/defaults/pref/dove.js"
-fi
-
-# OS X (INTEL)
-if [ "${DOVE_OSX_INTEL}" == 1 ]; then
-    echo_green_text 'Building Dove for OS X (Intel)...'
-    mkdir -vp "${DOVE_OSX_INTEL_OUTPUTS}/assets" || error_fn
-    echo
-    mkdir -vp "${DOVE_OSX_INTEL_OUTPUTS}/defaults/pref" || error_fn
-    echo
-    mkdir -vp "${DOVE_OSX_INTEL_OUTPUTS}/Library/celenity" || error_fn
-    echo
-
-    # Copy license
-    cp -vf "${DOVE_ROOT}/COPYING.txt" "${DOVE_OSX_INTEL_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy README
-    cp -vf "${DOVE_ROOT}/README.md" "${DOVE_OSX_INTEL_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy assets
-    cp "${DOVE_BUILD_RESOURCES}/assets/dove.png" "${DOVE_OSX_INTEL_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Copy Thunderbird's autoconfiguration files
-    rm -vrf "${DOVE_OSX_INTEL_OUTPUTS}/assets/autoconfig/*" || error_fn
-    echo
-    mkdir -vp "${DOVE_OSX_INTEL_OUTPUTS}/assets/autoconfig/v1.1" || error_fn
-    echo
-    cp -vrf "${DOVE_BUILD}/autoconfig" "${DOVE_OSX_INTEL_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Copy OS X-specific files
-    cp -rf "${DOVE_BUILD_RESOURCES}/osx-shared/Library/LaunchAgents" "${DOVE_OSX_INTEL_OUTPUTS}/Library/"
-
-    cp -rf "${DOVE_BUILD_RESOURCES}/osx-intel/Library/celenity/Dove" "${DOVE_OSX_INTEL_OUTPUTS}/Library/celenity/"
-    cp -rf "${DOVE_BUILD_RESOURCES}/osx-intel/Library/LaunchAgents/" "${DOVE_OSX_INTEL_OUTPUTS}/Library/LaunchAgents/"
-    cp -rf "${DOVE_BUILD_RESOURCES}/osx-intel/Library/LaunchDaemons" "${DOVE_OSX_INTEL_OUTPUTS}/Library/"
-
-    # Remove lines containing [FLATPAK-LINUX-ONLY], [LINUX-ONLY], [NO-INTEL-OSX], [NO-OSX], [LINUX-NON-FLATPAK-ONLY], [SILICON-OSX-ONLY], and [WINDOWS-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|LINUX-ONLY|NO-INTEL-OSX|NO-OSX|NON-FLATPAK-LINUX-ONLY|SILICON-OSX-ONLY|WINDOWS-ONLY' "${DOVE_BUILD_RESOURCES}/dove-bootstrap.js" > "${DOVE_OSX_INTEL_OUTPUTS}/defaults/pref/dove.js" || error_fn
-    echo
-    echo "Created ${DOVE_OSX_INTEL_OUTPUTS}/defaults/pref/dove.js"
-fi
-
-# WINDOWS
-if [ "${DOVE_WINDOWS}" == 1 ]; then
-    echo_green_text 'Building Dove for Windows...'
-
-    # Copy license
-    cp -vf "${DOVE_ROOT}/COPYING.txt" "${DOVE_WINDOWS_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy README
-    cp -vf "${DOVE_ROOT}/README.md" "${DOVE_WINDOWS_OUTPUTS}/" || error_fn
-    echo
-
-    # Copy assets
-    cp "${DOVE_BUILD_RESOURCES}/assets/dove.png" "${DOVE_WINDOWS_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Copy Thunderbird's autoconfiguration files
-    rm -vrf "${DOVE_WINDOWS_OUTPUTS}/assets/autoconfig/*" || error_fn
-    echo
-    mkdir -vp "${DOVE_WINDOWS_OUTPUTS}/assets/autoconfig/v1.1" || error_fn
-    echo
-    cp -vrf "${DOVE_BUILD}/autoconfig" "${DOVE_WINDOWS_OUTPUTS}/assets/" || error_fn
-    echo
-
-    # Remove lines containing [FLATPAK-LINUX-ONLY], [INTEL-OSX-ONLY], [LINUX-ONLY], [NO-WINDOWS], [LINUX-NON-FLATPAK-ONLY], [OSX-ONLY], and [SILICON-OSX-ONLY]
-    grep -vE 'FLATPAK-LINUX-ONLY|INTEL-OSX-ONLY|LINUX-ONLY|NO-WINDOWS|NON-FLATPAK-LINUX-ONLY|OSX-ONLY|SILICON-OSX-ONLY' "${DOVE_BUILD_RESOURCES}/dove-bootstrap.js" > "${DOVE_WINDOWS_OUTPUTS}/defaults/pref/dove.js" || error_fn
-    echo
-    echo "Created ${DOVE_WINDOWS_OUTPUTS}/defaults/pref/dove.js"
-fi
+# Clean-up temporary files
+rm -rf "${DOVE_TEMP}"

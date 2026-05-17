@@ -74,52 +74,12 @@ readonly DOVE_DOWNLOADS="${DOVE_EXTERNAL}/downloads"
 export DOVE_DOWNLOADS
 
 # Dove outputs directory
-readonly DOVE_OUTPUTS_DEFAULT="${DOVE_ROOT}"
+readonly DOVE_OUTPUTS_DEFAULT="${DOVE_ROOT}/outputs"
 if [[ -z "${DOVE_OUTPUTS+x}" ]]; then
     DOVE_OUTPUTS="${DOVE_OUTPUTS_DEFAULT}"
 fi
 readonly DOVE_OUTPUTS
 export DOVE_OUTPUTS
-
-# Linux outputs directory
-readonly DOVE_LINUX_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/linux"
-if [[ -z "${DOVE_LINUX_OUTPUTS+x}" ]]; then
-    DOVE_LINUX_OUTPUTS="${DOVE_LINUX_OUTPUTS_DEFAULT}"
-fi
-readonly DOVE_LINUX_OUTPUTS
-export DOVE_LINUX_OUTPUTS
-
-## Linux (Flatpak) outputs directory
-readonly DOVE_LINUX_FLATPAK_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/linux-flatpak"
-if [[ -z "${DOVE_LINUX_FLATPAK_OUTPUTS+x}" ]]; then
-    DOVE_LINUX_FLATPAK_OUTPUTS="${DOVE_LINUX_FLATPAK_OUTPUTS_DEFAULT}"
-fi
-readonly DOVE_LINUX_FLATPAK_OUTPUTS
-export DOVE_LINUX_FLATPAK_OUTPUTS
-
-# OS X outputs directory
-readonly DOVE_OSX_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/osx"
-if [[ -z "${DOVE_OSX_OUTPUTS+x}" ]]; then
-    DOVE_OSX_OUTPUTS="${DOVE_OSX_OUTPUTS_DEFAULT}"
-fi
-readonly DOVE_OSX_OUTPUTS
-export DOVE_OSX_OUTPUTS
-
-## OS X (Intel) outputs directory
-readonly DOVE_OSX_INTEL_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/osx-intel"
-if [[ -z "${DOVE_OSX_INTEL_OUTPUTS+x}" ]]; then
-    DOVE_OSX_INTEL_OUTPUTS="${DOVE_OSX_INTEL_OUTPUTS_DEFAULT}"
-fi
-readonly DOVE_OSX_INTEL_OUTPUTS
-export DOVE_OSX_INTEL_OUTPUTS
-
-# Windows outputs directory
-readonly DOVE_WINDOWS_OUTPUTS_DEFAULT="${DOVE_OUTPUTS}/windows"
-if [[ -z "${DOVE_WINDOWS_OUTPUTS+x}" ]]; then
-    DOVE_WINDOWS_OUTPUTS="${DOVE_WINDOWS_OUTPUTS_DEFAULT}"
-fi
-readonly DOVE_WINDOWS_OUTPUTS
-export DOVE_WINDOWS_OUTPUTS
 
 # Should we create a log file for build.sh? (Default)
 readonly DOVE_LOG_BUILD_DEFAULT=1
@@ -427,6 +387,15 @@ if [[ -z "${DOVE_WINDOWS+x}" ]]; then
 fi
 readonly DOVE_WINDOWS
 export DOVE_WINDOWS
+
+# Whether we should build Dove in the static .js prefs format
+## This is not recommended in favor of the .cfg format, and will likely be removed entirely in the near future
+readonly DOVE_STATIC_JS_DEFAULT=0
+if [[ -z "${DOVE_STATIC_JS+x}" ]]; then
+  DOVE_STATIC_JS="${DOVE_STATIC_JS_DEFAULT}"
+fi
+readonly DOVE_STATIC_JS
+export DOVE_STATIC_JS
 
 # Set our external environment variables
 readonly DOVE_ENV_EXTERNAL="${DOVE_SCRIPTS}/env_external.sh"

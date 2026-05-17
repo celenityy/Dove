@@ -14,3 +14,6 @@
 # nix build
 result-*
 result
+
+# Outputs
+/outputs/

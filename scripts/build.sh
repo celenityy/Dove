@@ -22,7 +22,7 @@ if [ "${DOVE_LOG_BUILD}" == 1 ]; then
     # Ensure our log directory exists
     mkdir -vp "${DOVE_LOG_DIR}"
 
-    bash -x "${DOVE_SCRIPTS}/build-dove.sh" > >(tee -a "${BUILD_LOG_FILE}") 2>&1
+    bash -x "${DOVE_SCRIPTS}/fly.sh" > >(tee -a "${BUILD_LOG_FILE}") 2>&1
 else
-    bash -x "${DOVE_SCRIPTS}/build-dove.sh"
+    bash -x "${DOVE_SCRIPTS}/fly.sh"
 fi
