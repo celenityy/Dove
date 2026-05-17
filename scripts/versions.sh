@@ -4,6 +4,7 @@ readonly DOVE_VERSION='2026.04.27.1'
 # Sources
 
 # Phoenix
+### Version: 2026.04.27.1
 ## https://gitlab.com/celenityy/Phoenix
 readonly PHOENIX_COMMIT='9ad10b5e54831a97a9c01cde09ea2351706d19dc'
 readonly PHOENIX_SHA512SUM='aaa70de11014e4e24e4787a6e9e000739c0266f30f3766f0ef86196e5f04b1e335921dff8d16b9ccce52f6f0c9c24f9b85d994dfd78f4aa20a31f279906933b7'
@@ -20,11 +21,11 @@ readonly AUTOCONFIG_SHA512SUM='e20f3c8a024d74127549fbd6a37ac1821e2b217b54a36a534
 ## lxml
 ### Version: 6.1.0
 ### https://github.com/lxml/lxml
-### (This commit corresponds to https://github.com/lxml/lxml/releases/tag/lxml-6.1.0)
 readonly LXML_COMMIT='43722f4402afa48b7890a96ce012eb0b9b1af5be'
 readonly LXML_SHA512SUM='361581690be1597cd3177355442b0bbff6f01cc65f4c65b06fbdaf7b9ce15402661a586c25d48d5961bdc32577ad1596656a2c79c1ac52a1f5fd8e4be073b9d9'
 
 ## Python
+### Version: 20260510 (3.14.5)
 ### https://github.com/astral-sh/python-build-standalone
 readonly PYTHON_GIT_RELEASE='20260510'
 readonly PYTHON_SHA512SUM_LINUX_ARM64='2b63d6cd1aa82c3329b93c771e46028c311b0d8b9ddb24d72e58566d3729d15aedea3f5794e878febe9378b6b83d9084f104a6f11c962a4770e7a01bbb350280'
@@ -32,6 +33,11 @@ readonly PYTHON_SHA512SUM_LINUX_X86_64='04e04c763fe103822627e4da29015c7c6976c836
 readonly PYTHON_SHA512SUM_OSX_ARM64='f9a64cfbc8706b7f6d22a463879b27086ff929350a69c47917f8e3cd9185e8fbd219fe1b368de79a90895f0fe55636f7a0c49cac03f2c40943388c792e7afe9b'
 readonly PYTHON_SHA512SUM_OSX_X86_64='28d38843ee3be61a4bdcac150a8b3512d75911fd6869bd4196a677240b10ec60d11dec2a93c106f3a7e9659920e092056b7eb977b0926435193c1e76b593d131'
 readonly PYTHON_VERSION='3.14.5'
+
+## s3cmd
+### https://github.com/s3tools/s3cmd
+readonly S3CMD_COMMIT='cee84f9c539a7bbf5ee73c7bf29a47632119c0c6'
+readonly S3CMD_SHA512SUM='b1b7c792265dfa1ccdd40f816e3463617c168e4317acac930b251ce73fcd3b8eb479d966d4ba93fbe8c0cf251bada64bcd9caf30d1e5e94c20a87a36447c1263'
 
 ## uv
 ### Version: 0.11.14

@@ -97,6 +97,14 @@ fi
 readonly DOVE_LOG_SOURCES
 export DOVE_LOG_SOURCES
 
+# Should we create a log file for push.sh? (Default)
+readonly DOVE_LOG_PUSH_DEFAULT=1
+if [[ -z "${DOVE_LOG_PUSH+x}" ]]; then
+  DOVE_LOG_PUSH="${DOVE_LOG_PUSH_DEFAULT}"
+fi
+readonly DOVE_LOG_PUSH
+export DOVE_LOG_PUSH
+
 # Directory where we should store log files (if logging is desired)
 readonly DOVE_LOG_DIR_DEFAULT="${DOVE_BUILD}/logs"
 if [[ -z "${DOVE_LOG_DIR+x}" ]]; then
@@ -188,6 +196,16 @@ fi
 readonly DOVE_PYTHON
 export DOVE_PYTHON
 
+# s3cmd
+readonly DOVE_S3CMD_DIR_DEFAULT="${DOVE_EXTERNAL}/s3cmd"
+if [[ -z "${DOVE_S3CMD_DIR+x}" ]]; then
+    DOVE_S3CMD_DIR="${DOVE_S3CMD_DIR_DEFAULT}"
+fi
+readonly DOVE_S3CMD_DIR
+readonly DOVE_S3CMD="${DOVE_PYENV_DIR}/bin/s3cmd"
+export DOVE_S3CMD
+export DOVE_S3CMD_DIR
+
 # UV
 readonly DOVE_UV_DIR_DEFAULT="${DOVE_EXTERNAL}/uv"
 if [[ -z "${DOVE_UV_DIR+x}" ]]; then
@@ -266,6 +284,27 @@ else
     readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT} ${DOVE_CURL_FLAGS}"
 fi
 export DOVE_CURL_FLAGS
+
+# If s3cmd flags are added, this determines whether they should be appended to our default flags (default),
+## or if they should override them entirely
+readonly DOVE_S3CMD_FLAGS_OVERRIDE_DEFAULT=0
+if [[ -z "${DOVE_S3CMD_FLAGS_OVERRIDE+x}" ]]; then
+    DOVE_S3CMD_FLAGS_OVERRIDE="${DOVE_S3CMD_FLAGS_OVERRIDE_DEFAULT}"
+fi
+readonly DOVE_S3CMD_FLAGS_OVERRIDE
+export DOVE_S3CMD_FLAGS_OVERRIDE
+
+# s3cmd flags
+readonly DOVE_S3CMD_FLAGS_DEFAULT='--check-certificate --check-hostname --check-md5 --no-guess-mime-type --no-mime-magic --progress --ssl'
+if [[ -z "${DOVE_S3CMD_FLAGS+x}" ]]; then
+    DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS_DEFAULT}"
+elif [[ "${DOVE_S3CMD_FLAGS_OVERRIDE}" == 1 ]]; then
+    DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS}"
+else
+    DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS_DEFAULT} ${DOVE_S3CMD_FLAGS}"
+fi
+readonly DOVE_S3CMD_FLAGS
+export DOVE_S3CMD_FLAGS
 
 # Whether we're ONLY building Dove for Linux
 readonly DOVE_LINUX_ONLY_DEFAULT=0
@@ -396,6 +435,40 @@ if [[ -z "${DOVE_STATIC_JS+x}" ]]; then
 fi
 readonly DOVE_STATIC_JS
 export DOVE_STATIC_JS
+
+# S3
+
+# S3 access key
+readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-access-key.txt'
+if [[ -z "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE+x}" ]]; then
+    DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE="${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT}"
+fi
+readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
+export DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
+
+# S3 bucket name
+readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-bucket-name.txt'
+if [[ -z "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE+x}" ]]; then
+    DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE="${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT}"
+fi
+readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
+export DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
+
+# S3 endpoint
+readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-endpoint.txt'
+if [[ -z "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE+x}" ]]; then
+    DOVE_CEL_RELEASES_S3_ENDPOINT_FILE="${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT}"
+fi
+readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
+export DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
+
+# S3 secret key
+readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-secret-key.txt'
+if [[ -z "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE+x}" ]]; then
+    DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE="${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT}"
+fi
+readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE
+export DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE
 
 # Set our external environment variables
 readonly DOVE_ENV_EXTERNAL="${DOVE_SCRIPTS}/env_external.sh"

@@ -21,6 +21,7 @@ DOVE_GET_SOURCE_AUTOCONFIG=0
 DOVE_GET_SOURCE_LXML=0
 DOVE_GET_SOURCE_PHOENIX=0
 DOVE_GET_SOURCE_PYTHON=0
+DOVE_GET_SOURCE_S3CMD=0
 DOVE_GET_SOURCE_UV=0
 
 if [ "${target}" == 'autoconfig' ]; then
@@ -35,11 +36,15 @@ elif [ "${target}" == 'phoenix' ]; then
 elif [ "${target}" == 'python' ]; then
     #  Get Python
     DOVE_GET_SOURCE_PYTHON=1
+elif [ "${target}" == 's3cmd' ]; then
+    # Get s3cmd
+    DOVE_GET_SOURCE_S3CMD=1
 elif [ "${target}" == 'uv' ]; then
     # Get + set-up uv
     DOVE_GET_SOURCE_UV=1
 elif [ "${target}" == 'all' ]; then
-    # If no argument is specified (or argument is set to "all"), just get everything
+    # If no argument is specified (or argument is set to "all"), just get everything, except s3cmd
+    ## (We don't need to bother getting s3cmd here since it's only used in certain scenarios)
     DOVE_GET_SOURCE_AUTOCONFIG=1
     DOVE_GET_SOURCE_LXML=1
     DOVE_GET_SOURCE_PHOENIX=1
@@ -51,6 +56,7 @@ else
     echo 'lxml:                                     lxml'
     echo 'Phoenix:                                  phoenix'
     echo 'Python:                                   python'
+    echo 's3cmd:                                    s3cmd'
     echo 'Thunderbird Autoconfiguration Database:   autoconfig'
     echo 'uv:                                       uv'
     exit 1
@@ -59,6 +65,7 @@ readonly DOVE_GET_SOURCE_AUTOCONFIG
 readonly DOVE_GET_SOURCE_LXML
 readonly DOVE_GET_SOURCE_PHOENIX
 readonly DOVE_GET_SOURCE_PYTHON
+readonly DOVE_GET_SOURCE_S3CMD
 readonly DOVE_GET_SOURCE_UV
 
 # If the 'checksum-update' argument is specified, in addition to downloading the dependencies as usual,
@@ -111,6 +118,10 @@ function update_sha512sum() {
         echo_red_text 'Updating SHA512sum for Python (OS X - x86_64)...'
         "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_OSX_X86_64='.*'|PYTHON_SHA512SUM_OSX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Python (OS X - x86_64)'
+    elif [ "${old_sha512sum}" == "${S3CMD_SHA512SUM}" ]; then
+        echo_red_text 'Updating SHA512sum for s3cmd...'
+        "${PHOENIX_SED}" -i -e "s|S3CMD_SHA512SUM='.*'|S3CMD_SHA512SUM='"${new_sha512sum}"'|g" "${PHOENIX_VERSIONS}"
+        echo_green_text 'SUCCESS: Updated SHA512sum for s3cmd'
     elif [ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_ARM64}" ]; then
         echo_red_text 'Updating SHA512sum for uv (Linux - ARM64)...'
         "${DOVE_SED}" -i -e "s|UV_SHA512SUM_LINUX_ARM64='.*'|UV_SHA512SUM_LINUX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
@@ -420,6 +431,39 @@ function get_python() {
     fi
 }
 
+# Get s3cmd
+function get_s3cmd() {
+    # If all we're doing is updating the checksum, we don't care if the environment is prepared
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+        if  [ ! -d "${DOVE_UV_DIR}" ] || [ ! -f "${DOVE_PYENV}" ]; then
+            echo_red_text "ERROR: You tried to download s3cmd, but you don't have a uv environment set-up yet."
+            exit 1
+        fi
+
+        if [[ -d "${DOVE_PYENV_DIR}/bin/s3cmd" ]]; then
+            echo_red_text "s3cmd is already installed at ${DOVE_PYENV_DIR}/bin/s3cmd"
+            read -p "Do you want to re-download it? [y/N] " -n 1 -r
+            echo
+            if [[ "${REPLY}" =~ ^[Nn]$ ]]; then
+                return 0
+            else
+                source "${DOVE_PYENV}"
+                "${DOVE_UV}" pip uninstall s3cmd
+            fi
+        fi
+    fi
+
+    echo_red_text "Downloading s3cmd..."
+    download_and_extract 's3cmd' "https://github.com/s3tools/s3cmd/archive/${S3CMD_COMMIT}.tar.gz" "${DOVE_S3CMD_DIR}" "${S3CMD_SHA512SUM}"
+
+    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+        source "${DOVE_PYENV}"
+        echo_red_text 'Installing s3cmd...'
+        "${DOVE_UV}" pip install --no-editable --strict "${DOVE_S3CMD_DIR}"
+        echo_green_text "SUCCESS: Set-up s3cmd at ${DOVE_S3CMD}"
+    fi
+}
+
 # Get + set-up uv
 function get_uv() {
     # If all we're doing is updating the checksum, we don't care if the environment is prepared
@@ -497,7 +541,7 @@ if [ "${DOVE_GET_SOURCE_AUTOCONFIG}" == 1 ]; then
     get_autoconfig
 fi
 
-# These need to run before we get lxml
+# These need to run before we get lxml and s3cmd
 if [ "${DOVE_GET_SOURCE_PYTHON}" == 1 ]; then
     get_python
 fi
@@ -512,4 +556,8 @@ fi
 
 if [ "${DOVE_GET_SOURCE_PHOENIX}" == 1 ]; then
     get_phoenix
+fi
+
+if [ "${DOVE_GET_SOURCE_S3CMD}" == 1 ]; then
+    get_s3cmd
 fi
