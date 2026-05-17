@@ -1,7 +1,6 @@
 # .gitattributes
 
 # Aliases
-[attr]lfs filter=lfs diff=lfs merge=lfs -text
 [attr]crlf eol=crlf
 
 # Normalize
@@ -9,10 +8,6 @@
 
 # Windows
 # *.bat crlf
-
-# LFS, binary files
-*.png lfs
-*.zip lfs
 
 # GitLab: syntax highlight
 *.cfg            gitlab-language=javascript
