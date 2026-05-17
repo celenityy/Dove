@@ -135,7 +135,7 @@
                 patchShebangs ./scripts/*.sh
 
                 ./scripts/build.sh
-                sed -i '/general.config.filename/d' build-resources/dove-unified.js
+                sed -i '/general.config.filename/d' dove-unified.cfg
 
                 runHook postBuild
               '';
@@ -146,13 +146,13 @@
                 ${
                   if stdenvNoCC.isDarwin then
                     ''
-                      cp osx/* $out/
-                      cp -r osx/assets $out/assets
+                      cp outputs/osx-silicon/* $out/
+                      cp -r outputs/osx-silicon/assets $out/assets
                     ''
                   else
                     ''
-                      cp -r linux/policies/policies.json linux/dove.cfg linux/defaults/pref $out/
-                      cp -r linux/assets $out/assets
+                      cp -r outputs/linux-nonflatpak/policies/policies.json outputs/linux-nonflatpak/dove.cfg outputs/linux-nonflatpak/defaults/pref $out/
+                      cp -r outputs/linux-nonflatpak/assets $out/assets
                     ''
                 }
                 install -Dm644 README.md $out/share/doc/dove/README.md
