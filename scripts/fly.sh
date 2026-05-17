@@ -91,7 +91,7 @@ function build_dove() {
     fi
 
     # Copy icon
-    cp "${DOVE_BUILD_RESOURCES}/assets/dove.png" "${dove_output_dir}/assets/dove.png"
+    cp "${DOVE_ROOT}/assets/dove.png" "${dove_output_dir}/assets/dove.png"
 
     # Copy license
     cp "${DOVE_ROOT}/COPYING.txt" "${dove_output_dir}/COPYING.txt"
@@ -101,10 +101,10 @@ function build_dove() {
 
     # Copy platform-specific files
     if [ "${dove_platform}" == 'linux-nonflatpak' ]; then
-        cp -r "${DOVE_BUILD_RESOURCES}/linux/etc" "${dove_output_dir}/"
+        cp -r "${DOVE_ROOT}/linux/etc" "${dove_output_dir}/"
     elif [ "${dove_platform}" == 'osx-silicon' ] || [ "${dove_platform}" == 'osx-intel' ]; then
-        cp -r "${DOVE_BUILD_RESOURCES}/osx-shared/Library" "${dove_output_dir}/"
-        cp -r "${DOVE_BUILD_RESOURCES}/${dove_platform}/Library/" "${dove_output_dir}/Library/"
+        cp -r "${DOVE_ROOT}/osx/shared/Library" "${dove_output_dir}/"
+        cp -r "${DOVE_ROOT}/osx/${dove_platform}/Library/" "${dove_output_dir}/Library/"
     fi
 
     # Copy enterprise policies

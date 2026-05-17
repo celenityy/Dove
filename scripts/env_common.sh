@@ -61,10 +61,6 @@ export DOVE_BUILD
 readonly DOVE_TEMP="${DOVE_BUILD}/tmp"
 export DOVE_TEMP
 
-# Build resources directory
-readonly DOVE_BUILD_RESOURCES="${DOVE_ROOT}/build-resources"
-export DOVE_BUILD_RESOURCES
-
 # External sources directory
 readonly DOVE_EXTERNAL="${DOVE_ROOT}/external"
 export DOVE_EXTERNAL

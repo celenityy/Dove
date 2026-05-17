@@ -54,14 +54,14 @@ export PHOENIX_EXTRA_CFG
 readonly PHOENIX_OVERRIDES_CFG="${DOVE_ROOT}/phoenix-overrides.cfg"
 export PHOENIX_OVERRIDES_CFG
 
-readonly PHOENIX_EXTRA_POLICIES="${DOVE_BUILD_RESOURCES}/policies/dove-core.json"
-readonly PHOENIX_EXTRA_POLICIES_LINUX="${DOVE_BUILD_RESOURCES}/policies/dove-linux.json"
-readonly PHOENIX_EXTRA_POLICIES_LINUX_NONFLATPAK="${DOVE_BUILD_RESOURCES}/policies/dove-linux-nonflatpak.json"
-readonly PHOENIX_EXTRA_POLICIES_LINUX_FLATPAK="${DOVE_BUILD_RESOURCES}/policies/dove-linux-flatpak.json"
-readonly PHOENIX_EXTRA_POLICIES_OSX="${DOVE_BUILD_RESOURCES}/policies/dove-osx.json"
-readonly PHOENIX_EXTRA_POLICIES_OSX_INTEL="${DOVE_BUILD_RESOURCES}/policies/dove-osx-intel.json"
-readonly PHOENIX_EXTRA_POLICIES_OSX_SILICON="${DOVE_BUILD_RESOURCES}/policies/dove-osx-silicon.json"
-readonly PHOENIX_EXTRA_POLICIES_WINDOWS="${DOVE_BUILD_RESOURCES}/policies/dove-windows.json"
+readonly PHOENIX_EXTRA_POLICIES="${DOVE_ROOT}/policies/dove-core.json"
+readonly PHOENIX_EXTRA_POLICIES_LINUX="${DOVE_ROOT}/policies/dove-linux.json"
+readonly PHOENIX_EXTRA_POLICIES_LINUX_NONFLATPAK="${DOVE_ROOT}/policies/dove-linux-nonflatpak.json"
+readonly PHOENIX_EXTRA_POLICIES_LINUX_FLATPAK="${DOVE_ROOT}/policies/dove-linux-flatpak.json"
+readonly PHOENIX_EXTRA_POLICIES_OSX="${DOVE_ROOT}/policies/dove-osx.json"
+readonly PHOENIX_EXTRA_POLICIES_OSX_INTEL="${DOVE_ROOT}/policies/dove-osx-intel.json"
+readonly PHOENIX_EXTRA_POLICIES_OSX_SILICON="${DOVE_ROOT}/policies/dove-osx-silicon.json"
+readonly PHOENIX_EXTRA_POLICIES_WINDOWS="${DOVE_ROOT}/policies/dove-windows.json"
 export PHOENIX_EXTRA_POLICIES
 export PHOENIX_EXTRA_POLICIES_LINUX
 export PHOENIX_EXTRA_POLICIES_LINUX_NONFLATPAK

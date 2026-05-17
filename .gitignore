@@ -5,12 +5,6 @@
 /scripts/env_local.sh
 /wip/
 
-/linux/assets/autoconfig
-/linux-flatpak/assets/autoconfig
-/osx/assets/autoconfig
-/osx-intel/assets/autoconfig
-/windows/assets/autoconfig
-
 # nix build
 result-*
 result
