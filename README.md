@@ -301,91 +301,73 @@ By default, Dove is installed & updated via your operating system's package mana
 
 However, if this is not desirable for you & your situation, or you would simply like to use Dove on an unsupported operating system, you can manually install Dove with the following steps:
 
-**1:** Download `dove.cfg` for your platform:
+**1:** Download the archive for your desired Dove release:
 
-- Linux: [`https://gitlab.com/celenityy/Dove/-/raw/pages/linux/dove.cfg`](https://gitlab.com/celenityy/Dove/-/raw/pages/linux/dove.cfg)
-- macOS: [`https://gitlab.com/celenityy/Dove/-/raw/pages/osx/macos/dove.cfg`](https://gitlab.com/celenityy/Dove/-/raw/pages/osx/macos/dove.cfg)
-- Windows: [`https://gitlab.com/celenityy/Dove/-/raw/pages/windows/dove.cfg`](https://gitlab.com/celenityy/Dove/-/raw/pages/windows/dove.cfg)
+This can be found at the link below *(replacing `{DOVE_VERSION}` with the version of Dove you'd like to download)*. For reference, the latest version of Dove can always be found at the top of [the `Releases` page](https://codeberg.org/celenity/Dove/releases).
 
-You can right click and select `Save page as` from your browser after navigating to the link for your platform's `dove.cfg`, or you can run the following command in your terminal:
+- Linux: `https://releases.celenity.dev/dove/releases/{DOVE_VERSION}/linux/dove-{DOVE_VERSION}-linux.tar.xz`
+- macOS: `https://releases.celenity.dev/dove/releases/{DOVE_VERSION}/osx/dove-{DOVE_VERSION}-osx.tar.xz`
+- Windows: `https://releases.celenity.dev/dove/releases/{DOVE_VERSION}/windows/dove-{DOVE_VERSION}-windows.zip`
+
+You can navigate to the link above and download the archive
+directly from your web browser, or you can run the following
+command in your terminal:
 
 **Linux**:
 
 ```sh
-curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/linux/dove.cfg
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://releases.celenity.dev/dove/releases/{DOVE_VERSION}/linux/dove-{DOVE_VERSION}-linux.tar.xz
 ```
 
 **macOS**:
 
 ```sh
-curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx/macos/dove.cfg
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://releases.celenity.dev/dove/releases/{DOVE_VERSION}/osx/dove-{DOVE_VERSION}-osx.tar.xz
 ```
 
 **Windows**:
 
 ```sh
-curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/windows/dove.cfg
+curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://releases.celenity.dev/dove/releases/{DOVE_VERSION}/windows/dove-{DOVE_VERSION}-windows.zip
 ```
 
-**2:** Download `dove.js` for your platform:
+**2:** Extract your downloaded archive:
 
-- Linux: [`https://gitlab.com/celenityy/Dove/-/raw/pages/linux/defaults/pref/dove.js`](https://gitlab.com/celenityy/Dove/-/raw/pages/linux/defaults/pref/dove.js)
-- macOS: [`https://gitlab.com/celenityy/Dove/-/raw/pages/osx/defaults/pref/dove.js`](https://gitlab.com/celenityy/Dove/-/raw/pages/osx/defaults/pref/dove.js)
-- Windows: [`https://gitlab.com/celenityy/Dove/-/raw/pages/windows/defaults/pref/dove.js`](https://gitlab.com/celenityy/Dove/-/raw/pages/windows/defaults/pref/dove.js)
+First, create the directory where you'd like to extract Dove:
 
-You can right click and select `Save page as` from your browser after navigating to the link for your platform's `dove.js`, or you can run the following command in your terminal:
+```sh
+mkdir -p dove
+```
+
+Now, extract the downloaded archive:
+
+*(Replacing `{DOVE_VERSION}` with the version of Dove you'd like to download, and `/path/to` with the path to your downloaded archive)*
 
 **Linux**:
 
 ```sh
-curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/linux/defaults/pref/dove.js
+tar xJf /path/to/dove-{DOVE_VERSION}-linux.tar.xz -C dove
 ```
 
 **macOS**:
 
 ```sh
-curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx/defaults/pref/dove.js
+tar xJf /path/to/dove-{DOVE_VERSION}-osx.tar.xz -C dove
 ```
 
 **Windows**:
 
 ```sh
-curl -q -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/windows/defaults/pref/dove.js
+unzip -q /path/to/dove-{DOVE_VERSION}-windows.zip -d dove
 ```
 
-**3:** Download `policies.json` *(or `org.mozilla.thunderbird.plist` for macOS users)* for your platform:
-
-- Linux: [`https://gitlab.com/celenityy/Dove/-/raw/pages/linux/policies/policies.json`](https://gitlab.com/celenityy/Dove/-/raw/pages/linux/policies/policies.json)
-- macOS: [`https://gitlab.com/celenityy/Dove/-/raw/pages/osx/macos/org.mozilla.thunderbird.plist`](https://gitlab.com/celenityy/Dove/-/raw/pages/osx/macos/org.mozilla.thunderbird.plist)
-- Windows: [`https://gitlab.com/celenityy/Dove/-/raw/pages/windows/distribution/policies.json`](https://gitlab.com/celenityy/Dove/-/raw/pages/windows/distribution/policies.json)
-
-You can right click and select `Save page as` from your browser after navigating to the link for your platform's `policies.json` *(or `org.mozilla.thunderbird.plist` for macOS users)*, or you can run the following command in your terminal:
-
-**Linux**:
-
-```sh
-curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/linux/policies/policies.json
-```
-
-**macOS**:
-
-```sh
-curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/osx/macos/org.mozilla.thunderbird.plist
-```
-
-**Windows**:
-
-```sh
-curl -q --disable --no-netrc -j -e "" -A "" -S --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --ftp-create-dirs --ftp-ssl-control --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-proxy-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-allow-beast --no-proxy-ssl-auto-client-cert --no-sessionid --no-skip-existing --no-ssl --no-ssl-allow-beast --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-tls-earlydata --no-xattr --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer "" --remove-on-error --show-error --ssl-reqd --trace-time --user-agent "" --verbose -O -sSL https://gitlab.com/celenityy/Dove/-/raw/pages/windows/distribution/policies.json
-```
-
-**4:** Locate your Thunderbird installation directory. This will vary depending on your platform, you can generally find it by navigating to `Help` (Located on top bar) -> `Troubleshooting information` & checking the directory next to `Application Binary`. For example: If I see `/Users/${USER}/Applications/Thunderbird.app/Contents/MacOS/thunderbird` listed next to `Application Binary`,
+**3:** Locate your Thunderbird installation directory. This will vary depending on your platform, you can generally find it by navigating to `Help` (Located on top bar) -> `Troubleshooting information` & checking the directory next to `Application Binary`. For example: If I see `/Users/${USER}/Applications/Thunderbird.app/Contents/MacOS/thunderbird` listed next to `Application Binary`,
 my installation directory would be: **`/Users/${USER}/Applications/Thunderbird.app`**.
 
 > [!CAUTION]
 >**Your directory will probably be different, and you should replace this directory on the following steps with your actual installation directory.**
 
-**5:**
+**4:**
 
 **Linux**:
 
@@ -409,7 +391,7 @@ Now, copy `dove.cfg` to the `/etc/thunderbird` directory you just created. You c
 **NOTE**: If you have previously installed `dove.cfg` to a different location *(such as Thunderbird's installation directory)*, **please REMOVE it** to ensure any conflicts are avoided.
 
 ```sh
-sudo cp dove.cfg /etc/thunderbird/dove.cfg
+sudo cp dove/dove.cfg /etc/thunderbird/dove.cfg
 ```
 
 **macOS**:
@@ -419,7 +401,7 @@ You can either drag and drop it manually, or run the following command:
 *assuming `/Users/${USER}/Applications/Thunderbird.app` is your installation directory*
 
 ```sh
-sudo cp dove.cfg /Users/${USER}/Applications/Thunderbird.app/Resources/dove.cfg
+sudo cp dove/dove.cfg /Users/${USER}/Applications/Thunderbird.app/Resources/dove.cfg
 ```
 
 **Windows**:
@@ -428,14 +410,10 @@ Copy `dove.cfg` to the **root** of your installation directory. You
 can either drag and drop it manually, or run the following command:
 
 ```sh
-cp dove.cfg C:\'Program Files'\'Mozilla Thunderbird'\dove.cfg
+cp dove\dove.cfg C:\'Program Files'\'Mozilla Thunderbird'\dove.cfg
 ```
 
-**6:**
-
-**Linux**:
-
-**6:** If it does not already exist, inside the `/etc/thunderbird` directory, create a new folder named `defaults`,
+**5:** If it does not already exist, inside the `/etc/thunderbird` directory, create a new folder named `defaults`,
 and inside this new `defaults` folder, create another folder titled `pref`. This will work
 **regardless of your distribution** - even Snaps are supported. You can also
 just run the command below:
@@ -475,12 +453,12 @@ If it does not already exist, in the **root** of your installation directory, cr
 mkdir -vp C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref
 ```
 
-**7:** Copy `dove.js` to the `pref` folder that you just created. You can run the following command for your platform below:
+**6:** Copy `defaults/pref/dove.js` to the `pref` folder that you just created. You can run the following command for your platform below:
 
 **Linux**:
 
 ```sh
-sudo cp dove.js /etc/thunderbird/defaults/pref/dove.js
+sudo cp dove/defaults/pref/dove.js /etc/thunderbird/defaults/pref/dove.js
 ```
 
 **macOS**:
@@ -488,16 +466,16 @@ sudo cp dove.js /etc/thunderbird/defaults/pref/dove.js
 *assuming `/Users/${USER}/Applications/Thunderbird.app` is your installation directory*
 
 ```sh
-sudo cp dove.js /Users/${USER}/Applications/Thunderbird.app/Resources/defaults/pref/dove.js
+sudo cp dove/defaults/pref/dove.js /Users/${USER}/Applications/Thunderbird.app/Resources/defaults/pref/dove.js
 ```
 
 **Windows**:
 
 ```sh
-cp dove.js C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref\dove.js
+cp dove\defaults\pref\dove.js C:\'Program Files'\'Mozilla Thunderbird'\defaults\pref\dove.js
 ```
 
-**8:**
+**7:**
 
 On Windows, in the **root** of your installation directory, create a folder named `distribution`. You can do this manually through your file explorer, or you can run the following command:
 
@@ -517,68 +495,62 @@ For non-Flatpak GNU/Linux users, you'll also want to ensure that the folder you 
 sudo chmod 655 /etc/thunderbird/policies
 ```
 
-**9:** Now, those on Windows should copy `policies.json` to the `distribution` folder that you just created. You can run the following command:
+**9:** Now, those on Windows should copy `distribution/policies.json` to the `distribution` folder that you just created. You can run the following command:
 
 ```sh
-cp policies.json C:\'Program Files'\'Mozilla Thunderbird'\distribution\policies.json
+cp dove\distribution\policies.json C:\'Program Files'\'Mozilla Thunderbird'\distribution\policies.json
 ```
 
-macOS users should **instead** copy `org.mozilla.thunderbird.plist` to `/Library/Preferences`, and **reboot** their device once finished:
+macOS users should **instead** copy `macos/org.mozilla.thunderbird.plist` to `/Library/Preferences`, and **reboot** their device once finished:
 
 ```sh
-sudo cp org.mozilla.thunderbird.plist /Library/Preferences/org.mozilla.thunderbird.plist`
+sudo cp dove/macos/org.mozilla.thunderbird.plist /Library/Preferences/org.mozilla.thunderbird.plist`
 ```
 
-GNU/Linux users should **instead** copy `policies.json` to their `/etc/thunderbird/policies` folder they just created.
+GNU/Linux users should **instead** copy `policies/policies.json` to their `/etc/thunderbird/policies` folder they just created.
 
 ```sh
-sudo cp policies.json /etc/thunderbird/policies/policies.json
+sudo cp dove/policies/policies.json /etc/thunderbird/policies/policies.json
 ```
 
-**10**: Within your Dove `assets` directory, create a directory titled `autoconfig`, and within that directory, create a directory titled `v1.1`. Navigate into the `v1.1` directory.
+**10**: Within your Dove directory, create a directory titled `assets`, and copy `assets/autoconfig` into this new `assets` directory.
 
 **Linux** *(Non-Flatpak)*:
 
 ```sh
-mkdir -vp /etc/thunderbird/dove/assets/autoconfig/v1.1
-cd /etc/thunderbird/dove/assets/autoconfig/v1.1
+mkdir -vp /etc/thunderbird/dove/assets
+cp -vrf dove/assets/autoconfig /etc/thunderbird/dove/assets/
 ```
 
 **Linux** *(Flatpak)*:
 
 ```sh
-mkdir -vp /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/autoconfig/v1.1
-cd /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/autoconfig/v1.1
+mkdir -vp /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets
+cp -vrf dove/assets/autoconfig /var/lib/flatpak/app/org.mozilla.Thunderbird/current/active/files/etc/thunderbird/dove/assets/
 ```
 
 **macOS** *(Apple Silicon)*:
 
 ```sh
-mkdir -vp /opt/homebrew/opt/dove/assets/autoconfig/v1.1
-cd /opt/homebrew/opt/dove/assets/autoconfig/v1.1
+mkdir -vp /opt/homebrew/opt/dove/assets
+cp -vrf dove/assets/autoconfig /opt/homebrew/opt/dove/assets/
 ```
 
 **macOS** *(Intel)*:
 
 ```sh
-mkdir -vp /usr/local/opt/dove-intel/assets/autoconfig/v1.1
-cd /usr/local/opt/dove-intel/assets/autoconfig/v1.1
+mkdir -vp /usr/local/opt/dove-intel/assets
+cp -vrf dove/assets/autoconfig /usr/local/opt/dove-intel/assets/
 ```
 
 **Windows**:
 
 ```sh
-mkdir -vp C:\dove\assets\autoconfig\v1.1
-cd C:\dove\assets\autoconfig\v1.1
+mkdir -vp C:\dove\assets
+cp -vrf dove\assets\autoconfig C:\dove\assets\
 ```
 
-**11:** Download Mozilla's latest autoconfiguration files into the root of the `v1.1` directory. These [can be found here](https://autoconfig.thunderbird.net/v1.1/). The easiest way to download them is by installing **`wget`** *(if you haven't already)*, and running the following command in your Terminal:
-
-```sh
-wget -r -np -nH --cut-dirs=3 -R index.html -e robots=off https://autoconfig.thunderbird.net/v1.1/
-```
-
-**Alternatively**: At the cost of privacy and security, after installing Dove, you can set the value of `mailnews.auto_config_url` to `https://autoconfig.thunderbird.net/v1.1/` in your `about:config` *(Accessible by navigating to `Settings` -> `General` -> Scroll to the bottom -> `Config Editor...`)*. This is **NOT** recommended, as it will share your email provider with Mozilla, and is slower/less responsive.
+**Alternatively**: At the cost of privacy and security, after installing Dove, you can set the value of `mailnews.auto_config_url` to `https://autoconfig.thunderbird.net/v1.1/` from [`about:config`](about:config) *(Accessible by navigating to `Settings` -> `General` -> Scroll to the bottom -> `Config Editor...`)*. This is **NOT** recommended, as it will share your email provider with Mozilla, and is slower/less responsive.
 
 Congratulations, you're done. Enjoy Dove, and be sure to keep up with updates!
 
