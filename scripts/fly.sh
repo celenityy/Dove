@@ -73,7 +73,7 @@ function build_dove() {
     cp "${DOVE_ROOT}/dove.js" "${dove_output_dir}/defaults/pref/dove.js"
 
     # Copy our parsed dove.cfg
-    if [ "${dove_platform}" == 'osx-silicon' ]; then
+    if [ "${dove_platform}" == 'osx' ]; then
         # To ensure installs continue working as expected, this must be placed in (and copied from)
         ## the `macos` directory
         local readonly dove_cfg_output_dir="${dove_output_dir}/macos"
@@ -99,18 +99,24 @@ function build_dove() {
     # Copy README
     cp "${DOVE_ROOT}/README.md" "${dove_output_dir}/README.md"
 
-    # Copy platform-specific files
-    if [ "${dove_platform}" == 'linux-nonflatpak' ]; then
-        cp -r "${DOVE_ROOT}/linux/etc" "${dove_output_dir}/"
-    elif [ "${dove_platform}" == 'osx-silicon' ] || [ "${dove_platform}" == 'osx-intel' ]; then
+    # Copy generic platform files
+    if [ "${dove_platform}" == 'osx' ] || [ "${dove_platform}" == 'osx-intel' ]; then
         cp -r "${DOVE_ROOT}/osx/shared/Library" "${dove_output_dir}/"
-        cp -r "${DOVE_ROOT}/osx/${dove_platform}/Library/" "${dove_output_dir}/Library/"
+    fi
+
+    # Copy platform-specific files
+    if [ "${dove_platform}" == 'linux' ]; then
+        cp -r "${DOVE_ROOT}/linux/etc" "${dove_output_dir}/"
+    elif [ "${dove_platform}" == 'osx' ]; then
+        cp -r "${DOVE_ROOT}/osx/osx-silicon/Library/" "${dove_output_dir}/Library/"
+    elif [ "${dove_platform}" == 'osx-intel' ]; then
+        cp -r "${DOVE_ROOT}/osx/osx-intel/Library/" "${dove_output_dir}/Library/"
     fi
 
     # Copy enterprise policies
-    if [ "${dove_platform}" == 'linux-nonflatpak' ] || [ "${dove_platform}" == 'linux-flatpak' ]; then
+    if [ "${dove_platform}" == 'linux' ] || [ "${dove_platform}" == 'linux-flatpak' ]; then
         cp -r "${DOVE_PHOENIX}/outputs/${dove_platform}/policies" "${dove_output_dir}/"
-    elif [ "${dove_platform}" == 'osx-silicon' ]; then
+    elif [ "${dove_platform}" == 'osx' ]; then
         cp "${DOVE_PHOENIX}/outputs/${dove_platform}/macos/org.mozilla.firefox.plist" "${dove_output_dir}/macos/org.mozilla.thunderbird.plist"
     elif [ "${dove_platform}" == 'osx-intel' ]; then
         cp "${DOVE_PHOENIX}/outputs/${dove_platform}/org.mozilla.firefox.plist" "${dove_output_dir}/org.mozilla.thunderbird.plist"
@@ -119,7 +125,7 @@ function build_dove() {
     fi
     
     # For OS X, also copy the standard policies.json
-    if [ "${dove_platform}" == 'osx-silicon' ] || [ "${dove_platform}" == 'osx-intel' ]; then
+    if [ "${dove_platform}" == 'osx' ] || [ "${dove_platform}" == 'osx-intel' ]; then
         mkdir -p "${dove_output_dir}/unused"
         cp "${DOVE_PHOENIX}/outputs/${dove_platform}/unused/policies.json" "${dove_output_dir}/unused/policies.json"
     fi
@@ -155,7 +161,7 @@ build_phoenix
 
 # Build Dove for Linux (non-Flatpak)
 if [ "${DOVE_LINUX}" == 1 ]; then
-    build_dove 'linux-nonflatpak'
+    build_dove 'linux'
 fi
 
 # Build Dove for Linux (Flatpak)
@@ -165,7 +171,7 @@ fi
 
 # Build Dove for OS X (Silicon)
 if [ "${DOVE_OSX}" == 1 ]; then
-    build_dove 'osx-silicon'
+    build_dove 'osx'
 fi
 
 # Build Dove for OS X (Intel)

@@ -93,13 +93,13 @@ DOVE_PUSH_OSX=0
 DOVE_PUSH_OSX_INTEL=0
 DOVE_PUSH_WINDOWS=0
 
-if [ "${target}" == 'linux-nonflatpak' ]; then
+if [ "${target}" == 'linux' ]; then
     # Push Dove for Linux (non-Flatpak)
     DOVE_PUSH_LINUX=1
 elif [ "${target}" == 'linux-flatpak' ]; then
     # Push Dove for Linux (Flatpak)
     DOVE_PUSH_LINUX_FLATPAK=1
-elif [ "${target}" == 'osx-silicon' ]; then
+elif [ "${target}" == 'osx' ]; then
     # Push Dove for OS X (Silicon)
     DOVE_PUSH_OSX=1
 elif [ "${target}" == 'osx-intel' ]; then
@@ -120,7 +120,7 @@ else
     echo 'All:                              all (Default)'
     echo 'Linux (non-Flatpak):              linux'
     echo 'Linux (Flatpak):                  linux-flatpak'
-    echo 'OS X (Silicon):                   osx-silicon'
+    echo 'OS X (Silicon):                   osx'
     echo 'OS X (Intel):                     osx-intel'
     echo 'Windows:                          windows'
     exit 1
@@ -256,7 +256,7 @@ function push_dove() {
 }
 
 if [ "${DOVE_PUSH_LINUX}" == 1 ]; then
-    push_dove 'linux-nonflatpak'
+    push_dove 'linux'
 fi
 
 if [ "${DOVE_PUSH_LINUX_FLATPAK}" == 1 ]; then
@@ -264,7 +264,7 @@ if [ "${DOVE_PUSH_LINUX_FLATPAK}" == 1 ]; then
 fi
 
 if [ "${DOVE_PUSH_OSX}" == 1 ]; then
-    push_dove 'osx-silicon'
+    push_dove 'osx'
 fi
 
 if [ "${DOVE_PUSH_OSX_INTEL}" == 1 ]; then

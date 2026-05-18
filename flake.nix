@@ -146,13 +146,13 @@
                 ${
                   if stdenvNoCC.isDarwin then
                     ''
-                      cp outputs/osx-silicon/* $out/
-                      cp -r outputs/osx-silicon/assets $out/assets
+                      cp outputs/osx/* $out/
+                      cp -r outputs/osx/assets $out/assets
                     ''
                   else
                     ''
-                      cp -r outputs/linux-nonflatpak/policies/policies.json outputs/linux-nonflatpak/dove.cfg outputs/linux-nonflatpak/defaults/pref $out/
-                      cp -r outputs/linux-nonflatpak/assets $out/assets
+                      cp -r outputs/linux/policies/policies.json outputs/linux/dove.cfg outputs/linux/defaults/pref $out/
+                      cp -r outputs/linux/assets $out/assets
                     ''
                 }
                 install -Dm644 README.md $out/share/doc/dove/README.md
