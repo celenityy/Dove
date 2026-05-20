@@ -423,6 +423,15 @@ fi
 readonly DOVE_WINDOWS
 export DOVE_WINDOWS
 
+# Whether we should hardcode/set Dove's target platform directly in the output dove.cfg file
+## Setting this to 0 means that Dove will instead determine the OS automatically
+readonly DOVE_HARDCODE_PLATFORM_DEFAULT=1
+if [[ -z "${DOVE_HARDCODE_PLATFORM+x}" ]]; then
+  DOVE_HARDCODE_PLATFORM="${DOVE_HARDCODE_PLATFORM_DEFAULT}"
+fi
+readonly DOVE_HARDCODE_PLATFORM
+export DOVE_HARDCODE_PLATFORM
+
 # Whether we should build Dove in the static .js prefs format
 ## This is not recommended in favor of the .cfg format, and will likely be removed entirely in the near future
 readonly DOVE_STATIC_JS_DEFAULT=0
