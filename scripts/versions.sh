@@ -1,4 +1,4 @@
-readonly DOVE_VERSION='2026.04.27.1'
+readonly DOVE_VERSION='2026.05.21.1'
 
 # Sources
 
