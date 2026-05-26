@@ -47,7 +47,7 @@ export DOVE_ARCHIVES
 # Build directory
 readonly DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"
 if [[ -z "${DOVE_BUILD+x}" ]]; then
-    if [ "${DOVE_NIX}" == 1 ]; then
+    if [[ "${DOVE_NIX}" == 1 ]]; then
         # Nix needs to use /tmp here, see https://codeberg.org/celenity/Dove/issues/59
         DOVE_BUILD='/tmp/dove/build'
     else
@@ -304,7 +304,7 @@ export DOVE_S3CMD_FLAGS
 
 # Whether we're ONLY building Dove for Linux
 readonly DOVE_LINUX_ONLY_DEFAULT=0
-if [ "${DOVE_NIX}" == 1 ] && [ "${DOVE_OS}" != 'osx' ]; then
+if [[ "${DOVE_NIX}" == 1 ]] && [[ "${DOVE_OS}" != 'osx' ]]; then
     # Nix flakes should only build their respective platform
     DOVE_LINUX_ONLY=1
 elif [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
@@ -312,7 +312,7 @@ elif [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
 fi
 readonly DOVE_LINUX_ONLY
 export DOVE_LINUX_ONLY
-if [ "${DOVE_LINUX_ONLY}" == 1 ]; then
+if [[ "${DOVE_LINUX_ONLY}" == 1 ]]; then
     DOVE_LINUX=1
     DOVE_LINUX_FLATPAK=0
     DOVE_OSX=0
@@ -327,7 +327,7 @@ if [[ -z "${DOVE_LINUX_FLATPAK_ONLY+x}" ]]; then
 fi
 readonly DOVE_LINUX_FLATPAK_ONLY
 export DOVE_LINUX_FLATPAK_ONLY
-if [ "${DOVE_LINUX_FLATPAK_ONLY}" == 1 ]; then
+if [[ "${DOVE_LINUX_FLATPAK_ONLY}" == 1 ]]; then
     DOVE_LINUX_FLATPAK=1
     DOVE_LINUX=0
     DOVE_OSX=0
@@ -337,7 +337,7 @@ fi
 
 # Whether we're ONLY building Dove for OS X
 readonly DOVE_OSX_ONLY_DEFAULT=0
-if [ "${DOVE_NIX}" == 1 ] && [ "${DOVE_OS}" == 'osx' ]; then
+if [[ "${DOVE_NIX}" == 1 ]] && [[ "${DOVE_OS}" == 'osx' ]]; then
     # Nix flakes should only build their respective platform
     DOVE_OSX_ONLY=1
 elif [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
@@ -345,7 +345,7 @@ elif [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
 fi
 readonly DOVE_OSX_ONLY
 export DOVE_OSX_ONLY
-if [ "${DOVE_OSX_ONLY}" == 1 ]; then
+if [[ "${DOVE_OSX_ONLY}" == 1 ]]; then
     DOVE_OSX=1
     DOVE_LINUX=0
     DOVE_LINUX_FLATPAK=0
@@ -360,7 +360,7 @@ if [[ -z "${DOVE_OSX_INTEL_ONLY+x}" ]]; then
 fi
 readonly DOVE_OSX_INTEL_ONLY
 export DOVE_OSX_INTEL_ONLY
-if [ "${DOVE_OSX_INTEL_ONLY}" == 1 ]; then
+if [[ "${DOVE_OSX_INTEL_ONLY}" == 1 ]]; then
     DOVE_OSX_INTEL=1
     DOVE_LINUX=0
     DOVE_LINUX_FLATPAK=0
@@ -375,7 +375,7 @@ if [[ -z "${DOVE_WINDOWS_ONLY+x}" ]]; then
 fi
 readonly DOVE_WINDOWS_ONLY
 export DOVE_WINDOWS_ONLY
-if [ "${DOVE_WINDOWS_ONLY}" == 1 ]; then
+if [[ "${DOVE_WINDOWS_ONLY}" == 1 ]]; then
     DOVE_WINDOWS=1
     DOVE_LINUX=0
     DOVE_LINUX_FLATPAK=0

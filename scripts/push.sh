@@ -21,11 +21,11 @@ fi
 # Push Dove
 readonly DOVE_FROM_PUSH=1
 export DOVE_FROM_PUSH
-if [ "${DOVE_LOG_PUSH}" == 1 ]; then
+if [[ "${DOVE_LOG_PUSH}" == 1 ]]; then
     readonly PUSH_LOG_FILE="${DOVE_LOG_DIR}/push-${target}.log"
 
     # If the log file already exists, remove it
-    if [ -f "${PUSH_LOG_FILE}" ]; then
+    if [[ -f "${PUSH_LOG_FILE}" ]]; then
         rm "${PUSH_LOG_FILE}"
     fi
 

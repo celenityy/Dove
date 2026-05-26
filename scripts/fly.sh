@@ -17,7 +17,7 @@ if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
 fi
 
 # Set-up Python venv
-if [ "${DOVE_NIX}" != 1 ]; then
+if [[ "${DOVE_NIX}" != 1 ]]; then
     source "${DOVE_PYENV}"
 fi
 
@@ -73,7 +73,7 @@ function build_dove() {
     cp "${DOVE_ROOT}/dove.js" "${dove_output_dir}/defaults/pref/dove.js"
 
     # Copy our parsed dove.cfg
-    if [ "${dove_platform}" == 'osx' ]; then
+    if [[ "${dove_platform}" == 'osx' ]]; then
         # To ensure installs continue working as expected, this must be placed in (and copied from)
         ## the `macos` directory
         local readonly dove_cfg_output_dir="${dove_output_dir}/macos"
@@ -86,10 +86,10 @@ function build_dove() {
     cp "${DOVE_PHOENIX}/outputs/${phoenix_cfg_input_path}/phoenix.cfg" "${dove_cfg_output_dir}/dove.cfg"
 
     # If necessary, set our platform (for dove.cfg)
-    if [ "${DOVE_HARDCODE_PLATFORM}" == 1 ]; then
-        if [ "${dove_platform}" == 'osx-intel' ]; then
+    if [[ "${DOVE_HARDCODE_PLATFORM}" == 1 ]]; then
+        if [[ "${dove_platform}" == 'osx-intel' ]]; then
             local readonly dove_platform_to_hardcode='osx'
-        elif [ "${dove_platform}" == 'linux-flatpak' ]; then
+        elif [[ "${dove_platform}" == 'linux-flatpak' ]]; then
             local readonly dove_platform_to_hardcode='linux'
         else
             local readonly dove_platform_to_hardcode="${dove_platform}"
@@ -97,8 +97,8 @@ function build_dove() {
         "${DOVE_SED}" -i "s|{DOVE_PLATFORM_TO_HARDCODE}|${dove_platform_to_hardcode}|" "${dove_cfg_output_dir}/dove.cfg"
 
         # For OS X, we also need to set whether we're targetting Apple Silicon or Intel
-        if [ "${dove_platform}" == 'osx' ] || [ "${dove_platform}" == 'osx-intel' ]; then
-            if [ "${dove_platform}" == 'osx-intel' ]; then
+        if [[ "${dove_platform}" == 'osx' ]] || [[ "${dove_platform}" == 'osx-intel' ]]; then
+            if [[ "${dove_platform}" == 'osx-intel' ]]; then
                 local readonly dove_osx_variant_to_hardcode='intel'
             else
                 local readonly dove_osx_variant_to_hardcode='silicon'
@@ -113,7 +113,7 @@ function build_dove() {
     fi
 
     # If necessary, copy our static dove.js
-    if [ "${DOVE_STATIC_JS}" == 1 ]; then
+    if [[ "${DOVE_STATIC_JS}" == 1 ]]; then
         cp "${DOVE_PHOENIX}/outputs/${dove_platform}/phoenix-static-${PHOENIX_VERSION}-${dove_platform}.js" "${dove_output_dir}/dove-static-${DOVE_VERSION}-${dove_platform}.js"
     fi
 
@@ -127,32 +127,32 @@ function build_dove() {
     cp "${DOVE_ROOT}/README.md" "${dove_output_dir}/README.md"
 
     # Copy generic platform files
-    if [ "${dove_platform}" == 'osx' ] || [ "${dove_platform}" == 'osx-intel' ]; then
+    if [[ "${dove_platform}" == 'osx' ]] || [[ "${dove_platform}" == 'osx-intel' ]]; then
         cp -r "${DOVE_ROOT}/osx/shared/Library" "${dove_output_dir}/"
     fi
 
     # Copy platform-specific files
-    if [ "${dove_platform}" == 'linux' ]; then
+    if [[ "${dove_platform}" == 'linux' ]]; then
         cp -r "${DOVE_ROOT}/linux/etc" "${dove_output_dir}/"
-    elif [ "${dove_platform}" == 'osx' ]; then
+    elif [[ "${dove_platform}" == 'osx' ]]; then
         cp -r "${DOVE_ROOT}/osx/osx-silicon/Library/" "${dove_output_dir}/Library/"
-    elif [ "${dove_platform}" == 'osx-intel' ]; then
+    elif [[ "${dove_platform}" == 'osx-intel' ]]; then
         cp -r "${DOVE_ROOT}/osx/osx-intel/Library/" "${dove_output_dir}/Library/"
     fi
 
     # Copy enterprise policies
-    if [ "${dove_platform}" == 'linux' ] || [ "${dove_platform}" == 'linux-flatpak' ]; then
+    if [[ "${dove_platform}" == 'linux' ]] || [[ "${dove_platform}" == 'linux-flatpak' ]]; then
         cp -r "${DOVE_PHOENIX}/outputs/${dove_platform}/policies" "${dove_output_dir}/"
-    elif [ "${dove_platform}" == 'osx' ]; then
+    elif [[ "${dove_platform}" == 'osx' ]]; then
         cp "${DOVE_PHOENIX}/outputs/${dove_platform}/macos/org.mozilla.firefox.plist" "${dove_output_dir}/macos/org.mozilla.thunderbird.plist"
-    elif [ "${dove_platform}" == 'osx-intel' ]; then
+    elif [[ "${dove_platform}" == 'osx-intel' ]]; then
         cp "${DOVE_PHOENIX}/outputs/${dove_platform}/org.mozilla.firefox.plist" "${dove_output_dir}/org.mozilla.thunderbird.plist"
-    elif [ "${dove_platform}" == 'windows' ]; then
+    elif [[ "${dove_platform}" == 'windows' ]]; then
         cp -r "${DOVE_PHOENIX}/outputs/${dove_platform}/distribution" "${dove_output_dir}/"
     fi
     
     # For OS X, also copy the standard policies.json
-    if [ "${dove_platform}" == 'osx' ] || [ "${dove_platform}" == 'osx-intel' ]; then
+    if [[ "${dove_platform}" == 'osx' ]] || [[ "${dove_platform}" == 'osx-intel' ]]; then
         mkdir -p "${dove_output_dir}/unused"
         cp "${DOVE_PHOENIX}/outputs/${dove_platform}/unused/policies.json" "${dove_output_dir}/unused/policies.json"
     fi
@@ -166,7 +166,7 @@ function build_dove() {
     fi
 
     pushd "${dove_output_dir}"
-    if [ "${dove_platform}" == 'windows' ]; then
+    if [[ "${dove_platform}" == 'windows' ]]; then
         zip -r "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.zip" * -x '.DS_Store'
     else
         "${DOVE_TAR}" -cJv --no-xattrs --exclude ".DS_Store" -f "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.tar.xz" *
@@ -187,27 +187,27 @@ build_autoconfig
 build_phoenix
 
 # Build Dove for Linux (non-Flatpak)
-if [ "${DOVE_LINUX}" == 1 ]; then
+if [[ "${DOVE_LINUX}" == 1 ]]; then
     build_dove 'linux'
 fi
 
 # Build Dove for Linux (Flatpak)
-if [ "${DOVE_LINUX_FLATPAK}" == 1 ]; then
+if [[ "${DOVE_LINUX_FLATPAK}" == 1 ]]; then
     build_dove 'linux-flatpak'
 fi
 
 # Build Dove for OS X (Silicon)
-if [ "${DOVE_OSX}" == 1 ]; then
+if [[ "${DOVE_OSX}" == 1 ]]; then
     build_dove 'osx'
 fi
 
 # Build Dove for OS X (Intel)
-if [ "${DOVE_OSX_INTEL}" == 1 ]; then
+if [[ "${DOVE_OSX_INTEL}" == 1 ]]; then
     build_dove 'osx-intel'
 fi
 
 # Build Dove for Windows
-if [ "${DOVE_WINDOWS}" == 1 ]; then
+if [[ "${DOVE_WINDOWS}" == 1 ]]; then
     build_dove 'windows'
 fi
 

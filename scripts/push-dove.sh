@@ -21,14 +21,14 @@ if [[ -z "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" ]]; then
     exit 1
 fi
 
-if ! [[ -f "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" ]]; then
+if [[ ! -f "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" ]]; then
     echo_red_text "ERROR: S3 access key file not found! (${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE})"
     echo_green_text "Please ensure the DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE environment variable is set to the correct path in which the key file is located."
     echo_red_text "Aborting..."
     exit 1
 fi
 
-if ! [[ -s "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" ]]; then
+if [[ ! -s "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" ]]; then
     echo_red_text "ERROR: S3 access key file ${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE} is empty!"
     exit 1
 fi
@@ -38,14 +38,14 @@ if [[ -z "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" ]]; then
     exit 1
 fi
 
-if ! [[ -f "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" ]]; then
+if [[ ! -f "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" ]]; then
     echo_red_text "ERROR: S3 bucket name file not found! (${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE})"
     echo_green_text "Please ensure the DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE environment variable is set to the correct path in which the bucket name file is located."
     echo_red_text "Aborting..."
     exit 1
 fi
 
-if ! [[ -s "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" ]]; then
+if [[ ! -s "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" ]]; then
     echo_red_text "ERROR: S3 bucket name file ${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE} is empty!"
     exit 1
 fi
@@ -55,14 +55,14 @@ if [[ -z "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" ]]; then
     exit 1
 fi
 
-if ! [[ -f "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" ]]; then
+if [[ ! -f "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" ]]; then
     echo_red_text "ERROR: S3 endpoint file not found! (${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE})"
     echo_green_text "Please ensure the DOVE_CEL_RELEASES_S3_ENDPOINT_FILE environment variable is set to the correct path in which the endpoint file is located."
     echo_red_text "Aborting..."
     exit 1
 fi
 
-if ! [[ -s "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" ]]; then
+if [[ ! -s "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" ]]; then
     echo_red_text "ERROR: S3 bucket name file ${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE} is empty!"
     exit 1
 fi
@@ -72,14 +72,14 @@ if [[ -z "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" ]]; then
     exit 1
 fi
 
-if ! [[ -f "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" ]]; then
+if [[ ! -f "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" ]]; then
     echo_red_text "ERROR: S3 secret key file not found! (${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE})"
     echo_green_text "Please ensure the DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE environment variable is set to the correct path in which the key file is located."
     echo_red_text "Aborting..."
     exit 1
 fi
 
-if ! [[ -s "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" ]]; then
+if [[ ! -s "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" ]]; then
     echo_red_text "ERROR: S3 secret key file ${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE} is empty!"
     exit 1
 fi
@@ -93,22 +93,22 @@ DOVE_PUSH_OSX=0
 DOVE_PUSH_OSX_INTEL=0
 DOVE_PUSH_WINDOWS=0
 
-if [ "${target}" == 'linux' ]; then
+if [[ "${target}" == 'linux' ]]; then
     # Push Dove for Linux (non-Flatpak)
     DOVE_PUSH_LINUX=1
-elif [ "${target}" == 'linux-flatpak' ]; then
+elif [[ "${target}" == 'linux-flatpak' ]]; then
     # Push Dove for Linux (Flatpak)
     DOVE_PUSH_LINUX_FLATPAK=1
-elif [ "${target}" == 'osx' ]; then
+elif [[ "${target}" == 'osx' ]]; then
     # Push Dove for OS X (Silicon)
     DOVE_PUSH_OSX=1
-elif [ "${target}" == 'osx-intel' ]; then
+elif [[ "${target}" == 'osx-intel' ]]; then
     # Push Dove for OS X (Intel)
     DOVE_PUSH_OSX_INTEL=1
-elif [ "${target}" == 'windows' ]; then
+elif [[ "${target}" == 'windows' ]]; then
     # Push Dove for Windows
     DOVE_PUSH_WINDOWS=1
-elif [ "${target}" == 'all' ]; then
+elif [[ "${target}" == 'all' ]]; then
     # If no argument is specified (or argument is set to "all"), just push everything
     DOVE_PUSH_LINUX=1
     DOVE_PUSH_LINUX_FLATPAK=1
@@ -143,12 +143,12 @@ export TZ="UTC"
 function verify_file() {
     local readonly file_to_verify="$1"
 
-    if ! [[ -f "${file_to_verify}" ]]; then
+    if [[ ! -f "${file_to_verify}" ]]; then
         echo_red_text "ERROR: File ${file_to_verify} does not exist!"
         exit 1
     fi
 
-    if ! [[ -s "${file_to_verify}" ]]; then
+    if [[ ! -s "${file_to_verify}" ]]; then
         echo_red_text "ERROR: File ${file_to_verify} is empty!"
         exit 1
     fi
@@ -216,7 +216,7 @@ function add_sha512sum() {
     local readonly sha512sum_file_out="${sha512sum_file_path}/${sha512sum_file_name}-sha512sum.txt"
 
     # If there's already a SHA512sum file, remove it
-    if [ -f "${sha512sum_file_out}" ]; then
+    if [[ -f "${sha512sum_file_out}" ]]; then
         rm -f "${sha512sum_file_out}"
     fi
 
@@ -246,7 +246,7 @@ function push_dove() {
     local readonly dove_platform="$1"
 
     # Set our archive type
-    if [ "${dove_platform}" == 'windows' ]; then
+    if [[ "${dove_platform}" == 'windows' ]]; then
        local readonly dove_archive_type='zip'
     else
         local readonly dove_archive_type='tar.xz'
@@ -255,22 +255,22 @@ function push_dove() {
     push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "dove/releases/${DOVE_VERSION}/${dove_platform}"
 }
 
-if [ "${DOVE_PUSH_LINUX}" == 1 ]; then
+if [[ "${DOVE_PUSH_LINUX}" == 1 ]]; then
     push_dove 'linux'
 fi
 
-if [ "${DOVE_PUSH_LINUX_FLATPAK}" == 1 ]; then
+if [[ "${DOVE_PUSH_LINUX_FLATPAK}" == 1 ]]; then
     push_dove 'linux-flatpak'
 fi
 
-if [ "${DOVE_PUSH_OSX}" == 1 ]; then
+if [[ "${DOVE_PUSH_OSX}" == 1 ]]; then
     push_dove 'osx'
 fi
 
-if [ "${DOVE_PUSH_OSX_INTEL}" == 1 ]; then
+if [[ "${DOVE_PUSH_OSX_INTEL}" == 1 ]]; then
     push_dove 'osx-intel'
 fi
 
-if [ "${DOVE_PUSH_WINDOWS}" == 1 ]; then
+if [[ "${DOVE_PUSH_WINDOWS}" == 1 ]]; then
     push_dove 'windows'
 fi

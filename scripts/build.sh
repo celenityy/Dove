@@ -11,11 +11,11 @@ source $(dirname $0)/env.sh
 # Build Dove
 readonly DOVE_FROM_BUILD=1
 export DOVE_FROM_BUILD
-if [ "${DOVE_LOG_BUILD}" == 1 ]; then
+if [[ "${DOVE_LOG_BUILD}" == 1 ]]; then
     readonly BUILD_LOG_FILE="${DOVE_LOG_DIR}/build.log"
 
     # If the log file already exists, remove it
-    if [ -f "${BUILD_LOG_FILE}" ]; then
+    if [[ -f "${BUILD_LOG_FILE}" ]]; then
         rm "${BUILD_LOG_FILE}"
     fi
 

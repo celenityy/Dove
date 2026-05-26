@@ -24,25 +24,25 @@ DOVE_GET_SOURCE_PYTHON=0
 DOVE_GET_SOURCE_S3CMD=0
 DOVE_GET_SOURCE_UV=0
 
-if [ "${target}" == 'autoconfig' ]; then
+if [[ "${target}" == 'autoconfig' ]]; then
     # Get Thunderbird's Autoconfiguration Database (ISPDB)
     DOVE_GET_SOURCE_AUTOCONFIG=1
-elif [ "${target}" == 'lxml' ]; then
+elif [[ "${target}" == 'lxml' ]]; then
     # Get lxml
     DOVE_GET_SOURCE_LXML=1
-elif [ "${target}" == 'phoenix' ]; then
+elif [[ "${target}" == 'phoenix' ]]; then
     # Get Phoenix
     DOVE_GET_SOURCE_PHOENIX=1
-elif [ "${target}" == 'python' ]; then
+elif [[ "${target}" == 'python' ]]; then
     #  Get Python
     DOVE_GET_SOURCE_PYTHON=1
-elif [ "${target}" == 's3cmd' ]; then
+elif [[ "${target}" == 's3cmd' ]]; then
     # Get s3cmd
     DOVE_GET_SOURCE_S3CMD=1
-elif [ "${target}" == 'uv' ]; then
+elif [[ "${target}" == 'uv' ]]; then
     # Get + set-up uv
     DOVE_GET_SOURCE_UV=1
-elif [ "${target}" == 'all' ]; then
+elif [[ "${target}" == 'all' ]]; then
     # If no argument is specified (or argument is set to "all"), just get everything, except s3cmd
     ## (We don't need to bother getting s3cmd here since it's only used in certain scenarios)
     DOVE_GET_SOURCE_AUTOCONFIG=1
@@ -71,9 +71,9 @@ readonly DOVE_GET_SOURCE_UV
 # If the 'checksum-update' argument is specified, in addition to downloading the dependencies as usual,
 ## we're also updating their checksums
 DOVE_GET_SOURCE_CHECKSUM_UPDATE=0
-if [ "${mode}" == 'checksum-update' ]; then
+if [[ "${mode}" == 'checksum-update' ]]; then
     DOVE_GET_SOURCE_CHECKSUM_UPDATE=1
-elif [ "${mode}" != 'download' ]; then
+elif [[ "${mode}" != 'download' ]]; then
     echo_red_text "ERROR: Invalid mode: ${mode}\n You must enter one of the following:"
     echo 'Download:                     download (Default)'
     echo 'Download + update checksums:  checksum-update'
@@ -90,51 +90,51 @@ function update_sha512sum() {
     local readonly new_sha512sum="$2"
     local readonly file="$3"
 
-    if [ "${old_sha512sum}" == "${AUTOCONFIG_SHA512SUM}" ]; then
+    if [[ "${old_sha512sum}" == "${AUTOCONFIG_SHA512SUM}" ]]; then
         echo_red_text 'Updating SHA512sum for Thunderbird Autoconfiguration Database...'
         "${DOVE_SED}" -i -e "s|AUTOCONFIG_SHA512SUM='.*'|AUTOCONFIG_SHA512SUM='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Thunderbird Autoconfiguration Database'
-    elif [ "${old_sha512sum}" == "${LXML_SHA512SUM}" ]; then
+    elif [[ "${old_sha512sum}" == "${LXML_SHA512SUM}" ]]; then
         echo_red_text 'Updating SHA512sum for lxml...'
         "${DOVE_SED}" -i -e "s|LXML_SHA512SUM='.*'|LXML_SHA512SUM='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for lxml'
-    elif [ "${old_sha512sum}" == "${PHOENIX_SHA512SUM}" ]; then
+    elif [[ "${old_sha512sum}" == "${PHOENIX_SHA512SUM}" ]]; then
         echo_red_text 'Updating SHA512sum for Phoenix...'
         "${DOVE_SED}" -i -e "s|PHOENIX_SHA512SUM='.*'|PHOENIX_SHA512SUM='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Phoenix'
-    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_LINUX_ARM64}" ]; then
+    elif [[ "${old_sha512sum}" == "${PYTHON_SHA512SUM_LINUX_ARM64}" ]]; then
         echo_red_text 'Updating SHA512sum for Python (Linux - ARM64)...'
         "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_LINUX_ARM64='.*'|PYTHON_SHA512SUM_LINUX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Python (Linux - ARM64)'
-    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_LINUX_X86_64}" ]; then
+    elif [[ "${old_sha512sum}" == "${PYTHON_SHA512SUM_LINUX_X86_64}" ]]; then
         echo_red_text 'Updating SHA512sum for Python (Linux - x86_64)...'
         "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_LINUX_X86_64='.*'|PYTHON_SHA512SUM_LINUX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Python (Linux - x86_64)'
-    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_OSX_ARM64}" ]; then
+    elif [[ "${old_sha512sum}" == "${PYTHON_SHA512SUM_OSX_ARM64}" ]]; then
         echo_red_text 'Updating SHA512sum for Python (OS X - ARM64)...'
         "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_OSX_ARM64='.*'|PYTHON_SHA512SUM_OSX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Python (OS X - ARM64)'
-    elif [ "${old_sha512sum}" == "${PYTHON_SHA512SUM_OSX_X86_64}" ]; then
+    elif [[ "${old_sha512sum}" == "${PYTHON_SHA512SUM_OSX_X86_64}" ]]; then
         echo_red_text 'Updating SHA512sum for Python (OS X - x86_64)...'
         "${DOVE_SED}" -i -e "s|PYTHON_SHA512SUM_OSX_X86_64='.*'|PYTHON_SHA512SUM_OSX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for Python (OS X - x86_64)'
-    elif [ "${old_sha512sum}" == "${S3CMD_SHA512SUM}" ]; then
+    elif [[ "${old_sha512sum}" == "${S3CMD_SHA512SUM}" ]]; then
         echo_red_text 'Updating SHA512sum for s3cmd...'
         "${DOVE_SED}" -i -e "s|S3CMD_SHA512SUM='.*'|S3CMD_SHA512SUM='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for s3cmd'
-    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_ARM64}" ]; then
+    elif [[ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_ARM64}" ]]; then
         echo_red_text 'Updating SHA512sum for uv (Linux - ARM64)...'
         "${DOVE_SED}" -i -e "s|UV_SHA512SUM_LINUX_ARM64='.*'|UV_SHA512SUM_LINUX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for uv (Linux - ARM64)'
-    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_X86_64}" ]; then
+    elif [[ "${old_sha512sum}" == "${UV_SHA512SUM_LINUX_X86_64}" ]]; then
         echo_red_text 'Updating SHA512sum for uv (Linux - x86_64)...'
         "${DOVE_SED}" -i -e "s|UV_SHA512SUM_LINUX_X86_64='.*'|UV_SHA512SUM_LINUX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for uv (Linux - x86_64)'
-    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_OSX_ARM64}" ]; then
+    elif [[ "${old_sha512sum}" == "${UV_SHA512SUM_OSX_ARM64}" ]]; then
         echo_red_text 'Updating SHA512sum for uv (OS X - ARM64)...'
         "${DOVE_SED}" -i -e "s|UV_SHA512SUM_OSX_ARM64='.*'|UV_SHA512SUM_OSX_ARM64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for uv (OS X - ARM64)'
-    elif [ "${old_sha512sum}" == "${UV_SHA512SUM_OSX_X86_64}" ]; then
+    elif [[ "${old_sha512sum}" == "${UV_SHA512SUM_OSX_X86_64}" ]]; then
         echo_red_text 'Updating SHA512sum for uv (OS X - x86_64)...'
         "${DOVE_SED}" -i -e "s|UV_SHA512SUM_OSX_X86_64='.*'|UV_SHA512SUM_OSX_X86_64='"${new_sha512sum}"'|g" "${DOVE_VERSIONS}"
         echo_green_text 'SUCCESS: Updated SHA512sum for uv (OS X - x86_64)'
@@ -149,9 +149,9 @@ function validate_sha512sum() {
 
     local readonly local_sha512sum=$(sha512sum "${file}" | "${DOVE_AWK}" '{print $1}')
 
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
         update_sha512sum "${expected_sha512sum}" "${local_sha512sum}" "${file}"
-    elif [ "${local_sha512sum}" != "${expected_sha512sum}" ]; then
+    elif [[ "${local_sha512sum}" != "${expected_sha512sum}" ]]; then
         echo_red_text 'ERROR: Checksum validation failed.'
         echo "Expected SHA512sum:   ${expected_sha512sum}"
         echo "Actual SHA512sum:     ${local_sha512sum}"
@@ -216,7 +216,7 @@ function download() {
         exit 1
     fi
 
-    if [ -f "${filepath}" ]; then
+    if [[ -f "${filepath}" ]]; then
         echo_red_text "${filepath} already exists."
         read -p "Do you want to re-download? [y/N] " -n 1 -r
         echo
@@ -240,7 +240,7 @@ function extract() {
     local readonly target_path="$2"
     local readonly temp_repo_name="$3"
 
-    if ! [[ -f "${archive_path}" ]]; then
+    if [[ ! -f "${archive_path}" ]]; then
         echo_red_text "ERROR: Archive '${archive_path}' does not exist!"
     fi
 
@@ -311,7 +311,7 @@ function download_and_extract() {
 
     download "${url}" "${repo_archive}"
 
-    if [ ! -f "${repo_archive}" ]; then
+    if [[ ! -f "${repo_archive}" ]]; then
         echo_red_text "ERROR: Source archive for ${repo_name} does not exist."
         exit 1
     fi
@@ -319,7 +319,7 @@ function download_and_extract() {
     # Before extracting, verify SHA512sum...
     validate_sha512sum "${expected_sha512sum}" "${repo_archive}"
 
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
         echo_red_text "Extracting ${repo_archive}..."
         extract "${repo_archive}" "${path}" "${repo_name}"
         echo
@@ -330,7 +330,7 @@ function download_and_extract() {
 function get_autoconfig() {
     echo_red_text 'Downloading Thunderbird Autoconfiguration Database (ISPDB)...'
     download_and_extract 'autoconfig' "https://github.com/thunderbird/autoconfig/archive/${AUTOCONFIG_COMMIT}.tar.gz" "${DOVE_AUTOCONFIG}" "${AUTOCONFIG_SHA512SUM}"
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
         echo_green_text "SUCCESS: Set-up Thunderbird Autoconfiguration Database (ISPDB) at ${DOVE_AUTOCONFIG}"
     fi
 }
@@ -338,8 +338,8 @@ function get_autoconfig() {
 # Get lxml
 function get_lxml() {
     # If all we're doing is updating the checksum, we don't care if the environment is prepared
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
-        if  [ ! -d "${DOVE_UV_DIR}" ] || [ ! -f "${DOVE_PYENV}" ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
+        if  [[ ! -d "${DOVE_UV_DIR}" ]] || [[ ! -f "${DOVE_PYENV}" ]]; then
             echo_red_text "ERROR: You tried to download lxml, but you don't have a uv environment set-up yet."
             exit 1
         fi
@@ -348,7 +348,7 @@ function get_lxml() {
     echo_red_text "Downloading lxml..."
     download_and_extract 'lxml' "https://github.com/lxml/lxml/archive/${LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${LXML_SHA512SUM}"
 
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
         source "${DOVE_PYENV}"
         echo_red_text 'Installing lxml...'
         "${DOVE_UV}" pip install --no-editable --strict "${DOVE_LXML}"
@@ -360,7 +360,7 @@ function get_lxml() {
 function get_phoenix() {
     echo_red_text 'Downloading Phoenix...'
     download_and_extract 'phoenix' "https://gitlab.com/celenityy/Phoenix/-/archive/${PHOENIX_COMMIT}/Phoenix-${PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${PHOENIX_SHA512SUM}"
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
         echo_green_text "SUCCESS: Set-up Phoenix at ${DOVE_PHOENIX}"
     fi
 }
@@ -368,35 +368,35 @@ function get_phoenix() {
 # Get Python
 function get_python() {
     # Set our platform
-    if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+    if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
         local readonly PYTHON_PLATFORM='apple-darwin'
     else
         local readonly PYTHON_PLATFORM='unknown-linux-gnu'
     fi
 
     # Set our platform architecture
-    if [ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]; then
+    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
         local readonly PYTHON_ARCH='aarch64'
     else
         local readonly PYTHON_ARCH='x86_64'
     fi
 
     # Set our checksum to verify
-    if [ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]; then
-        if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
+        if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
             local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_OSX_ARM64}"
         else
             local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_LINUX_ARM64}"
         fi
     else
-        if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+        if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
             local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_OSX_X86_64}"
         else
             local readonly PYTHON_SHA512SUM="${PYTHON_SHA512SUM_LINUX_X86_64}"
         fi
     fi
 
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
         echo_red_text 'Downloading Python (Linux - ARM64)...'
         download "https://github.com/astral-sh/python-build-standalone/releases/download/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
 
@@ -434,8 +434,8 @@ function get_python() {
 # Get s3cmd
 function get_s3cmd() {
     # If all we're doing is updating the checksum, we don't care if the environment is prepared
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
-        if  [ ! -d "${DOVE_UV_DIR}" ] || [ ! -f "${DOVE_PYENV}" ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
+        if  [[ ! -d "${DOVE_UV_DIR}" ]] || [[ ! -f "${DOVE_PYENV}" ]]; then
             echo_red_text "ERROR: You tried to download s3cmd, but you don't have a uv environment set-up yet."
             exit 1
         fi
@@ -456,7 +456,7 @@ function get_s3cmd() {
     echo_red_text "Downloading s3cmd..."
     download_and_extract 's3cmd' "https://github.com/s3tools/s3cmd/archive/${S3CMD_COMMIT}.tar.gz" "${DOVE_S3CMD_DIR}" "${S3CMD_SHA512SUM}"
 
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
         source "${DOVE_PYENV}"
         echo_red_text 'Installing s3cmd...'
         "${DOVE_UV}" pip install --no-editable --strict "${DOVE_S3CMD_DIR}"
@@ -467,8 +467,8 @@ function get_s3cmd() {
 # Get + set-up uv
 function get_uv() {
     # If all we're doing is updating the checksum, we don't care if the environment is prepared
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]; then
-        if  [ ! -d "${DOVE_PYTHON_DIR}" ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
+        if  [[ ! -d "${DOVE_PYTHON_DIR}" ]]; then
             echo_red_text "ERROR: You tried to download uv, but you don't have Python downloaded yet."
             exit 1
         fi
@@ -484,35 +484,35 @@ function get_uv() {
     fi
 
     # Set our platform
-    if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+    if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
         local readonly UV_PLATFORM='apple-darwin'
     else
         local readonly UV_PLATFORM='unknown-linux-gnu'
     fi
 
     # Set our platform architecture
-    if [ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]; then
+    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
         local readonly UV_ARCH='aarch64'
     else
         local readonly UV_ARCH='x86_64'
     fi
 
     # Set our checksum to verify
-    if [ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]; then
-        if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
+        if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
             local readonly UV_SHA512SUM="${UV_SHA512SUM_OSX_ARM64}"
         else
             local readonly UV_SHA512SUM="${UV_SHA512SUM_LINUX_ARM64}"
         fi
     else
-        if [ "${DOVE_PLATFORM}" == 'darwin' ]; then
+        if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
             local readonly UV_SHA512SUM="${UV_SHA512SUM_OSX_X86_64}"
         else
             local readonly UV_SHA512SUM="${UV_SHA512SUM_LINUX_X86_64}"
         fi
     fi
 
-    if [ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]; then
+    if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
         echo_red_text 'Downloading uv (Linux - ARM64)...'
         download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-aarch64-unknown-linux-gnu.tar.gz" "${DOVE_UV_DIR}" "${UV_SHA512SUM_LINUX_ARM64}"
 
@@ -537,27 +537,27 @@ function get_uv() {
     fi
 }
 
-if [ "${DOVE_GET_SOURCE_AUTOCONFIG}" == 1 ]; then
+if [[ "${DOVE_GET_SOURCE_AUTOCONFIG}" == 1 ]]; then
     get_autoconfig
 fi
 
 # These need to run before we get lxml and s3cmd
-if [ "${DOVE_GET_SOURCE_PYTHON}" == 1 ]; then
+if [[ "${DOVE_GET_SOURCE_PYTHON}" == 1 ]]; then
     get_python
 fi
 
-if [ "${DOVE_GET_SOURCE_UV}" == 1 ]; then
+if [[ "${DOVE_GET_SOURCE_UV}" == 1 ]]; then
     get_uv
 fi
 
-if [ "${DOVE_GET_SOURCE_LXML}" == 1 ]; then
+if [[ "${DOVE_GET_SOURCE_LXML}" == 1 ]]; then
     get_lxml
 fi
 
-if [ "${DOVE_GET_SOURCE_PHOENIX}" == 1 ]; then
+if [[ "${DOVE_GET_SOURCE_PHOENIX}" == 1 ]]; then
     get_phoenix
 fi
 
-if [ "${DOVE_GET_SOURCE_S3CMD}" == 1 ]; then
+if [[ "${DOVE_GET_SOURCE_S3CMD}" == 1 ]]; then
     get_s3cmd
 fi
