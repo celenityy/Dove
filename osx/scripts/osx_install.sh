@@ -194,8 +194,8 @@ echo_green_text "Creating /Library/celenity/Dove directory..."
 sudo mkdir -vp /Library/celenity/Dove || error_fn
 echo
 
-echo_green_text "Changing permissions of Library/celenity/Dove to 744..."
-sudo chmod -v 744 /Library/celenity/Dove || error_fn
+echo_green_text "Changing permissions of Library/celenity/Dove to 755..."
+sudo chmod -v 755 /Library/celenity/Dove || error_fn
 echo
 
 echo -e ""
