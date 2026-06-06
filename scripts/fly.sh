@@ -85,33 +85,6 @@ function build_dove() {
     mkdir -p "${dove_cfg_output_dir}"
     cp "${DOVE_PHOENIX}/outputs/${phoenix_cfg_input_path}/phoenix.cfg" "${dove_cfg_output_dir}/dove.cfg"
 
-    # If necessary, set our platform (for dove.cfg)
-    if [[ "${DOVE_HARDCODE_PLATFORM}" == 1 ]]; then
-        if [[ "${dove_platform}" == 'osx-intel' ]]; then
-            local readonly dove_platform_to_hardcode='osx'
-        elif [[ "${dove_platform}" == 'linux-flatpak' ]]; then
-            local readonly dove_platform_to_hardcode='linux'
-        else
-            local readonly dove_platform_to_hardcode="${dove_platform}"
-        fi
-        "${DOVE_SED}" -i "s|{DOVE_PLATFORM_TO_HARDCODE}|${dove_platform_to_hardcode}|" "${dove_cfg_output_dir}/dove.cfg"
-
-        # For OS X, we also need to set whether we're targetting Apple Silicon or Intel
-        if [[ "${dove_platform}" == 'osx' ]] || [[ "${dove_platform}" == 'osx-intel' ]]; then
-            if [[ "${dove_platform}" == 'osx-intel' ]]; then
-                local readonly dove_osx_variant_to_hardcode='intel'
-            else
-                local readonly dove_osx_variant_to_hardcode='silicon'
-            fi
-            "${DOVE_SED}" -i "s|{DOVE_OSX_VARIANT_TO_HARDCODE}|${dove_osx_variant_to_hardcode}|" "${dove_cfg_output_dir}/dove.cfg"
-        else
-            "${DOVE_SED}" -i "s|{DOVE_OSX_VARIANT_TO_HARDCODE}|not-osx|" "${dove_cfg_output_dir}/dove.cfg"
-        fi
-    else
-         "${DOVE_SED}" -i "s|{DOVE_PLATFORM_TO_HARDCODE}|none|" "${dove_cfg_output_dir}/dove.cfg"
-         "${DOVE_SED}" -i "s|{DOVE_OSX_VARIANT_TO_HARDCODE}|none|" "${dove_cfg_output_dir}/dove.cfg"
-    fi
-
     # If necessary, copy our static dove.js
     if [[ "${DOVE_STATIC_JS}" == 1 ]]; then
         cp "${DOVE_PHOENIX}/outputs/${dove_platform}/phoenix-static-${PHOENIX_VERSION}-${dove_platform}.js" "${dove_output_dir}/dove-static-${DOVE_VERSION}-${dove_platform}.js"

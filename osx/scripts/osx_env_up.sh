@@ -25,6 +25,9 @@ DOVE_INSTALL_LAUNCHCTL='/bin/launchctl'
 # mkdir
 DOVE_INSTALL_MKDIR='/bin/mkdir -vp'
 
+# rm
+DOVE_INSTALL_RM='/bin/rm -f'
+
 # sleep
 DOVE_INSTALL_SLEEP='/bin/sleep'
 
@@ -84,6 +87,14 @@ echo
 
 echo_green_text "Loading dev.celenity.dove.env.SSLKEYLOGFILE.plist..."
 "${DOVE_INSTALL_LAUNCHCTL}" load /Library/LaunchAgents/dev.celenity.dove.env.SSLKEYLOGFILE.plist || error_fn
+echo
+
+echo_green_text "Unloading dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
+"${DOVE_INSTALL_LAUNCHCTL}" unload /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
+echo
+
+echo_green_text "Removing dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist..."
+"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_RM}" /Library/LaunchAgents/dev.celenity.dove.env.DOVE_HOST_PLATFORM.plist || error_fn
 echo
 
 popd

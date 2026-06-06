@@ -14,7 +14,6 @@
 # Also impacts other Mozilla software (like Firefox)
 
 # Set our host platform
-export DOVE_HOST_PLATFORM='linux'
 export PHOENIX_HOST_PLATFORM='linux'
 
 # Disable GFX crash telemetry

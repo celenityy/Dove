@@ -64,7 +64,6 @@
                 environment.etc."thunderbird/dove.cfg".source = "${pkgs.dove}/dove.cfg";
                 environment.etc."thunderbird/dove/assets".source = "${pkgs.dove}/assets";
                 environment.variables = {
-                  DOVE_HOST_NIX = 1;
                   MOZ_CRASHREPORTER = null;
                   MOZ_CRASHREPORTER_DISABLE = 1;
                   MOZ_CRASHREPORTER_NO_REPORT = 1;
