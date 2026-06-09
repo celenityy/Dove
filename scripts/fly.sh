@@ -51,7 +51,7 @@ function check_file_or_dir_exists() {
             if [[ -d "${path}" ]]; then
                 rm -rf "${path}"
             elif [[ -f "${path}" ]]; then
-                rm -f "${path}"
+                rm -f "${path}" "${path}-sha512sum.txt"
             fi
         else
             exit 1
@@ -112,13 +112,16 @@ function build_dove() {
 
     if [[ "${dove_platform}" == 'windows' ]]; then
         local readonly dove_output_archive="${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.zip"
+        local readonly dove_output_archive_latest="${DOVE_OUTPUTS}/dove-latest-${dove_platform}.zip"
     else
         local readonly dove_output_archive="${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.tar.xz"
+        local readonly dove_output_archive_latest="${DOVE_OUTPUTS}/dove-latest-${dove_platform}.tar.xz"
     fi
 
     # Ensure existing outputs don't already exist
     check_file_or_dir_exists "${dove_output_dir}"
     check_file_or_dir_exists "${dove_output_archive}"
+    check_file_or_dir_exists "${dove_output_archive_latest}"
 
     # Create our output directory
     mkdir -p "${dove_output_dir}/assets/autoconfig/v1.1"
