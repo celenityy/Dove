@@ -24,6 +24,41 @@ fi
 # Include version info
 source "${DOVE_VERSIONS}"
 
+# Check if a file or directory already exists
+## If the file or directory already exists, prompt the user to remove it
+## If the user chooses not to remove it, we exit
+## If the file or directory doesn't already exist, we just do nothing
+function check_file_or_dir_exists() {
+    function print_usage() {
+        echo 'Usage: check_file_or_dir_exists /path/to/file_or_dir'
+    }
+
+    if [[ -z "${1+x}" ]]; then
+        echo_red_text 'ERROR: Please specify the path to a file or directory to check'
+        print_usage
+        exit 1
+    fi
+
+    local readonly path="$1"
+
+    if [[ -d "${path}" ]] || [[ -f "${path}" ]]; then
+        echo_red_text "'${path}' already exists"
+        echo_red_text 'Continuing WILL remove this file/directory'
+        read -p "Are you sure you want to proceed? [y/N] " -n 1 -r
+        echo
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+            echo_red_text "Removing ${path}..."
+            if [[ -d "${path}" ]]; then
+                rm -rf "${path}"
+            elif [[ -f "${path}" ]]; then
+                rm -f "${path}"
+            fi
+        else
+            exit 1
+        fi
+    fi
+}
+
 # Begin the build...
 echo_red_text "Building Dove ${DOVE_VERSION}..."
 
@@ -62,8 +97,28 @@ function build_phoenix() {
 
 # Platform-specific build logic
 function build_dove() {
+    function print_usage() {
+        echo "Usage: build_dove 'platform'"
+    }
+
+    if [[ -z "${1+x}" ]]; then
+        echo_red_text 'ERROR: Please specify the platform you would like to build Dove for'
+        print_usage
+        exit 1
+    fi
+
     local readonly dove_platform="$1"
     local readonly dove_output_dir="${DOVE_OUTPUTS}/${dove_platform}"
+
+    if [[ "${dove_platform}" == 'windows' ]]; then
+        local readonly dove_output_archive="${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.zip"
+    else
+        local readonly dove_output_archive="${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.tar.xz"
+    fi
+
+    # Ensure existing outputs don't already exist
+    check_file_or_dir_exists "${dove_output_dir}"
+    check_file_or_dir_exists "${dove_output_archive}"
 
     # Create our output directory
     mkdir -p "${dove_output_dir}/assets/autoconfig/v1.1"
@@ -140,9 +195,9 @@ function build_dove() {
 
     pushd "${dove_output_dir}"
     if [[ "${dove_platform}" == 'windows' ]]; then
-        zip -r "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.zip" * -x '.DS_Store'
+        zip -r "${dove_output_archive}" * -x '.DS_Store'
     else
-        "${DOVE_TAR}" -cJv --no-xattrs --exclude ".DS_Store" -f "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.tar.xz" *
+        "${DOVE_TAR}" -cJv --no-xattrs --exclude ".DS_Store" -f "${dove_output_archive}" *
     fi
     popd
 }
