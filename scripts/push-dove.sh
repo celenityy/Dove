@@ -253,6 +253,11 @@ function push_dove() {
     fi
 
     push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "dove/releases/${DOVE_VERSION}/${dove_platform}"
+
+    # Ensure the latest version can always be downloaded from https://releases.celenity.dev/dove/releases/latest/{dove_platform}/dove-latest-{dove_platform}.${dove_archive_type}
+    ## (Ex. for convenience/packaging)
+    cp -f "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "${DOVE_OUTPUTS}/dove-latest-${dove_platform}.${dove_archive_type}"
+    push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-latest-${dove_platform}.${dove_archive_type}" "dove/releases/latest/${dove_platform}"
 }
 
 if [[ "${DOVE_PUSH_LINUX}" == 1 ]]; then
