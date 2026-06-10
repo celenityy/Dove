@@ -18,10 +18,10 @@ readonly AUTOCONFIG_SHA512SUM='e20f3c8a024d74127549fbd6a37ac1821e2b217b54a36a534
 # Tools
 
 ## lxml
-### Version: 7.0.0a1
+### Version: 7.0.0a2
 ### https://github.com/lxml/lxml
-readonly LXML_COMMIT='2183096c995112a9d60ae33c805b1147ce3b19fc'
-readonly LXML_SHA512SUM='44496fbfb59ac424d0ad2e215fc8adda5388435d180c409e56b460a4eae552b67e65239b307a0e28778d9667fbc631ec218f8fab042a2d13a1bd19c5d0f93208'
+readonly LXML_COMMIT='838d14e5bf1ead0b5972ec82fc5c342e5efeed0e'
+readonly LXML_SHA512SUM='4176f44d50c10dcc790437446f36c1b345beccd561391d661b931a5e12f00135d8ad2646ecdf9c050935a4176ae11d6c3cd711cc776ae6db0ca5b000336406fa'
 
 ## Python
 ### Version: 20260602 (3.14.5)
