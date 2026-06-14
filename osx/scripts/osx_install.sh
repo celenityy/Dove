@@ -53,13 +53,20 @@ echo_green_text "If you are unable/unwilling to grant your Terminal this permiss
 echo_red_text "Press enter to continue."
 read
 
-## Install Dove
+# Install Dove
 echo_green_text "Adding celenity's Tap to Homebrew..."
 brew tap celenity/tap https://gitlab.com/celenityy/tap || error_fn
 echo
 
+# "Trust" our tap...
+brew trust --tap celenity/tap
+
 echo_green_text "Updating Homebrew cache..."
-brew update && brew upgrade --force --verbose || error_fn
+brew update --force || error_fn
+echo
+
+echo_green_text "Ensuring Homebrew packages are up to date..."
+brew upgrade --greedy || error_fn
 echo
 
 echo_green_text "Downloading dev.celenity.dove.env.MOZ_CRASHREPORTER.plist..."
@@ -207,7 +214,7 @@ read "DEVICETYPE?Please enter your selection: "
 case ${DEVICETYPE} in
 	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
 		echo_green_text "Installing dove package..."
-		brew install dove || error_fn
+		brew install celenity/tap/dove || error_fn
 		echo
 
         echo_green_text "Downloading dove-apply.sh..."
@@ -305,7 +312,7 @@ case ${DEVICETYPE} in
 
 	"intel" | "Intel" | "INTEL" | 2)
 		echo_green_text "Installing dove-intel package..."
-		brew install dove-intel || error_fn
+		brew install celenity/tap/dove-intel || error_fn
 		echo
 
 		echo_green_text "Downloading dove-apply-intel.sh..."
