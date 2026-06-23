@@ -10,7 +10,7 @@
 ## These need to be set first, to ensure that they don't interfere with certain variables
 readonly DOVE_ENV_OVERRIDE="${DOVE_ROOT}/env_override.sh"
 if [[ -f "${DOVE_ENV_OVERRIDE}" ]]; then
-    source "${DOVE_ENV_OVERRIDE}"
+  source "${DOVE_ENV_OVERRIDE}"
 fi
 
 # Dove
@@ -31,7 +31,7 @@ source "${DOVE_ENV_HELPERS}"
 # Whether we're being invoked from a Nix flake
 readonly DOVE_NIX_DEFAULT=0
 if [[ -z "${DOVE_NIX+x}" ]]; then
-    DOVE_NIX="${DOVE_NIX_DEFAULT}"
+  DOVE_NIX="${DOVE_NIX_DEFAULT}"
 fi
 readonly DOVE_NIX
 export DOVE_NIX
@@ -47,12 +47,12 @@ export DOVE_ARCHIVES
 # Build directory
 readonly DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"
 if [[ -z "${DOVE_BUILD+x}" ]]; then
-    if [[ "${DOVE_NIX}" == 1 ]]; then
-        # Nix needs to use /tmp here, see https://codeberg.org/celenity/Dove/issues/59
-        DOVE_BUILD='/tmp/dove/build'
-    else
-        DOVE_BUILD="${DOVE_BUILD_DEFAULT}"
-    fi
+  if [[ "${DOVE_NIX}" == 1 ]]; then
+    # Nix needs to use /tmp here, see https://codeberg.org/celenity/Dove/issues/59
+    DOVE_BUILD='/tmp/dove/build'
+  else
+    DOVE_BUILD="${DOVE_BUILD_DEFAULT}"
+  fi
 fi
 readonly DOVE_BUILD
 export DOVE_BUILD
@@ -72,7 +72,7 @@ export DOVE_DOWNLOADS
 # Dove outputs directory
 readonly DOVE_OUTPUTS_DEFAULT="${DOVE_ROOT}/outputs"
 if [[ -z "${DOVE_OUTPUTS+x}" ]]; then
-    DOVE_OUTPUTS="${DOVE_OUTPUTS_DEFAULT}"
+  DOVE_OUTPUTS="${DOVE_OUTPUTS_DEFAULT}"
 fi
 readonly DOVE_OUTPUTS
 export DOVE_OUTPUTS
@@ -80,7 +80,7 @@ export DOVE_OUTPUTS
 # Should we create a log file for build.sh? (Default)
 readonly DOVE_LOG_BUILD_DEFAULT=1
 if [[ -z "${DOVE_LOG_BUILD+x}" ]]; then
-    DOVE_LOG_BUILD="${DOVE_LOG_BUILD_DEFAULT}"
+  DOVE_LOG_BUILD="${DOVE_LOG_BUILD_DEFAULT}"
 fi
 readonly DOVE_LOG_BUILD
 export DOVE_LOG_BUILD
@@ -88,7 +88,7 @@ export DOVE_LOG_BUILD
 # Should we create a log file for get_sources.sh? (Default)
 readonly DOVE_LOG_SOURCES_DEFAULT=1
 if [[ -z "${DOVE_LOG_SOURCES+x}" ]]; then
-    DOVE_LOG_SOURCES="${DOVE_LOG_SOURCES_DEFAULT}"
+  DOVE_LOG_SOURCES="${DOVE_LOG_SOURCES_DEFAULT}"
 fi
 readonly DOVE_LOG_SOURCES
 export DOVE_LOG_SOURCES
@@ -104,43 +104,43 @@ export DOVE_LOG_PUSH
 # Directory where we should store log files (if logging is desired)
 readonly DOVE_LOG_DIR_DEFAULT="${DOVE_BUILD}/logs"
 if [[ -z "${DOVE_LOG_DIR+x}" ]]; then
-    DOVE_LOG_DIR="${DOVE_LOG_DIR_DEFAULT}"
+  DOVE_LOG_DIR="${DOVE_LOG_DIR_DEFAULT}"
 fi
 readonly DOVE_LOG_DIR
 export DOVE_LOG_DIR
 
 # GNU awk
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-    readonly DOVE_AWK_DEFAULT='gawk'
+  readonly DOVE_AWK_DEFAULT='gawk'
 else
-    readonly DOVE_AWK_DEFAULT='awk'
+  readonly DOVE_AWK_DEFAULT='awk'
 fi
 if [[ -z "${DOVE_AWK+x}" ]]; then
-    DOVE_AWK="${DOVE_AWK_DEFAULT}"
+  DOVE_AWK="${DOVE_AWK_DEFAULT}"
 fi
 readonly DOVE_AWK
 export DOVE_AWK
 
 # GNU sed
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-    readonly DOVE_SED_DEFAULT='gsed'
+  readonly DOVE_SED_DEFAULT='gsed'
 else
-    readonly DOVE_SED_DEFAULT='sed'
+  readonly DOVE_SED_DEFAULT='sed'
 fi
 if [[ -z "${DOVE_SED+x}" ]]; then
-    DOVE_SED="${DOVE_SED_DEFAULT}"
+  DOVE_SED="${DOVE_SED_DEFAULT}"
 fi
 readonly DOVE_SED
 export DOVE_SED
 
 # GNU tar
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-    readonly DOVE_TAR_DEFAULT='gtar'
+  readonly DOVE_TAR_DEFAULT='gtar'
 else
-    readonly DOVE_TAR_DEFAULT='tar'
+  readonly DOVE_TAR_DEFAULT='tar'
 fi
 if [[ -z "${DOVE_TAR+x}" ]]; then
-    DOVE_TAR="${DOVE_TAR_DEFAULT}"
+  DOVE_TAR="${DOVE_TAR_DEFAULT}"
 fi
 readonly DOVE_TAR
 export DOVE_TAR
@@ -148,7 +148,7 @@ export DOVE_TAR
 # lxml
 readonly DOVE_LXML_DEFAULT="${DOVE_EXTERNAL}/lxml"
 if [[ -z "${DOVE_LXML+x}" ]]; then
-    DOVE_LXML="${DOVE_LXML_DEFAULT}"
+  DOVE_LXML="${DOVE_LXML_DEFAULT}"
 fi
 readonly DOVE_LXML
 export DOVE_LXML
@@ -156,7 +156,7 @@ export DOVE_LXML
 # Phoenix
 readonly DOVE_PHOENIX_DEFAULT="${DOVE_EXTERNAL}/phoenix"
 if [[ -z "${DOVE_PHOENIX+x}" ]]; then
-    DOVE_PHOENIX="${DOVE_PHOENIX_DEFAULT}"
+  DOVE_PHOENIX="${DOVE_PHOENIX_DEFAULT}"
 fi
 readonly DOVE_PHOENIX
 export DOVE_PHOENIX
@@ -164,7 +164,7 @@ export DOVE_PHOENIX
 # Python
 readonly DOVE_PYTHON_DIR_DEFAULT="${DOVE_EXTERNAL}/python"
 if [[ -z "${DOVE_PYTHON_DIR+x}" ]]; then
-    DOVE_PYTHON_DIR="${DOVE_PYTHON_DIR_DEFAULT}"
+  DOVE_PYTHON_DIR="${DOVE_PYTHON_DIR_DEFAULT}"
 fi
 readonly DOVE_PYTHON_DIR
 export DOVE_PYTHON_DIR
@@ -172,7 +172,7 @@ export DOVE_PYTHON_DIR
 # Python (UV) environment
 readonly DOVE_PYENV_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
 if [[ -z "${DOVE_PYENV_DIR+x}" ]]; then
-    DOVE_PYENV_DIR="${DOVE_PYENV_DIR_DEFAULT}"
+  DOVE_PYENV_DIR="${DOVE_PYENV_DIR_DEFAULT}"
 fi
 readonly DOVE_PYENV_DIR
 readonly DOVE_PYENV="${DOVE_PYENV_DIR}/bin/activate"
@@ -180,14 +180,14 @@ export DOVE_PYENV
 export DOVE_PYENV_DIR
 
 if [[ "${DOVE_NIX}" == 1 ]]; then
-    ## Nix doesn't want/need to set a specific Python path, see discussion at https://codeberg.org/celenity/Dove/issues/59
-    ## and https://codeberg.org/celenity/Phoenix/issues/252
-    readonly DOVE_PYTHON_DEFAULT='python'
+  ## Nix doesn't want/need to set a specific Python path, see discussion at https://codeberg.org/celenity/Dove/issues/59
+  ## and https://codeberg.org/celenity/Phoenix/issues/252
+  readonly DOVE_PYTHON_DEFAULT='python'
 else
-    readonly DOVE_PYTHON_DEFAULT="${DOVE_PYENV_DIR}/bin/python"
+  readonly DOVE_PYTHON_DEFAULT="${DOVE_PYENV_DIR}/bin/python"
 fi
 if [[ -z "${DOVE_PYTHON+x}" ]]; then
-    DOVE_PYTHON="${DOVE_PYTHON_DEFAULT}"
+  DOVE_PYTHON="${DOVE_PYTHON_DEFAULT}"
 fi
 readonly DOVE_PYTHON
 export DOVE_PYTHON
@@ -195,7 +195,7 @@ export DOVE_PYTHON
 # s3cmd
 readonly DOVE_S3CMD_DIR_DEFAULT="${DOVE_EXTERNAL}/s3cmd"
 if [[ -z "${DOVE_S3CMD_DIR+x}" ]]; then
-    DOVE_S3CMD_DIR="${DOVE_S3CMD_DIR_DEFAULT}"
+  DOVE_S3CMD_DIR="${DOVE_S3CMD_DIR_DEFAULT}"
 fi
 readonly DOVE_S3CMD_DIR
 readonly DOVE_S3CMD="${DOVE_PYENV_DIR}/bin/s3cmd"
@@ -205,7 +205,7 @@ export DOVE_S3CMD_DIR
 # UV
 readonly DOVE_UV_DIR_DEFAULT="${DOVE_EXTERNAL}/uv"
 if [[ -z "${DOVE_UV_DIR+x}" ]]; then
-    DOVE_UV_DIR="${DOVE_UV_DIR_DEFAULT}"
+  DOVE_UV_DIR="${DOVE_UV_DIR_DEFAULT}"
 fi
 readonly DOVE_UV_DIR
 readonly DOVE_UV="${DOVE_UV_DIR}/uv"
@@ -215,7 +215,7 @@ export DOVE_UV_DIR
 # UV (local directory)
 readonly DOVE_UV_LOCAL_DEFAULT="${DOVE_BUILD}/uv"
 if [[ -z "${DOVE_UV_LOCAL+x}" ]]; then
-    DOVE_UV_LOCAL="${DOVE_UV_LOCAL_DEFAULT}"
+  DOVE_UV_LOCAL="${DOVE_UV_LOCAL_DEFAULT}"
 fi
 readonly DOVE_UV_LOCAL
 export DOVE_UV_LOCAL
@@ -223,7 +223,7 @@ export DOVE_UV_LOCAL
 # UV cache
 readonly DOVE_UV_CACHE_DEFAULT="${DOVE_UV_LOCAL}/cache"
 if [[ -z "${DOVE_UV_CACHE+x}" ]]; then
-    DOVE_UV_CACHE="${DOVE_UV_CACHE_DEFAULT}"
+  DOVE_UV_CACHE="${DOVE_UV_CACHE_DEFAULT}"
 fi
 readonly DOVE_UV_CACHE
 export DOVE_UV_CACHE
@@ -231,7 +231,7 @@ export DOVE_UV_CACHE
 # UV Python directory
 readonly DOVE_UV_PYTHON_DEFAULT="${DOVE_UV_LOCAL}/python"
 if [[ -z "${DOVE_UV_PYTHON+x}" ]]; then
-    DOVE_UV_PYTHON="${DOVE_UV_PYTHON_DEFAULT}"
+  DOVE_UV_PYTHON="${DOVE_UV_PYTHON_DEFAULT}"
 fi
 readonly DOVE_UV_PYTHON
 export DOVE_UV_PYTHON
@@ -239,7 +239,7 @@ export DOVE_UV_PYTHON
 # UV tools
 readonly DOVE_UV_TOOLS_DEFAULT="${DOVE_UV_LOCAL}/tools"
 if [[ -z "${DOVE_UV_TOOLS+x}" ]]; then
-    DOVE_UV_TOOLS="${DOVE_UV_TOOLS_DEFAULT}"
+  DOVE_UV_TOOLS="${DOVE_UV_TOOLS_DEFAULT}"
 fi
 readonly DOVE_UV_TOOLS
 export DOVE_UV_TOOLS
@@ -247,7 +247,7 @@ export DOVE_UV_TOOLS
 # Thunderbird Autoconfiguration Database (ISPDB)
 readonly DOVE_AUTOCONFIG_DEFAULT="${DOVE_EXTERNAL}/autoconfig"
 if [[ -z "${DOVE_AUTOCONFIG+x}" ]]; then
-    DOVE_AUTOCONFIG="${DOVE_AUTOCONFIG_DEFAULT}"
+  DOVE_AUTOCONFIG="${DOVE_AUTOCONFIG_DEFAULT}"
 fi
 readonly DOVE_AUTOCONFIG
 export DOVE_AUTOCONFIG
@@ -282,7 +282,7 @@ export DOVE_CIPHERS
 ## or if they should override them entirely
 readonly DOVE_CURL_FLAGS_OVERRIDE_DEFAULT=0
 if [[ -z "${DOVE_CURL_FLAGS_OVERRIDE+x}" ]]; then
-    DOVE_CURL_FLAGS_OVERRIDE="${DOVE_CURL_FLAGS_OVERRIDE_DEFAULT}"
+  DOVE_CURL_FLAGS_OVERRIDE="${DOVE_CURL_FLAGS_OVERRIDE_DEFAULT}"
 fi
 readonly DOVE_CURL_FLAGS_OVERRIDE
 export DOVE_CURL_FLAGS_OVERRIDE
@@ -290,11 +290,11 @@ export DOVE_CURL_FLAGS_OVERRIDE
 # curl flags
 readonly DOVE_CURL_FLAGS_DEFAULT="--disable --no-netrc --ciphers ${DOVE_NONTLS13_CIPHERS} --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --proxy-ciphers ${DOVE_NONTLS13_CIPHERS} --proxy-tls13-ciphers ${DOVE_TLS13_CIPHERS} --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tls13-ciphers ${DOVE_TLS13_CIPHERS} --tlsv1.2 --trace-time --user-agent '' --verbose"
 if [[ -z "${DOVE_CURL_FLAGS+x}" ]]; then
-    readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT}"
+  readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT}"
 elif [[ "${DOVE_CURL_FLAGS_OVERRIDE}" == 1 ]]; then
-    readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS}"
+  readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS}"
 else
-    readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT} ${DOVE_CURL_FLAGS}"
+  readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT} ${DOVE_CURL_FLAGS}"
 fi
 export DOVE_CURL_FLAGS
 
@@ -302,7 +302,7 @@ export DOVE_CURL_FLAGS
 ## or if they should override them entirely
 readonly DOVE_S3CMD_FLAGS_OVERRIDE_DEFAULT=0
 if [[ -z "${DOVE_S3CMD_FLAGS_OVERRIDE+x}" ]]; then
-    DOVE_S3CMD_FLAGS_OVERRIDE="${DOVE_S3CMD_FLAGS_OVERRIDE_DEFAULT}"
+  DOVE_S3CMD_FLAGS_OVERRIDE="${DOVE_S3CMD_FLAGS_OVERRIDE_DEFAULT}"
 fi
 readonly DOVE_S3CMD_FLAGS_OVERRIDE
 export DOVE_S3CMD_FLAGS_OVERRIDE
@@ -310,11 +310,11 @@ export DOVE_S3CMD_FLAGS_OVERRIDE
 # s3cmd flags
 readonly DOVE_S3CMD_FLAGS_DEFAULT='--check-certificate --check-hostname --check-md5 --no-guess-mime-type --no-mime-magic --progress --ssl'
 if [[ -z "${DOVE_S3CMD_FLAGS+x}" ]]; then
-    DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS_DEFAULT}"
+  DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS_DEFAULT}"
 elif [[ "${DOVE_S3CMD_FLAGS_OVERRIDE}" == 1 ]]; then
-    DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS}"
+  DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS}"
 else
-    DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS_DEFAULT} ${DOVE_S3CMD_FLAGS}"
+  DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS_DEFAULT} ${DOVE_S3CMD_FLAGS}"
 fi
 readonly DOVE_S3CMD_FLAGS
 export DOVE_S3CMD_FLAGS
@@ -322,88 +322,88 @@ export DOVE_S3CMD_FLAGS
 # Whether we're ONLY building Dove for Linux
 readonly DOVE_LINUX_ONLY_DEFAULT=0
 if [[ "${DOVE_NIX}" == 1 ]] && [[ "${DOVE_OS}" != 'osx' ]]; then
-    # Nix flakes should only build their respective platform
-    DOVE_LINUX_ONLY=1
+  # Nix flakes should only build their respective platform
+  DOVE_LINUX_ONLY=1
 elif [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
-    DOVE_LINUX_ONLY="${DOVE_LINUX_ONLY_DEFAULT}"
+  DOVE_LINUX_ONLY="${DOVE_LINUX_ONLY_DEFAULT}"
 fi
 readonly DOVE_LINUX_ONLY
 export DOVE_LINUX_ONLY
 if [[ "${DOVE_LINUX_ONLY}" == 1 ]]; then
-    DOVE_LINUX=1
-    DOVE_LINUX_FLATPAK=0
-    DOVE_OSX=0
-    DOVE_OSX_INTEL=0
-    DOVE_WINDOWS=0
+  DOVE_LINUX=1
+  DOVE_LINUX_FLATPAK=0
+  DOVE_OSX=0
+  DOVE_OSX_INTEL=0
+  DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for Linux (Flatpak)
 readonly DOVE_LINUX_FLATPAK_ONLY_DEFAULT=0
 if [[ -z "${DOVE_LINUX_FLATPAK_ONLY+x}" ]]; then
-    DOVE_LINUX_FLATPAK_ONLY="${DOVE_LINUX_FLATPAK_ONLY_DEFAULT}"
+  DOVE_LINUX_FLATPAK_ONLY="${DOVE_LINUX_FLATPAK_ONLY_DEFAULT}"
 fi
 readonly DOVE_LINUX_FLATPAK_ONLY
 export DOVE_LINUX_FLATPAK_ONLY
 if [[ "${DOVE_LINUX_FLATPAK_ONLY}" == 1 ]]; then
-    DOVE_LINUX_FLATPAK=1
-    DOVE_LINUX=0
-    DOVE_OSX=0
-    DOVE_OSX_INTEL=0
-    DOVE_WINDOWS=0
+  DOVE_LINUX_FLATPAK=1
+  DOVE_LINUX=0
+  DOVE_OSX=0
+  DOVE_OSX_INTEL=0
+  DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for OS X
 readonly DOVE_OSX_ONLY_DEFAULT=0
 if [[ "${DOVE_NIX}" == 1 ]] && [[ "${DOVE_OS}" == 'osx' ]]; then
-    # Nix flakes should only build their respective platform
-    DOVE_OSX_ONLY=1
+  # Nix flakes should only build their respective platform
+  DOVE_OSX_ONLY=1
 elif [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
-    DOVE_OSX_ONLY="${DOVE_OSX_ONLY_DEFAULT}"
+  DOVE_OSX_ONLY="${DOVE_OSX_ONLY_DEFAULT}"
 fi
 readonly DOVE_OSX_ONLY
 export DOVE_OSX_ONLY
 if [[ "${DOVE_OSX_ONLY}" == 1 ]]; then
-    DOVE_OSX=1
-    DOVE_LINUX=0
-    DOVE_LINUX_FLATPAK=0
-    DOVE_OSX_INTEL=0
-    DOVE_WINDOWS=0
+  DOVE_OSX=1
+  DOVE_LINUX=0
+  DOVE_LINUX_FLATPAK=0
+  DOVE_OSX_INTEL=0
+  DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for OS X (Intel)
 readonly DOVE_OSX_INTEL_ONLY_DEFAULT=0
 if [[ -z "${DOVE_OSX_INTEL_ONLY+x}" ]]; then
-    DOVE_OSX_INTEL_ONLY="${DOVE_OSX_INTEL_ONLY_DEFAULT}"
+  DOVE_OSX_INTEL_ONLY="${DOVE_OSX_INTEL_ONLY_DEFAULT}"
 fi
 readonly DOVE_OSX_INTEL_ONLY
 export DOVE_OSX_INTEL_ONLY
 if [[ "${DOVE_OSX_INTEL_ONLY}" == 1 ]]; then
-    DOVE_OSX_INTEL=1
-    DOVE_LINUX=0
-    DOVE_LINUX_FLATPAK=0
-    DOVE_OSX=0
-    DOVE_WINDOWS=0
+  DOVE_OSX_INTEL=1
+  DOVE_LINUX=0
+  DOVE_LINUX_FLATPAK=0
+  DOVE_OSX=0
+  DOVE_WINDOWS=0
 fi
 
 # Whether we're ONLY building Dove for Windows
 readonly DOVE_WINDOWS_ONLY_DEFAULT=0
 if [[ -z "${DOVE_WINDOWS_ONLY+x}" ]]; then
-    DOVE_WINDOWS_ONLY="${DOVE_WINDOWS_ONLY_DEFAULT}"
+  DOVE_WINDOWS_ONLY="${DOVE_WINDOWS_ONLY_DEFAULT}"
 fi
 readonly DOVE_WINDOWS_ONLY
 export DOVE_WINDOWS_ONLY
 if [[ "${DOVE_WINDOWS_ONLY}" == 1 ]]; then
-    DOVE_WINDOWS=1
-    DOVE_LINUX=0
-    DOVE_LINUX_FLATPAK=0
-    DOVE_OSX=0
-    DOVE_OSX_INTEL=0
+  DOVE_WINDOWS=1
+  DOVE_LINUX=0
+  DOVE_LINUX_FLATPAK=0
+  DOVE_OSX=0
+  DOVE_OSX_INTEL=0
 fi
 
 # Whether we're building Dove for Linux (Default)
 readonly DOVE_LINUX_DEFAULT=1
 if [[ -z "${DOVE_LINUX+x}" ]]; then
-    DOVE_LINUX="${DOVE_LINUX_DEFAULT}"
+  DOVE_LINUX="${DOVE_LINUX_DEFAULT}"
 fi
 readonly DOVE_LINUX
 export DOVE_LINUX
@@ -411,7 +411,7 @@ export DOVE_LINUX
 # Whether we're building Dove for Linux (Flatpak) (Default)
 readonly DOVE_LINUX_FLATPAK_DEFAULT=1
 if [[ -z "${DOVE_LINUX_FLATPAK+x}" ]]; then
-    DOVE_LINUX_FLATPAK="${DOVE_LINUX_FLATPAK_DEFAULT}"
+  DOVE_LINUX_FLATPAK="${DOVE_LINUX_FLATPAK_DEFAULT}"
 fi
 readonly DOVE_LINUX_FLATPAK
 export DOVE_LINUX_FLATPAK
@@ -419,7 +419,7 @@ export DOVE_LINUX_FLATPAK
 # Whether we're building Dove for OS X (Default)
 readonly DOVE_OSX_DEFAULT=1
 if [[ -z "${DOVE_OSX+x}" ]]; then
-    DOVE_OSX="${DOVE_OSX_DEFAULT}"
+  DOVE_OSX="${DOVE_OSX_DEFAULT}"
 fi
 readonly DOVE_OSX
 export DOVE_OSX
@@ -427,7 +427,7 @@ export DOVE_OSX
 # Whether we're building Dove for OS X (Intel) (Default)
 readonly DOVE_OSX_INTEL_DEFAULT=1
 if [[ -z "${DOVE_OSX_INTEL+x}" ]]; then
-    DOVE_OSX_INTEL="${DOVE_OSX_INTEL_DEFAULT}"
+  DOVE_OSX_INTEL="${DOVE_OSX_INTEL_DEFAULT}"
 fi
 readonly DOVE_OSX_INTEL
 export DOVE_OSX_INTEL
@@ -435,7 +435,7 @@ export DOVE_OSX_INTEL
 # Whether we're building Dove for Windows (Default)
 readonly DOVE_WINDOWS_DEFAULT=1
 if [[ -z "${DOVE_WINDOWS+x}" ]]; then
-    DOVE_WINDOWS="${DOVE_WINDOWS_DEFAULT}"
+  DOVE_WINDOWS="${DOVE_WINDOWS_DEFAULT}"
 fi
 readonly DOVE_WINDOWS
 export DOVE_WINDOWS
@@ -463,7 +463,7 @@ export DOVE_STATIC_JS
 # S3 access key
 readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-access-key.txt'
 if [[ -z "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE+x}" ]]; then
-    DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE="${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT}"
+  DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE="${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
 export DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
@@ -471,7 +471,7 @@ export DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
 # S3 bucket name
 readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-bucket-name.txt'
 if [[ -z "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE+x}" ]]; then
-    DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE="${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT}"
+  DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE="${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
 export DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
@@ -479,7 +479,7 @@ export DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
 # S3 endpoint
 readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-endpoint.txt'
 if [[ -z "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE+x}" ]]; then
-    DOVE_CEL_RELEASES_S3_ENDPOINT_FILE="${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT}"
+  DOVE_CEL_RELEASES_S3_ENDPOINT_FILE="${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
 export DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
@@ -487,7 +487,7 @@ export DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
 # S3 secret key
 readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-secret-key.txt'
 if [[ -z "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE+x}" ]]; then
-    DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE="${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT}"
+  DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE="${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE
 export DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE

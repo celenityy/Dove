@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Set-up our environment
 if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-    bash -x $(dirname $0)/env.sh
+  bash -x $(dirname $0)/env.sh
 fi
 source $(dirname $0)/env.sh
 

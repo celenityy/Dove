@@ -4,19 +4,19 @@ set -euo pipefail
 
 # Functions
 echo_red_text() {
-	echo -e "\033[31m$1\033[0m"
+  echo -e "\033[31m$1\033[0m"
 }
 
 echo_green_text() {
-	echo -e "\033[32m$1\033[0m"
+  echo -e "\033[32m$1\033[0m"
 }
 
 error_fn() {
-	echo
-	echo_red_text "\033[31mSomething went wrong! The script failed.\033[0m"
-	echo_red_text "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
-	echo
-	exit 1
+  echo
+  echo_red_text "\033[31mSomething went wrong! The script failed.\033[0m"
+  echo_red_text "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
+  echo
+  exit 1
 }
 
 # launchctl
@@ -182,33 +182,33 @@ echo_red_text "1. Silicon";
 echo_green_text "2. Intel";
 read "DEVICETYPE?Please enter your selection: "
 case ${DEVICETYPE} in
-	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
-		echo_green_text "Uninstalling dove..."
-		brew uninstall dove || error_fn
-		echo
+  "apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
+	echo_green_text "Uninstalling dove..."
+	brew uninstall dove || error_fn
+	echo
 
-        echo_green_text "Unloading dev.celenity.dove.apply.plist..."
-		"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_LAUNCHCTL}" unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
-		echo
+    echo_green_text "Unloading dev.celenity.dove.apply.plist..."
+	"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_LAUNCHCTL}" unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+	echo
 
-		echo_green_text "Removing dev.celenity.dove.apply.plist..."
-		"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
-		echo
-		;;
+	echo_green_text "Removing dev.celenity.dove.apply.plist..."
+	"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+	echo
+	;;
 
-	"intel" | "Intel" | "INTEL" | 2)
-		echo_green_text "Uninstalling dove-intel..."
-		brew uninstall dove-intel || error_fn
-		echo
+  "intel" | "Intel" | "INTEL" | 2)
+	echo_green_text "Uninstalling dove-intel..."
+	brew uninstall dove-intel || error_fn
+	echo
 
-		echo_green_text "Unloading dev.celenity.dove.apply.intel.plist..."
-		"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_LAUNCHCTL}" unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
-		echo
+	echo_green_text "Unloading dev.celenity.dove.apply.intel.plist..."
+	"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_LAUNCHCTL}" unload -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+	echo
 
-		echo_green_text "Removing dev.celenity.dove.apply.intel.plist..."
-		"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
-		echo
-		;;
+	echo_green_text "Removing dev.celenity.dove.apply.intel.plist..."
+	"${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+	echo
+	;;
 esac
 
 echo -e ""
@@ -218,43 +218,42 @@ echo_red_text "1. system - /Applications/Thunderbird.app";
 echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
 read "LOCATION?Please enter your selection: "
 case ${LOCATION} in
-	"system" | "System" | "SYSTEM" | 1)
-        echo_green_text "Removing dove.js..."
-        "${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
-        echo
+  "system" | "System" | "SYSTEM" | 1)
+    echo_green_text "Removing dove.js..."
+    "${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
+    echo
 
-        echo_green_text "Removing dove.cfg..."
-        "${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
-        echo
-		;;
+    echo_green_text "Removing dove.cfg..."
+    "${DOVE_UNINSTALL_SUDO}" "${DOVE_UNINSTALL_RM}" /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
+    echo
+	;;
 
-	"user" | "User" | "USER" | 2)
-		echo_green_text "Removing dove.js..."
-        "${DOVE_UNINSTALL_RM}" "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
-        echo
+  "user" | "User" | "USER" | 2)
+	echo_green_text "Removing dove.js..."
+    "${DOVE_UNINSTALL_RM}" "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
+    echo
 
-        echo_green_text "Removing dove.cfg..."
-        "${DOVE_UNINSTALL_RM}" "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
-        echo
-		;;
+    echo_green_text "Removing dove.cfg..."
+    "${DOVE_UNINSTALL_RM}" "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
+    echo
+	;;
 esac
 
 read "RESULT?Would you also like to remove celenity's Homebrew Tap? [Y/n] "
 echo
 case ${RESULT} in
+  "y" | "yes" | "YES" | "Y")
+	echo_green_text "Removing celenity's Tap..."
+	brew untap celenity/tap || error_fn
+	echo
 
-		"y" | "yes" | "YES" | "Y")
-			echo_green_text "Removing celenity's Tap..."
-			brew untap celenity/tap || error_fn
-			echo
-
-			echo_green_text "Updating Homebrew cache..."
-			brew update && brew upgrade --force --verbose || error_fn
-			echo
-			;;
+	echo_green_text "Updating Homebrew cache..."
+	brew update && brew upgrade --force --verbose || error_fn
+	echo
+	;;
 		
-		"n" | "no" | "N" | "NO")
-			;;
+  "n" | "no" | "N" | "NO")
+	;;
 esac
 
 popd

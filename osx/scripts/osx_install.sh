@@ -4,19 +4,19 @@ set -euo pipefail
 
 # Functions
 echo_red_text() {
-	echo -e "\033[31m$1\033[0m"
+  echo -e "\033[31m$1\033[0m"
 }
 
 echo_green_text() {
-	echo -e "\033[32m$1\033[0m"
+  echo -e "\033[32m$1\033[0m"
 }
 
 error_fn() {
-	echo
-	echo_red_text "\033[31mSomething went wrong! The script failed.\033[0m"
-	echo_red_text "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
-	echo
-	exit 1
+  echo
+  echo_red_text "\033[31mSomething went wrong! The script failed.\033[0m"
+  echo_red_text "\033[31mPlease report this (with the output message) to https://dove.celenity.dev/issues\033[0m"
+  echo
+  exit 1
 }
 
 # launchctl
@@ -212,201 +212,201 @@ echo_red_text "1. Silicon";
 echo_green_text "2. Intel";
 read "DEVICETYPE?Please enter your selection: "
 case ${DEVICETYPE} in
-	"apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
-		echo_green_text "Installing dove package..."
-		brew install celenity/tap/dove || error_fn
+  "apple" | "Apple" | "APPLE" | "silicon" | "Silicon" | "SILICON" | 1)
+	echo_green_text "Installing dove package..."
+	brew install celenity/tap/dove || error_fn
+	echo
+
+    echo_green_text "Downloading dove-apply.sh..."
+	curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-silicon/Library/celenity/Dove/dove-apply.sh --output "${DOVE_INSTALL_TEMP}/dove-apply.sh" || error_fn
+	echo
+
+	echo_green_text "Changing permissions of dove-apply.sh to 744..."
+	sudo chmod -v 744 dove-apply.sh || error_fn
+	echo
+
+	echo_green_text "Copying dove-apply.sh to /Library/celenity/Dove/dove-apply.sh..."
+	sudo cp dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
+	echo
+
+	echo_green_text "Downloading dev.celenity.dove.apply.plist..."
+	curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-silicon/Library/LaunchDaemons/dev.celenity.dove.apply.plist --output "${DOVE_INSTALL_TEMP}/dev.celenity.dove.apply.plist" || error_fn
+	echo
+
+	echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
+	sudo chmod -v 644 dev.celenity.dove.apply.plist || error_fn
+	echo
+
+	echo_green_text "Copying dev.celenity.dove.apply.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.plist..."
+	sudo cp dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+	echo
+
+	echo_green_text "Loading dev.celenity.dove.apply.plist..."
+	"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_LAUNCHCTL}" load -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
+	echo
+
+    echo_green_text "Downloading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
+    curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-silicon/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist --output "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist" || error_fn
+    echo
+
+    echo_green_text "Changing permissions of dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to 644..."
+    sudo chmod -v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+    echo
+
+    echo_green_text "Copying dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
+    sudo cp dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+    echo
+
+    echo_green_text "Loading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
+    "${DOVE_INSTALL_LAUNCHCTL}" load /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+    echo
+
+	echo -e ""
+	echo_green_text "Where is your installation of Thunderbird located?";
+	echo_green_text "Your options are:";
+	echo_red_text "1. system - /Applications/Thunderbird.app";
+	echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
+	read "LOCATION?Please enter your selection: "
+	case ${LOCATION} in
+	  "system" | "System" | "SYSTEM" | 1)
+		## Ensure Thunderbird isn't quarantined so we don't break it...
+		# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_XATTR}" /Applications/Thunderbird.app
+
+		echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+		sudo mkdir -vp /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
 		echo
 
-        echo_green_text "Downloading dove-apply.sh..."
-		curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-silicon/Library/celenity/Dove/dove-apply.sh --output "${DOVE_INSTALL_TEMP}/dove-apply.sh" || error_fn
+		echo_green_text "Changing permissions of /Applications/Thunderbird.app/Contents/Resources/defaults/pref to 755..."
+		sudo chmod -v -R 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
 		echo
 
-		echo_green_text "Changing permissions of dove-apply.sh to 744..."
-		sudo chmod -v 744 dove-apply.sh || error_fn
+		echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
+		sudo ln -s /opt/homebrew/opt/dove/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
 		echo
 
-		echo_green_text "Copying dove-apply.sh to /Library/celenity/Dove/dove-apply.sh..."
-		sudo cp dove-apply.sh /Library/celenity/Dove/dove-apply.sh || error_fn
+		echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/macos/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
+		sudo ln -s /opt/homebrew/opt/dove/macos/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
 		echo
-
-		echo_green_text "Downloading dev.celenity.dove.apply.plist..."
-		curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-silicon/Library/LaunchDaemons/dev.celenity.dove.apply.plist --output "${DOVE_INSTALL_TEMP}/dev.celenity.dove.apply.plist" || error_fn
-		echo
-
-		echo_green_text "Changing permissions of dev.celenity.dove.apply.plist to 644..."
-		sudo chmod -v 644 dev.celenity.dove.apply.plist || error_fn
-		echo
-
-		echo_green_text "Copying dev.celenity.dove.apply.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.plist..."
-		sudo cp dev.celenity.dove.apply.plist /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
-		echo
-
-		echo_green_text "Loading dev.celenity.dove.apply.plist..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_LAUNCHCTL}" load -w /Library/LaunchDaemons/dev.celenity.dove.apply.plist || error_fn
-		echo
-
-        echo_green_text "Downloading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-silicon/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist --output "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist" || error_fn
-        echo
-
-        echo_green_text "Changing permissions of dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to 644..."
-        sudo chmod -v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
-        echo
-
-        echo_green_text "Copying dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        sudo cp dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
-        echo
-
-        echo_green_text "Loading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_LAUNCHCTL}" load /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
-        echo
-
-		echo -e ""
-		echo_green_text "Where is your installation of Thunderbird located?";
-		echo_green_text "Your options are:";
-		echo_red_text "1. system - /Applications/Thunderbird.app";
-		echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
-		read "LOCATION?Please enter your selection: "
-		case ${LOCATION} in
-			"system" | "System" | "SYSTEM" | 1)
-				## Ensure Thunderbird isn't quarantined so we don't break it...
-				# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_XATTR}" /Applications/Thunderbird.app
-
-				echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-				sudo mkdir -vp /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
-				echo
-
-				echo_green_text "Changing permissions of /Applications/Thunderbird.app/Contents/Resources/defaults/pref to 755..."
-				sudo chmod -v -R 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
-				echo
-
-				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
-				sudo ln -s /opt/homebrew/opt/dove/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
-				echo
-
-				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/macos/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
-				sudo ln -s /opt/homebrew/opt/dove/macos/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
-				echo
-				;;
-
-			"user" | "User" | "USER" | 2)
-				## Ensure Thunderbird isn't quarantined so we don't break it...
-				# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
-				"${DOVE_INSTALL_XATTR}" "${HOME}/Applications/Thunderbird.app"
-
-				echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-				mkdir -vp "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
-				echo
-
-				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
-				ln -s /opt/homebrew/opt/dove/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
-				echo
-
-				echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/macos/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
-				ln -s /opt/homebrew/opt/dove/macos/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
-				echo
-				;;
-		esac
 		;;
 
-	"intel" | "Intel" | "INTEL" | 2)
-		echo_green_text "Installing dove-intel package..."
-		brew install celenity/tap/dove-intel || error_fn
+	  "user" | "User" | "USER" | 2)
+		## Ensure Thunderbird isn't quarantined so we don't break it...
+		# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+		"${DOVE_INSTALL_XATTR}" "${HOME}/Applications/Thunderbird.app"
+
+		echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+		mkdir -vp "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
 		echo
 
-		echo_green_text "Downloading dove-apply-intel.sh..."
-		curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-intel/Library/celenity/Dove/dove-apply-intel.sh --output "${DOVE_INSTALL_TEMP}/dove-apply-intel.sh" || error_fn
+		echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
+		ln -s /opt/homebrew/opt/dove/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
 		echo
 
-		echo_green_text "Changing permissions of dove-apply-intel.sh to 744..."
-		sudo chmod -v 744 dove-apply-intel.sh || error_fn
+		echo_green_text "Creating a symlink from /opt/homebrew/opt/dove/macos/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
+		ln -s /opt/homebrew/opt/dove/macos/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
 		echo
-
-		echo_green_text "Copying dove-apply-intel.sh to /Library/celenity/Dove/dove-apply-intel.sh..."
-		sudo cp dove-apply-intel.sh /Library/celenity/Dove/dove-apply-intel.sh || error_fn
-		echo
-
-		echo_green_text "Downloading dev.celenity.dove.apply.intel.plist..."
-		curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-intel/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist --output "${DOVE_INSTALL_TEMP}/dev.celenity.dove.apply.intel.plist" || error_fn
-		echo
-
-		echo_green_text "Changing permissions of dev.celenity.dove.apply.intel.plist to 644..."
-		sudo chmod -v 644 dev.celenity.dove.apply.intel.plist || error_fn
-		echo
-
-		echo_green_text "Copying dev.celenity.dove.apply.intel.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist..."
-		sudo cp dev.celenity.dove.apply.intel.plist /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
-		echo
-
-		echo_green_text "Loading dev.celenity.dove.apply.intel.plist..."
-		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_LAUNCHCTL}" load -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
-		echo
-
-        echo_green_text "Downloading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist --output "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist" || error_fn
-        echo
-
-        echo_green_text "Changing permissions of dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to 644..."
-        sudo chmod -v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
-        echo
-
-        echo_green_text "Copying dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        sudo cp dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
-        echo
-
-        echo_green_text "Loading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
-        "${DOVE_INSTALL_LAUNCHCTL}" load /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
-        echo
-
-		echo -e ""
-		echo_green_text "Where is your installation of Thunderbird located?";
-		echo_green_text "Your options are:";
-		echo_red_text "1. system - /Applications/Thunderbird.app";
-		echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
-		read "LOCATION?Please enter your selection: "
-		case ${LOCATION} in
-			"system" | "System" | "SYSTEM" | 1)
-				## Ensure Thunderbird isn't quarantined so we don't break it...
-				# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
-				"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_XATTR}" /Applications/Thunderbird.app
-
-				echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-				sudo mkdir -vp /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
-				echo
-
-				echo_green_text "Changing permissions of /Applications/Thunderbird.app/Contents/Resources/defaults/pref to 755..."
-				sudo chmod -v -R 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
-				echo
-
-				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
-				sudo ln -s /usr/local/opt/dove-intel/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
-				echo
-
-				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
-				sudo ln -s /usr/local/opt/dove-intel/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
-				echo
-				;;
-
-			"user" | "User" | "USER" | 2)
-				## Ensure Thunderbird isn't quarantined so we don't break it...
-				# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
-				"${DOVE_INSTALL_XATTR}" "${HOME}/Applications/Thunderbird.app"
-
-				echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
-				mkdir -vp "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
-				echo
-
-				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
-				ln -s /usr/local/opt/dove-intel/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
-				echo
-
-				echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
-				ln -s /usr/local/opt/dove-intel/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
-				echo
-				;;
-		esac
 		;;
+	esac
+	;;
+
+  "intel" | "Intel" | "INTEL" | 2)
+	echo_green_text "Installing dove-intel package..."
+	brew install celenity/tap/dove-intel || error_fn
+	echo
+
+	echo_green_text "Downloading dove-apply-intel.sh..."
+	curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-intel/Library/celenity/Dove/dove-apply-intel.sh --output "${DOVE_INSTALL_TEMP}/dove-apply-intel.sh" || error_fn
+	echo
+
+	echo_green_text "Changing permissions of dove-apply-intel.sh to 744..."
+	sudo chmod -v 744 dove-apply-intel.sh || error_fn
+	echo
+
+	echo_green_text "Copying dove-apply-intel.sh to /Library/celenity/Dove/dove-apply-intel.sh..."
+	sudo cp dove-apply-intel.sh /Library/celenity/Dove/dove-apply-intel.sh || error_fn
+	echo
+
+	echo_green_text "Downloading dev.celenity.dove.apply.intel.plist..."
+	curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-intel/Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist --output "${DOVE_INSTALL_TEMP}/dev.celenity.dove.apply.intel.plist" || error_fn
+	echo
+
+	echo_green_text "Changing permissions of dev.celenity.dove.apply.intel.plist to 644..."
+	sudo chmod -v 644 dev.celenity.dove.apply.intel.plist || error_fn
+	echo
+
+	echo_green_text "Copying dev.celenity.dove.apply.intel.plist to /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist..."
+	sudo cp dev.celenity.dove.apply.intel.plist /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+	echo
+
+	echo_green_text "Loading dev.celenity.dove.apply.intel.plist..."
+	"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_LAUNCHCTL}" load -w /Library/LaunchDaemons/dev.celenity.dove.apply.intel.plist || error_fn
+	echo
+
+    echo_green_text "Downloading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
+    curl --disable --no-netrc --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tlsv1.2 --trace-time --user-agent '' --verbose --location https://gitlab.com/celenityy/Dove/-/raw/pages/osx/osx-intel/Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist --output "${DOVE_INSTALL_TEMP}/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist" || error_fn
+    echo
+
+    echo_green_text "Changing permissions of dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to 644..."
+    sudo chmod -v 644 dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+    echo
+
+    echo_green_text "Copying dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist to /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
+    sudo cp dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+    echo
+
+    echo_green_text "Loading dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist..."
+    "${DOVE_INSTALL_LAUNCHCTL}" load /Library/LaunchAgents/dev.celenity.dove.env.PHOENIX_HOST_PLATFORM.plist || error_fn
+    echo
+
+	echo -e ""
+	echo_green_text "Where is your installation of Thunderbird located?";
+	echo_green_text "Your options are:";
+	echo_red_text "1. system - /Applications/Thunderbird.app";
+	echo_green_text "2. user - ${HOME}/Applications/Thunderbird.app";
+	read "LOCATION?Please enter your selection: "
+	case ${LOCATION} in
+	  "system" | "System" | "SYSTEM" | 1)
+		## Ensure Thunderbird isn't quarantined so we don't break it...
+		# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+		"${DOVE_INSTALL_SUDO}" "${DOVE_INSTALL_XATTR}" /Applications/Thunderbird.app
+
+		echo_green_text "Creating /Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+		sudo mkdir -vp /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+		echo
+
+		echo_green_text "Changing permissions of /Applications/Thunderbird.app/Contents/Resources/defaults/pref to 755..."
+		sudo chmod -v -R 755 /Applications/Thunderbird.app/Contents/Resources/defaults/pref || error_fn
+		echo
+
+		echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/defaults/pref/dove.js to /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js..."
+		sudo ln -s /usr/local/opt/dove-intel/defaults/pref/dove.js /Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js || error_fn
+		echo
+
+		echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/dove.cfg to /Applications/Thunderbird.app/Contents/Resources/dove.cfg.."
+		sudo ln -s /usr/local/opt/dove-intel/dove.cfg /Applications/Thunderbird.app/Contents/Resources/dove.cfg || error_fn
+		echo
+		;;
+
+	  "user" | "User" | "USER" | 2)
+		## Ensure Thunderbird isn't quarantined so we don't break it...
+		# https://support.mozilla.org/kb/deploying-firefox-customizations-macos
+		"${DOVE_INSTALL_XATTR}" "${HOME}/Applications/Thunderbird.app"
+
+		echo_green_text "Creating ${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref directory..."
+		mkdir -vp "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref" || error_fn
+		echo
+
+		echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/defaults/pref/dove.js to "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js"..."
+		ln -s /usr/local/opt/dove-intel/defaults/pref/dove.js "${HOME}/Applications/Thunderbird.app/Contents/Resources/defaults/pref/dove.js" || error_fn
+		echo
+
+		echo_green_text "Creating a symlink from /usr/local/opt/dove-intel/dove.cfg to "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg".."
+		ln -s /usr/local/opt/dove-intel/dove.cfg "${HOME}/Applications/Thunderbird.app/Contents/Resources/dove.cfg" || error_fn
+		echo
+		;;
+	esac
+	;;
 esac
 
 popd
