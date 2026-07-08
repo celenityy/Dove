@@ -111,9 +111,9 @@ export DOVE_LOG_DIR
 
 # GNU awk
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-  readonly DOVE_AWK_DEFAULT='gawk'
+  readonly DOVE_AWK_DEFAULT='/opt/homebrew/bin/gawk'
 else
-  readonly DOVE_AWK_DEFAULT='awk'
+  readonly DOVE_AWK_DEFAULT='/bin/awk'
 fi
 if [[ -z "${DOVE_AWK+x}" ]]; then
   DOVE_AWK="${DOVE_AWK_DEFAULT}"
@@ -121,11 +121,23 @@ fi
 readonly DOVE_AWK
 export DOVE_AWK
 
+# GNU date
+if [[ "${DOVE_OS}" == 'osx' ]]; then
+  readonly DOVE_DATE_DEFAULT='/opt/homebrew/bin/gdate'
+else
+  readonly DOVE_DATE_DEFAULT='/bin/date'
+fi
+if [[ -z "${DOVE_DATE+x}" ]]; then
+  DOVE_DATE="${DOVE_DATE_DEFAULT}"
+fi
+readonly DOVE_DATE
+export DOVE_DATE
+
 # GNU sed
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-  readonly DOVE_SED_DEFAULT='gsed'
+  readonly DOVE_SED_DEFAULT='/opt/homebrew/bin/gsed'
 else
-  readonly DOVE_SED_DEFAULT='sed'
+  readonly DOVE_SED_DEFAULT='/bin/sed'
 fi
 if [[ -z "${DOVE_SED+x}" ]]; then
   DOVE_SED="${DOVE_SED_DEFAULT}"
@@ -135,15 +147,23 @@ export DOVE_SED
 
 # GNU tar
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-  readonly DOVE_TAR_DEFAULT='gtar'
+  readonly DOVE_TAR_DEFAULT='/opt/homebrew/bin/gtar'
 else
-  readonly DOVE_TAR_DEFAULT='tar'
+  readonly DOVE_TAR_DEFAULT='/bin/tar'
 fi
 if [[ -z "${DOVE_TAR+x}" ]]; then
   DOVE_TAR="${DOVE_TAR_DEFAULT}"
 fi
 readonly DOVE_TAR
 export DOVE_TAR
+
+# zip
+readonly DOVE_ZIP_DEFAULT='/usr/bin/zip'
+if [[ -z "${DOVE_ZIP+x}" ]]; then
+  DOVE_ZIP="${DOVE_ZIP_DEFAULT}"
+fi
+readonly DOVE_ZIP
+export DOVE_ZIP
 
 # lxml
 readonly DOVE_LXML_DEFAULT="${DOVE_EXTERNAL}/lxml"

@@ -1,4 +1,5 @@
-readonly DOVE_VERSION='2026.06.10.1'
+readonly DOVE_VERSION_DATE='2026.06.10'
+readonly DOVE_VERSION="${DOVE_VERSION_DATE}.1"
 
 # Sources
 
