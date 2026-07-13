@@ -289,12 +289,14 @@ function build_dove() {
   cp -vrf "${DOVE_BUILD}/autoconfig" "${dove_output_dir}/assets/"
 
   # Finally, create our platform-specific archives
-  if [[ "${dove_platform}" == 'windows' ]]; then
-    local readonly archive_type='zip'
-  else
-    local readonly archive_type='tar'
+  if [[ "${DOVE_PRODUCE_ARCHIVES}" == 1 ]]; then
+    if [[ "${dove_platform}" == 'windows' ]]; then
+      local readonly archive_type='zip'
+    else
+      local readonly archive_type='tar'
+    fi
+    create_archive "${archive_type}" "${dove_output_dir}" "${dove_output_archive}"
   fi
-  create_archive "${archive_type}" "${dove_output_dir}" "${dove_output_archive}"
 }
 
 # Create our temporary file directory

@@ -110,18 +110,21 @@
               stdenvNoCC,
               python3,
               jq,
-              zip,
+              gawk,
+              gnused,
               ...
             }:
             stdenvNoCC.mkDerivation {
               name = "dove";
               src = ./.;
+
               nativeBuildInputs = [
                 (python3.withPackages (ps: [
                   ps.lxml
                 ]))
                 jq
-                zip
+                gawk
+                gnused
               ];
               buildPhase = ''
                 runHook preBuild
@@ -131,10 +134,13 @@
                 cp --no-preserve=mode -r ${phoenix} "$DOVE_PHOENIX"
 
                 export DOVE_NIX=1
+                export DOVE_AWK="${gawk}/bin/awk"
+                export DOVE_SED="${gnused}/bin/sed"
+                export DOVE_PYTHON="${python3.withPackages (ps: [ ps.lxml ])}/bin/python"
+
                 patchShebangs ./scripts/*.sh
 
                 ./scripts/build.sh
-                sed -i '/general.config.filename/d' dove-unified.cfg
 
                 runHook postBuild
               '';

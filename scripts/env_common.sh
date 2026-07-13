@@ -36,6 +36,20 @@ fi
 readonly DOVE_NIX
 export DOVE_NIX
 
+# Whether we should produce an output archive (Default)
+## This is unnecessary/undesirable in some cases, such as Nix
+## (for some background, see: https://codeberg.org/celenity/Phoenix/pulls/337)
+if [[ "${DOVE_NIX}" == 1 ]]; then
+  readonly DOVE_PRODUCE_ARCHIVES_DEFAULT=0
+else
+  readonly DOVE_PRODUCE_ARCHIVES_DEFAULT=1
+fi
+if [[ -z "${DOVE_PRODUCE_ARCHIVES+x}" ]]; then
+  DOVE_PRODUCE_ARCHIVES="${DOVE_PRODUCE_ARCHIVES_DEFAULT}"
+fi
+readonly DOVE_PRODUCE_ARCHIVES
+export DOVE_PRODUCE_ARCHIVES
+
 # Version info
 readonly DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
 export DOVE_VERSIONS
@@ -202,13 +216,7 @@ readonly DOVE_PYENV="${DOVE_PYENV_DIR}/bin/activate"
 export DOVE_PYENV
 export DOVE_PYENV_DIR
 
-if [[ "${DOVE_NIX}" == 1 ]]; then
-  ## Nix doesn't want/need to set a specific Python path, see discussion at https://codeberg.org/celenity/Dove/issues/59
-  ## and https://codeberg.org/celenity/Phoenix/issues/252
-  readonly DOVE_PYTHON_DEFAULT='python'
-else
-  readonly DOVE_PYTHON_DEFAULT="${DOVE_PYENV_DIR}/bin/python"
-fi
+readonly DOVE_PYTHON_DEFAULT="${DOVE_PYENV_DIR}/bin/python"
 if [[ -z "${DOVE_PYTHON+x}" ]]; then
   DOVE_PYTHON="${DOVE_PYTHON_DEFAULT}"
 fi
