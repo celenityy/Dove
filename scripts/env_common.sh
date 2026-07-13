@@ -148,10 +148,7 @@ readonly DOVE_DATE
 export DOVE_DATE
 
 # GNU sed
-if [[ "${DOVE_NIX}" == 1 ]]; then
-  # https://codeberg.org/celenity/Phoenix/issues/335
-  readonly DOVE_SED_DEFAULT='sed'
-elif [[ "${DOVE_OS}" == 'osx' ]]; then
+if [[ "${DOVE_OS}" == 'osx' ]]; then
   readonly DOVE_SED_DEFAULT='/opt/homebrew/bin/gsed'
 else
   readonly DOVE_SED_DEFAULT='/bin/sed'
