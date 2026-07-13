@@ -59,14 +59,14 @@ readonly DOVE_ARCHIVES="${DOVE_ROOT}/archives"
 export DOVE_ARCHIVES
 
 # Build directory
-readonly DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"
+if [[ "${DOVE_NIX}" == 1 ]]; then
+  # Nix needs to use /tmp here, see: https://codeberg.org/celenity/Dove/issues/59
+  readonly DOVE_BUILD_DEFAULT='/tmp/dove/build'
+else
+  readonly DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"
+fi
 if [[ -z "${DOVE_BUILD+x}" ]]; then
-  if [[ "${DOVE_NIX}" == 1 ]]; then
-    # Nix needs to use /tmp here, see https://codeberg.org/celenity/Dove/issues/59
-    DOVE_BUILD='/tmp/dove/build'
-  else
-    DOVE_BUILD="${DOVE_BUILD_DEFAULT}"
-  fi
+  DOVE_BUILD="${DOVE_BUILD_DEFAULT}"
 fi
 readonly DOVE_BUILD
 export DOVE_BUILD
