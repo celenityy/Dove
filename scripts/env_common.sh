@@ -348,11 +348,13 @@ readonly DOVE_S3CMD_FLAGS
 export DOVE_S3CMD_FLAGS
 
 # Whether we're ONLY building Dove for Linux
-readonly DOVE_LINUX_ONLY_DEFAULT=0
 if [[ "${DOVE_NIX}" == 1 ]] && [[ "${DOVE_OS}" != 'osx' ]]; then
   # Nix flakes should only build their respective platform
-  DOVE_LINUX_ONLY=1
-elif [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
+  readonly DOVE_LINUX_ONLY_DEFAULT=1
+else
+  readonly DOVE_LINUX_ONLY_DEFAULT=0
+fi
+if [[ -z "${DOVE_LINUX_ONLY+x}" ]]; then
   DOVE_LINUX_ONLY="${DOVE_LINUX_ONLY_DEFAULT}"
 fi
 readonly DOVE_LINUX_ONLY
@@ -381,11 +383,13 @@ if [[ "${DOVE_LINUX_FLATPAK_ONLY}" == 1 ]]; then
 fi
 
 # Whether we're ONLY building Dove for OS X
-readonly DOVE_OSX_ONLY_DEFAULT=0
 if [[ "${DOVE_NIX}" == 1 ]] && [[ "${DOVE_OS}" == 'osx' ]]; then
   # Nix flakes should only build their respective platform
-  DOVE_OSX_ONLY=1
-elif [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
+  readonly DOVE_OSX_ONLY_DEFAULT=1
+else
+  readonly DOVE_OSX_ONLY_DEFAULT=0
+fi
+if [[ -z "${DOVE_OSX_ONLY+x}" ]]; then
   DOVE_OSX_ONLY="${DOVE_OSX_ONLY_DEFAULT}"
 fi
 readonly DOVE_OSX_ONLY
@@ -461,7 +465,12 @@ readonly DOVE_OSX_INTEL
 export DOVE_OSX_INTEL
 
 # Whether we're building Dove for Windows (Default)
-readonly DOVE_WINDOWS_DEFAULT=1
+if [[ "${DOVE_NIX}" == 1 ]]; then
+  # This makes absolutely no sense for Nix - ensure we never try to build Windows there
+  readonly DOVE_WINDOWS_DEFAULT=0
+else
+  readonly DOVE_WINDOWS_DEFAULT=1
+fi
 if [[ -z "${DOVE_WINDOWS+x}" ]]; then
   DOVE_WINDOWS="${DOVE_WINDOWS_DEFAULT}"
 fi
