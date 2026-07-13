@@ -18,6 +18,11 @@ fi
 
 # Set-up Python venv
 if [[ "${DOVE_NIX}" != 1 ]]; then
+  # The Python environment *should* already be created by `get_sources.sh`, but it may not be (ex. if the user provides their own Python and/or
+  # doesn't use `get_sources.sh`), so if it doesn't exist then create it
+  if [[ ! -f "${DOVE_PYENV}" ]]; then
+    "${DOVE_UV}" venv "${DOVE_PYENV_DIR}"
+  fi
   source "${DOVE_PYENV}"
 fi
 
