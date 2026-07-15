@@ -653,6 +653,28 @@ export DOVE_NONTLS13_CIPHERS
 readonly DOVE_CIPHERS="${DOVE_TLS13_CIPHERS}:${DOVE_NONTLS13_CIPHERS}"
 export DOVE_CIPHERS
 
+# If compiler flags are added, this determines whether they should be appended to our default flags (default),
+## or if they should override them entirely
+readonly DOVE_COMPILER_FLAGS_OVERRIDE_DEFAULT=0
+if [[ -z "${DOVE_COMPILER_FLAGS_OVERRIDE+x}" ]]; then
+  DOVE_COMPILER_FLAGS_OVERRIDE="${DOVE_COMPILER_FLAGS_OVERRIDE_DEFAULT}"
+fi
+readonly DOVE_COMPILER_FLAGS_OVERRIDE
+export DOVE_COMPILER_FLAGS_OVERRIDE
+
+# Compiler flags
+## (Used for lxml)
+readonly DOVE_COMPILER_FLAGS_DEFAULT='-DNDEBUG -O3 -flto=full -fstack-clash-protection -fstack-protector-strong -ftrivial-auto-var-init=zero -fwrapv'
+if [[ -z "${DOVE_COMPILER_FLAGS+x}" ]]; then
+  DOVE_COMPILER_FLAGS="${DOVE_COMPILER_FLAGS_DEFAULT}"
+elif [[ "${DOVE_COMPILER_FLAGS_OVERRIDE}" == 1 ]]; then
+  DOVE_COMPILER_FLAGS="${DOVE_COMPILER_FLAGS}"
+else
+  DOVE_COMPILER_FLAGS="${DOVE_COMPILER_FLAGS_DEFAULT} ${DOVE_COMPILER_FLAGS}"
+fi
+readonly DOVE_COMPILER_FLAGS
+export DOVE_COMPILER_FLAGS
+
 # If curl flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
 readonly DOVE_CURL_FLAGS_OVERRIDE_DEFAULT=0

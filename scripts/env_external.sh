@@ -8,6 +8,25 @@
 ## CAUTION: Do NOT try to configure any of these environment variables directly!
 ## Use the Dove equivalent variables (at `env_common.sh`) instead.
 
+# Compiler flags
+## (Used by lxml)
+readonly CFLAGS="${DOVE_COMPILER_FLAGS}"
+readonly CPPFLAGS="${DOVE_COMPILER_FLAGS}"
+readonly CXXFLAGS="${DOVE_COMPILER_FLAGS}"
+readonly HOST_CFLAGS="${DOVE_COMPILER_FLAGS}"
+readonly HOST_CPPFLAGS="${DOVE_COMPILER_FLAGS}"
+readonly HOST_CXXFLAGS="${DOVE_COMPILER_FLAGS}"
+readonly TARGET_CFLAGS="${DOVE_COMPILER_FLAGS}"
+readonly TARGET_CXXFLAGS="${DOVE_COMPILER_FLAGS}"
+export CFLAGS
+export CPPFLAGS
+export CXXFLAGS
+export HOST_CFLAGS
+export HOST_CPPFLAGS
+export HOST_CXXFLAGS
+export TARGET_CFLAGS
+export TARGET_CXXFLAGS
+
 # Phoenix
 readonly PHOENIX_ANDROID=0
 readonly PHOENIX_AWK="${DOVE_AWK}"
