@@ -84,21 +84,21 @@ function create_archive() {
     echo
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
       echo_red_text "Removing ${output_archive}..."
-      rm -f "${output_archive}"
+      "${DOVE_RM}" -f "${output_archive}"
     else
       exit 1
     fi
   fi
 
   # If the directory for our output archive doesn't exist, create it
-  local readonly output_archive_dir="$(dirname "${output_archive}")"
+  local readonly output_archive_dir="$("${DOVE_DIRNAME}" "${output_archive}")"
   if [[ ! -d "${output_archive_dir}" ]]; then
-    mkdir -p "${output_archive_dir}"
+    "${DOVE_MKDIR}" -p "${output_archive_dir}"
   fi
 
   # If we're on OS X, clean the target directory
   if [[ "${DOVE_OS}" == 'osx' ]]; then
-    /usr/sbin/dot_clean -mv "${target_dir}"
+    "${DOVE_DOT_CLEAN}" -mv "${target_dir}"
   fi
 
   # Set the file timestamp
@@ -108,12 +108,12 @@ function create_archive() {
   local readonly DOVE_TIMESTAMP="$("${DOVE_DATE}" -d "${DOVE_STAMP}" +"%Y-%m-%dT%H:%M:%SZ")"
 
   # Override the timestamps for each file to match our stamp above
-  find "${target_dir}" -newermt "${DOVE_FIND_STAMP}" -print0 | \
-    xargs -0r touch -h -d "${DOVE_TIMESTAMP}"
+  "${DOVE_FIND}" "${target_dir}" -newermt "${DOVE_FIND_STAMP}" -print0 | \
+    "${DOVE_XARGS}" -0r "${DOVE_TOUCH}" -h -d "${DOVE_TIMESTAMP}"
 
   # Override the timestamps for each directory to match our stamp above
-  for dir in $(find "${target_dir}" -type d); do
-    touch -r "${dir}/$(ls -At "${dir}" | head -n 1)" "${dir}"
+  for dir in $("${DOVE_FIND}" "${target_dir}" -type d); do
+    "${DOVE_TOUCH}" -r "${dir}/$("${DOVE_LS}" -At "${dir}" | "${DOVE_HEAD}" -n 1)" "${dir}"
   done
 
   # Finally create our archive
@@ -151,9 +151,9 @@ function check_file_or_dir_exists() {
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
       echo_red_text "Removing ${path}..."
       if [[ -d "${path}" ]]; then
-        rm -rf "${path}"
+        "${DOVE_RM}" -rf "${path}"
       elif [[ -f "${path}" ]]; then
-        rm -f "${path}" "${path}-sha512sum.txt"
+        "${DOVE_RM}" -f "${path}" "${path}-sha512sum.txt"
       fi
     else
       exit 1
@@ -166,20 +166,20 @@ echo_red_text "Building Dove ${DOVE_VERSION}..."
 
 # Prepare to build Dove
 function prep_dove() {
-  cp -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg"
+  "${DOVE_CP}" -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg"
 
   # Update the versions
   "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_TEMP}/dove-parsed.cfg"
-  "${DOVE_SED}" -i "s|{PHOENIX_VERSION}|${PHOENIX_VERSION}|" "${DOVE_TEMP}/dove-parsed.cfg"
+  "${DOVE_SED}" -i "s|{DOVE_PHOENIX_VERSION}|${DOVE_PHOENIX_VERSION}|" "${DOVE_TEMP}/dove-parsed.cfg"
 }
 
 # Build Thunderbird's autoconfiguration database
 function build_autoconfig() {
   echo_red_text 'Building the Thunderbird autoconfiguration database...'
-  mkdir -p "${DOVE_BUILD}/autoconfig/v1.1"
+  "${DOVE_MKDIR}" -p "${DOVE_BUILD}/autoconfig/v1.1"
 
   pushd "${DOVE_BUILD}/autoconfig"
-  cp "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_BUILD}/autoconfig/LICENSE.txt"
+  "${DOVE_CP}" "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_BUILD}/autoconfig/LICENSE.txt"
   "${DOVE_PYTHON}" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml
   popd
 
@@ -191,7 +191,7 @@ function build_phoenix() {
   echo_red_text 'Building Phoenix...'
 
   pushd "${DOVE_PHOENIX}"
-  bash -x "${DOVE_PHOENIX}/scripts/build.sh"
+  /bin/bash -x "${DOVE_PHOENIX}/scripts/build.sh"
   popd
 
   echo_green_text 'SUCCESS: Built Phoenix'
@@ -226,11 +226,11 @@ function build_dove() {
   check_file_or_dir_exists "${dove_output_archive_latest}"
 
   # Create our output directory
-  mkdir -p "${dove_output_dir}/assets/autoconfig/v1.1"
+  "${DOVE_MKDIR}" -p "${dove_output_dir}/assets/autoconfig/v1.1"
 
   # Copy our bootstrap dove.js
-  mkdir -p "${dove_output_dir}/defaults/pref"
-  cp "${DOVE_ROOT}/dove.js" "${dove_output_dir}/defaults/pref/dove.js"
+  "${DOVE_MKDIR}" -p "${dove_output_dir}/defaults/pref"
+  "${DOVE_CP}" "${DOVE_ROOT}/dove.js" "${dove_output_dir}/defaults/pref/dove.js"
 
   # Copy our parsed dove.cfg
   if [[ "${dove_platform}" == 'osx' ]]; then
@@ -242,56 +242,56 @@ function build_dove() {
     local readonly dove_cfg_output_dir="${dove_output_dir}"
     local readonly phoenix_cfg_input_path="${dove_platform}"
   fi
-  mkdir -p "${dove_cfg_output_dir}"
-  cp "${DOVE_PHOENIX}/outputs/${phoenix_cfg_input_path}/phoenix.cfg" "${dove_cfg_output_dir}/dove.cfg"
+  "${DOVE_MKDIR}" -p "${dove_cfg_output_dir}"
+  "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${phoenix_cfg_input_path}/phoenix.cfg" "${dove_cfg_output_dir}/dove.cfg"
 
   # If necessary, copy our static dove.js
   if [[ "${DOVE_STATIC_JS}" == 1 ]]; then
-    cp "${DOVE_PHOENIX}/outputs/${dove_platform}/phoenix-static-${PHOENIX_VERSION}-${dove_platform}.js" "${dove_output_dir}/dove-static-${DOVE_VERSION}-${dove_platform}.js"
+    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/phoenix-static-${DOVE_PHOENIX_VERSION}-${dove_platform}.js" "${dove_output_dir}/dove-static-${DOVE_VERSION}-${dove_platform}.js"
   fi
 
   # Copy icon
-  cp "${DOVE_ROOT}/assets/dove.png" "${dove_output_dir}/assets/dove.png"
+  "${DOVE_CP}" "${DOVE_ROOT}/assets/dove.png" "${dove_output_dir}/assets/dove.png"
 
   # Copy license
-  cp "${DOVE_ROOT}/COPYING.txt" "${dove_output_dir}/COPYING.txt"
+  "${DOVE_CP}" "${DOVE_ROOT}/COPYING.txt" "${dove_output_dir}/COPYING.txt"
 
   # Copy README
-  cp "${DOVE_ROOT}/README.md" "${dove_output_dir}/README.md"
+  "${DOVE_CP}" "${DOVE_ROOT}/README.md" "${dove_output_dir}/README.md"
 
   # Copy generic platform files
   if [[ "${dove_platform}" == 'osx' ]] || [[ "${dove_platform}" == 'osx-intel' ]]; then
-    cp -r "${DOVE_ROOT}/osx/shared/Library" "${dove_output_dir}/"
+    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/shared/Library" "${dove_output_dir}/"
   fi
 
   # Copy platform-specific files
   if [[ "${dove_platform}" == 'linux' ]]; then
-    cp -r "${DOVE_ROOT}/linux/etc" "${dove_output_dir}/"
+    "${DOVE_CP}" -r "${DOVE_ROOT}/linux/etc" "${dove_output_dir}/"
   elif [[ "${dove_platform}" == 'osx' ]]; then
-    cp -r "${DOVE_ROOT}/osx/osx-silicon/Library/" "${dove_output_dir}/Library/"
+    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/osx-silicon/Library/" "${dove_output_dir}/Library/"
   elif [[ "${dove_platform}" == 'osx-intel' ]]; then
-    cp -r "${DOVE_ROOT}/osx/osx-intel/Library/" "${dove_output_dir}/Library/"
+    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/osx-intel/Library/" "${dove_output_dir}/Library/"
   fi
 
   # Copy enterprise policies
   if [[ "${dove_platform}" == 'linux' ]] || [[ "${dove_platform}" == 'linux-flatpak' ]]; then
-    cp -r "${DOVE_PHOENIX}/outputs/${dove_platform}/policies" "${dove_output_dir}/"
+    "${DOVE_CP}" -r "${DOVE_PHOENIX}/outputs/${dove_platform}/policies" "${dove_output_dir}/"
   elif [[ "${dove_platform}" == 'osx' ]]; then
-    cp "${DOVE_PHOENIX}/outputs/${dove_platform}/macos/org.mozilla.firefox.plist" "${dove_output_dir}/macos/org.mozilla.thunderbird.plist"
+    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/macos/org.mozilla.firefox.plist" "${dove_output_dir}/macos/org.mozilla.thunderbird.plist"
   elif [[ "${dove_platform}" == 'osx-intel' ]]; then
-    cp "${DOVE_PHOENIX}/outputs/${dove_platform}/org.mozilla.firefox.plist" "${dove_output_dir}/org.mozilla.thunderbird.plist"
+    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/org.mozilla.firefox.plist" "${dove_output_dir}/org.mozilla.thunderbird.plist"
   elif [[ "${dove_platform}" == 'windows' ]]; then
-    cp -r "${DOVE_PHOENIX}/outputs/${dove_platform}/distribution" "${dove_output_dir}/"
+    "${DOVE_CP}" -r "${DOVE_PHOENIX}/outputs/${dove_platform}/distribution" "${dove_output_dir}/"
   fi
 
   # For OS X, also copy the standard policies.json
   if [[ "${dove_platform}" == 'osx' ]] || [[ "${dove_platform}" == 'osx-intel' ]]; then
-    mkdir -p "${dove_output_dir}/unused"
-    cp "${DOVE_PHOENIX}/outputs/${dove_platform}/unused/policies.json" "${dove_output_dir}/unused/policies.json"
+    "${DOVE_MKDIR}" -p "${dove_output_dir}/unused"
+    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/unused/policies.json" "${dove_output_dir}/unused/policies.json"
   fi
 
   # Copy Thunderbird's autoconfiguration files
-  cp -vrf "${DOVE_BUILD}/autoconfig" "${dove_output_dir}/assets/"
+  "${DOVE_CP}" -vrf "${DOVE_BUILD}/autoconfig" "${dove_output_dir}/assets/"
 
   # Finally, create our platform-specific archives
   if [[ "${DOVE_PRODUCE_ARCHIVES}" == 1 ]]; then
@@ -305,7 +305,7 @@ function build_dove() {
 }
 
 # Create our temporary file directory
-mkdir -p "${DOVE_TEMP}"
+"${DOVE_MKDIR}" -p "${DOVE_TEMP}"
 
 # First, prepare our build environment
 prep_dove
@@ -344,4 +344,4 @@ fi
 echo_green_text "SUCCESS: Built Dove ${DOVE_VERSION}"
 
 # Clean-up temporary files
-rm -rf "${DOVE_TEMP}"
+"${DOVE_RM}" -rf "${DOVE_TEMP}"

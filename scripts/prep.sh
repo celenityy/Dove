@@ -7,7 +7,7 @@ set +x
 
 # Set-up our environment
 if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-  bash -x $(dirname $0)/env.sh
+  /bin/bash -x $(dirname $0)/env.sh
 fi
 source $(dirname $0)/env.sh
 
@@ -91,29 +91,29 @@ function prep_s3() {
   fi
 
   # Create our directories
-  mkdir -p $(dirname "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}")
-  mkdir -p $(dirname "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}")
-  mkdir -p $(dirname "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}")
-  mkdir -p $(dirname "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}")
+  "${DOVE_MKDIR}" -p $("${DOVE_DIRNAME}" "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}")
+  "${DOVE_MKDIR}" -p $("${DOVE_DIRNAME}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}")
+  "${DOVE_MKDIR}" -p $("${DOVE_DIRNAME}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}")
+  "${DOVE_MKDIR}" -p $("${DOVE_DIRNAME}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}")
 
   # Create the S3 access key file
-  touch "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}"
-  chmod 600 "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}"
+  "${DOVE_TOUCH}" "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}"
+  "${DOVE_CHMOD}" 600 "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}"
   echo -n "${DOVE_CEL_RELEASES_S3_ACCESS_KEY}" > "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}"
 
   # Create the S3 bucket name file
-  touch "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}"
-  chmod 600 "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}"
+  "${DOVE_TOUCH}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}"
+  "${DOVE_CHMOD}" 600 "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}"
   echo -n "${DOVE_CEL_RELEASES_S3_BUCKET_NAME}" > "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}"
 
   # Create the S3 endpoint file
-  touch "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}"
-  chmod 600 "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}"
+  "${DOVE_TOUCH}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}"
+  "${DOVE_CHMOD}" 600 "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}"
   echo -n "${DOVE_CEL_RELEASES_S3_ENDPOINT}" > "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}"
 
   # Create the S3 secret key file
-  touch "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}"
-  chmod 600 "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}"
+  "${DOVE_TOUCH}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}"
+  "${DOVE_CHMOD}" 600 "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}"
   echo -n "${DOVE_CEL_RELEASES_S3_SECRET_KEY}" > "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}"
 
   # Ensure nothing went wrong...

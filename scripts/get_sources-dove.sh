@@ -87,56 +87,56 @@ source "${DOVE_VERSIONS}"
 # Back-up (and remove) a file if it exists
 function backup_file() {
   local readonly file="$1"
-  local readonly file_name="$(basename "${file}")"
+  local readonly file_name="$("${DOVE_BASENAME}" "${file}")"
   local readonly backup_file="${DOVE_EXTERNAL}/temp/backup/${file_name}"
 
   if [[ -f "${file}" ]]; then
-    rm -f "${backup_file}"
-    mkdir -p "$(dirname "${backup_file}")"
-    cp -f "${file}" "${backup_file}"
-    rm -f "${file}"
+    "${DOVE_RM}" -f "${backup_file}"
+    "${DOVE_MKDIR}" -p "$("${DOVE_DIRNAME}" "${backup_file}")"
+    "${DOVE_CP}" -f "${file}" "${backup_file}"
+    "${DOVE_RM}" -f "${file}"
   fi
 }
 
 # Back-up (and remove) a directory if it exists
 function backup_dir() {
   local readonly dir="$1"
-  local readonly dir_name="$(basename "${dir}")"
+  local readonly dir_name="$("${DOVE_BASENAME}" "${dir}")"
   local readonly backup_dir="${DOVE_EXTERNAL}/temp/backup/${dir_name}"
 
   if [[ -d "${dir}" ]]; then
-    rm -rf "${backup_dir}"
-    mkdir -p "$(dirname "${backup_dir}")"
-    cp -rf "${dir}/" "${backup_dir}"
-    rm -rf "${dir}"
+    "${DOVE_RM}" -rf "${backup_dir}"
+    "${DOVE_MKDIR}" -p "$("${DOVE_DIRNAME}" "${backup_dir}")"
+    "${DOVE_CP}" -rf "${dir}/" "${backup_dir}"
+    "${DOVE_RM}" -rf "${dir}"
   fi
 }
 
 # Restore a backed-up file
 function restore_file() {
   local readonly file="$1"
-  local readonly file_name="$(basename "${file}")"
+  local readonly file_name="$("${DOVE_BASENAME}" "${file}")"
   local readonly backed_up_file="${DOVE_EXTERNAL}/temp/backup/${file_name}"
 
   if [[ -f "${backed_up_file}" ]]; then
-    rm -f "${file}"
-    mkdir -p "$(dirname "${file}")"
-    cp -f "${backed_up_file}" "${file}"
-    rm -f "${backed_up_file}"
+    "${DOVE_RM}" -f "${file}"
+    "${DOVE_MKDIR}" -p "$("${DOVE_DIRNAME}" "${file}")"
+    "${DOVE_CP}" -f "${backed_up_file}" "${file}"
+    "${DOVE_RM}" -f "${backed_up_file}"
   fi
 }
 
 # Restore a backed-up directory
 function restore_dir() {
   local readonly dir="$1"
-  local readonly dir_name="$(basename "${dir}")"
+  local readonly dir_name="$("${DOVE_BASENAME}" "${dir}")"
   local readonly backed_up_dir="${DOVE_EXTERNAL}/temp/backup/${dir_name}"
 
   if [[ -d "${backed_up_dir}" ]]; then
-    rm -rf "${dir}"
-    mkdir -p "$(dirname "${dir}")"
-    cp -rf "${backed_up_dir}/" "${dir}"
-    rm -rf "${backed_up_dir}"
+    "${DOVE_RM}" -rf "${dir}"
+    "${DOVE_MKDIR}" -p "$("${DOVE_DIRNAME}" "${dir}")"
+    "${DOVE_CP}" -rf "${backed_up_dir}/" "${dir}"
+    "${DOVE_RM}" -rf "${backed_up_dir}"
   fi
 }
 
@@ -178,16 +178,16 @@ function validate_checksum() {
 
   if [[ "${checksum_type}" == 'md5sum' ]]; then
     local readonly checksum_type_pretty='MD5sum'
-    local readonly local_checksum=$(md5sum "${file}" | "${DOVE_AWK}" '{print $1}')
+    local readonly local_checksum=$("${DOVE_MD5SUM}" "${file}" | "${DOVE_AWK}" '{print $1}')
   elif [[ "${checksum_type}" == 'sha1sum' ]]; then
     local readonly checksum_type_pretty='SHA1sum'
-    local readonly local_checksum=$(sha1sum "${file}" | "${DOVE_AWK}" '{print $1}')
+    local readonly local_checksum=$("${DOVE_SHA1SUM}" "${file}" | "${DOVE_AWK}" '{print $1}')
   elif [[ "${checksum_type}" == 'sha256sum' ]]; then
     local readonly checksum_type_pretty='SHA256sum'
-    local readonly local_checksum=$(sha256sum "${file}" | "${DOVE_AWK}" '{print $1}')
+    local readonly local_checksum=$("${DOVE_SHA256SUM}" "${file}" | "${DOVE_AWK}" '{print $1}')
   elif [[ "${checksum_type}" == 'sha512sum' ]]; then
     local readonly checksum_type_pretty='SHA512sum'
-    local readonly local_checksum=$(sha512sum "${file}" | "${DOVE_AWK}" '{print $1}')
+    local readonly local_checksum=$("${DOVE_SHA512SUM}" "${file}" | "${DOVE_AWK}" '{print $1}')
   else
     echo_red_text 'ERROR: Unknown checksum type.'
     return 1
@@ -201,7 +201,7 @@ function validate_checksum() {
     echo "Actual ${checksum_type_pretty}:     ${local_checksum}"
 
     # If checksum validation fails, also just remove the file
-    rm -f "${file}"
+    "${DOVE_RM}" -f "${file}"
 
     return 1
   else
@@ -241,20 +241,20 @@ function clone_repo() {
     echo
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
       echo_red_text "Removing ${path}..."
-      rm -rf "${path}"
+      "${DOVE_RM}" -rf "${path}"
     else
       return 0
     fi
   fi
 
   echo_red_text "Cloning ${url}::${revision}..."
-  git clone --revision="${revision}" --depth=1 "${url}" "${path}"
+  "${DOVE_GIT}" clone --revision="${revision}" --depth=1 "${url}" "${path}"
 }
 
 function download() {
   local readonly url="$1"
   local readonly file_in="$2"
-  local readonly file_name=$(basename "${file_in}")
+  local readonly file_name=$("${DOVE_BASENAME}" "${file_in}")
   local readonly expected_sha512sum="$3"
 
   # By default, we want to exit upon an error
@@ -286,7 +286,7 @@ function download() {
 
   # If we're doing a checksum update, we download the file to a separate temporary directory, instead of our standard one
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
-    rm -rf "${DOVE_EXTERNAL}/temp/chksm"
+    "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/chksm"
     local readonly file="${DOVE_EXTERNAL}/temp/chksm/${file_name}"
   else
     local readonly file="${file_in}"
@@ -311,15 +311,15 @@ function download() {
   local DOVE_CHECKSUM_FAILED=0
   local DOVE_DOWNLOAD_FAILED=0
 
-  if [[ ! -d "$(dirname "${file}")" ]]; then
-    mkdir -vp "$(dirname "${file}")"
+  if [[ ! -d "$("${DOVE_DIRNAME}" "${file}")" ]]; then
+    "${DOVE_MKDIR}" -vp "$("${DOVE_DIRNAME}" "${file}")"
     local readonly CREATED_DIR_FOR_DL=1
   else
     local readonly CREATED_DIR_FOR_DL=0
   fi
 
   echo_red_text "Downloading ${url}..."
-  curl ${DOVE_CURL_FLAGS} --location "${url}" --output "${file}" || local DOVE_DOWNLOAD_FAILED=1
+  "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --location "${url}" --output "${file}" || local DOVE_DOWNLOAD_FAILED=1
 
   # Verify (or update) SHA512sum
   validate_checksum "${expected_sha512sum}" "${file}" 'sha512sum' || local DOVE_CHECKSUM_FAILED=1
@@ -345,14 +345,14 @@ function download() {
   fi
 
   # Clean-up
-  rm -f "${DOVE_EXTERNAL}/temp/backup/${file_name}"
-  rm -rf "${DOVE_EXTERNAL}/temp/chksm"
+  "${DOVE_RM}" -f "${DOVE_EXTERNAL}/temp/backup/${file_name}"
+  "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/chksm"
 
   # If the download (or checksum validation) failed, exit
   if [[ "${DOVE_CHECKSUM_FAILED}" == 1 ]] || [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
     # If a directory was created just for this download, remove it
     if [[ "${CREATED_DIR_FOR_DL}" == 1 ]]; then
-      rm -rf "$(dirname "${file}")"
+      "${DOVE_RM}" -rf "$("${DOVE_DIRNAME}" "${file}")"
     fi
     if [[ "${DOVE_DOWNLOAD_EXIT}" != 1 ]]; then
       unset DOVE_DOWNLOAD_EXIT
@@ -376,16 +376,16 @@ function extract() {
 
   # If our temporary directory for extraction already exists, delete it
   if [[ -d "${DOVE_EXTERNAL}/temp/${temp_repo_name}" ]]; then
-    rm -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
+    "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
   fi
 
   # Create temporary directory for extraction
-  mkdir -p "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
+  "${DOVE_MKDIR}" -p "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
 
   # Extract based on file extension
   case "${archive_path}" in
     *.zip)
-      unzip -q "${archive_path}" -d "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
+      "${DOVE_UNZIP}" -q "${archive_path}" -d "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
       ;;
     *.tar.gz)
       "${DOVE_TAR}" xzf "${archive_path}" -C "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
@@ -398,14 +398,14 @@ function extract() {
       ;;
     *)
       echo_red_text "ERROR: Unsupported archive format: ${archive_path}"
-      rm -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
+      "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
       exit 1
       ;;
   esac
 
-  local readonly top_input_dir=$(ls "${DOVE_EXTERNAL}/temp/${temp_repo_name}")
-  cp -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}/${top_input_dir}/" "${target_path}"
-  rm -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
+  local readonly top_input_dir=$("${DOVE_LS}" "${DOVE_EXTERNAL}/temp/${temp_repo_name}")
+  "${DOVE_CP}" -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}/${top_input_dir}/" "${target_path}"
+  "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
 }
 
 function download_and_extract() {
@@ -485,7 +485,7 @@ function download_and_extract() {
   extract "${repo_archive}" "${path}" "${repo_name}"
 
   # Clean-up
-  rm -rf "${DOVE_EXTERNAL}/temp/backup/${repo_name}"
+  "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/backup/${repo_name}"
 }
 
 # Get Thunderbird's Autoconfiguration Database (ISPDB)
@@ -521,7 +521,7 @@ function get_lxml() {
 # Get Phoenix
 function get_phoenix() {
   echo_red_text 'Downloading Phoenix...'
-  download_and_extract 'phoenix' "https://gitlab.com/celenityy/Phoenix/-/archive/${PHOENIX_COMMIT}/Phoenix-${PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${PHOENIX_SHA512SUM}"
+  download_and_extract 'phoenix' "https://gitlab.com/celenityy/Phoenix/-/archive/${DOVE_PHOENIX_COMMIT}/Phoenix-${DOVE_PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${DOVE_PHOENIX_SHA512SUM}"
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
     echo_green_text "SUCCESS: Set-up Phoenix at ${DOVE_PHOENIX}"
   fi
@@ -624,7 +624,7 @@ function get_python() {
       restore_dir "${DOVE_UV_CACHE}"
       restore_dir "${DOVE_UV_PYTHON}"
       restore_dir "${DOVE_UV_LOCAL}/python-cache"
-      rm -rf "${DOVE_EXTERNAL}/temp"
+      "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
       exit 1
     elif [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       echo_green_text "SUCCESS: Downloaded Python to ${DOVE_PYTHON_DIR}/${PYTHON_GIT_RELEASE}/cpython-${PYTHON_VERSION}+${PYTHON_GIT_RELEASE}-${PYTHON_ARCH}-${PYTHON_PLATFORM}-install_only_stripped.tar.gz"
@@ -639,7 +639,7 @@ function get_python() {
         restore_dir "${DOVE_UV_CACHE}"
         restore_dir "${DOVE_UV_PYTHON}"
         restore_dir "${DOVE_UV_LOCAL}/python-cache"
-        rm -rf "${DOVE_EXTERNAL}/temp"
+        "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
         exit 1
       fi
 
@@ -650,7 +650,7 @@ function get_python() {
       if [[ "${DOVE_PYENV_FAILED}" == 1 ]]; then
         echo_red_text 'ERROR: Download failed! Exiting...'
         restore_dir "${DOVE_PYENV_DIR}"
-        rm -rf "${DOVE_EXTERNAL}/temp"
+        "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
         exit 1
       else
         echo_green_text "SUCCESS: Set-up Python environment at ${DOVE_PYENV_DIR}"
@@ -765,7 +765,7 @@ function get_uv() {
       echo_red_text 'ERROR: Download failed! Exiting...'
       restore_dir "${DOVE_UV_DIR}"
       restore_dir "${DOVE_UV_LOCAL}"
-      rm -rf "${DOVE_EXTERNAL}/temp"
+      "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
       exit 1
     elif [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       echo_green_text "SUCCESS: Set-up uv at ${DOVE_UV}"
@@ -774,8 +774,8 @@ function get_uv() {
 }
 
 # Clean-up
-rm -rf "${DOVE_EXTERNAL}/downloads"
-rm -rf "${DOVE_EXTERNAL}/temp"
+"${DOVE_RM}" -rf "${DOVE_EXTERNAL}/downloads"
+"${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
 
 if [[ "${DOVE_GET_SOURCE_AUTOCONFIG}" == 1 ]]; then
   get_autoconfig

@@ -20,4 +20,62 @@ fi
 
 if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
   source "$(dirname $0)/env_local.sh"
+
+  # Set-up our PATH
+  "${DOVE_RM}" -rf "${DOVE_PATH}"
+  "${DOVE_MKDIR}" -p "${DOVE_PATH}"
+
+  "${DOVE_LN}" -sf "${DOVE_AWK}"          "${DOVE_PATH}/awk"
+  "${DOVE_LN}" -sf "${DOVE_AWK}"          "${DOVE_PATH}/gawk"
+  "${DOVE_LN}" -sf "${DOVE_BASENAME}"     "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_CAT}"          "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_CHMOD}"        "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_CLANG}"        "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_CP}"           "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_CURL}"         "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_DATE}"         "${DOVE_PATH}/date"
+  "${DOVE_LN}" -sf "${DOVE_DATE}"         "${DOVE_PATH}/gdate"
+  "${DOVE_LN}" -sf "${DOVE_DIRNAME}"      "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_FIND}"         "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_GIT}"          "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_GREP}"         "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_GZIP}"         "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_HEAD}"         "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_JQ}"           "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_LN}"           "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_LS}"           "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_MD5SUM}"       "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_MKDIR}"        "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_PYTHON}"       "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_RM}"           "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_S3CMD}"        "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_SED}"          "${DOVE_PATH}/gsed"
+  "${DOVE_LN}" -sf "${DOVE_SED}"          "${DOVE_PATH}/sed"
+  "${DOVE_LN}" -sf "${DOVE_SHA1SUM}"      "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_SHA256SUM}"    "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_SHA512SUM}"    "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_TAR}"          "${DOVE_PATH}/gtar"
+  "${DOVE_LN}" -sf "${DOVE_TAR}"          "${DOVE_PATH}/tar"
+  "${DOVE_LN}" -sf "${DOVE_TEE}"          "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_TOUCH}"        "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_UNAME}"        "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_UNZIP}"        "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_UV}"           "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_XARGS}"        "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_XML2_CONFIG}"  "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_XSLT_CONFIG}"  "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_XZ}"           "${DOVE_PATH}/"
+  "${DOVE_LN}" -sf "${DOVE_ZIP}"          "${DOVE_PATH}/"
+
+  # OS X-specific
+  if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+    "${DOVE_LN}" -sf "${DOVE_DOT_CLEAN}"    "${DOVE_PATH}/"
+    "${DOVE_LN}" -sf "${DOVE_XCRUN}"        "${DOVE_PATH}/"
+  fi
+
+  # Temporary work-around (until next Phoenix release)
+  "${DOVE_LN}" -sf '/bin/bash' "${DOVE_PATH}/"
+
+  readonly PATH="${DOVE_PATH}"
+  export PATH
 fi

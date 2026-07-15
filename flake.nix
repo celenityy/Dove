@@ -108,9 +108,10 @@
           dove = final.callPackage (
             {
               stdenvNoCC,
+              bashNonInteractive,
+              coreutils,
               python3,
               jq,
-              gawk,
               gnused,
               ...
             }:
@@ -122,10 +123,16 @@
                 (python3.withPackages (ps: [
                   ps.lxml
                 ]))
+                bashNonInteractive
+                coreutils
                 jq
-                gawk
                 gnused
               ];
+
+              patchPhase = ''
+                sed -i 's|/bin/bash|${bashNonInteractive}/bin/bash|g' ./scripts/build.sh
+              '';
+
               buildPhase = ''
                 runHook preBuild
 
@@ -134,12 +141,21 @@
                 cp --no-preserve=mode -r ${phoenix} "$DOVE_PHOENIX"
 
                 export DOVE_NIX=1
-                export DOVE_AWK="${gawk}/bin/awk"
+
+                # external tools used during build
+                export DOVE_RM="${coreutils}/bin/rm"
+                export DOVE_MKDIR="${coreutils}/bin/mkdir"
+                export DOVE_LN="${coreutils}/bin/ln"
+                export DOVE_TEE="${coreutils}/bin/tee"
+                export DOVE_DIRNAME="${coreutils}/bin/dirname"
+                export DOVE_CP="${coreutils}/bin/cp"
                 export DOVE_SED="${gnused}/bin/sed"
+                export DOVE_CAT="${coreutils}/bin/cat"
+                export DOVE_JQ="${jq}/bin/jq"
+                export DOVE_UNAME="${coreutils}/bin/uname"
                 export DOVE_PYTHON="${python3.withPackages (ps: [ ps.lxml ])}/bin/python"
 
                 patchShebangs ./scripts/*.sh
-
                 ./scripts/build.sh
 
                 runHook postBuild

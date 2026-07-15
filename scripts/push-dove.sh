@@ -184,7 +184,7 @@ function push_file() {
 
   local readonly push_file="$1"
   local readonly s3_path="$2"
-  local readonly s3_full_path="${s3_path}/$(basename "${push_file}")"
+  local readonly s3_full_path="${s3_path}/$("${DOVE_BASENAME}" "${push_file}")"
 
   # Ensure our file to push is valid
   verify_file "${push_file}"
@@ -209,10 +209,10 @@ function push_file() {
       ;;
   esac
 
-  local readonly s3_access_key=$(cat "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" | xargs)
-  local readonly s3_bucket_name=$(cat "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" | xargs)
-  local readonly s3_endpoint=$(cat "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" | xargs)
-  local readonly s3_secret_key=$(cat "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" | xargs)
+  local readonly s3_access_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" | "${DOVE_XARGS}")
+  local readonly s3_bucket_name=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" | "${DOVE_XARGS}")
+  local readonly s3_endpoint=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" | "${DOVE_XARGS}")
+  local readonly s3_secret_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" | "${DOVE_XARGS}")
 
   echo_red_text "Pushing ${push_file} to S3..."
   source "${DOVE_PYENV}"
@@ -237,11 +237,11 @@ function add_sha512sum() {
   fi
 
   local readonly sha512sum_file_in="$1"
-  local readonly sha512sum_file_name=$(basename "${sha512sum_file_in}")
-  local readonly sha512sum_file_path=$(dirname "${sha512sum_file_in}")
+  local readonly sha512sum_file_name=$("${DOVE_BASENAME}" "${sha512sum_file_in}")
+  local readonly sha512sum_file_path=$("${DOVE_DIRNAME}" "${sha512sum_file_in}")
 
   if [[ -z "${2+x}" ]]; then
-    local readonly sha512sum_s3path=$(basename "${sha512sum_file_path}" | "${DOVE_AWK}" '{print tolower($0)}')
+    local readonly sha512sum_s3path=$("${DOVE_BASENAME}" "${sha512sum_file_path}" | "${DOVE_AWK}" '{print tolower($0)}')
   else
     local readonly sha512sum_s3path="$2"
   fi
@@ -253,10 +253,10 @@ function add_sha512sum() {
 
   # If there's already a SHA512sum file, remove it
   if [[ -f "${sha512sum_file_out}" ]]; then
-    rm -f "${sha512sum_file_out}"
+    "${DOVE_RM}" -f "${sha512sum_file_out}"
   fi
 
-  local readonly local_sha512sum=$(sha512sum "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
+  local readonly local_sha512sum=$("${DOVE_SHA512SUM}" "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
   echo -n "${local_sha512sum}" > "${sha512sum_file_out}"
 
   push_file "${sha512sum_file_out}" "${sha512sum_s3path}"
@@ -318,7 +318,7 @@ function push_dove() {
 
   # Ensure the latest version can always be downloaded from https://releases.celenity.dev/dove/releases/latest/{dove_platform}/dove-latest-{dove_platform}.${dove_archive_type}
   ## (Ex. for convenience/packaging)
-  cp -f "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "${DOVE_OUTPUTS}/dove-latest-${dove_platform}.${dove_archive_type}"
+  "${DOVE_CP}" -f "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "${DOVE_OUTPUTS}/dove-latest-${dove_platform}.${dove_archive_type}"
   push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-latest-${dove_platform}.${dove_archive_type}" "dove/releases/latest/${dove_platform}"
 }
 

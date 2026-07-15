@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Set-up our environment
 if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-  bash -x $(dirname $0)/env.sh
+  /bin/bash -x $(dirname $0)/env.sh
 fi
 source $(dirname $0)/env.sh
 
@@ -26,13 +26,13 @@ if [[ "${DOVE_LOG_PUSH}" == 1 ]]; then
 
   # If the log file already exists, remove it
   if [[ -f "${PUSH_LOG_FILE}" ]]; then
-    rm "${PUSH_LOG_FILE}"
+    "${DOVE_RM}" "${PUSH_LOG_FILE}"
   fi
 
   # Ensure our log directory exists
-  mkdir -vp "${DOVE_LOG_DIR}"
+  "${DOVE_MKDIR}" -vp "${DOVE_LOG_DIR}"
 
-  bash "${DOVE_SCRIPTS}/push-dove.sh" "${target}" > >(tee -a "${PUSH_LOG_FILE}") 2>&1
+  /bin/bash "${DOVE_SCRIPTS}/push-dove.sh" "${target}" > >("${DOVE_TEE}" -a "${PUSH_LOG_FILE}") 2>&1
 else
-  bash "${DOVE_SCRIPTS}/push-dove.sh" "${target}"
+  /bin/bash "${DOVE_SCRIPTS}/push-dove.sh" "${target}"
 fi
