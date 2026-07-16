@@ -131,6 +131,7 @@
 
               patchPhase = ''
                 sed -i 's|/bin/bash|${bashNonInteractive}/bin/bash|g' ./scripts/build.sh
+                sed -i 's|/bin/bash|${bashNonInteractive}/bin/bash|g' ./scripts/fly.sh
               '';
 
               buildPhase = ''
@@ -139,6 +140,7 @@
                 export DOVE_PHOENIX="$PWD/phoenix"
                 export DOVE_AUTOCONFIG=${autoconfig}
                 cp --no-preserve=mode -r ${phoenix} "$DOVE_PHOENIX"
+                sed -i 's|/bin/bash|${bashNonInteractive}/bin/bash|g' "$DOVE_PHOENIX/scripts/build.sh"
 
                 export DOVE_NIX=1
 
