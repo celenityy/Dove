@@ -322,6 +322,8 @@ export DOVE_HEAD
 # jq
 if [[ "${DOVE_OS}" == 'osx' ]]; then
   readonly DOVE_JQ_DEFAULT='/opt/homebrew/bin/jq'
+elif [[ "${DOVE_OS}" == 'secureblue' ]]; then
+  readonly DOVE_JQ_DEFAULT='/home/linuxbrew/.linuxbrew/bin/jq'
 else
   readonly DOVE_JQ_DEFAULT='/bin/jq'
 fi
