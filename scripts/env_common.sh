@@ -552,7 +552,7 @@ fi
 readonly DOVE_PYTHON_DIR
 export DOVE_PYTHON_DIR
 
-# Python (UV) environment
+# Python (uv) environment
 readonly DOVE_PYENV_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
 if [[ -z "${DOVE_PYENV_DIR+x}" ]]; then
   DOVE_PYENV_DIR="${DOVE_PYENV_DIR_DEFAULT}"
@@ -579,7 +579,7 @@ readonly DOVE_S3CMD="${DOVE_PYENV_DIR}/bin/s3cmd"
 export DOVE_S3CMD
 export DOVE_S3CMD_DIR
 
-# UV
+# uv
 readonly DOVE_UV_DIR_DEFAULT="${DOVE_EXTERNAL}/uv"
 if [[ -z "${DOVE_UV_DIR+x}" ]]; then
   DOVE_UV_DIR="${DOVE_UV_DIR_DEFAULT}"
@@ -589,7 +589,7 @@ readonly DOVE_UV="${DOVE_UV_DIR}/uv"
 export DOVE_UV
 export DOVE_UV_DIR
 
-# UV (local directory)
+# uv (local directory)
 readonly DOVE_UV_LOCAL_DEFAULT="${DOVE_BUILD}/uv"
 if [[ -z "${DOVE_UV_LOCAL+x}" ]]; then
   DOVE_UV_LOCAL="${DOVE_UV_LOCAL_DEFAULT}"
@@ -597,7 +597,7 @@ fi
 readonly DOVE_UV_LOCAL
 export DOVE_UV_LOCAL
 
-# UV cache
+# uv cache
 readonly DOVE_UV_CACHE_DEFAULT="${DOVE_UV_LOCAL}/cache"
 if [[ -z "${DOVE_UV_CACHE+x}" ]]; then
   DOVE_UV_CACHE="${DOVE_UV_CACHE_DEFAULT}"
@@ -605,7 +605,7 @@ fi
 readonly DOVE_UV_CACHE
 export DOVE_UV_CACHE
 
-# UV Python directory
+# uv Python directory
 readonly DOVE_UV_PYTHON_DEFAULT="${DOVE_UV_LOCAL}/python"
 if [[ -z "${DOVE_UV_PYTHON+x}" ]]; then
   DOVE_UV_PYTHON="${DOVE_UV_PYTHON_DEFAULT}"
@@ -613,7 +613,7 @@ fi
 readonly DOVE_UV_PYTHON
 export DOVE_UV_PYTHON
 
-# UV tools
+# uv tools
 readonly DOVE_UV_TOOLS_DEFAULT="${DOVE_UV_LOCAL}/tools"
 if [[ -z "${DOVE_UV_TOOLS+x}" ]]; then
   DOVE_UV_TOOLS="${DOVE_UV_TOOLS_DEFAULT}"
