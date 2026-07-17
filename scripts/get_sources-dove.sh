@@ -773,7 +773,7 @@ function get_uv() {
 }
 
 # Clean-up
-"${DOVE_RM}" -rf "${DOVE_EXTERNAL}/downloads"
+"${DOVE_RM}" -rf "${DOVE_DOWNLOADS}"
 "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
 
 if [[ "${DOVE_GET_SOURCE_AUTOCONFIG}" == 1 ]]; then
