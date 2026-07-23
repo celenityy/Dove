@@ -16,6 +16,53 @@ if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
   exit 1
 fi
 
+readonly target="$1"
+
+# Set-up target parameters
+DOVE_LINUX=0
+DOVE_LINUX_FLATPAK=0
+DOVE_OSX=0
+DOVE_OSX_INTEL=0
+DOVE_WINDOWS=0
+
+if [[ "${target}" == 'linux' ]]; then
+  # Linux (non-Flatpak)
+  DOVE_LINUX=1
+elif [[ "${target}" == 'linux-flatpak' ]]; then
+  # Linux (Flatpak)
+  DOVE_LINUX_FLATPAK=1
+elif [[ "${target}" == 'osx' ]]; then
+  # OS X (Silicon)
+  DOVE_OSX=1
+elif [[ "${target}" == 'osx-intel' ]]; then
+  # OS X (Intel)
+  DOVE_OSX_INTEL=1
+elif [[ "${target}" == 'windows' ]]; then
+  # Windows
+  DOVE_WINDOWS=1
+elif [[ "${target}" == 'all' ]]; then
+  # If no argument is specified (or argument is set to "all"), build everything
+  DOVE_LINUX=1
+  DOVE_LINUX_FLATPAK=1
+  DOVE_OSX=1
+  DOVE_OSX_INTEL=1
+  DOVE_WINDOWS=1
+else
+  echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
+  echo 'All:                  all (Default)'
+  echo 'Linux (non-Flatpak):  linux'
+  echo 'Linux (Flatpak):      linux-flatpak'
+  echo 'OS X (Silicon):       osx'
+  echo 'OS X (Intel):         osx-intel'
+  echo 'Windows:              windows'
+  exit 1
+fi
+readonly DOVE_LINUX
+readonly DOVE_LINUX_FLATPAK
+readonly DOVE_OSX
+readonly DOVE_OSX_INTEL
+readonly DOVE_WINDOWS
+
 # Set-up Python venv
 if [[ "${DOVE_NIX}" != 1 ]]; then
   # The Python environment *should* already be created by `get_sources.sh`, but it may not be (ex. if the user provides their own Python and/or
@@ -191,13 +238,13 @@ function build_phoenix() {
   echo_red_text 'Building Phoenix...'
 
   pushd "${DOVE_PHOENIX}"
-  /bin/bash -x "${DOVE_PHOENIX}/scripts/build.sh"
+  /bin/bash -x "${DOVE_PHOENIX}/scripts/build.sh" "${target}"
   popd
 
   echo_green_text 'SUCCESS: Built Phoenix'
 }
 
-# Platform-specific build logic
+# Build Dove
 function build_dove() {
   function print_usage() {
     echo "Usage: build_dove 'platform'"

@@ -158,7 +158,16 @@
                 export DOVE_PYTHON="${python3.withPackages (ps: [ ps.lxml ])}/bin/python"
 
                 patchShebangs ./scripts/*.sh
-                ./scripts/build.sh
+                ${
+                  if stdenvNoCC.isDarwin then
+                    ''
+                      ./scripts/build.sh 'osx'
+                    ''
+                  else
+                    ''
+                      ./scripts/build.sh 'linux'
+                    ''
+                }
 
                 runHook postBuild
               '';

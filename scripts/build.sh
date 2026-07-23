@@ -8,6 +8,13 @@ if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
 fi
 source $(dirname $0)/env.sh
 
+# Set-up target parameters
+if [[ -z "${1+x}" ]]; then
+  readonly target='all'
+else
+  readonly target=$(echo "${1}" | "${DOVE_AWK}" '{print tolower($0)}')
+fi
+
 # Build Dove
 readonly DOVE_FROM_BUILD=1
 export DOVE_FROM_BUILD
@@ -22,7 +29,7 @@ if [[ "${DOVE_LOG_BUILD}" == 1 ]]; then
   # Ensure our log directory exists
   "${DOVE_MKDIR}" -vp "${DOVE_LOG_DIR}"
 
-  /bin/bash -x "${DOVE_SCRIPTS}/fly.sh" > >("${DOVE_TEE}" -a "${BUILD_LOG_FILE}") 2>&1
+  /bin/bash -x "${DOVE_SCRIPTS}/fly.sh" "${target}" > >("${DOVE_TEE}" -a "${BUILD_LOG_FILE}") 2>&1
 else
-  /bin/bash -x "${DOVE_SCRIPTS}/fly.sh"
+  /bin/bash -x "${DOVE_SCRIPTS}/fly.sh" "${target}"
 fi
