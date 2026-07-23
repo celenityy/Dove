@@ -55,7 +55,6 @@ readonly PHOENIX_MD5SUM="${DOVE_MD5SUM}"
 readonly PHOENIX_MKDIR="${DOVE_MKDIR}"
 readonly PHOENIX_NIX="${DOVE_NIX}"
 readonly PHOENIX_NONTLS13_CIPHERS="${DOVE_NONTLS13_CIPHERS}"
-readonly PHOENIX_PRODUCE_ARCHIVES="${DOVE_PRODUCE_ARCHIVES}"
 readonly PHOENIX_PYENV_DIR="${DOVE_PYENV_DIR}"
 readonly PHOENIX_PYTHON="${DOVE_PYTHON}"
 readonly PHOENIX_PYTHON_DIR="${DOVE_PYTHON_DIR}"
@@ -106,7 +105,6 @@ export PHOENIX_MD5SUM
 export PHOENIX_MKDIR
 export PHOENIX_NIX
 export PHOENIX_NONTLS13_CIPHERS
-export PHOENIX_PRODUCE_ARCHIVES
 export PHOENIX_PYENV_DIR
 export PHOENIX_PYTHON
 export PHOENIX_PYTHON_DIR
@@ -143,6 +141,10 @@ export PHOENIX_EXTRA_POLICIES
 ## Disable build logging, as it's redundant with our own build log
 readonly PHOENIX_LOG_BUILD=0
 export PHOENIX_LOG_BUILD
+
+## We produce our own archives
+readonly PHOENIX_PRODUCE_ARCHIVES=0
+export PHOENIX_PRODUCE_ARCHIVES
 
 # Python
 ## https://docs.python.org/3/using/cmdline.html#environment-variables
