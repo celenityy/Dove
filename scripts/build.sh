@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Set-up our environment
 if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-  /bin/bash -x $(dirname $0)/env.sh
+  /bin/bash $(dirname $0)/env.sh
 fi
 source $(dirname $0)/env.sh
 
@@ -29,7 +29,7 @@ if [[ "${DOVE_LOG_BUILD}" == 1 ]]; then
   # Ensure our log directory exists
   "${DOVE_MKDIR}" -vp "${DOVE_LOG_DIR}"
 
-  /bin/bash -x "${DOVE_SCRIPTS}/fly.sh" "${target}" > >("${DOVE_TEE}" -a "${BUILD_LOG_FILE}") 2>&1
+  /bin/bash "${DOVE_SCRIPTS}/fly.sh" "${target}" > >("${DOVE_TEE}" -a "${BUILD_LOG_FILE}") 2>&1
 else
-  /bin/bash -x "${DOVE_SCRIPTS}/fly.sh" "${target}"
+  /bin/bash "${DOVE_SCRIPTS}/fly.sh" "${target}"
 fi

@@ -130,6 +130,14 @@ fi
 readonly DOVE_LOG_DIR
 export DOVE_LOG_DIR
 
+# Whether we should display verbose build output
+readonly DOVE_VERBOSE_DEFAULT=0
+if [[ -z "${DOVE_VERBOSE+x}" ]]; then
+  DOVE_VERBOSE="${DOVE_VERBOSE_DEFAULT}"
+fi
+readonly DOVE_VERBOSE
+export DOVE_VERBOSE
+
 # basename
 if [[ "${DOVE_OS}" == 'osx' ]]; then
   readonly DOVE_BASENAME_DEFAULT='/usr/bin/basename'

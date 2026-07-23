@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Set-up our environment
 if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-  /bin/bash -x $(dirname $0)/env.sh
+  /bin/bash $(dirname $0)/env.sh
 fi
 source $(dirname $0)/env.sh
 
@@ -35,7 +35,7 @@ if [[ "${DOVE_LOG_SOURCES}" == 1 ]]; then
   # Ensure our log directory exists
   "${DOVE_MKDIR}" -vp "${DOVE_LOG_DIR}"
 
-  /bin/bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}" "${mode}" > >("${DOVE_TEE}" -a "${SOURCES_LOG_FILE}") 2>&1
+  /bin/bash "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}" "${mode}" > >("${DOVE_TEE}" -a "${SOURCES_LOG_FILE}") 2>&1
 else
-  /bin/bash -x "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}" "${mode}"
+  /bin/bash "${DOVE_SCRIPTS}/get_sources-dove.sh" "${target}" "${mode}"
 fi
