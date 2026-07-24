@@ -70,16 +70,6 @@ readonly DOVE_OSX
 readonly DOVE_OSX_INTEL
 readonly DOVE_WINDOWS
 
-# Set-up Python venv
-if [[ "${DOVE_NIX}" != 1 ]]; then
-  # The Python environment *should* already be created by `get_sources.sh`, but it may not be (ex. if the user provides their own Python and/or
-  # doesn't use `get_sources.sh`), so if it doesn't exist then create it
-  if [[ ! -f "${DOVE_PYENV}" ]]; then
-    "${DOVE_UV}" venv "${DOVE_PYENV_DIR}"
-  fi
-  source "${DOVE_PYENV}"
-fi
-
 # Include version info
 source "${DOVE_VERSIONS}"
 
@@ -215,8 +205,50 @@ function check_file_or_dir_exists() {
   fi
 }
 
-# Begin the build...
-echo_red_text "Building Dove ${DOVE_VERSION}..."
+# Verify that an executable (corresponding to an environment variable) exists and is properly set-up
+function verify_exec() {
+  function print_usage() {
+    echo "Usage: verify_exec /path/to/executable 'ENVIRONMENT_VARIABLE_FOR_EXECUTABLE'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please specify an executable!'
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${2+x}" ]]; then
+    echo_red_text 'ERROR: Please specify an environment variable that corresponds to an executable!'
+    print_usage
+    exit 1
+  fi
+
+  local readonly exec="$1"
+  local readonly exec_env="$2"
+
+  if [[ -z "${exec_env+x}" ]]; then
+    echo_red_text "ERROR: Environment variable is missing!: ${exec_env}"
+    exit 1
+  fi
+
+  if [[ ! -f "${exec}" ]]; then
+    echo_red_text "ERROR: ${exec} is missing!"
+    echo_green_text "Please ensure that environment variable is set to a valid executable: ${exec_env}"
+    return 1
+  fi
+
+  if [[ ! -s "${exec}" ]]; then
+    echo_red_text "ERROR: ${exec} is empty!"
+    echo_green_text "Please ensure that environment variable is set to a valid executable: ${exec_env}"
+    return 1
+  fi
+
+  if [[ ! -x "${exec}" ]]; then
+    echo_red_text "ERROR: ${exec} is not executable!"
+    echo_green_text "Please ensure that environment variable is set to a valid executable: ${exec_env}"
+    return 1
+  fi
+}
 
 # Prepare to build Dove
 function prep_dove() {
@@ -361,6 +393,36 @@ function build_dove() {
 # Create our temporary file directory
 "${DOVE_MKDIR}" -p "${DOVE_TEMP}"
 
+# Set-up Python environment
+if [[ "${DOVE_NIX}" == 1 ]]; then
+  readonly dove_py=0
+else
+  readonly dove_py=1
+fi
+if [[ "${dove_py}" == 1 ]]; then
+  # Ensure Python is properly set-up
+  verify_exec "${DOVE_PYTHON}" 'DOVE_PYTHON' || exit 1
+
+  # The Python environment *should* already be created by `get_sources.sh`, but it may not be (ex. if the user provides their own Python and/or
+  # doesn't use `get_sources.sh`), so if it doesn't exist then create it
+  if [[ ! -f "${DOVE_PYENV}" ]]; then
+    # Preferably, we want to use uv, but if uv is unavailable, we can try falling back to Python's built-in venv module
+    DOVE_UV_AVAILABLE=1
+    verify_exec "${DOVE_UV}" 'DOVE_UV' || DOVE_UV_AVAILABLE=0
+    if [[ "${DOVE_UV_AVAILABLE}" == 1 ]]; then
+      echo_red_text 'Creating Python environment with uv...'
+      "${DOVE_UV}" venv "${DOVE_PYENV_DIR}"
+    else
+      echo_red_text 'Creating Python environment with Python...'
+      "${DOVE_PYTHON}" -m venv "${DOVE_PYENV_DIR}"
+    fi
+    echo_green_text "Created Python environment: ${DOVE_PYENV}"
+  fi
+  echo_red_text 'Sourcing Python environment...'
+  source "${DOVE_PYENV}"
+  echo_green_text "Sourced Python environment: ${DOVE_PYENV}"
+fi
+
 # First, prepare our build environment
 prep_dove
 
@@ -369,6 +431,9 @@ build_autoconfig
 
 # Build Phoenix
 build_phoenix
+
+# Begin the build...
+echo_red_text "Building Dove ${DOVE_VERSION}..."
 
 # Build Dove for Linux (non-Flatpak)
 if [[ "${DOVE_LINUX}" == 1 ]]; then

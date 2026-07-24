@@ -48,6 +48,7 @@ if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
   "${DOVE_LN}" -sf "${DOVE_MKDIR}"        "${DOVE_PATH}/mkdir"
   "${DOVE_LN}" -sf "${DOVE_PYTHON}"       "${DOVE_PATH}/python"
   "${DOVE_LN}" -sf "${DOVE_PYTHON}"       "${DOVE_PATH}/python3"
+  "${DOVE_LN}" -sf "${DOVE_PYTHON}"       "${DOVE_PATH}/python3.14"
   "${DOVE_LN}" -sf "${DOVE_RM}"           "${DOVE_PATH}/rm"
   "${DOVE_LN}" -sf "${DOVE_S3CMD}"        "${DOVE_PATH}/s3cmd"
   "${DOVE_LN}" -sf "${DOVE_SED}"          "${DOVE_PATH}/gsed"
