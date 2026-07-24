@@ -123,9 +123,15 @@ function push_file() {
   local readonly s3_endpoint=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" | "${DOVE_XARGS}")
   local readonly s3_secret_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" | "${DOVE_XARGS}")
 
+  if [[ "${s3_path}" == 'root' ]]; then
+    local readonly s3_target_path="s3://${s3_bucket_name}"
+  else
+    local readonly s3_target_path="s3://${s3_bucket_name}/${s3_full_path}"
+  fi
+
   echo_red_text "Pushing ${push_file} to S3..."
   source "${DOVE_PYENV}"
-  "${DOVE_S3CMD}" ${DOVE_S3CMD_FLAGS} --mime-type="${mime_type}" put "${push_file}" "s3://${s3_bucket_name}/${s3_full_path}" \
+  "${DOVE_S3CMD}" ${DOVE_S3CMD_FLAGS} --mime-type="${mime_type}" put "${push_file}" "${s3_target_path}" \
     --access_key="${s3_access_key}" \
     --secret_key="${s3_secret_key}" \
     --host="${s3_endpoint}" \
