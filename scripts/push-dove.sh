@@ -16,73 +16,11 @@ if [[ -z "${DOVE_FROM_PUSH+x}" ]]; then
   exit 1
 fi
 
-if [[ -z "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" ]]; then
-  echo_red_text 'ERROR: The DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE environment variable is missing! Aborting...'
-  exit 1
-fi
-
-if [[ ! -f "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" ]]; then
-  echo_red_text "ERROR: S3 access key file not found! (${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE})"
-  echo_green_text "Please ensure the DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE environment variable is set to the correct path in which the key file is located."
-  echo_red_text "Aborting..."
-  exit 1
-fi
-
-if [[ ! -s "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" ]]; then
-  echo_red_text "ERROR: S3 access key file ${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE} is empty!"
-  exit 1
-fi
-
-if [[ -z "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" ]]; then
-  echo_red_text 'ERROR: The DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE environment variable is missing! Aborting...'
-  exit 1
-fi
-
-if [[ ! -f "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" ]]; then
-  echo_red_text "ERROR: S3 bucket name file not found! (${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE})"
-  echo_green_text "Please ensure the DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE environment variable is set to the correct path in which the bucket name file is located."
-  echo_red_text "Aborting..."
-  exit 1
-fi
-
-if [[ ! -s "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" ]]; then
-  echo_red_text "ERROR: S3 bucket name file ${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE} is empty!"
-  exit 1
-fi
-
-if [[ -z "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" ]]; then
-  echo_red_text 'ERROR: The DOVE_CEL_RELEASES_S3_ENDPOINT_FILE environment variable is missing! Aborting...'
-  exit 1
-fi
-
-if [[ ! -f "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" ]]; then
-  echo_red_text "ERROR: S3 endpoint file not found! (${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE})"
-  echo_green_text "Please ensure the DOVE_CEL_RELEASES_S3_ENDPOINT_FILE environment variable is set to the correct path in which the endpoint file is located."
-  echo_red_text "Aborting..."
-  exit 1
-fi
-
-if [[ ! -s "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" ]]; then
-  echo_red_text "ERROR: S3 bucket name file ${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE} is empty!"
-  exit 1
-fi
-
-if [[ -z "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" ]]; then
-  echo_red_text 'ERROR: The DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE environment variable is missing! Aborting...'
-  exit 1
-fi
-
-if [[ ! -f "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" ]]; then
-  echo_red_text "ERROR: S3 secret key file not found! (${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE})"
-  echo_green_text "Please ensure the DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE environment variable is set to the correct path in which the key file is located."
-  echo_red_text "Aborting..."
-  exit 1
-fi
-
-if [[ ! -s "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" ]]; then
-  echo_red_text "ERROR: S3 secret key file ${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE} is empty!"
-  exit 1
-fi
+# Verify secrets
+verify_file_with_env "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE'
+verify_file_with_env "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" 'DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE'
+verify_file_with_env "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" 'DOVE_CEL_RELEASES_S3_ENDPOINT_FILE'
+verify_file_with_env "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE'
 
 readonly target="$1"
 
@@ -134,35 +72,6 @@ readonly DOVE_PUSH_WINDOWS
 
 # Include version info
 source "${DOVE_VERSIONS}"
-
-# Set timezone to UTC for consistency
-unset TZ
-export TZ="UTC"
-
-# Verifies that a file exists and is not empty
-function verify_file() {
-  function print_usage() {
-    echo "Usage: verify_file '/path/to/file'"
-  }
-
-  if [[ -z "${1+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the path to a file to verify'
-    print_usage
-    exit 1
-  fi
-
-  local readonly file_to_verify="$1"
-
-  if [[ ! -f "${file_to_verify}" ]]; then
-    echo_red_text "ERROR: File ${file_to_verify} does not exist!"
-    exit 1
-  fi
-
-  if [[ ! -s "${file_to_verify}" ]]; then
-    echo_red_text "ERROR: File ${file_to_verify} is empty!"
-    exit 1
-  fi
-}
 
 # Pushes a file to S3
 function push_file() {

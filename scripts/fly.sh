@@ -205,51 +205,6 @@ function check_file_or_dir_exists() {
   fi
 }
 
-# Verify that an executable (corresponding to an environment variable) exists and is properly set-up
-function verify_exec() {
-  function print_usage() {
-    echo "Usage: verify_exec /path/to/executable 'ENVIRONMENT_VARIABLE_FOR_EXECUTABLE'"
-  }
-
-  if [[ -z "${1+x}" ]]; then
-    echo_red_text 'ERROR: Please specify an executable!'
-    print_usage
-    exit 1
-  fi
-
-  if [[ -z "${2+x}" ]]; then
-    echo_red_text 'ERROR: Please specify an environment variable that corresponds to an executable!'
-    print_usage
-    exit 1
-  fi
-
-  local readonly exec="$1"
-  local readonly exec_env="$2"
-
-  if [[ -z "${exec_env+x}" ]]; then
-    echo_red_text "ERROR: Environment variable is missing!: ${exec_env}"
-    exit 1
-  fi
-
-  if [[ ! -f "${exec}" ]]; then
-    echo_red_text "ERROR: ${exec} is missing!"
-    echo_green_text "Please ensure that environment variable is set to a valid executable: ${exec_env}"
-    return 1
-  fi
-
-  if [[ ! -s "${exec}" ]]; then
-    echo_red_text "ERROR: ${exec} is empty!"
-    echo_green_text "Please ensure that environment variable is set to a valid executable: ${exec_env}"
-    return 1
-  fi
-
-  if [[ ! -x "${exec}" ]]; then
-    echo_red_text "ERROR: ${exec} is not executable!"
-    echo_green_text "Please ensure that environment variable is set to a valid executable: ${exec_env}"
-    return 1
-  fi
-}
-
 # Prepare to build Dove
 function prep_dove() {
   "${DOVE_CP}" -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg"
