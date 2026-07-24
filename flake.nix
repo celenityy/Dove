@@ -113,6 +113,7 @@
               python3,
               jq,
               gnused,
+              gawk,
               ...
             }:
             stdenvNoCC.mkDerivation {
@@ -127,6 +128,7 @@
                 coreutils
                 jq
                 gnused
+                gawk
               ];
 
               patchPhase = ''
@@ -152,6 +154,7 @@
                 export DOVE_DIRNAME="${coreutils}/bin/dirname"
                 export DOVE_CP="${coreutils}/bin/cp"
                 export DOVE_SED="${gnused}/bin/sed"
+                export DOVE_AWK="${gawk}/bin/awk"
                 export DOVE_CAT="${coreutils}/bin/cat"
                 export DOVE_JQ="${jq}/bin/jq"
                 export DOVE_UNAME="${coreutils}/bin/uname"
