@@ -73,10 +73,6 @@ readonly DOVE_WINDOWS
 # Include version info
 source "${DOVE_VERSIONS}"
 
-# Set timezone to UTC for consistency
-unset TZ
-export TZ="UTC"
-
 # Produce a (reproducible) archive from a directory
 ## For reference/details on this process, see...
 ## https://codeberg.org/celenity/Phoenix/issues/314
@@ -133,6 +129,10 @@ function create_archive() {
       exit 1
     fi
   fi
+
+  # Set timezone to UTC for consistency
+  unset TZ
+  export TZ='UTC'
 
   # If the directory for our output archive doesn't exist, create it
   local readonly output_archive_dir="$("${DOVE_DIRNAME}" "${output_archive}")"
