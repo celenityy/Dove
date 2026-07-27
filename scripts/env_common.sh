@@ -182,6 +182,19 @@ fi
 readonly DOVE_VERBOSE
 export DOVE_VERBOSE
 
+# as (assembler)
+## (Required by lxml on Linux)
+if [[ "${DOVE_OS}" == 'osx' ]]; then
+  readonly DOVE_ASSEMBLER_DEFAULT='/usr/bin/as'
+else
+  readonly DOVE_ASSEMBLER_DEFAULT='/bin/as'
+fi
+if [[ -z "${DOVE_ASSEMBLER+x}" ]]; then
+  DOVE_ASSEMBLER="${DOVE_ASSEMBLER_DEFAULT}"
+fi
+readonly DOVE_ASSEMBLER
+export DOVE_ASSEMBLER
+
 # basename
 if [[ "${DOVE_OS}" == 'osx' ]]; then
   readonly DOVE_BASENAME_DEFAULT='/usr/bin/basename'

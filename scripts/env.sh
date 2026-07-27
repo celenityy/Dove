@@ -75,6 +75,7 @@ if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
     "${DOVE_LN}" -sf "${DOVE_DOT_CLEAN}"    "${DOVE_PATH}/dot_clean"
     "${DOVE_LN}" -sf "${DOVE_XCRUN}"        "${DOVE_PATH}/xcrun"
   else
+    "${DOVE_LN}" -sf "${DOVE_ASSEMBLER}"    "${DOVE_PATH}/as"
     "${DOVE_LN}" -sf "${DOVE_CC}"           "${DOVE_PATH}/cc"
   fi
 
