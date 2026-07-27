@@ -216,7 +216,7 @@ function add_asset_to_forgejo_release() {
 
 # Publish a release to Forgejo (Codeberg)
 function publish_to_forgejo() {
-  local readonly DOVE_RELEASE_NOTES="${DOVE_TEMP}/dove-${DOVE_VERSION}-release-notes.md"
+  local readonly DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
 
   if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
     echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
@@ -280,7 +280,7 @@ function publish_to_forgejo() {
 
 # Publish a release to GitHub
 function publish_to_github() {
-  local readonly DOVE_RELEASE_NOTES="${DOVE_TEMP}/dove-${DOVE_VERSION}-release-notes.md"
+  local readonly DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
 
   if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
     echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
@@ -320,7 +320,7 @@ function publish_to_github() {
 
 # Publish a release to GitLab
 function publish_to_gitlab() {
-  local readonly DOVE_RELEASE_NOTES="${DOVE_TEMP}/dove-${DOVE_VERSION}-release-notes.md"
+  local readonly DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
 
   if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
     echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
