@@ -202,6 +202,19 @@ fi
 readonly DOVE_CAT
 export DOVE_CAT
 
+# cc
+## (Required by lxml on Linux)
+if [[ "${DOVE_OS}" == 'osx' ]]; then
+  readonly DOVE_CC_DEFAULT='/usr/bin/cc'
+else
+  readonly DOVE_CC_DEFAULT='/bin/cc'
+fi
+if [[ -z "${DOVE_CC+x}" ]]; then
+  DOVE_CC="${DOVE_CC_DEFAULT}"
+fi
+readonly DOVE_CC
+export DOVE_CC
+
 # chmod
 readonly DOVE_CHMOD_DEFAULT='/bin/chmod'
 if [[ -z "${DOVE_CHMOD+x}" ]]; then

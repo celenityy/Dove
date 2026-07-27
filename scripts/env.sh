@@ -74,6 +74,8 @@ if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
   if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
     "${DOVE_LN}" -sf "${DOVE_DOT_CLEAN}"    "${DOVE_PATH}/dot_clean"
     "${DOVE_LN}" -sf "${DOVE_XCRUN}"        "${DOVE_PATH}/xcrun"
+  else
+    "${DOVE_LN}" -sf "${DOVE_CC}"           "${DOVE_PATH}/cc"
   fi
 
   # Temporary work-around (until next Phoenix release)
