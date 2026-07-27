@@ -77,6 +77,7 @@ if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
   else
     "${DOVE_LN}" -sf "${DOVE_ASSEMBLER}"    "${DOVE_PATH}/as"
     "${DOVE_LN}" -sf "${DOVE_CC}"           "${DOVE_PATH}/cc"
+    "${DOVE_LN}" -sf "${DOVE_LD}"           "${DOVE_PATH}/ld"
   fi
 
   # Temporary work-around (until next Phoenix release)

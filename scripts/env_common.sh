@@ -419,6 +419,19 @@ fi
 readonly DOVE_JQ
 export DOVE_JQ
 
+# ld
+## (Required by lxml on Linux)
+if [[ "${DOVE_OS}" == 'osx' ]]; then
+  readonly DOVE_LD_DEFAULT='/usr/bin/ld'
+else
+  readonly DOVE_LD_DEFAULT='/bin/ld'
+fi
+if [[ -z "${DOVE_LD+x}" ]]; then
+  DOVE_LD="${DOVE_LD_DEFAULT}"
+fi
+readonly DOVE_LD
+export DOVE_LD
+
 # ln
 readonly DOVE_LN_DEFAULT='/bin/ln'
 if [[ -z "${DOVE_LN+x}" ]]; then
