@@ -765,7 +765,7 @@ export DOVE_COMPILER_FLAGS_OVERRIDE
 
 # Compiler flags
 ## (Used for lxml)
-readonly DOVE_COMPILER_FLAGS_DEFAULT='-DNDEBUG -O3 -flto=full -fstack-clash-protection -fstack-protector-strong -ftrivial-auto-var-init=zero -fwrapv'
+readonly DOVE_COMPILER_FLAGS_DEFAULT='-DNDEBUG -O3 -fstack-clash-protection -fstack-protector-strong -ftrivial-auto-var-init=zero -fwrapv'
 if [[ -z "${DOVE_COMPILER_FLAGS+x}" ]]; then
   DOVE_COMPILER_FLAGS="${DOVE_COMPILER_FLAGS_DEFAULT}"
 elif [[ "${DOVE_COMPILER_FLAGS_OVERRIDE}" == 1 ]]; then
