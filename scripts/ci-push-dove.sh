@@ -498,9 +498,6 @@ function push_file() {
 
   # Set our MIME type
   case "${push_file}" in
-    *.js)
-      local readonly mime_type='text/javascript'
-      ;;
     *.tar.xz)
       local readonly mime_type='application/x-gtar'
       ;;
