@@ -31,6 +31,20 @@ fi
 readonly DOVE_UTILS="${DOVE_SCRIPTS}/utilities.sh"
 export DOVE_UTILS
 
+# Tools
+readonly DOVE_TOOLS="${DOVE_ROOT}/tools"
+export DOVE_TOOLS
+
+# Templates
+readonly DOVE_TEMPLATES="${DOVE_ROOT}/templates"
+export DOVE_TEMPLATES
+
+# CI artifacts
+readonly DOVE_ARTIFACTS="${DOVE_ROOT}/artifacts"
+readonly DOVE_LOG_ARTIFACTS="${DOVE_ARTIFACTS}/logs"
+export DOVE_ARTIFACTS
+export DOVE_LOG_ARTIFACTS
+
 # Whether we're being invoked from a Nix flake
 readonly DOVE_NIX_DEFAULT=0
 if [[ -z "${DOVE_NIX+x}" ]]; then
@@ -52,6 +66,20 @@ if [[ -z "${DOVE_PRODUCE_ARCHIVES+x}" ]]; then
 fi
 readonly DOVE_PRODUCE_ARCHIVES
 export DOVE_PRODUCE_ARCHIVES
+
+# Are we in a CI environment?
+readonly DOVE_CI_DEFAULT=0
+if [[ -z "${DOVE_CI+x}" ]]; then
+  DOVE_CI="${DOVE_CI_DEFAULT}"
+fi
+readonly DOVE_CI
+export DOVE_CI
+
+## If so, set our CI environment variables
+readonly DOVE_ENV_CI="${DOVE_SCRIPTS}/env_ci.sh"
+if [[ "${DOVE_CI}" == 1 ]]; then
+  source "${DOVE_ENV_CI}"
+fi
 
 # Version info
 readonly DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
@@ -105,6 +133,22 @@ if [[ -z "${DOVE_LOG_BUILD+x}" ]]; then
 fi
 readonly DOVE_LOG_BUILD
 export DOVE_LOG_BUILD
+
+# Should we create a log file for ci-download-artifacts.sh? (Default)
+readonly DOVE_LOG_AR_DOWN_DEFAULT=1
+if [[ -z "${DOVE_LOG_AR_DOWN+x}" ]]; then
+  DOVE_LOG_AR_DOWN="${DOVE_LOG_AR_DOWN_DEFAULT}"
+fi
+readonly DOVE_LOG_AR_DOWN
+export DOVE_LOG_AR_DOWN
+
+# Should we create a log file for ci-upload-artifacts.sh? (Default)
+readonly DOVE_LOG_AR_UP_DEFAULT=1
+if [[ -z "${DOVE_LOG_AR_UP+x}" ]]; then
+  DOVE_LOG_AR_UP="${DOVE_LOG_AR_UP_DEFAULT}"
+fi
+readonly DOVE_LOG_AR_UP
+export DOVE_LOG_AR_UP
 
 # Should we create a log file for get_sources.sh? (Default)
 readonly DOVE_LOG_SOURCES_DEFAULT=1
@@ -218,6 +262,14 @@ if [[ -z "${DOVE_DOT_CLEAN+x}" ]]; then
 fi
 readonly DOVE_DOT_CLEAN
 export DOVE_DOT_CLEAN
+
+# echo
+readonly DOVE_ECHO_DEFAULT="${DOVE_TOOLS}/echo.sh"
+if [[ -z "${DOVE_ECHO+x}" ]]; then
+  DOVE_ECHO="${DOVE_ECHO_DEFAULT}"
+fi
+readonly DOVE_ECHO
+export DOVE_ECHO
 
 # find
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -746,32 +798,68 @@ export DOVE_STATIC_JS
 
 # S3
 
-# S3 access key
-readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-access-key.txt'
+## Artifacts
+
+### S3 access key
+readonly DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE_DEFAULT='null'
+if [[ -z "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE+x}" ]]; then
+  DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE="${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE_DEFAULT}"
+fi
+readonly DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE
+export DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE
+
+### S3 bucket name
+readonly DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE_DEFAULT='null'
+if [[ -z "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE+x}" ]]; then
+  DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE="${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE_DEFAULT}"
+fi
+readonly DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE
+export DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE
+
+### S3 endpoint
+readonly DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE_DEFAULT='null'
+if [[ -z "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE+x}" ]]; then
+  DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE="${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE_DEFAULT}"
+fi
+readonly DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE
+export DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE
+
+### S3 secret key
+readonly DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE_DEFAULT='null'
+if [[ -z "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE+x}" ]]; then
+  DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE="${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE_DEFAULT}"
+fi
+readonly DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE
+export DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE
+
+## Releases
+
+### S3 access key
+readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT='null'
 if [[ -z "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE+x}" ]]; then
   DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE="${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
 export DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
 
-# S3 bucket name
-readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-bucket-name.txt'
+### S3 bucket name
+readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT='null'
 if [[ -z "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE+x}" ]]; then
   DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE="${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
 export DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
 
-# S3 endpoint
-readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-endpoint.txt'
+### S3 endpoint
+readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT='null'
 if [[ -z "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE+x}" ]]; then
   DOVE_CEL_RELEASES_S3_ENDPOINT_FILE="${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
 export DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
 
-# S3 secret key
-readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT='/opt/celenity/celenity-releases-s3-secret-key.txt'
+### S3 secret key
+readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT='null'
 if [[ -z "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE+x}" ]]; then
   DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE="${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT}"
 fi

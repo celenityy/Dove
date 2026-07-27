@@ -1,0 +1,2 @@
+- Updated to Phoenix [`2026.07.24.1`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.07.24.1).
+- Tweaks/enhancements to Dove's build system.

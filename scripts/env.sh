@@ -36,6 +36,7 @@ if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
   "${DOVE_LN}" -sf "${DOVE_DATE}"         "${DOVE_PATH}/date"
   "${DOVE_LN}" -sf "${DOVE_DATE}"         "${DOVE_PATH}/gdate"
   "${DOVE_LN}" -sf "${DOVE_DIRNAME}"      "${DOVE_PATH}/dirname"
+  "${DOVE_LN}" -sf "${DOVE_ECHO}"         "${DOVE_PATH}/echo"
   "${DOVE_LN}" -sf "${DOVE_FIND}"         "${DOVE_PATH}/find"
   "${DOVE_LN}" -sf "${DOVE_GIT}"          "${DOVE_PATH}/git"
   "${DOVE_LN}" -sf "${DOVE_GREP}"         "${DOVE_PATH}/grep"
