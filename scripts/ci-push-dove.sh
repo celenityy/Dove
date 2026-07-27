@@ -498,6 +498,9 @@ function push_file() {
 
   # Set our MIME type
   case "${push_file}" in
+    *.md)
+      local readonly mime_type='text/markdown'
+      ;;
     *.tar.xz)
       local readonly mime_type='application/x-gtar'
       ;;
