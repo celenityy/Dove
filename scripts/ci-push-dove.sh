@@ -57,7 +57,7 @@ readonly DOVE_GITLAB_GENERIC_PACKAGES_URL="${DOVE_GITLAB_API_URL}/projects/${DOV
 # Create release notes
 function create_release_notes() {
   # Ensure our changelog (for release-specific changes) exists
-  local readonly DOVE_CHANGELOG_FILE="${DOVE_ROOT}/changelog.md"
+  local readonly DOVE_CHANGELOG_FILE="${DOVE_ROOT}/CHANGELOG.md"
   verify_file "${DOVE_CHANGELOG_FILE}" || exit 1
 
   # Ensure our release template exists
@@ -109,7 +109,7 @@ function create_release_notes() {
     echo ''
     echo '## Changes'
     echo ''
-    "${DOVE_CAT}" "${DOVE_ROOT}/changelog.md"
+    "${DOVE_CAT}" "${DOVE_ROOT}/CHANGELOG.md"
     echo ''
     "${DOVE_CAT}" "${DOVE_RELEASE_NOTES_TEMP}"
   } >> "${DOVE_RELEASE_NOTES}"
