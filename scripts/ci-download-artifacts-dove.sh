@@ -19,8 +19,8 @@ if [[ -z "${DOVE_FROM_AR_DOWN+x}" ]]; then
   exit 1
 fi
 
-if [[ -z "${CI_PIPELINE_ID+x}" ]]; then
-  echo_red_text 'ERROR: Missing pipeline ID! Please set CI_PIPELINE_ID.'
+if [[ -z "${DOVE_CI_ID+x}" ]]; then
+  echo_red_text 'ERROR: Missing CI ID! Please set DOVE_CI_ID.'
   exit 1
 fi
 
@@ -130,25 +130,25 @@ function download_artifact() {
 
 # dove-{DOVE_VERSION}-linux.tar.xz
 if [[ "${DOVE_AR_DOWN_LINUX_ARCHIVE}" == 1 ]]; then
-  download_artifact "${CI_PIPELINE_ID}" 'linux' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'linux' "${DOVE_ARTIFACTS}"
 fi
 
 # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
 if [[ "${DOVE_AR_DOWN_LINUX_FLATPAK_ARCHIVE}" == 1 ]]; then
-  download_artifact "${CI_PIPELINE_ID}" 'linux-flatpak' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'linux-flatpak' "${DOVE_ARTIFACTS}"
 fi
 
 # dove-{DOVE_VERSION}-osx.tar.xz
 if [[ "${DOVE_AR_DOWN_OSX_ARCHIVE}" == 1 ]]; then
-  download_artifact "${CI_PIPELINE_ID}" 'osx' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'osx' "${DOVE_ARTIFACTS}"
 fi
 
 # dove-{DOVE_VERSION}-osx-intel.tar.xz
 if [[ "${DOVE_AR_DOWN_OSX_INTEL_ARCHIVE}" == 1 ]]; then
-  download_artifact "${CI_PIPELINE_ID}" 'osx-intel' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'osx-intel' "${DOVE_ARTIFACTS}"
 fi
 
 # dove-{DOVE_VERSION}-windows.zip
 if [[ "${DOVE_AR_DOWN_WINDOWS_ARCHIVE}" == 1 ]]; then
-  download_artifact "${CI_PIPELINE_ID}" 'windows' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'windows' "${DOVE_ARTIFACTS}"
 fi

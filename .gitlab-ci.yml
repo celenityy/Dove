@@ -18,6 +18,7 @@ variables: &common_variables
   ARTIFACT_COMPRESSION_LEVEL: 'slowest'
   CACHE_COMPRESSION_LEVEL: 'slowest'
   DOVE_CI: 1
+  DOVE_CI_TYPE: 'gitlab'
   FF_USE_FASTZIP: '1'
   PRODUCTION_BRANCH: 'pages'
   TRANSFER_METER_FREQUENCY: '2s'

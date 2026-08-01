@@ -1,0 +1,65 @@
+name: Build Dove
+
+on:
+  push:
+    paths:
+      - 'scripts/**/*'
+      - '.forgejo/workflows/**/*'
+
+env:
+  DOVE_CI: 1
+  DOVE_CI_TYPE: 'forgejo'
+
+jobs:
+  build:
+    runs-on: codeberg-medium
+    container:
+      image: fedora:43
+    steps:
+      - name: Get dependencies
+        run: |
+          set -euo pipefail
+          /bin/sudo /bin/dnf update -y --refresh
+          /bin/sudo /bin/dnf install -y node
+
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Build
+        env:
+          DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY: ${{ secrets.DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY }}
+          DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME: ${{ secrets.DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME }}
+          DOVE_CEL_ARTIFACTS_S3_ENDPOINT: ${{ secrets.DOVE_CEL_ARTIFACTS_S3_ENDPOINT }}
+          DOVE_CEL_ARTIFACTS_S3_SECRET_KEY: ${{ secrets.DOVE_CEL_ARTIFACTS_S3_SECRET_KEY }}
+        run: |
+          set -euo pipefail
+          /bin/bash scripts/ci-build.sh
+
+  publish-release:
+    if: forgejo.ref == 'refs/heads/pages' && forgejo.repository == 'celenity/Dove'
+    needs: [build]
+    runs-on: codeberg-medium
+    container:
+      image: fedora:43
+    steps:
+      - name: Get dependencies
+        run: |
+          set -euo pipefail
+          /bin/sudo /bin/dnf update -y --refresh
+          /bin/sudo /bin/dnf install -y node
+
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Publish release
+        env:
+          DOVE_CEL_RELEASES_S3_ACCESS_KEY: ${{ secrets.DOVE_CEL_RELEASES_S3_ACCESS_KEY }}
+          DOVE_CEL_RELEASES_S3_BUCKET_NAME: ${{ secrets.DOVE_CEL_RELEASES_S3_BUCKET_NAME }}
+          DOVE_CEL_RELEASES_S3_ENDPOINT: ${{ secrets.DOVE_CEL_RELEASES_S3_ENDPOINT }}
+          DOVE_CEL_RELEASES_S3_SECRET_KEY: ${{ secrets.DOVE_CEL_RELEASES_S3_SECRET_KEY }}
+          DOVE_FORGEJO_CI_API_TOKEN: ${{ secrets.DOVE_FORGEJO_CI_API_TOKEN }}
+          DOVE_GITHUB_CI_API_TOKEN: ${{ secrets.DOVE_GITHUB_CI_API_TOKEN }}
+          DOVE_GITLAB_CI_API_TOKEN: ${{ secrets.DOVE_GITLAB_CI_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          /bin/bash scripts/ci-publish-release.sh

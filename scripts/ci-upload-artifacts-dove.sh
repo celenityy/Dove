@@ -22,8 +22,8 @@ if [[ -z "${DOVE_FROM_AR_UP+x}" ]]; then
   exit 1
 fi
 
-if [[ -z "${CI_PIPELINE_ID+x}" ]]; then
-  echo_red_text 'ERROR: Missing pipeline ID! Please set CI_PIPELINE_ID.'
+if [[ -z "${DOVE_CI_ID+x}" ]]; then
+  echo_red_text 'ERROR: Missing CI ID! Please set DOVE_CI_ID.'
   exit 1
 fi
 
@@ -222,25 +222,25 @@ function push_and_add_sha512sum() {
 
 # dove-{DOVE_VERSION}-linux.tar.xz
 if [[ "${DOVE_AR_UP_LINUX_ARCHIVE}" == 1 ]]; then
-  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-linux.tar.xz" "${CI_PIPELINE_ID}"
+  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-linux.tar.xz" "${DOVE_CI_ID}"
 fi
 
 # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
 if [[ "${DOVE_AR_UP_LINUX_FLATPAK_ARCHIVE}" == 1 ]]; then
-  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" "${CI_PIPELINE_ID}"
+  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" "${DOVE_CI_ID}"
 fi
 
 # dove-{DOVE_VERSION}-osx.tar.xz
 if [[ "${DOVE_AR_UP_OSX_ARCHIVE}" == 1 ]]; then
-  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-osx.tar.xz" "${CI_PIPELINE_ID}"
+  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-osx.tar.xz" "${DOVE_CI_ID}"
 fi
 
 # dove-{DOVE_VERSION}-osx-intel.tar.xz
 if [[ "${DOVE_AR_UP_OSX_INTEL_ARCHIVE}" == 1 ]]; then
-  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" "${CI_PIPELINE_ID}"
+  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" "${DOVE_CI_ID}"
 fi
 
 # dove-{DOVE_VERSION}-windows.zip
 if [[ "${DOVE_AR_UP_WINDOWS_ARCHIVE}" == 1 ]]; then
-  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-windows.zip" "${CI_PIPELINE_ID}"
+  push_and_add_sha512sum "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-windows.zip" "${DOVE_CI_ID}"
 fi
