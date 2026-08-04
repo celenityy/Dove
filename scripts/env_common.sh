@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Dove common environment variables
 
 ## CAUTION: Do NOT source this directly!
@@ -109,6 +110,10 @@ export DOVE_TEMP
 # Dove PATH
 readonly DOVE_PATH="${DOVE_BUILD}/path"
 export DOVE_PATH
+
+# Minimal Dove PATH for linting
+readonly DOVE_LINT_PATH="${DOVE_BUILD}/lint-path"
+export DOVE_LINT_PATH
 
 # External sources directory
 readonly DOVE_EXTERNAL="${DOVE_ROOT}/external"
@@ -512,6 +517,26 @@ fi
 readonly DOVE_SHA512SUM
 export DOVE_SHA512SUM
 
+# -shellcheck
+readonly DOVE_SHELLCHECK_DIR_DEFAULT="${DOVE_EXTERNAL}/shellcheck"
+if [[ -z "${DOVE_SHELLCHECK_DIR+x}" ]]; then
+  DOVE_SHELLCHECK_DIR="${DOVE_SHELLCHECK_DIR_DEFAULT}"
+fi
+readonly DOVE_SHELLCHECK_DIR
+readonly DOVE_SHELLCHECK="${DOVE_SHELLCHECK_DIR}/shellcheck"
+export DOVE_SHELLCHECK
+export DOVE_SHELLCHECK_DIR
+
+# shfmt
+readonly DOVE_SHFMT_DIR_DEFAULT="${DOVE_EXTERNAL}/shfmt"
+if [[ -z "${DOVE_SHFMT_DIR+x}" ]]; then
+  DOVE_SHFMT_DIR="${DOVE_SHFMT_DIR_DEFAULT}"
+fi
+readonly DOVE_SHFMT_DIR
+readonly DOVE_SHFMT="${DOVE_SHFMT_DIR}/shfmt"
+export DOVE_SHFMT
+export DOVE_SHFMT_DIR
+
 # tee
 if [[ "${DOVE_OS}" == 'osx' ]]; then
   readonly DOVE_TEE_DEFAULT='/usr/bin/tee'
@@ -786,6 +811,7 @@ readonly DOVE_CURL_FLAGS_OVERRIDE
 export DOVE_CURL_FLAGS_OVERRIDE
 
 # curl flags
+# shellcheck disable=SC2089
 readonly DOVE_CURL_FLAGS_DEFAULT="--disable --no-netrc --ciphers ${DOVE_NONTLS13_CIPHERS} --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --proxy-ciphers ${DOVE_NONTLS13_CIPHERS} --proxy-tls13-ciphers ${DOVE_TLS13_CIPHERS} --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tls13-ciphers ${DOVE_TLS13_CIPHERS} --tlsv1.2 --trace-time --user-agent '' --verbose"
 if [[ -z "${DOVE_CURL_FLAGS+x}" ]]; then
   readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT}"
@@ -794,6 +820,7 @@ elif [[ "${DOVE_CURL_FLAGS_OVERRIDE}" == 1 ]]; then
 else
   readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT} ${DOVE_CURL_FLAGS}"
 fi
+# shellcheck disable=SC2090
 export DOVE_CURL_FLAGS
 
 # If s3cmd flags are added, this determines whether they should be appended to our default flags (default),

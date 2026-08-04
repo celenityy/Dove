@@ -103,9 +103,9 @@ function push_file() {
     exit 1
   fi
 
-  local readonly push_file="$1"
-  local readonly s3_path="$2"
-  local readonly s3_full_path="${s3_path}/$("${DOVE_BASENAME}" "${push_file}")"
+  local -r push_file="$1"
+  local -r s3_path="$2"
+  local -r s3_full_path="${s3_path}/$("${DOVE_BASENAME}" "${push_file}")"
 
   # Ensure our file to push is valid
   verify_file "${push_file}" || exit 1
@@ -113,16 +113,16 @@ function push_file() {
   # Set our MIME type
   case "${push_file}" in
     *.log)
-      local readonly mime_type='text/plain'
+      local -r mime_type='text/plain'
       ;;
     *.tar.xz)
-      local readonly mime_type='application/x-gtar'
+      local -r mime_type='application/x-gtar'
       ;;
     *.txt)
-      local readonly mime_type='text/plain'
+      local -r mime_type='text/plain'
       ;;
     *.zip)
-      local readonly mime_type='application/zip'
+      local -r mime_type='application/zip'
       ;;
     *)
       echo_red_text "ERROR: Unsupported file type: ${push_file}"
@@ -130,15 +130,15 @@ function push_file() {
       ;;
   esac
 
-  local readonly s3_access_key=$("${DOVE_CAT}" "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE}" | "${DOVE_XARGS}")
-  local readonly s3_bucket_name=$("${DOVE_CAT}" "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE}" | "${DOVE_XARGS}")
-  local readonly s3_endpoint=$("${DOVE_CAT}" "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE}" | "${DOVE_XARGS}")
-  local readonly s3_secret_key=$("${DOVE_CAT}" "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE}" | "${DOVE_XARGS}")
+  local -r s3_access_key=$("${DOVE_CAT}" "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE}" | "${DOVE_XARGS}")
+  local -r s3_bucket_name=$("${DOVE_CAT}" "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE}" | "${DOVE_XARGS}")
+  local -r s3_endpoint=$("${DOVE_CAT}" "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE}" | "${DOVE_XARGS}")
+  local -r s3_secret_key=$("${DOVE_CAT}" "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE}" | "${DOVE_XARGS}")
 
   if [[ "${s3_path}" == 'root' ]]; then
-    local readonly s3_target_path="s3://${s3_bucket_name}/${DOVE_CEL_S3_PROJECT}"
+    local -r s3_target_path="s3://${s3_bucket_name}/${DOVE_CEL_S3_PROJECT}"
   else
-    local readonly s3_target_path="s3://${s3_bucket_name}/${DOVE_CEL_S3_PROJECT}/${s3_full_path}"
+    local -r s3_target_path="s3://${s3_bucket_name}/${DOVE_CEL_S3_PROJECT}/${s3_full_path}"
   fi
 
   echo_red_text "Uploading ${push_file} to S3..."
@@ -163,27 +163,27 @@ function add_sha512sum() {
     exit 1
   fi
 
-  local readonly sha512sum_file_in="$1"
-  local readonly sha512sum_file_name=$("${DOVE_BASENAME}" "${sha512sum_file_in}")
-  local readonly sha512sum_file_path=$("${DOVE_DIRNAME}" "${sha512sum_file_in}")
+  local -r sha512sum_file_in="$1"
+  local -r sha512sum_file_name=$("${DOVE_BASENAME}" "${sha512sum_file_in}")
+  local -r sha512sum_file_path=$("${DOVE_DIRNAME}" "${sha512sum_file_in}")
 
   if [[ -z "${2+x}" ]]; then
-    local readonly sha512sum_s3path=$("${DOVE_BASENAME}" "${sha512sum_file_path}" | "${DOVE_AWK}" '{print tolower($0)}')
+    local -r sha512sum_s3path=$("${DOVE_BASENAME}" "${sha512sum_file_path}" | "${DOVE_AWK}" '{print tolower($0)}')
   else
-    local readonly sha512sum_s3path="$2"
+    local -r sha512sum_s3path="$2"
   fi
 
   # Ensure our file to create a SHA512sum for is valid
   verify_file "${sha512sum_file_in}" || exit 1
 
-  local readonly sha512sum_file_out="${sha512sum_file_path}/${sha512sum_file_name}-sha512sum.txt"
+  local -r sha512sum_file_out="${sha512sum_file_path}/${sha512sum_file_name}-sha512sum.txt"
 
   # If there's already a SHA512sum file, remove it
   if [[ -f "${sha512sum_file_out}" ]]; then
     "${DOVE_RM}" -f "${sha512sum_file_out}"
   fi
 
-  local readonly local_sha512sum=$("${DOVE_SHA512SUM}" "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
+  local -r local_sha512sum=$("${DOVE_SHA512SUM}" "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
   echo -n "${local_sha512sum}" > "${sha512sum_file_out}"
 
   push_file "${sha512sum_file_out}" "${sha512sum_s3path}"
@@ -207,8 +207,8 @@ function push_and_add_sha512sum() {
     exit 1
   fi
 
-  local readonly file_in="$1"
-  local readonly s3_path_out="$2"
+  local -r file_in="$1"
+  local -r s3_path_out="$2"
 
   # Ensure our file to create a SHA512sum for and push is valid
   verify_file "${file_in}" || exit 1

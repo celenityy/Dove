@@ -57,15 +57,15 @@ readonly DOVE_GITLAB_GENERIC_PACKAGES_URL="${DOVE_GITLAB_API_URL}/projects/${DOV
 # Create release notes
 function create_release_notes() {
   # Ensure our changelog (for release-specific changes) exists
-  local readonly DOVE_CHANGELOG_FILE="${DOVE_ROOT}/CHANGELOG.md"
+  local -r DOVE_CHANGELOG_FILE="${DOVE_ROOT}/CHANGELOG.md"
   verify_file "${DOVE_CHANGELOG_FILE}" || exit 1
 
   # Ensure our release template exists
-  local readonly DOVE_RELEASE_TEMPLATE="${DOVE_TEMPLATES}/release-notes.md"
+  local -r DOVE_RELEASE_TEMPLATE="${DOVE_TEMPLATES}/release-notes.md"
   verify_file "${DOVE_RELEASE_TEMPLATE}" || exit 1
 
-  local readonly DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
-  local readonly DOVE_RELEASE_NOTES_TEMP="${DOVE_TEMP}/dove-${DOVE_VERSION}-release-notes-temp.md"
+  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
+  local -r DOVE_RELEASE_NOTES_TEMP="${DOVE_TEMP}/dove-${DOVE_VERSION}-release-notes-temp.md"
   "${DOVE_RM}" -f "${DOVE_RELEASE_NOTES}" "${DOVE_RELEASE_NOTES_TEMP}"
 
   "${DOVE_MKDIR}" -p "${DOVE_ARTIFACTS}" "${DOVE_TEMP}"
@@ -76,33 +76,33 @@ function create_release_notes() {
 
   # Set the previous (current) version
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --location "${DOVE_CEL_RELEASES_URL}/dove/releases/latest_release.txt" --output "${DOVE_TEMP}/previous_release.txt"
-  local readonly DOVE_PREVIOUS_VERSION=$("${DOVE_CAT}" "${DOVE_TEMP}/previous_release.txt" | "${DOVE_XARGS}")
+  local -r DOVE_PREVIOUS_VERSION=$("${DOVE_CAT}" "${DOVE_TEMP}/previous_release.txt" | "${DOVE_XARGS}")
   "${DOVE_SED}" -i "s|{DOVE_PREVIOUS_VERSION}|${DOVE_PREVIOUS_VERSION}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # Set our SHA512sums
 
   # dove-{DOVE_VERSION}-linux.tar.xz
-  local readonly DOVE_LINUX_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux.tar.xz" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_LINUX_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux.tar.xz" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_LINUX_ARCHIVE_SHA512SUM}|${DOVE_LINUX_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
-  local readonly DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM}|${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # dove-{DOVE_VERSION}-osx.tar.xz
-  local readonly DOVE_OSX_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx.tar.xz" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_OSX_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx.tar.xz" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_OSX_ARCHIVE_SHA512SUM}|${DOVE_OSX_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # dove-{DOVE_VERSION}-osx-intel.tar.xz
-  local readonly DOVE_OSX_INTEL_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_OSX_INTEL_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_OSX_INTEL_ARCHIVE_SHA512SUM}|${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # dove-{DOVE_VERSION}-windows.zip
-  local readonly DOVE_WINDOWS_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-windows.zip" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_WINDOWS_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-windows.zip" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_WINDOWS_ARCHIVE_SHA512SUM}|${DOVE_WINDOWS_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # Add release-specific changes
-  local readonly DOVE_CHANGELOG=$("${DOVE_CAT}" "${DOVE_CHANGELOG_FILE}")
+  local -r DOVE_CHANGELOG=$("${DOVE_CAT}" "${DOVE_CHANGELOG_FILE}")
   {
     echo "# Dove ${DOVE_VERSION}"
     echo '____'
@@ -137,8 +137,8 @@ function upload_to_forgejo_package_registry() {
     exit 1
   fi
 
-  local readonly upload_file="$1"
-  local readonly upload_file_name="$("${DOVE_BASENAME}" "${upload_file}")"
+  local -r upload_file="$1"
+  local -r upload_file_name="$("${DOVE_BASENAME}" "${upload_file}")"
 
   # Ensure our file to upload is valid
   verify_file "${upload_file}" || exit 1
@@ -166,8 +166,8 @@ function upload_to_gitlab_package_registry() {
     exit 1
   fi
 
-  local readonly upload_file="$1"
-  local readonly upload_file_name="$("${DOVE_BASENAME}" "${upload_file}")"
+  local -r upload_file="$1"
+  local -r upload_file_name="$("${DOVE_BASENAME}" "${upload_file}")"
 
   # Ensure our file to upload is valid
   verify_file "${upload_file}" || exit 1
@@ -201,9 +201,9 @@ function add_asset_to_forgejo_release() {
     exit 1
   fi
 
-  local readonly release_id="$1"
-  local readonly asset_url="$2"
-  local readonly asset=$("${DOVE_BASENAME}" "${asset_url}")
+  local -r release_id="$1"
+  local -r asset_url="$2"
+  local -r asset=$("${DOVE_BASENAME}" "${asset_url}")
 
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header 'accept: application/json' \
     --header "Authorization: token ${DOVE_FORGEJO_CI_API_TOKEN}" \
@@ -216,7 +216,7 @@ function add_asset_to_forgejo_release() {
 
 # Publish a release to Forgejo (Codeberg)
 function publish_to_forgejo() {
-  local readonly DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
+  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
 
   if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
     echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
@@ -229,9 +229,9 @@ function publish_to_forgejo() {
     exit 1
   fi
 
-  local readonly dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
+  local -r dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
 
-  local readonly dove_codeberg_release_data="$(
+  local -r dove_codeberg_release_data="$(
     "${DOVE_JQ}" -Rs --arg name "${DOVE_VERSION}" --arg ref "${DOVE_FORGEJO_BRANCH}" --arg tag "${DOVE_VERSION}" '{
       name: $name,
       tag_name: $tag,
@@ -242,7 +242,7 @@ function publish_to_forgejo() {
       }' <<< "${dove_release_desc}"
   )"
 
-  local readonly dove_codeberg_release=$("${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header 'Content-Type: application/json' \
+  local -r dove_codeberg_release=$("${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header 'Content-Type: application/json' \
     --header 'accept: application/json' \
     --header "Authorization: token ${DOVE_FORGEJO_CI_API_TOKEN}" \
     --data "${dove_codeberg_release_data}" \
@@ -250,7 +250,7 @@ function publish_to_forgejo() {
     "${DOVE_FORGEJO_API_URL}/v1/repos/${DOVE_FORGEJO_REPO}/releases")
 
   # Get our release ID
-  local readonly dove_codeberg_release_id=$(echo "${dove_codeberg_release}" | "${DOVE_JQ}" -r '.id')
+  local -r dove_codeberg_release_id=$(echo "${dove_codeberg_release}" | "${DOVE_JQ}" -r '.id')
 
   # Attach our assets
 
@@ -280,7 +280,7 @@ function publish_to_forgejo() {
 
 # Publish a release to GitHub
 function publish_to_github() {
-  local readonly DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
+  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
 
   if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
     echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
@@ -293,9 +293,9 @@ function publish_to_github() {
     exit 1
   fi
 
-  local readonly dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
+  local -r dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
 
-  local readonly dove_github_release_data="$(
+  local -r dove_github_release_data="$(
     "${DOVE_JQ}" -Rs --arg name "${DOVE_VERSION}" --arg ref "${DOVE_GITHUB_BRANCH}" --arg tag "${DOVE_VERSION}" '{
       name: $name,
       tag_name: $tag,
@@ -320,7 +320,7 @@ function publish_to_github() {
 
 # Publish a release to GitLab
 function publish_to_gitlab() {
-  local readonly DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
+  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
 
   if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
     echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
@@ -333,73 +333,73 @@ function publish_to_gitlab() {
     exit 1
   fi
 
-  local readonly dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
+  local -r dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
 
   # Attach our assets
 
   # dove-{DOVE_VERSION}-linux.tar.xz
-  local readonly DOVE_LINUX_ARCHIVE_NAME="dove-${DOVE_VERSION}-linux.tar.xz"
-  local readonly DOVE_LINUX_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/linux/${DOVE_LINUX_ARCHIVE_NAME}"
-  local readonly DOVE_LINUX_ARCHIVE_SHA512SUM_NAME="${DOVE_LINUX_ARCHIVE_NAME}-sha512sum.txt"
-  local readonly DOVE_LINUX_ARCHIVE_SHA512SUM_URL="${DOVE_LINUX_ARCHIVE_URL}-sha512sum.txt"
+  local -r DOVE_LINUX_ARCHIVE_NAME="dove-${DOVE_VERSION}-linux.tar.xz"
+  local -r DOVE_LINUX_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/linux/${DOVE_LINUX_ARCHIVE_NAME}"
+  local -r DOVE_LINUX_ARCHIVE_SHA512SUM_NAME="${DOVE_LINUX_ARCHIVE_NAME}-sha512sum.txt"
+  local -r DOVE_LINUX_ARCHIVE_SHA512SUM_URL="${DOVE_LINUX_ARCHIVE_URL}-sha512sum.txt"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_ARCHIVE_NAME}"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_ARCHIVE_SHA512SUM_NAME}"
 
   # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
-  local readonly DOVE_LINUX_FLATPAK_ARCHIVE_NAME="dove-${DOVE_VERSION}-linux-flatpak.tar.xz"
-  local readonly DOVE_LINUX_FLATPAK_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/linux-flatpak/${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}"
-  local readonly DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_NAME="${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}-sha512sum.txt"
-  local readonly DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_URL="${DOVE_LINUX_FLATPAK_ARCHIVE_URL}-sha512sum.txt"
+  local -r DOVE_LINUX_FLATPAK_ARCHIVE_NAME="dove-${DOVE_VERSION}-linux-flatpak.tar.xz"
+  local -r DOVE_LINUX_FLATPAK_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/linux-flatpak/${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}"
+  local -r DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_NAME="${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}-sha512sum.txt"
+  local -r DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_URL="${DOVE_LINUX_FLATPAK_ARCHIVE_URL}-sha512sum.txt"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_NAME}"
 
   # dove-{DOVE_VERSION}-osx.tar.xz
-  local readonly DOVE_OSX_ARCHIVE_NAME="dove-${DOVE_VERSION}-osx.tar.xz"
-  local readonly DOVE_OSX_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/osx/${DOVE_OSX_ARCHIVE_NAME}"
-  local readonly DOVE_OSX_ARCHIVE_SHA512SUM_NAME="${DOVE_OSX_ARCHIVE_NAME}-sha512sum.txt"
-  local readonly DOVE_OSX_ARCHIVE_SHA512SUM_URL="${DOVE_OSX_ARCHIVE_URL}-sha512sum.txt"
+  local -r DOVE_OSX_ARCHIVE_NAME="dove-${DOVE_VERSION}-osx.tar.xz"
+  local -r DOVE_OSX_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/osx/${DOVE_OSX_ARCHIVE_NAME}"
+  local -r DOVE_OSX_ARCHIVE_SHA512SUM_NAME="${DOVE_OSX_ARCHIVE_NAME}-sha512sum.txt"
+  local -r DOVE_OSX_ARCHIVE_SHA512SUM_URL="${DOVE_OSX_ARCHIVE_URL}-sha512sum.txt"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_ARCHIVE_NAME}"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_ARCHIVE_SHA512SUM_NAME}"
 
   # dove-{DOVE_VERSION}-osx-intel.tar.xz
-  local readonly DOVE_OSX_INTEL_ARCHIVE_NAME="dove-${DOVE_VERSION}-osx-intel.tar.xz"
-  local readonly DOVE_OSX_INTEL_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/osx-intel/${DOVE_OSX_INTEL_ARCHIVE_NAME}"
-  local readonly DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_NAME="${DOVE_OSX_INTEL_ARCHIVE_NAME}-sha512sum.txt"
-  local readonly DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_URL="${DOVE_OSX_INTEL_ARCHIVE_URL}-sha512sum.txt"
+  local -r DOVE_OSX_INTEL_ARCHIVE_NAME="dove-${DOVE_VERSION}-osx-intel.tar.xz"
+  local -r DOVE_OSX_INTEL_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/osx-intel/${DOVE_OSX_INTEL_ARCHIVE_NAME}"
+  local -r DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_NAME="${DOVE_OSX_INTEL_ARCHIVE_NAME}-sha512sum.txt"
+  local -r DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_URL="${DOVE_OSX_INTEL_ARCHIVE_URL}-sha512sum.txt"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_INTEL_ARCHIVE_NAME}"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_NAME}"
 
   # dove-{DOVE_VERSION}-windows.zip
-  local readonly DOVE_WINDOWS_ARCHIVE_NAME="dove-${DOVE_VERSION}-windows.zip"
-  local readonly DOVE_WINDOWS_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/windows/${DOVE_WINDOWS_ARCHIVE_NAME}"
-  local readonly DOVE_WINDOWS_ARCHIVE_SHA512SUM_NAME="${DOVE_WINDOWS_ARCHIVE_NAME}-sha512sum.txt"
-  local readonly DOVE_WINDOWS_ARCHIVE_SHA512SUM_URL="${DOVE_WINDOWS_ARCHIVE_URL}-sha512sum.txt"
+  local -r DOVE_WINDOWS_ARCHIVE_NAME="dove-${DOVE_VERSION}-windows.zip"
+  local -r DOVE_WINDOWS_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/windows/${DOVE_WINDOWS_ARCHIVE_NAME}"
+  local -r DOVE_WINDOWS_ARCHIVE_SHA512SUM_NAME="${DOVE_WINDOWS_ARCHIVE_NAME}-sha512sum.txt"
+  local -r DOVE_WINDOWS_ARCHIVE_SHA512SUM_URL="${DOVE_WINDOWS_ARCHIVE_URL}-sha512sum.txt"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_WINDOWS_ARCHIVE_NAME}"
   upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_WINDOWS_ARCHIVE_SHA512SUM_NAME}"
 
-  local readonly dove_gitlab_release_data="$(
+  local -r dove_gitlab_release_data="$(
     "${DOVE_JQ}" -Rs --arg name "${DOVE_VERSION}" --arg ref "${DOVE_GITLAB_BRANCH}" --arg tag "${DOVE_VERSION}" --arg version "${DOVE_VERSION}" \
-    --arg linux_archive_name "${DOVE_LINUX_ARCHIVE_NAME}" \
-    --arg linux_archive_url "${DOVE_LINUX_ARCHIVE_URL}" \
-    --arg linux_archive_sha512sum_name "${DOVE_LINUX_ARCHIVE_SHA512SUM_NAME}" \
-    --arg linux_archive_sha512sum_url "${DOVE_LINUX_ARCHIVE_SHA512SUM_URL}" \
-    --arg linux_flatpak_archive_name "${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}" \
-    --arg linux_flatpak_archive_url "${DOVE_LINUX_FLATPAK_ARCHIVE_URL}" \
-    --arg linux_flatpak_archive_sha512sum_name "${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_NAME}" \
-    --arg linux_flatpak_archive_sha512sum_url "${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_URL}" \
-    --arg osx_archive_name "${DOVE_OSX_ARCHIVE_NAME}" \
-    --arg osx_archive_url "${DOVE_OSX_ARCHIVE_URL}" \
-    --arg osx_archive_sha512sum_name "${DOVE_OSX_ARCHIVE_SHA512SUM_NAME}" \
-    --arg osx_archive_sha512sum_url "${DOVE_OSX_ARCHIVE_SHA512SUM_URL}" \
-    --arg osx_intel_archive_name "${DOVE_OSX_INTEL_ARCHIVE_NAME}" \
-    --arg osx_intel_archive_url "${DOVE_OSX_INTEL_ARCHIVE_URL}" \
-    --arg osx_intel_archive_sha512sum_name "${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_NAME}" \
-    --arg osx_intel_archive_sha512sum_url "${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_URL}" \
-    --arg windows_archive_name "${DOVE_WINDOWS_ARCHIVE_NAME}" \
-    --arg windows_archive_url "${DOVE_WINDOWS_ARCHIVE_URL}" \
-    --arg windows_archive_sha512sum_name "${DOVE_WINDOWS_ARCHIVE_SHA512SUM_NAME}" \
-    --arg windows_archive_sha512sum_url "${DOVE_WINDOWS_ARCHIVE_SHA512SUM_URL}" \
-    '{
+      --arg linux_archive_name "${DOVE_LINUX_ARCHIVE_NAME}" \
+      --arg linux_archive_url "${DOVE_LINUX_ARCHIVE_URL}" \
+      --arg linux_archive_sha512sum_name "${DOVE_LINUX_ARCHIVE_SHA512SUM_NAME}" \
+      --arg linux_archive_sha512sum_url "${DOVE_LINUX_ARCHIVE_SHA512SUM_URL}" \
+      --arg linux_flatpak_archive_name "${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}" \
+      --arg linux_flatpak_archive_url "${DOVE_LINUX_FLATPAK_ARCHIVE_URL}" \
+      --arg linux_flatpak_archive_sha512sum_name "${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_NAME}" \
+      --arg linux_flatpak_archive_sha512sum_url "${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_URL}" \
+      --arg osx_archive_name "${DOVE_OSX_ARCHIVE_NAME}" \
+      --arg osx_archive_url "${DOVE_OSX_ARCHIVE_URL}" \
+      --arg osx_archive_sha512sum_name "${DOVE_OSX_ARCHIVE_SHA512SUM_NAME}" \
+      --arg osx_archive_sha512sum_url "${DOVE_OSX_ARCHIVE_SHA512SUM_URL}" \
+      --arg osx_intel_archive_name "${DOVE_OSX_INTEL_ARCHIVE_NAME}" \
+      --arg osx_intel_archive_url "${DOVE_OSX_INTEL_ARCHIVE_URL}" \
+      --arg osx_intel_archive_sha512sum_name "${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_NAME}" \
+      --arg osx_intel_archive_sha512sum_url "${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_URL}" \
+      --arg windows_archive_name "${DOVE_WINDOWS_ARCHIVE_NAME}" \
+      --arg windows_archive_url "${DOVE_WINDOWS_ARCHIVE_URL}" \
+      --arg windows_archive_sha512sum_name "${DOVE_WINDOWS_ARCHIVE_SHA512SUM_NAME}" \
+      --arg windows_archive_sha512sum_url "${DOVE_WINDOWS_ARCHIVE_SHA512SUM_URL}" \
+      '{
       name: $name,
       ref: $ref,
       tag_name: $tag,
@@ -489,9 +489,9 @@ function push_file() {
     exit 1
   fi
 
-  local readonly push_file="$1"
-  local readonly s3_path="$2"
-  local readonly s3_full_path="${s3_path}/$("${DOVE_BASENAME}" "${push_file}")"
+  local -r push_file="$1"
+  local -r s3_path="$2"
+  local -r s3_full_path="${s3_path}/$("${DOVE_BASENAME}" "${push_file}")"
 
   # Ensure our file to push is valid
   verify_file "${push_file}" || exit 1
@@ -499,16 +499,16 @@ function push_file() {
   # Set our MIME type
   case "${push_file}" in
     *.md)
-      local readonly mime_type='text/markdown'
+      local -r mime_type='text/markdown'
       ;;
     *.tar.xz)
-      local readonly mime_type='application/x-gtar'
+      local -r mime_type='application/x-gtar'
       ;;
     *.txt)
-      local readonly mime_type='text/plain'
+      local -r mime_type='text/plain'
       ;;
     *.zip)
-      local readonly mime_type='application/zip'
+      local -r mime_type='application/zip'
       ;;
     *)
       echo_red_text "ERROR: Unsupported file type: ${push_file}"
@@ -516,15 +516,15 @@ function push_file() {
       ;;
   esac
 
-  local readonly s3_access_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" | "${DOVE_XARGS}")
-  local readonly s3_bucket_name=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" | "${DOVE_XARGS}")
-  local readonly s3_endpoint=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" | "${DOVE_XARGS}")
-  local readonly s3_secret_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" | "${DOVE_XARGS}")
+  local -r s3_access_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" | "${DOVE_XARGS}")
+  local -r s3_bucket_name=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" | "${DOVE_XARGS}")
+  local -r s3_endpoint=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" | "${DOVE_XARGS}")
+  local -r s3_secret_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" | "${DOVE_XARGS}")
 
   if [[ "${s3_path}" == 'root' ]]; then
-    local readonly s3_target_path="s3://${s3_bucket_name}"
+    local -r s3_target_path="s3://${s3_bucket_name}"
   else
-    local readonly s3_target_path="s3://${s3_bucket_name}/${s3_full_path}"
+    local -r s3_target_path="s3://${s3_bucket_name}/${s3_full_path}"
   fi
 
   echo_red_text "Pushing ${push_file} to S3..."
@@ -540,7 +540,7 @@ function push_file() {
 # Creates and pushes a SHA512sum for a file to S3
 function add_sha512sum() {
   function print_usage() {
-      echo "Usage: add_sha512sum '/path/to/file'"
+    echo "Usage: add_sha512sum '/path/to/file'"
   }
 
   if [[ -z "${1+x}" ]]; then
@@ -549,27 +549,27 @@ function add_sha512sum() {
     exit 1
   fi
 
-  local readonly sha512sum_file_in="$1"
-  local readonly sha512sum_file_name=$("${DOVE_BASENAME}" "${sha512sum_file_in}")
-  local readonly sha512sum_file_path=$("${DOVE_DIRNAME}" "${sha512sum_file_in}")
+  local -r sha512sum_file_in="$1"
+  local -r sha512sum_file_name=$("${DOVE_BASENAME}" "${sha512sum_file_in}")
+  local -r sha512sum_file_path=$("${DOVE_DIRNAME}" "${sha512sum_file_in}")
 
   if [[ -z "${2+x}" ]]; then
-    local readonly sha512sum_s3path=$("${DOVE_BASENAME}" "${sha512sum_file_path}" | "${DOVE_AWK}" '{print tolower($0)}')
+    local -r sha512sum_s3path=$("${DOVE_BASENAME}" "${sha512sum_file_path}" | "${DOVE_AWK}" '{print tolower($0)}')
   else
-    local readonly sha512sum_s3path="$2"
+    local -r sha512sum_s3path="$2"
   fi
 
   # Ensure our file to create a SHA512sum for is valid
   verify_file "${sha512sum_file_in}" || exit 1
 
-  local readonly sha512sum_file_out="${sha512sum_file_path}/${sha512sum_file_name}-sha512sum.txt"
+  local -r sha512sum_file_out="${sha512sum_file_path}/${sha512sum_file_name}-sha512sum.txt"
 
   # If there's already a SHA512sum file, remove it
   if [[ -f "${sha512sum_file_out}" ]]; then
     "${DOVE_RM}" -f "${sha512sum_file_out}"
   fi
 
-  local readonly local_sha512sum=$("${DOVE_SHA512SUM}" "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
+  local -r local_sha512sum=$("${DOVE_SHA512SUM}" "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
   echo -n "${local_sha512sum}" > "${sha512sum_file_out}"
 
   push_file "${sha512sum_file_out}" "${sha512sum_s3path}"
@@ -593,8 +593,8 @@ function push_and_add_sha512sum() {
     exit 1
   fi
 
-  local readonly file_in="$1"
-  local readonly s3_path_out="$2"
+  local -r file_in="$1"
+  local -r s3_path_out="$2"
 
   # Ensure our file to create a SHA512sum for and push is valid
   verify_file "${file_in}" || exit 1
@@ -618,13 +618,13 @@ function _push_dove() {
     exit 1
   fi
 
-  local readonly dove_platform="$1"
+  local -r dove_platform="$1"
 
   # Set our archive type
   if [[ "${dove_platform}" == 'windows' ]]; then
-    local readonly dove_archive_type='zip'
+    local -r dove_archive_type='zip'
   else
-    local readonly dove_archive_type='tar.xz'
+    local -r dove_archive_type='tar.xz'
   fi
 
   push_and_add_sha512sum "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "dove/releases/${DOVE_VERSION}/${dove_platform}"

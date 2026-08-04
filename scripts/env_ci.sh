@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Dove CI environment variables
 
 # Log directory

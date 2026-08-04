@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Dove external environment variables
 
 ## This is used for converting Dove-specific environment variables to ones used in external projects.

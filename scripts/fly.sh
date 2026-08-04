@@ -102,9 +102,9 @@ function create_archive() {
     exit 1
   fi
 
-  local readonly archive_type="$1"
-  local readonly target_dir="$2"
-  local readonly output_archive="$3"
+  local -r archive_type="$1"
+  local -r target_dir="$2"
+  local -r output_archive="$3"
 
   if [[ "${archive_type}" != 'tar' ]] && [[ "${archive_type}" != 'zip' ]]; then
     echo_red_text "ERROR: Invalid archive type (${archive_type})! Aborting..."
@@ -135,7 +135,7 @@ function create_archive() {
   export TZ='UTC'
 
   # If the directory for our output archive doesn't exist, create it
-  local readonly output_archive_dir="$("${DOVE_DIRNAME}" "${output_archive}")"
+  local -r output_archive_dir="$("${DOVE_DIRNAME}" "${output_archive}")"
   if [[ ! -d "${output_archive_dir}" ]]; then
     "${DOVE_MKDIR}" -p "${output_archive_dir}"
   fi
@@ -147,12 +147,12 @@ function create_archive() {
 
   # Set the file timestamp
   ## (This is derived from DOVE_VERSION_DATE at `env_common.sh`)
-  local readonly DOVE_STAMP="${DOVE_VERSION_DATE//./-}"
-  local readonly DOVE_FIND_STAMP="$("${DOVE_DATE}" -d "${DOVE_STAMP}" +"%a, %d %b %Y %T %z")"
-  local readonly DOVE_TIMESTAMP="$("${DOVE_DATE}" -d "${DOVE_STAMP}" +"%Y-%m-%dT%H:%M:%SZ")"
+  local -r DOVE_STAMP="${DOVE_VERSION_DATE//./-}"
+  local -r DOVE_FIND_STAMP="$("${DOVE_DATE}" -d "${DOVE_STAMP}" +"%a, %d %b %Y %T %z")"
+  local -r DOVE_TIMESTAMP="$("${DOVE_DATE}" -d "${DOVE_STAMP}" +"%Y-%m-%dT%H:%M:%SZ")"
 
   # Override the timestamps for each file to match our stamp above
-  "${DOVE_FIND}" "${target_dir}" -newermt "${DOVE_FIND_STAMP}" -print0 | \
+  "${DOVE_FIND}" "${target_dir}" -newermt "${DOVE_FIND_STAMP}" -print0 |
     "${DOVE_XARGS}" -0r "${DOVE_TOUCH}" -h -d "${DOVE_TIMESTAMP}"
 
   # Override the timestamps for each directory to match our stamp above
@@ -163,8 +163,10 @@ function create_archive() {
   # Finally create our archive
   pushd "${target_dir}"
   if [[ "${archive_type}" == 'zip' ]]; then
+    # shellcheck disable=SC2035
     "${DOVE_ZIP}" -X -r "${output_archive}" * -x '.DS_Store'
   else
+    # shellcheck disable=SC2035
     "${DOVE_TAR}" -cJv --exclude-vcs --group=0 --mode='go+u,go-w' --no-acls --no-selinux --no-xattrs --numeric-owner --owner=0 --pax-option='delete=atime,delete=ctime' --pax-option='exthdr.name=%d/PaxHeaders/%f' --restrict --sort=name --utc --clamp-mtime --mtime="${DOVE_TIMESTAMP}" --exclude ".DS_Store" -f "${output_archive}" *
   fi
   popd
@@ -185,7 +187,7 @@ function check_file_or_dir_exists() {
     exit 1
   fi
 
-  local readonly path="$1"
+  local -r path="$1"
 
   if [[ -d "${path}" ]] || [[ -f "${path}" ]]; then
     echo_red_text "'${path}' already exists"
@@ -250,15 +252,15 @@ function build_dove() {
     exit 1
   fi
 
-  local readonly dove_platform="$1"
-  local readonly dove_output_dir="${DOVE_OUTPUTS}/${dove_platform}"
+  local -r dove_platform="$1"
+  local -r dove_output_dir="${DOVE_OUTPUTS}/${dove_platform}"
 
   if [[ "${dove_platform}" == 'windows' ]]; then
-    local readonly dove_output_archive="${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.zip"
-    local readonly dove_output_archive_latest="${DOVE_OUTPUTS}/dove-latest-${dove_platform}.zip"
+    local -r dove_output_archive="${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.zip"
+    local -r dove_output_archive_latest="${DOVE_OUTPUTS}/dove-latest-${dove_platform}.zip"
   else
-    local readonly dove_output_archive="${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.tar.xz"
-    local readonly dove_output_archive_latest="${DOVE_OUTPUTS}/dove-latest-${dove_platform}.tar.xz"
+    local -r dove_output_archive="${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-${dove_platform}.tar.xz"
+    local -r dove_output_archive_latest="${DOVE_OUTPUTS}/dove-latest-${dove_platform}.tar.xz"
   fi
 
   # Ensure existing outputs don't already exist
@@ -277,11 +279,11 @@ function build_dove() {
   if [[ "${dove_platform}" == 'osx' ]]; then
     # To ensure installs continue working as expected, this must be placed in (and copied from)
     ## the `macos` directory
-    local readonly dove_cfg_output_dir="${dove_output_dir}/macos"
-    local readonly phoenix_cfg_input_path="${dove_platform}/macos"
+    local -r dove_cfg_output_dir="${dove_output_dir}/macos"
+    local -r phoenix_cfg_input_path="${dove_platform}/macos"
   else
-    local readonly dove_cfg_output_dir="${dove_output_dir}"
-    local readonly phoenix_cfg_input_path="${dove_platform}"
+    local -r dove_cfg_output_dir="${dove_output_dir}"
+    local -r phoenix_cfg_input_path="${dove_platform}"
   fi
   "${DOVE_MKDIR}" -p "${dove_cfg_output_dir}"
   "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${phoenix_cfg_input_path}/phoenix.cfg" "${dove_cfg_output_dir}/dove.cfg"
@@ -337,9 +339,9 @@ function build_dove() {
   # Finally, create our platform-specific archives
   if [[ "${DOVE_PRODUCE_ARCHIVES}" == 1 ]]; then
     if [[ "${dove_platform}" == 'windows' ]]; then
-      local readonly archive_type='zip'
+      local -r archive_type='zip'
     else
-      local readonly archive_type='tar'
+      local -r archive_type='tar'
     fi
     create_archive "${archive_type}" "${dove_output_dir}" "${dove_output_archive}"
   fi
