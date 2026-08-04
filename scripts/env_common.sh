@@ -481,41 +481,19 @@ fi
 readonly DOVE_RM
 export DOVE_RM
 
-# sha1sum
+# shasum
 if [[ "${DOVE_OS}" == 'osx' ]]; then
-  readonly DOVE_SHA1SUM_DEFAULT='/sbin/sha1sum'
+  readonly DOVE_SHASUM_DEFAULT='/opt/homebrew/bin/shasum'
+elif [[ "${DOVE_OS}" == 'secureblue' ]]; then
+  readonly DOVE_SHASUM_DEFAULT='/home/linuxbrew/.linuxbrew/bin/shasum'
 else
-  readonly DOVE_SHA1SUM_DEFAULT='/bin/sha1sum'
+  readonly DOVE_SHASUM_DEFAULT='/bin/shasum'
 fi
-if [[ -z "${DOVE_SHA1SUM+x}" ]]; then
-  DOVE_SHA1SUM="${DOVE_SHA1SUM_DEFAULT}"
+if [[ -z "${DOVE_SHASUM+x}" ]]; then
+  DOVE_SHASUM="${DOVE_SHASUM_DEFAULT}"
 fi
-readonly DOVE_SHA1SUM
-export DOVE_SHA1SUM
-
-# sha256sum
-if [[ "${DOVE_OS}" == 'osx' ]]; then
-  readonly DOVE_SHA256SUM_DEFAULT='/sbin/sha256sum'
-else
-  readonly DOVE_SHA256SUM_DEFAULT='/bin/sha256sum'
-fi
-if [[ -z "${DOVE_SHA256SUM+x}" ]]; then
-  DOVE_SHA256SUM="${DOVE_SHA256SUM_DEFAULT}"
-fi
-readonly DOVE_SHA256SUM
-export DOVE_SHA256SUM
-
-# sha512sum
-if [[ "${DOVE_OS}" == 'osx' ]]; then
-  readonly DOVE_SHA512SUM_DEFAULT='/sbin/sha512sum'
-else
-  readonly DOVE_SHA512SUM_DEFAULT='/bin/sha512sum'
-fi
-if [[ -z "${DOVE_SHA512SUM+x}" ]]; then
-  DOVE_SHA512SUM="${DOVE_SHA512SUM_DEFAULT}"
-fi
-readonly DOVE_SHA512SUM
-export DOVE_SHA512SUM
+readonly DOVE_SHASUM
+export DOVE_SHASUM
 
 # -shellcheck
 readonly DOVE_SHELLCHECK_DIR_DEFAULT="${DOVE_EXTERNAL}/shellcheck"

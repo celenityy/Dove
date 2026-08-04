@@ -208,13 +208,13 @@ function validate_checksum() {
     local -r local_checksum=$("${DOVE_MD5SUM}" "${file}" | "${DOVE_AWK}" '{print $1}')
   elif [[ "${checksum_type}" == 'sha1sum' ]]; then
     local -r checksum_type_pretty='SHA1sum'
-    local -r local_checksum=$("${DOVE_SHA1SUM}" "${file}" | "${DOVE_AWK}" '{print $1}')
+    local -r local_checksum=$("${DOVE_SHASUM}" -a 1 "${file}" | "${DOVE_AWK}" '{print $1}')
   elif [[ "${checksum_type}" == 'sha256sum' ]]; then
     local -r checksum_type_pretty='SHA256sum'
-    local -r local_checksum=$("${DOVE_SHA256SUM}" "${file}" | "${DOVE_AWK}" '{print $1}')
+    local -r local_checksum=$("${DOVE_SHASUM}" -a 256 "${file}" | "${DOVE_AWK}" '{print $1}')
   elif [[ "${checksum_type}" == 'sha512sum' ]]; then
     local -r checksum_type_pretty='SHA512sum'
-    local -r local_checksum=$("${DOVE_SHA512SUM}" "${file}" | "${DOVE_AWK}" '{print $1}')
+    local -r local_checksum=$("${DOVE_SHASUM}" -a 512 "${file}" | "${DOVE_AWK}" '{print $1}')
   else
     echo_red_text 'ERROR: Unknown checksum type.'
     return 1

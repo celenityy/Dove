@@ -82,23 +82,23 @@ function create_release_notes() {
   # Set our SHA512sums
 
   # dove-{DOVE_VERSION}-linux.tar.xz
-  local -r DOVE_LINUX_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux.tar.xz" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_LINUX_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux.tar.xz" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_LINUX_ARCHIVE_SHA512SUM}|${DOVE_LINUX_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
-  local -r DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM}|${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # dove-{DOVE_VERSION}-osx.tar.xz
-  local -r DOVE_OSX_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx.tar.xz" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_OSX_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx.tar.xz" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_OSX_ARCHIVE_SHA512SUM}|${DOVE_OSX_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # dove-{DOVE_VERSION}-osx-intel.tar.xz
-  local -r DOVE_OSX_INTEL_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_OSX_INTEL_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_OSX_INTEL_ARCHIVE_SHA512SUM}|${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # dove-{DOVE_VERSION}-windows.zip
-  local -r DOVE_WINDOWS_ARCHIVE_SHA512SUM=$("${DOVE_SHA512SUM}" "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-windows.zip" | "${DOVE_AWK}" '{print $1}')
+  local -r DOVE_WINDOWS_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-windows.zip" | "${DOVE_AWK}" '{print $1}')
   "${DOVE_SED}" -i "s|{DOVE_WINDOWS_ARCHIVE_SHA512SUM}|${DOVE_WINDOWS_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # Add release-specific changes
@@ -569,7 +569,7 @@ function add_sha512sum() {
     "${DOVE_RM}" -f "${sha512sum_file_out}"
   fi
 
-  local -r local_sha512sum=$("${DOVE_SHA512SUM}" "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
+  local -r local_sha512sum=$("${DOVE_SHASUM}" -a 512 "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
   echo -n "${local_sha512sum}" > "${sha512sum_file_out}"
 
   push_file "${sha512sum_file_out}" "${sha512sum_s3path}"
