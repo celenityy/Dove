@@ -27,7 +27,7 @@ fi
 # Get dependencies
 echo_red_text 'CI - Downloading dependencies...'
 /bin/sudo /bin/dnf update -y --refresh
-/bin/sudo /bin/dnf install -y as cc clang curl jq ld libxml2 libxml2-devel libxslt libxslt-devel tar zip
+/bin/sudo /bin/dnf install -y as cc clang curl jq ld libxml2 libxml2-devel libxslt libxslt-devel shasum tar zip
 /bin/bash "${DOVE_SCRIPTS}/get_sources.sh" 'all'
 /bin/bash "${DOVE_SCRIPTS}/get_sources.sh" 's3cmd'
 echo_green_text 'CI - SUCCESS: Downloaded dependencies.'
