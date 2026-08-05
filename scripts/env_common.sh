@@ -86,10 +86,6 @@ fi
 readonly DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
 export DOVE_VERSIONS
 
-# Archives directory
-readonly DOVE_ARCHIVES="${DOVE_ROOT}/archives"
-export DOVE_ARCHIVES
-
 # Build directory
 if [[ "${DOVE_NIX}" == 1 ]]; then
   # Nix needs to use /tmp here, see: https://codeberg.org/celenity/Dove/issues/59
