@@ -56,7 +56,7 @@
               lib.mkIf cfg.enable {
                 assertions = [
                   {
-                    assertion = !pkgs.stdenv.isDarwin;
+                    assertion = !pkgs.stdenv.hostPlatform.isDarwin;
                     message = "Dove module has not been ported to nix-darwin yet. Contributions welcomed.";
                   }
                 ];
@@ -162,7 +162,7 @@
 
                 patchShebangs ./scripts/*.sh
                 ${
-                  if stdenvNoCC.isDarwin then
+                  if stdenvNoCC.hostPlatform.isDarwin then
                     ''
                       ./scripts/build.sh 'osx'
                     ''
@@ -179,7 +179,7 @@
 
                 mkdir $out
                 ${
-                  if stdenvNoCC.isDarwin then
+                  if stdenvNoCC.hostPlatform.isDarwin then
                     ''
                       cp outputs/osx/* $out/
                       cp -r outputs/osx/assets $out/assets
