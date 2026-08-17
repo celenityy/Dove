@@ -1,2 +1,1 @@
-- Updated to Phoenix [`2026.07.27.1`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.07.27.1).
-- [Implemented CI to automate the build/release process](https://codeberg.org/celenity/Dove/commit/29ffd5e547d9a270c1b28b65ace44c74fc614c69).
+- Updated to Phoenix [`2026.08.17.1`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.08.17.1).
