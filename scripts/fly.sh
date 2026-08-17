@@ -212,8 +212,8 @@ function prep_dove() {
   "${DOVE_CP}" -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg"
 
   # Update the versions
-  "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|" "${DOVE_TEMP}/dove-parsed.cfg"
-  "${DOVE_SED}" -i "s|{DOVE_PHOENIX_VERSION}|${DOVE_PHOENIX_VERSION}|" "${DOVE_TEMP}/dove-parsed.cfg"
+  "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|g" "${DOVE_TEMP}/dove-parsed.cfg"
+  "${DOVE_SED}" -i "s|{DOVE_PHOENIX_VERSION}|${DOVE_PHOENIX_VERSION}|g" "${DOVE_TEMP}/dove-parsed.cfg"
 }
 
 # Build Thunderbird's autoconfiguration database
