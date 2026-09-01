@@ -40,6 +40,11 @@ export DOVE_DOWNLOAD_UTILS
 readonly DOVE_FILE_UTILS="${DOVE_SCRIPTS}/file-utilities.sh"
 export DOVE_FILE_UTILS
 
+# S3 utilities
+# (For CI)
+readonly DOVE_S3_UTILS="${DOVE_SCRIPTS}/s3-utilities.sh"
+export DOVE_S3_UTILS
+
 # Tools
 readonly DOVE_TOOLS="${DOVE_ROOT}/tools"
 export DOVE_TOOLS
