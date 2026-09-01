@@ -11,6 +11,7 @@ env:
   DOVE_CI: 1
   DOVE_CI_TYPE: "forgejo"
   DOVE_DEV_BRANCH: "dev"
+  DOVE_FEDORA_VERSION: "44"
   DOVE_PROD_BRANCH: "pages"
 
 jobs:
@@ -18,7 +19,7 @@ jobs:
     name: Lint
     runs-on: codeberg-medium
     container:
-      image: fedora:43
+      image: fedora:${{ env.DOVE_FEDORA_VERSION }}
     steps:
       - name: Get dependencies
         run: |
@@ -43,7 +44,7 @@ jobs:
     needs: [lint]
     runs-on: codeberg-medium
     container:
-      image: fedora:43
+      image: fedora:${{ env.DOVE_FEDORA_VERSION }}
     steps:
       - name: Get dependencies
         run: |
@@ -70,7 +71,7 @@ jobs:
     needs: [build]
     runs-on: codeberg-medium
     container:
-      image: fedora:43
+      image: fedora:${{ env.DOVE_FEDORA_VERSION }}
     steps:
       - name: Get dependencies
         run: |

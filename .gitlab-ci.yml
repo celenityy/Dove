@@ -20,6 +20,7 @@ variables: &common_variables
   DOVE_CI: 1
   DOVE_CI_TYPE: "gitlab"
   DOVE_DEV_BRANCH: "dev"
+  DOVE_FEDORA_VERSION: "44"
   DOVE_PROD_BRANCH: "pages"
   FF_USE_FASTZIP: "1"
   TRANSFER_METER_FREQUENCY: "2s"
@@ -33,7 +34,7 @@ stages:
 # Runs first so a lint failure stops the pipeline before the multi-hour builds.
 # Uses a minimal image and is NOT namespace-gated, so it also runs for forks / contributor pipelines.
 lint:
-  image: fedora:43
+  image: fedora:$DOVE_FEDORA_VERSION
   stage: lint
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -49,7 +50,7 @@ lint:
     - /bin/bash scripts/lint.sh
 
 build:
-  image: fedora:43
+  image: fedora:$DOVE_FEDORA_VERSION
   stage: build
   tags:
     - saas-linux-2xlarge-amd64
@@ -75,7 +76,7 @@ build:
       when: never
 
 release:
-  image: fedora:43
+  image: fedora:$DOVE_FEDORA_VERSION
   stage: release
   interruptible: true
   needs:
