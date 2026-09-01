@@ -10,9 +10,12 @@ on:
 env:
   DOVE_CI: 1
   DOVE_CI_TYPE: "forgejo"
+  DOVE_DEV_BRANCH: "dev"
+  DOVE_PROD_BRANCH: "pages"
 
 jobs:
   lint:
+    name: Lint
     runs-on: codeberg-medium
     container:
       image: fedora:43
@@ -36,6 +39,7 @@ jobs:
           /bin/bash scripts/lint.sh
 
   build:
+    name: Build
     needs: [lint]
     runs-on: codeberg-medium
     container:
@@ -61,7 +65,8 @@ jobs:
           /bin/bash scripts/ci-build.sh
 
   release:
-    if: forgejo.ref == 'refs/heads/pages' && forgejo.repository == 'celenity/Dove'
+    name: Release
+    if: forgejo.ref_name == env.DOVE_PROD_BRANCH && forgejo.repository == 'celenity/Dove'
     needs: [build]
     runs-on: codeberg-medium
     container:

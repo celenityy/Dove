@@ -3,22 +3,27 @@
 set -euo pipefail
 
 # Set-up our environment
-source $(dirname $0)/env.sh
+source $(dirname $0)/env.sh || exit 1
 
 # Include utilities
-source "${DOVE_UTILS}"
+source "${DOVE_UTILS}" || exit 1
+
+# Set verbosity
+set_verbosity
+
+# Include download utilities
+source "${DOVE_DOWNLOAD_UTILS}" || exit 1
+
+# Include file utilities
+source "${DOVE_FILE_UTILS}" || exit 1
 
 if [[ -z "${DOVE_FROM_SOURCES+x}" ]]; then
-  echo_red_text "ERROR: Do not call get_sources-dove.sh directly. Instead, use get_sources.sh." >&1
+  echo_red_text "ERROR: Do not call 'get_sources-dove.sh' directly! Instead, use 'get_sources.sh'." >&1
   exit 1
 fi
 
-# Set verbosity
-if [[ "${DOVE_VERBOSE}" == 1 ]]; then
-  set -x
-else
-  set +x
-fi
+# Ensure we have rm
+verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
 
 readonly target="$1"
 readonly mode="$2"
@@ -109,10 +114,35 @@ fi
 readonly DOVE_GET_SOURCE_CHECKSUM_UPDATE
 
 # Include version info
-source "${DOVE_VERSIONS}"
+source "${DOVE_VERSIONS}" || exit 1
 
 # Back-up (and remove) a file if it exists
 function backup_file() {
+  function print_usage() {
+    echo "Usage: backup_file 'path/to/file'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the file path!'
+    print_usage
+    exit 1
+  fi
+
+  # Ensure we have basename
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have dirname
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+
+  # Ensure we have mkdir
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
   local -r file="$1"
   local -r file_name="$("${DOVE_BASENAME}" "${file}")"
   local -r backup_file="${DOVE_EXTERNAL}/temp/backup/${file_name}"
@@ -127,6 +157,31 @@ function backup_file() {
 
 # Back-up (and remove) a directory if it exists
 function backup_dir() {
+  function print_usage() {
+    echo "Usage: backup_dir 'path/to/directory'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the directory path!'
+    print_usage
+    exit 1
+  fi
+
+  # Ensure we have basename
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have dirname
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+
+  # Ensure we have mkdir
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
   local -r dir="$1"
   local -r dir_name="$("${DOVE_BASENAME}" "${dir}")"
   local -r backup_dir="${DOVE_EXTERNAL}/temp/backup/${dir_name}"
@@ -141,6 +196,31 @@ function backup_dir() {
 
 # Restore a backed-up file
 function restore_file() {
+  function print_usage() {
+    echo "Usage: restore_file 'path/to/file'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the file path!'
+    print_usage
+    exit 1
+  fi
+
+  # Ensure we have basename
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have dirname
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+
+  # Ensure we have mkdir
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
   local -r file="$1"
   local -r file_name="$("${DOVE_BASENAME}" "${file}")"
   local -r backed_up_file="${DOVE_EXTERNAL}/temp/backup/${file_name}"
@@ -155,6 +235,31 @@ function restore_file() {
 
 # Restore a backed-up directory
 function restore_dir() {
+  function print_usage() {
+    echo "Usage: restore_dir 'path/to/directory'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the directory path!'
+    print_usage
+    exit 1
+  fi
+
+  # Ensure we have basename
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have dirname
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+
+  # Ensure we have mkdir
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
   local -r dir="$1"
   local -r dir_name="$("${DOVE_BASENAME}" "${dir}")"
   local -r backed_up_dir="${DOVE_EXTERNAL}/temp/backup/${dir_name}"
@@ -167,8 +272,42 @@ function restore_dir() {
   fi
 }
 
-# Function to automate updating checksums of dependencies
+# Update the checksum of a file
 function update_checksum() {
+  function print_usage() {
+    echo "Usage: update_checksum 'current_checksum' 'new_checksum' 'path/to/file' 'checksum_type'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text "ERROR: Please provide the file's current checksum!"
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${2+x}" ]]; then
+    echo_red_text "ERROR: Please provide the file's new checksum!"
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${3+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the file path!'
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${4+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the checksum type!'
+    print_usage
+    exit 1
+  fi
+
+  # Ensure we have GNU sed
+  verify_exec "${DOVE_SED}" 'DOVE_SED' || exit 1
+
+  # Ensure we can update `versions.sh`
+  verify_file "${DOVE_VERSIONS}" || exit 1
+
   local -r old_checksum="$1"
   local -r new_checksum="$2"
   local -r file="$3"
@@ -183,25 +322,65 @@ function update_checksum() {
   elif [[ "${checksum_type}" == 'sha512sum' ]]; then
     local -r checksum_type_pretty='SHA512sum'
   else
-    echo_red_text 'ERROR: Unknown checksum type.'
+    echo_red_text "ERROR: Unsupported checksum type: '${checksum_type}'!"
     exit 1
   fi
 
   if [[ "${old_checksum}" == "${new_checksum}" ]]; then
-    echo_red_text 'Checksums match. Skipping...'
-    echo "Old checksum: ${old_checksum}"
-    echo "New checksum: ${new_checksum}"
+    echo_red_text "Checksums for file: '${file}' already match! Skipping..."
+    echo "Old ${checksum_type_pretty}: '${old_checksum}'"
+    echo "New ${checksum_type_pretty}: '${new_checksum}'"
   else
-    echo_red_text "Updating ${checksum_type_pretty} for ${file}..."
-    "${DOVE_SED}" -i "s|'${old_checksum}'|'${new_checksum}'|" "${DOVE_VERSIONS}"
-    echo_green_text "SUCCESS: Updated ${checksum_type_pretty} for ${file}"
+    echo_red_text "Updating ${checksum_type_pretty} for file: '${file}'..."
+    "${DOVE_SED}" -i "s|'${old_checksum}'|'${new_checksum}'|g" "${DOVE_VERSIONS}"
+    echo_green_text "SUCCESS: Updated ${checksum_type_pretty} for file: '${file}'!"
   fi
 }
 
+# Validate the checksum of a file
 function validate_checksum() {
+  function print_usage() {
+    echo "Usage: validate_checksum 'expected_checksum' 'path/to/file' 'checksum_type'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text "ERROR: Please provide the file's expected checksum!"
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${2+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the file path!'
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${3+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the checksum type!'
+    print_usage
+    exit 1
+  fi
+
+  # Ensure we have GNU awk
+  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
+
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
   local -r expected_checksum="$1"
   local -r file="$2"
   local -r checksum_type="$3"
+
+  if [[ "${checksum_type}" == 'md5sum' ]]; then
+    # Ensure we have md5sum
+    verify_exec "${DOVE_MD5SUM}" 'DOVE_MD5SUM' || exit 1
+  else
+    # Ensure we have shasum
+    verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || exit 1
+  fi
+
+  # Ensure our file to validate is valid
+  verify_file "${file}" || exit 1
 
   if [[ "${checksum_type}" == 'md5sum' ]]; then
     local -r checksum_type_pretty='MD5sum'
@@ -216,69 +395,57 @@ function validate_checksum() {
     local -r checksum_type_pretty='SHA512sum'
     local -r local_checksum=$("${DOVE_SHASUM}" -a 512 "${file}" | "${DOVE_AWK}" '{print $1}')
   else
-    echo_red_text 'ERROR: Unknown checksum type.'
-    return 1
+    echo_red_text "ERROR: Unsupported checksum type: '${checksum_type}'!"
+    exit 1
   fi
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     update_checksum "${expected_checksum}" "${local_checksum}" "${file}" "${checksum_type}"
   elif [[ "${local_checksum}" != "${expected_checksum}" ]]; then
-    echo_red_text 'ERROR: Checksum validation failed.'
-    echo "Expected ${checksum_type_pretty}:   ${expected_checksum}"
-    echo "Actual ${checksum_type_pretty}:     ${local_checksum}"
+    echo_red_text "ERROR: Checksum (${checksum_type_pretty}) validation for file failed: '${file}'!"
+    echo "Expected ${checksum_type_pretty}:   '${expected_checksum}'"
+    echo "Actual ${checksum_type_pretty}:     '${local_checksum}'"
 
     # If checksum validation fails, also just remove the file
     "${DOVE_RM}" -f "${file}"
 
-    return 1
+    exit 1
   else
-    echo_green_text 'SUCCESS: Checksum validated.'
-    echo "${checksum_type_pretty}: ${local_checksum}"
+    echo_green_text "SUCCESS: Validated checksum (${checksum_type_pretty}) for file: '${file}'!"
+    echo "${checksum_type_pretty}: '${local_checksum}'"
   fi
 }
 
-function clone_repo() {
-  local -r url="$1"
-  local -r path="$2"
-  local -r revision="$3"
+# Download and verify the SHA512sum of a file
+function download_file() {
+  function print_usage() {
+    echo "Usage: download_file 'https://totally.real.url/file' 'path/to/file' 'file_sha512sum'"
+  }
 
-  if [[ "${url}" == "" ]]; then
-    echo_red_text "ERROR: URL missing for clone"
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the URL for the file to download!'
+    print_usage
     exit 1
   fi
 
-  if [[ "${path}" == "" ]]; then
-    echo_red_text "ERROR: Path is required for cloning '${url}'"
+  if [[ -z "${2+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the output file path!'
+    print_usage
     exit 1
   fi
 
-  if [[ "${revision}" == "" ]]; then
-    echo_red_text "ERROR: Revision is required for cloning '${url}'"
+  if [[ -z "${3+x}" ]]; then
+    echo_red_text "ERROR: Please provide the file's SHA512sum!"
+    print_usage
     exit 1
   fi
 
-  if [[ -f "${path}" ]]; then
-    echo_red_text "ERROR: '${path}' exists and is not a directory"
-    exit 1
-  fi
+  # Ensure we have basename
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
 
-  if [[ -d "${path}" ]]; then
-    echo_red_text "'${path}' already exists"
-    read -p "Do you want to re-clone this repository? [y/N] " -n 1 -r
-    echo
-    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-      echo_red_text "Removing ${path}..."
-      "${DOVE_RM}" -rf "${path}"
-    else
-      return 0
-    fi
-  fi
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
 
-  echo_red_text "Cloning ${url}::${revision}..."
-  "${DOVE_GIT}" clone --revision="${revision}" --depth=1 "${url}" "${path}"
-}
-
-function download() {
   local -r url="$1"
   local -r file_in="$2"
   local -r file_name=$("${DOVE_BASENAME}" "${file_in}")
@@ -300,17 +467,6 @@ function download() {
     DOVE_PERFORM_POST_DOWNLOAD=1
   fi
 
-  if [[ "${url}" == "" ]]; then
-    echo_red_text "ERROR: URL is required (file: '${file_in}')"
-    DOVE_PERFORM_POST_DOWNLOAD=0
-    if [[ "${DOVE_DOWNLOAD_EXIT}" != 1 ]]; then
-      unset DOVE_DOWNLOAD_EXIT
-      return 1
-    else
-      exit 1
-    fi
-  fi
-
   # If we're doing a checksum update, we download the file to a separate temporary directory, instead of our standard one
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/chksm"
@@ -320,13 +476,14 @@ function download() {
   fi
 
   if [[ -f "${file}" ]]; then
-    echo_red_text "${file} already exists."
+    echo_red_text "File already exists: '${file}'!"
     read -p "Do you want to re-download? [y/N] " -n 1 -r
     echo
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
       # Back-up (in case something goes wrong - ex. checksum validation fails) and remove our file
-      echo_red_text "Removing ${file}..."
+      echo_red_text "Removing file: '${file}'..."
       backup_file "${file}"
+      echo_green_text "SUCCESS: Removed file: '${file}'!"
     else
       unset DOVE_DOWNLOAD_EXIT
       DOVE_PERFORM_POST_DOWNLOAD=0
@@ -345,8 +502,8 @@ function download() {
     local -r CREATED_DIR_FOR_DL=0
   fi
 
-  echo_red_text "Downloading ${url}..."
-  "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --location "${url}" --output "${file}" || local DOVE_DOWNLOAD_FAILED=1
+  # Download our file
+  download "${url}" "${file}" || local DOVE_DOWNLOAD_FAILED=1
 
   # Verify (or update) SHA512sum
   validate_checksum "${expected_sha512sum}" "${file}" 'sha512sum' || local DOVE_CHECKSUM_FAILED=1
@@ -354,10 +511,10 @@ function download() {
   # If we're just updating the checksum, we're done, so go ahead and exit
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     if [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
-      echo_red_text 'ERROR: Download failed! Exiting...'
+      echo_red_text 'ERROR: Download failed!'
       exit 1
     elif [[ "${DOVE_CHECKSUM_FAILED}" == 1 ]]; then
-      echo_red_text 'ERROR: Failed to update checksum! Exiting...'
+      echo_red_text 'ERROR: Failed to update checksum!'
       exit 1
     else
       return 0
@@ -377,69 +534,46 @@ function download() {
 
   # If the download (or checksum validation) failed, exit
   if [[ "${DOVE_CHECKSUM_FAILED}" == 1 ]] || [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
-    # If a directory was created just for this download, remove it
-    if [[ "${CREATED_DIR_FOR_DL}" == 1 ]]; then
-      "${DOVE_RM}" -rf "$("${DOVE_DIRNAME}" "${file}")"
-    fi
     if [[ "${DOVE_DOWNLOAD_EXIT}" != 1 ]]; then
       unset DOVE_DOWNLOAD_EXIT
       return 1
     else
-      echo_red_text 'ERROR: Download failed! Exiting...'
+      echo_red_text 'ERROR: Download failed!'
       exit 1
     fi
   fi
 }
 
-# Extract archives
-function extract() {
-  local -r archive_path="$1"
-  local -r target_path="$2"
-  local -r temp_repo_name="$3"
-
-  if [[ ! -f "${archive_path}" ]]; then
-    echo_red_text "ERROR: Archive '${archive_path}' does not exist!"
-  fi
-
-  # If our temporary directory for extraction already exists, delete it
-  if [[ -d "${DOVE_EXTERNAL}/temp/${temp_repo_name}" ]]; then
-    "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
-  fi
-
-  # Create temporary directory for extraction
-  "${DOVE_MKDIR}" -p "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
-
-  # Extract based on file extension
-  case "${archive_path}" in
-    *.zip)
-      "${DOVE_UNZIP}" -q "${archive_path}" -d "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
-      ;;
-    *.tar.gz)
-      "${DOVE_TAR}" xzf "${archive_path}" -C "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
-      ;;
-    *.tar.xz)
-      "${DOVE_TAR}" xJf "${archive_path}" -C "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
-      ;;
-    *.tar.zst)
-      "${DOVE_TAR}" --zstd -xvf "${archive_path}" -C "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
-      ;;
-    *)
-      echo_red_text "ERROR: Unsupported archive format: ${archive_path}"
-      "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
-      exit 1
-      ;;
-  esac
-
-  local -r top_input_dir=$("${DOVE_LS}" "${DOVE_EXTERNAL}/temp/${temp_repo_name}")
-  "${DOVE_CP}" -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}/${top_input_dir}/" "${target_path}"
-  "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/${temp_repo_name}"
-}
-
+# Download and extract an archive
 function download_and_extract() {
-  local -r repo_name="$1"
-  local -r url="$2"
-  local -r path="$3"
-  local -r expected_sha512sum="$4"
+  function print_usage() {
+    echo "Usage: download_and_extract 'https://totally.real.url/archive' 'path/to/extract/archive/to' 'archive_sha512sum'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the URL for the archive to download!'
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${2+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the path that the archive should be extracted to!'
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${3+x}" ]]; then
+    echo_red_text "ERROR: Please provide the archive's SHA512sum!"
+    print_usage
+    exit 1
+  fi
+
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
+  local -r url="$1"
+  local -r path="$2"
+  local -r expected_sha512sum="$3"
 
   # By default, we want to perform post-download actions for sources
   ## (this includes things like ex. installing a dependency or creating/setting-up an environment)
@@ -453,13 +587,14 @@ function download_and_extract() {
   fi
 
   if [[ -d "${path}" ]] && [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
-    echo_red_text "'${path}' already exists"
+    echo_red_text "Path already exists: '${path}'!"
     read -p "Do you want to re-download? [y/N] " -n 1 -r
     echo
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
       # Back-up (in case something goes wrong - ex. checksum validation fails) and remove our directory
-      echo_red_text "Removing ${path}..."
+      echo_red_text "Removing path: '${path}'..."
       backup_dir "${path}"
+      echo_green_text "SUCCESS: Removed path: '${path}'!"
     else
       DOVE_PERFORM_POST_DOWNLOAD=0
       return 0
@@ -482,13 +617,17 @@ function download_and_extract() {
   # By default, we know the download hasn't failed...
   local DOVE_DOWNLOAD_FAILED=0
 
-  local -r repo_archive="${DOVE_DOWNLOADS}/${repo_name}${extension}"
-  download "${url}" "${repo_archive}" "${expected_sha512sum}" || local DOVE_DOWNLOAD_FAILED=1
+  # Set a temporary archive name
+  local -r temp_archive_path_name=$("${DOVE_BASENAME}" "${path}")
+  local -r temp_archive_path="${DOVE_DOWNLOADS}/${temp_archive_path_name}${extension}"
+
+  # Download the archive
+  download_file "${url}" "${temp_archive_path}" "${expected_sha512sum}" || local DOVE_DOWNLOAD_FAILED=1
 
   # If we're just updating the checksum, we're done, so go ahead and exit
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     if [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
-      echo_red_text 'ERROR: Download failed! Exiting...'
+      echo_red_text "ERROR: Download for archive failed: '${url}'!"
       exit 1
     else
       return 0
@@ -498,72 +637,130 @@ function download_and_extract() {
   # If the download failed, restore our back-up (if possible) and exit
   if [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
     restore_dir "${path}"
-    if [[ "${repo_name}" == 'uv' ]]; then
+    if [[ "${temp_archive_path_name}" == 'uv' ]]; then
       DOVE_PERFORM_POST_DOWNLOAD=0
       return 1
     else
-      echo_red_text 'ERROR: Download failed! Exiting...'
+      echo_red_text "ERROR: Download for archive failed: '${url}'!"
       exit 1
     fi
   fi
 
-  echo_red_text "Extracting ${repo_archive}..."
-  extract "${repo_archive}" "${path}" "${repo_name}"
+  # Extract the archive
+  extract_archive "${temp_archive_path}" "${path}"
 
   # Clean-up
-  "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/backup/${repo_name}"
+  "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/backup/${temp_archive_path_name}"
 }
 
 # Get Thunderbird's Autoconfiguration Database (ISPDB)
 function get_autoconfig() {
-  echo_red_text 'Downloading Thunderbird Autoconfiguration Database (ISPDB)...'
-  download_and_extract 'autoconfig' "https://github.com/thunderbird/autoconfig/archive/${DOVE_AUTOCONFIG_COMMIT}.tar.gz" "${DOVE_AUTOCONFIG}" "${DOVE_AUTOCONFIG_SHA512SUM}"
+  # Ensure we have `DOVE_AUTOCONFIG_COMMIT`
+  if [[ -z "${DOVE_AUTOCONFIG_COMMIT+x}" ]] || [[ "${DOVE_AUTOCONFIG_COMMIT}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_AUTOCONFIG_COMMIT' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_AUTOCONFIG_SHA512SUM`
+  if [[ -z "${DOVE_AUTOCONFIG_SHA512SUM+x}" ]] || [[ "${DOVE_AUTOCONFIG_SHA512SUM}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_AUTOCONFIG_SHA512SUM' is missing!"
+    exit 1
+  fi
+
+  echo_red_text "Downloading Thunderbird Autoconfiguration Database (ISPDB) to path: '${DOVE_AUTOCONFIG}'..."
+  download_and_extract "https://github.com/thunderbird/autoconfig/archive/${DOVE_AUTOCONFIG_COMMIT}.tar.gz" "${DOVE_AUTOCONFIG}" "${DOVE_AUTOCONFIG_SHA512SUM}"
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
-    echo_green_text "SUCCESS: Set-up Thunderbird Autoconfiguration Database (ISPDB) at ${DOVE_AUTOCONFIG}"
+    echo_green_text "SUCCESS: Set-up Thunderbird Autoconfiguration Database (ISPDB) at path: '${DOVE_AUTOCONFIG}'!"
   fi
 }
 
 # Get lxml
 function get_lxml() {
+  # Ensure we have `DOVE_LXML_COMMIT`
+  if [[ -z "${DOVE_LXML_COMMIT+x}" ]] || [[ "${DOVE_LXML_COMMIT}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_LXML_COMMIT' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_LXML_SHA512SUM`
+  if [[ -z "${DOVE_LXML_SHA512SUM+x}" ]] || [[ "${DOVE_LXML_SHA512SUM}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_LXML_SHA512SUM' is missing!"
+    exit 1
+  fi
+
   # If all we're doing is updating the checksum, we don't care if the environment is prepared
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
+    # Ensure we have uv
+    verify_exec "${DOVE_UV}" 'DOVE_UV' || {
+      echo_red_text "ERROR: Unable to download and install lxml without uv!"
+      exit 1
+    }
+
     if [[ ! -d "${DOVE_UV_DIR}" ]] || [[ ! -f "${DOVE_PYENV}" ]]; then
-      echo_red_text "ERROR: You tried to download lxml, but you don't have a Python environment set-up yet."
+      echo_red_text "ERROR: You tried to download lxml, but you don't have a Python environment set-up yet!"
       exit 1
     fi
   fi
 
-  echo_red_text "Downloading lxml..."
-  download_and_extract 'lxml' "https://github.com/lxml/lxml/archive/${DOVE_LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${DOVE_LXML_SHA512SUM}"
+  echo_red_text "Downloading lxml to path: '${DOVE_LXML}'..."
+  download_and_extract "https://github.com/lxml/lxml/archive/${DOVE_LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${DOVE_LXML_SHA512SUM}"
 
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
     source "${DOVE_PYENV}"
-    echo_red_text 'Installing lxml...'
+    echo_red_text "Installing lxml from path: '${DOVE_LXML}'..."
     "${DOVE_UV}" pip install --no-editable --strict "${DOVE_LXML}"
-    echo_green_text 'SUCCESS: Set-up lxml'
+    echo_green_text "SUCCESS: Set-up lxml from path: '${DOVE_LXML}'!"
   fi
 }
 
 # Get Phoenix
 function get_phoenix() {
-  echo_red_text 'Downloading Phoenix...'
-  download_and_extract 'phoenix' "https://gitlab.com/celenityy/Phoenix/-/archive/${DOVE_PHOENIX_COMMIT}/Phoenix-${DOVE_PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${DOVE_PHOENIX_SHA512SUM}"
+  # Ensure we have `DOVE_PHOENIX_COMMIT`
+  if [[ -z "${DOVE_PHOENIX_COMMIT+x}" ]] || [[ "${DOVE_PHOENIX_COMMIT}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_PHOENIX_COMMIT' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_PHOENIX_SHA512SUM`
+  if [[ -z "${DOVE_PHOENIX_SHA512SUM+x}" ]] || [[ "${DOVE_PHOENIX_SHA512SUM}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_PHOENIX_SHA512SUM' is missing!"
+    exit 1
+  fi
+
+  echo_red_text "Downloading Phoenix to path: '${DOVE_PHOENIX}'..."
+  download_and_extract "https://gitlab.com/celenityy/Phoenix/-/archive/${DOVE_PHOENIX_COMMIT}/Phoenix-${DOVE_PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${DOVE_PHOENIX_SHA512SUM}"
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
-    echo_green_text "SUCCESS: Set-up Phoenix at ${DOVE_PHOENIX}"
+    echo_green_text "SUCCESS: Set-up Phoenix at path: '${DOVE_PHOENIX}'!"
   fi
 }
 
 # Get Python
 function get_python() {
+  # Ensure we have `DOVE_PYTHON_GIT_RELEASE`
+  if [[ -z "${DOVE_PYTHON_GIT_RELEASE+x}" ]] || [[ "${DOVE_PYTHON_GIT_RELEASE}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_PYTHON_GIT_RELEASE' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_PYTHON_VERSION`
+  if [[ -z "${DOVE_PYTHON_VERSION+x}" ]] || [[ "${DOVE_PYTHON_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_PYTHON_VERSION' is missing!"
+    exit 1
+  fi
+
   # If all we're doing is updating the checksum, we don't care about existing installations
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
-    if [[ ! -x "${DOVE_UV}" ]]; then
-      echo_red_text "ERROR: You tried to download Python, but you're missing uv!"
+    # Ensure we have rm
+    verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
+    # Ensure we have uv
+    verify_exec "${DOVE_UV}" 'DOVE_UV' || {
+      echo_red_text "ERROR: Unable to download and install Python without uv!"
       exit 1
-    fi
+    }
 
     if [[ -d "${DOVE_PYENV_DIR}" ]]; then
-      echo_red_text "The Python environment is already set-up at ${DOVE_PYENV_DIR}"
+      echo_red_text "The Python environment is already set-up at path: '${DOVE_PYENV_DIR}'!"
       read -p "Do you want to re-create it? [y/N] " -n 1 -r
       echo
       if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
@@ -573,8 +770,8 @@ function get_python() {
     fi
 
     if [[ -d "${DOVE_PYTHON_DIR}" ]]; then
-      echo_red_text "Found existing installation at ${DOVE_PYTHON_DIR}"
-      echo 'Continuing will remove this installation and related data'
+      echo_red_text "Found existing installation at path: '${DOVE_PYTHON_DIR}'!"
+      echo 'Continuing will remove this installation and related data.'
       read -p "Do you still want to continue? [y/N] " -n 1 -r
       echo
       if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
@@ -590,19 +787,28 @@ function get_python() {
     fi
   fi
 
+  # Base download URL
+  local -r base_url="https://github.com/astral-sh/python-build-standalone/releases/download/${DOVE_PYTHON_GIT_RELEASE}"
+
+  # Base output path
+  local -r base_output="${DOVE_PYTHON_DIR}/${DOVE_PYTHON_GIT_RELEASE}"
+
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     echo_red_text 'Downloading Python (Linux - ARM64)...'
-    download "https://github.com/astral-sh/python-build-standalone/releases/download/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_ARM64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_ARM64}"
 
     echo_red_text 'Downloading Python (Linux - x86_64)...'
-    download "https://github.com/astral-sh/python-build-standalone/releases/download/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_X86_64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_X86_64}"
 
     echo_red_text 'Downloading Python (OS X - ARM64)...'
-    download "https://github.com/astral-sh/python-build-standalone/releases/download/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_ARM64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_ARM64}"
 
     echo_red_text 'Downloading Python (OS X - x86_64)...'
-    download "https://github.com/astral-sh/python-build-standalone/releases/download/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_X86_64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_X86_64}"
   else
+    # Ensure we have rm
+    verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
       local -r DOVE_PYTHON_PLATFORM='apple-darwin'
@@ -640,11 +846,16 @@ function get_python() {
     local DOVE_PYENV_FAILED=0
     local DOVE_PYTHON_INSTALL_FAILED=0
 
+    local -r dl_archive="cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-${DOVE_PYTHON_ARCH}-${DOVE_PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+    local -r dl_output="${base_output}/${dl_archive}"
+    local -r dl_url="${base_url}/${dl_archive}"
+
     echo_red_text 'Downloading Python...'
-    download "https://github.com/astral-sh/python-build-standalone/releases/download/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-${DOVE_PYTHON_ARCH}-${DOVE_PYTHON_PLATFORM}-install_only_stripped.tar.gz" "${DOVE_PYTHON_DIR}/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-${DOVE_PYTHON_ARCH}-${DOVE_PYTHON_PLATFORM}-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM}" || local DOVE_DOWNLOAD_FAILED=1
+    download_file "${dl_url}" "${dl_output}" "${DOVE_PYTHON_SHA512SUM}" || local DOVE_DOWNLOAD_FAILED=1
 
     # If the download failed, restore our back-ups, clean-up, and exit
     if [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
+      echo_red_text "ERROR: Download for Python to path: '${dl_output}' failed!"
       restore_dir "${DOVE_PYENV_DIR}"
       restore_dir "${DOVE_PYTHON_DIR}"
       restore_dir "${DOVE_UV_CACHE}"
@@ -653,13 +864,14 @@ function get_python() {
       "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
       exit 1
     elif [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
-      echo_green_text "SUCCESS: Downloaded Python to ${DOVE_PYTHON_DIR}/${DOVE_PYTHON_GIT_RELEASE}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-${DOVE_PYTHON_ARCH}-${DOVE_PYTHON_PLATFORM}-install_only_stripped.tar.gz"
+      echo_green_text "SUCCESS: Downloaded Python to path: '${dl_output}'!"
 
       echo_red_text 'Installing Python...'
       "${DOVE_UV}" python install "${DOVE_PYTHON_VERSION}" || local DOVE_PYTHON_INSTALL_FAILED=1
 
       # If the install failed, restore our back-ups, clean-up, and exit
       if [[ "${DOVE_PYTHON_INSTALL_FAILED}" == 1 ]]; then
+        echo_red_text "ERROR: Unable to install Python from path: '${dl_output}'!"
         restore_dir "${DOVE_PYENV_DIR}"
         restore_dir "${DOVE_PYTHON_DIR}"
         restore_dir "${DOVE_UV_CACHE}"
@@ -669,17 +881,17 @@ function get_python() {
         exit 1
       fi
 
-      echo_red_text 'Creating Python environment...'
+      echo_red_text "Creating Python environment at path: '${DOVE_PYENV_DIR}'..."
       "${DOVE_UV}" venv "${DOVE_PYENV_DIR}" || local DOVE_PYENV_FAILED=1
 
       # If the Python env set-up failed, restore our back-up, clean-up, and exit
       if [[ "${DOVE_PYENV_FAILED}" == 1 ]]; then
-        echo_red_text 'ERROR: Download failed! Exiting...'
+        echo_red_text "ERROR: Unable to set-up Python environment at path: '${PHOENIX_PYENV_DIR}'!"
         restore_dir "${DOVE_PYENV_DIR}"
         "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
         exit 1
       else
-        echo_green_text "SUCCESS: Set-up Python environment at ${DOVE_PYENV_DIR}"
+        echo_green_text "SUCCESS: Set-up Python environment at path: '${PHOENIX_PYENV_DIR}'!"
       fi
     fi
   fi
@@ -687,15 +899,33 @@ function get_python() {
 
 # Get s3cmd
 function get_s3cmd() {
+  # Ensure we have `DOVE_S3CMD_COMMIT`
+  if [[ -z "${DOVE_S3CMD_COMMIT+x}" ]] || [[ "${DOVE_S3CMD_COMMIT}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_S3CMD_COMMIT' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_S3CMD_SHA512SUM`
+  if [[ -z "${DOVE_S3CMD_SHA512SUM+x}" ]] || [[ "${DOVE_S3CMD_SHA512SUM}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_S3CMD_SHA512SUM' is missing!"
+    exit 1
+  fi
+
   # If all we're doing is updating the checksum, we don't care if the environment is prepared
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
+    # Ensure we have uv
+    verify_exec "${DOVE_UV}" 'DOVE_UV' || {
+      echo_red_text "ERROR: Unable to download and install s3cmd without uv!"
+      exit 1
+    }
+
     if [[ ! -d "${DOVE_UV_DIR}" ]] || [[ ! -f "${DOVE_PYENV}" ]]; then
-      echo_red_text "ERROR: You tried to download s3cmd, but you don't have a Python environment set-up yet."
+      echo_red_text "ERROR: You tried to download s3cmd, but you don't have a Python environment set-up yet!"
       exit 1
     fi
 
     if [[ -d "${DOVE_PYENV_DIR}/bin/s3cmd" ]]; then
-      echo_red_text "s3cmd is already installed at ${DOVE_PYENV_DIR}/bin/s3cmd"
+      echo_red_text "s3cmd is already installed at path: '${DOVE_PYENV_DIR}/bin/s3cmd'!"
       read -p "Do you want to re-download it? [y/N] " -n 1 -r
       echo
       if [[ "${REPLY}" =~ ^[Nn]$ ]]; then
@@ -707,31 +937,40 @@ function get_s3cmd() {
     fi
   fi
 
-  echo_red_text "Downloading s3cmd..."
-  download_and_extract 's3cmd' "https://github.com/s3tools/s3cmd/archive/${DOVE_S3CMD_COMMIT}.tar.gz" "${DOVE_S3CMD_DIR}" "${DOVE_S3CMD_SHA512SUM}"
+  echo_red_text "Downloading s3cmd to path: '${DOVE_S3CMD_DIR}'..."
+  download_and_extract "https://github.com/s3tools/s3cmd/archive/${DOVE_S3CMD_COMMIT}.tar.gz" "${DOVE_S3CMD_DIR}" "${DOVE_S3CMD_SHA512SUM}"
 
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
     source "${DOVE_PYENV}"
-    echo_red_text 'Installing s3cmd...'
+    echo_red_text "Installing s3cmd to path: '${DOVE_S3CMD}'..."
     "${DOVE_UV}" pip install --no-editable --strict "${DOVE_S3CMD_DIR}"
-    echo_green_text "SUCCESS: Set-up s3cmd at ${DOVE_S3CMD}"
+    echo_green_text "SUCCESS: Set-up s3cmd at path: '${DOVE_S3CMD}'!"
   fi
 }
 
 # Get shellcheck
 function get_shellcheck() {
+  # Ensure we have `DOVE_SHELLCHECK_VERSION`
+  if [[ -z "${DOVE_SHELLCHECK_VERSION+x}" ]] || [[ "${DOVE_SHELLCHECK_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_SHELLCHECK_VERSION' is missing!"
+    exit 1
+  fi
+
+  # Base download URL
+  local -r base_url="https://github.com/koalaman/shellcheck/releases/download/${DOVE_SHELLCHECK_VERSION}"
+
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     echo_red_text 'Downloading shellcheck (Linux - ARM64)...'
-    download "https://github.com/koalaman/shellcheck/releases/download/${DOVE_SHELLCHECK_VERSION}/shellcheck-${DOVE_SHELLCHECK_VERSION}.linux.aarch64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_LINUX_ARM64}"
+    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.linux.aarch64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_LINUX_ARM64}"
 
     echo_red_text 'Downloading shellcheck (Linux - x86_64)...'
-    download "https://github.com/koalaman/shellcheck/releases/download/${DOVE_SHELLCHECK_VERSION}/shellcheck-${DOVE_SHELLCHECK_VERSION}.linux.x86_64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_LINUX_X86_64}"
+    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.linux.x86_64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_LINUX_X86_64}"
 
     echo_red_text 'Downloading shellcheck (OS X - ARM64)...'
-    download "https://github.com/koalaman/shellcheck/releases/download/${DOVE_SHELLCHECK_VERSION}/shellcheck-${DOVE_SHELLCHECK_VERSION}.darwin.aarch64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_OSX_ARM64}"
+    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.darwin.aarch64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_OSX_ARM64}"
 
     echo_red_text 'Downloading shellcheck (OS X - x86_64)...'
-    download "https://github.com/koalaman/shellcheck/releases/download/${DOVE_SHELLCHECK_VERSION}/shellcheck-${DOVE_SHELLCHECK_VERSION}.darwin.x86_64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_OSX_X86_64}"
+    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.darwin.x86_64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_OSX_X86_64}"
   else
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
@@ -762,8 +1001,8 @@ function get_shellcheck() {
       fi
     fi
 
-    echo_red_text 'Downloading shellcheck...'
-    download_and_extract 'shellcheck' "https://github.com/koalaman/shellcheck/releases/download/${DOVE_SHELLCHECK_VERSION}/shellcheck-${DOVE_SHELLCHECK_VERSION}.${DOVE_SHELLCHECK_PLATFORM}.${DOVE_SHELLCHECK_ARCH}.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM}"
+    echo_red_text "Downloading shellcheck to path: '${DOVE_SHELLCHECK_DIR}'..."
+    download_and_extract "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.${DOVE_SHELLCHECK_PLATFORM}.${DOVE_SHELLCHECK_ARCH}.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM}"
 
     if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       # Set-up the linting pre-commit hook
@@ -771,25 +1010,40 @@ function get_shellcheck() {
         /bin/bash "${DOVE_SCRIPTS}/lint-hook.sh"
       fi
 
-      echo_green_text "SUCCESS: Set-up shellcheck at ${DOVE_SHELLCHECK}"
+      echo_green_text "SUCCESS: Set-up shellcheck at path: '${DOVE_SHELLCHECK}'!"
     fi
   fi
 }
 
 # Get shfmt
 function get_shfmt() {
+  # Ensure we have `DOVE_SHFMT_VERSION`
+  if [[ -z "${DOVE_SHFMT_VERSION+x}" ]] || [[ "${DOVE_SHFMT_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_SHFMT_VERSION' is missing!"
+    exit 1
+  fi
+
+  # If all we're doing is updating the checksum, we don't care about existing installations
+  if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
+    # Ensure we have chmod
+    verify_exec "${DOVE_CHMOD}" 'DOVE_CHMOD' || exit 1
+  fi
+
+  # Base download URL
+  local -r base_url="https://github.com/mvdan/sh/releases/download/${DOVE_SHFMT_VERSION}"
+
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     echo_red_text 'Downloading shfmt (Linux - ARM64)...'
-    download "https://github.com/mvdan/sh/releases/download/${DOVE_SHFMT_VERSION}/shfmt_${DOVE_SHFMT_VERSION}_linux_arm64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_LINUX_ARM64}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_linux_arm64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_LINUX_ARM64}"
 
     echo_red_text 'Downloading shfmt (Linux - x86_64)...'
-    download "https://github.com/mvdan/sh/releases/download/${DOVE_SHFMT_VERSION}/shfmt_${DOVE_SHFMT_VERSION}_linux_amd64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_LINUX_X86_64}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_linux_amd64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_LINUX_X86_64}"
 
     echo_red_text 'Downloading shfmt (OS X - ARM64)...'
-    download "https://github.com/mvdan/sh/releases/download/${DOVE_SHFMT_VERSION}/shfmt_${DOVE_SHFMT_VERSION}_darwin_arm64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_OSX_ARM64}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_darwin_arm64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_OSX_ARM64}"
 
     echo_red_text 'Downloading shfmt (OS X - x86_64)...'
-    download "https://github.com/mvdan/sh/releases/download/${DOVE_SHFMT_VERSION}/shfmt_${DOVE_SHFMT_VERSION}_darwin_amd64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_OSX_X86_64}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_darwin_amd64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_OSX_X86_64}"
   else
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
@@ -820,8 +1074,8 @@ function get_shfmt() {
       fi
     fi
 
-    echo_red_text 'Downloading shfmt...'
-    download "https://github.com/mvdan/sh/releases/download/${DOVE_SHFMT_VERSION}/shfmt_${DOVE_SHFMT_VERSION}_${DOVE_SHFMT_PLATFORM}_${DOVE_SHFMT_ARCH}" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM}"
+    echo_red_text "Downloading shfmt to path: '${DOVE_SHFMT}'..."
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_${DOVE_SHFMT_PLATFORM}_${DOVE_SHFMT_ARCH}" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM}"
 
     if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       "${DOVE_CHMOD}" +x "${DOVE_SHFMT}"
@@ -831,40 +1085,54 @@ function get_shfmt() {
         /bin/bash "${DOVE_SCRIPTS}/lint-hook.sh"
       fi
 
-      echo_green_text "SUCCESS: Set-up shfmt at ${DOVE_SHFMT}"
+      echo_green_text "SUCCESS: Set-up shfmt at path: '${DOVE_SHFMT}'!"
     fi
   fi
 }
 
 # Get + set-up uv
 function get_uv() {
+  # Ensure we have `DOVE_UV_VERSION`
+  if [[ -z "${DOVE_UV_VERSION+x}" ]] || [[ "${DOVE_UV_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_UV_VERSION' is missing!"
+    exit 1
+  fi
+
   # If all we're doing is updating the checksum, we don't care about existing installations
-  if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]] && [[ -d "${DOVE_UV_DIR}" ]]; then
-    echo_red_text "Found existing installation at ${DOVE_UV_DIR}"
-    echo 'Continuing will remove this installation and related data'
-    read -p "Do you still want to continue? [y/N] " -n 1 -r
-    echo
-    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-      # Back-up (in case something goes wrong - ex. checksum validation fails) and remove our directories
-      backup_dir "${DOVE_UV_DIR}"
-      backup_dir "${DOVE_UV_LOCAL}"
-    else
-      return 0
+  if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
+    # Ensure we have rm
+    verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
+    if [[ -d "${DOVE_UV_DIR}" ]]; then
+      echo_red_text "Found existing installation at path: '${PHOENIX_UV_DIR}'!"
+      echo 'Continuing will remove this installation and related data.'
+      read -p "Do you still want to continue? [y/N] " -n 1 -r
+      echo
+      if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+        # Back-up (in case something goes wrong - ex. checksum validation fails) and remove our directories
+        backup_dir "${DOVE_UV_DIR}"
+        backup_dir "${DOVE_UV_LOCAL}"
+      else
+        return 0
+      fi
     fi
   fi
 
+  # Base download URL
+  local -r base_url="https://github.com/astral-sh/uv/releases/download/${DOVE_UV_VERSION}"
+
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     echo_red_text 'Downloading uv (Linux - ARM64)...'
-    download "https://github.com/astral-sh/uv/releases/download/${DOVE_UV_VERSION}/uv-aarch64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-arm64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_ARM64}"
+    download_file "${base_url}/uv-aarch64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-arm64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_ARM64}"
 
     echo_red_text 'Downloading uv (Linux - x86_64)...'
-    download "https://github.com/astral-sh/uv/releases/download/${DOVE_UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_X86_64}"
+    download_file "${base_url}/uv-x86_64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_X86_64}"
 
     echo_red_text 'Downloading uv (OS X - ARM64)...'
-    download "https://github.com/astral-sh/uv/releases/download/${DOVE_UV_VERSION}/uv-aarch64-apple-darwin.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-osx-arm64.tar.gz" "${DOVE_UV_SHA512SUM_OSX_ARM64}"
+    download_file "${base_url}/uv-aarch64-apple-darwin.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-osx-arm64.tar.gz" "${DOVE_UV_SHA512SUM_OSX_ARM64}"
 
     echo_red_text 'Downloading uv (OS X - x86_64)...'
-    download "https://github.com/astral-sh/uv/releases/download/${DOVE_UV_VERSION}/uv-x86_64-apple-darwin.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-osx-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_OSX_X86_64}"
+    download_file "${base_url}/uv-x86_64-apple-darwin.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-osx-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_OSX_X86_64}"
   else
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
@@ -901,18 +1169,18 @@ function get_uv() {
     # By default, we know the download hasn't failed...
     local DOVE_DOWNLOAD_FAILED=0
 
-    echo_red_text 'Downloading uv...'
-    download_and_extract 'uv' "https://github.com/astral-sh/uv/releases/download/${DOVE_UV_VERSION}/uv-${DOVE_UV_ARCH}-${DOVE_UV_PLATFORM}.tar.gz" "${DOVE_UV_DIR}" "${DOVE_UV_SHA512SUM}" || local DOVE_DOWNLOAD_FAILED=1
+    echo_red_text "Downloading uv to path: '${DOVE_UV_DIR}'..."
+    download_and_extract "${base_url}/uv-${DOVE_UV_ARCH}-${DOVE_UV_PLATFORM}.tar.gz" "${DOVE_UV_DIR}" "${DOVE_UV_SHA512SUM}" || local DOVE_DOWNLOAD_FAILED=1
 
     # If the download failed, restore our back-up, clean-up, and exit
     if [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
-      echo_red_text 'ERROR: Download failed! Exiting...'
+      echo_red_text "ERROR: Download for uv to path: '${DOVE_UV_DIR}' failed!"
       restore_dir "${DOVE_UV_DIR}"
       restore_dir "${DOVE_UV_LOCAL}"
       "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
       exit 1
     elif [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
-      echo_green_text "SUCCESS: Set-up uv at ${DOVE_UV}"
+      echo_green_text "SUCCESS: Set-up uv at path: '${DOVE_UV}'!"
     fi
   fi
 }

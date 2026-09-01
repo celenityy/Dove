@@ -15,23 +15,24 @@ default:
       - unknown_failure
 
 variables: &common_variables
-  ARTIFACT_COMPRESSION_LEVEL: 'slowest'
-  CACHE_COMPRESSION_LEVEL: 'slowest'
+  ARTIFACT_COMPRESSION_LEVEL: "slowest"
+  CACHE_COMPRESSION_LEVEL: "slowest"
   DOVE_CI: 1
-  DOVE_CI_TYPE: 'gitlab'
-  FF_USE_FASTZIP: '1'
-  PRODUCTION_BRANCH: 'pages'
-  TRANSFER_METER_FREQUENCY: '2s'
+  DOVE_CI_TYPE: "gitlab"
+  DOVE_DEV_BRANCH: "dev"
+  DOVE_PROD_BRANCH: "pages"
+  FF_USE_FASTZIP: "1"
+  TRANSFER_METER_FREQUENCY: "2s"
 
 stages:
   - lint
-  - build_dove
-  - release_dove
+  - build
+  - release
 
 # Fast, lightweight gate: shellcheck + shfmt over the shell scripts.
 # Runs first so a lint failure stops the pipeline before the multi-hour builds.
 # Uses a minimal image and is NOT namespace-gated, so it also runs for forks / contributor pipelines.
-lint-scripts:
+lint:
   image: fedora:43
   stage: lint
   rules:
@@ -49,7 +50,7 @@ lint-scripts:
 
 build:
   image: fedora:43
-  stage: build_dove
+  stage: build
   tags:
     - saas-linux-2xlarge-amd64
   variables:
@@ -73,9 +74,9 @@ build:
     - if: $CI_COMMIT_TAG
       when: never
 
-publish-release:
+release:
   image: fedora:43
-  stage: release_dove
+  stage: release
   interruptible: true
   needs:
     - job: 'build'
@@ -85,9 +86,9 @@ publish-release:
       when: never
     - if: $CI_COMMIT_TAG
       when: never
-    - if: $CI_COMMIT_BRANCH == $PRODUCTION_BRANCH && $CI_COMMIT_MESSAGE =~ /\[skip-release\]/
+    - if: $CI_COMMIT_BRANCH == $DOVE_PROD_BRANCH && $CI_COMMIT_MESSAGE =~ /\[skip-release\]/
       when: never
-    - if: $CI_COMMIT_BRANCH == $PRODUCTION_BRANCH
+    - if: $CI_COMMIT_BRANCH == $DOVE_PROD_BRANCH
   tags:
     - saas-linux-2xlarge-amd64
   variables:

@@ -3,19 +3,27 @@
 set -euo pipefail
 
 # Ensure this is never ran with xtrace...
-set +x
+set +x || exit 1
 
 # Set-up our environment
-if [[ -z "${DOVE_CI+x}" ]]; then
-  export DOVE_CI=1
-fi
-source $(dirname $0)/env.sh
+source $(dirname $0)/env.sh || exit 1
 
 # Include utilities
-source "${DOVE_UTILS}"
+source "${DOVE_UTILS}" || exit 1
+
+# Include download utilities
+source "${DOVE_DOWNLOAD_UTILS}" || exit 1
+
+# Include S3 utilities
+source "${DOVE_S3_UTILS}" || exit 1
 
 if [[ -z "${DOVE_FROM_PUSH+x}" ]]; then
   echo_red_text 'ERROR: Do not call ci-push-dove.sh directly. Instead, use ci-push.sh.' >&1
+  exit 1
+fi
+
+if [[ "${DOVE_CI}" != 1 ]]; then
+  echo_red_text "ERROR: '$0' should only be called from CI!"
   exit 1
 fi
 
@@ -26,7 +34,7 @@ verify_file_with_env "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" 'DOVE_CEL_RELEASES_
 verify_file_with_env "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE' || exit 1
 
 # Include version info
-source "${DOVE_VERSIONS}"
+source "${DOVE_VERSIONS}" || exit 1
 
 # Constants
 
@@ -54,8 +62,77 @@ readonly DOVE_GITLAB_PACKAGE_NAME='dove'
 readonly DOVE_GITLAB_PROJECT_ID='66829593'
 readonly DOVE_GITLAB_GENERIC_PACKAGES_URL="${DOVE_GITLAB_API_URL}/projects/${DOVE_GITLAB_PROJECT_ID}/packages/generic"
 
+# Push a file with a SHA512sum to S3 storage
+function push_to_s3() {
+  function print_usage() {
+    echo "Usage: push_to_s3 '/path/to/file' 'path/on/s3'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please specify the path to a file that should be uploaded to S3 storage!'
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${2+x}" ]]; then
+    echo_red_text 'ERROR: Please specify the target path on S3 storage for where the file should be uploaded!'
+    print_usage
+    exit 1
+  fi
+
+  local -r push_file="$1"
+  local -r s3_path="$2"
+
+  local -r s3_access_key_file="${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}"
+  local -r s3_bucket_name_file="${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}"
+  local -r s3_endpoint_file="${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}"
+  local -r s3_secret_key_file="${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}"
+
+  # Ensure our file to push is valid
+  verify_file "${push_file}" || exit 1
+
+  # Create and push a SHA512sum for our file to S3 storage
+  push_and_add_sha512sum "${push_file}" "${s3_path}" "${s3_access_key_file}" "${s3_bucket_name_file}" "${s3_endpoint_file}" "${s3_secret_key_file}"
+}
+
 # Create release notes
 function create_release_notes() {
+  # Ensure we have cat
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have GNU awk
+  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
+
+  # Ensure we have GNU sed
+  verify_exec "${DOVE_SED}" 'DOVE_SED' || exit 1
+
+  # Ensure we have mkdir
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
+  # Ensure we have shasum
+  verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || exit 1
+
+  # Ensure we have xargs
+  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || exit 1
+
+  # Ensure we have `DOVE_VERSION`
+  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_CEL_RELEASES_URL`
+  if [[ -z "${DOVE_CEL_RELEASES_URL+x}" ]] || [[ "${DOVE_CEL_RELEASES_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_CEL_RELEASES_URL' is missing!"
+    exit 1
+  fi
+
   # Ensure our changelog (for release-specific changes) exists
   local -r DOVE_CHANGELOG_FILE="${DOVE_ROOT}/CHANGELOG.md"
   verify_file "${DOVE_CHANGELOG_FILE}" || exit 1
@@ -75,7 +152,7 @@ function create_release_notes() {
   "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
   # Set the previous (current) version
-  "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --location "${DOVE_CEL_RELEASES_URL}/dove/releases/latest_release.txt" --output "${DOVE_TEMP}/previous_release.txt"
+  download "${DOVE_CEL_RELEASES_URL}/dove/releases/latest_release.txt" "${DOVE_TEMP}/previous_release.txt"
   local -r DOVE_PREVIOUS_VERSION=$("${DOVE_CAT}" "${DOVE_TEMP}/previous_release.txt" | "${DOVE_XARGS}")
   "${DOVE_SED}" -i "s|{DOVE_PREVIOUS_VERSION}|${DOVE_PREVIOUS_VERSION}|g" "${DOVE_RELEASE_NOTES_TEMP}"
 
@@ -116,7 +193,7 @@ function create_release_notes() {
 
   "${DOVE_RM}" -f "${DOVE_RELEASE_NOTES_TEMP}"
 
-  echo_green_text "SUCCESS: Created release notes for Dove: ${DOVE_VERSION}"
+  echo_green_text "SUCCESS: Created release notes for Dove: '${DOVE_VERSION}'!"
 }
 
 # Upload a release to Forgejo (Codeberg)'s package registry
@@ -132,8 +209,44 @@ function upload_to_forgejo_package_registry() {
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]]; then
-    echo_red_text 'ERROR: Missing Forgejo CI API Token! Please set DOVE_FORGEJO_CI_API_TOKEN.'
+  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]] || [[ "${DOVE_FORGEJO_CI_API_TOKEN}" == "" ]]; then
+    echo_red_text "ERROR: Missing Forgejo CI API Token! Please set 'DOVE_FORGEJO_CI_API_TOKEN'."
+    exit 1
+  fi
+
+  # Ensure we have basename
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+
+  # Ensure we have our curl flags
+  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_VERSION`
+  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_FORGEJO_GENERIC_PACKAGES_URL`
+  if [[ -z "${DOVE_FORGEJO_GENERIC_PACKAGES_URL+x}" ]] || [[ "${DOVE_FORGEJO_GENERIC_PACKAGES_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_FORGEJO_GENERIC_PACKAGES_URL' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_FORGEJO_PACKAGE_NAME`
+  if [[ -z "${DOVE_FORGEJO_PACKAGE_NAME+x}" ]] || [[ "${DOVE_FORGEJO_PACKAGE_NAME}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_FORGEJO_PACKAGE_NAME' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_FORGEJO_USER`
+  if [[ -z "${DOVE_FORGEJO_USER+x}" ]] || [[ "${DOVE_FORGEJO_USER}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_FORGEJO_USER' is missing!"
     exit 1
   fi
 
@@ -161,8 +274,38 @@ function upload_to_gitlab_package_registry() {
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_GITLAB_CI_API_TOKEN+x}" ]]; then
-    echo_red_text 'ERROR: Missing GitLab CI API Token! Please set DOVE_GITLAB_CI_API_TOKEN.'
+  if [[ -z "${DOVE_GITLAB_CI_API_TOKEN+x}" ]] || [[ "${DOVE_GITLAB_CI_API_TOKEN}" == "" ]]; then
+    echo_red_text "ERROR: Missing GitLab CI API Token! Please set 'DOVE_GITLAB_CI_API_TOKEN'."
+    exit 1
+  fi
+
+  # Ensure we have basename
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+
+  # Ensure we have our curl flags
+  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_VERSION`
+  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_GITLAB_GENERIC_PACKAGES_URL`
+  if [[ -z "${DOVE_GITLAB_GENERIC_PACKAGES_URL+x}" ]] || [[ "${DOVE_GITLAB_GENERIC_PACKAGES_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_GITLAB_GENERIC_PACKAGES_URL' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_GITLAB_PACKAGE_NAME`
+  if [[ -z "${DOVE_GITLAB_PACKAGE_NAME+x}" ]] || [[ "${DOVE_GITLAB_PACKAGE_NAME}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_GITLAB_PACKAGE_NAME' is missing!"
     exit 1
   fi
 
@@ -196,8 +339,35 @@ function add_asset_to_forgejo_release() {
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]]; then
-    echo_red_text 'ERROR: Missing Forgejo CI API Token! Please set DOVE_FORGEJO_CI_API_TOKEN.'
+  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]] || [[ "${DOVE_FORGEJO_CI_API_TOKEN}" == "" ]]; then
+    echo_red_text "ERROR: Missing Forgejo CI API Token! Please set 'DOVE_FORGEJO_CI_API_TOKEN'."
+    exit 1
+  fi
+
+  # Ensure we have basename
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+
+  # Ensure we have jq
+  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || exit 1
+
+  # Ensure we have our curl flags
+  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_FORGEJO_API_URL`
+  if [[ -z "${DOVE_FORGEJO_API_URL+x}" ]] || [[ "${DOVE_FORGEJO_API_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_FORGEJO_API_URL' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_FORGEJO_REPO`
+  if [[ -z "${DOVE_FORGEJO_REPO+x}" ]] || [[ "${DOVE_FORGEJO_REPO}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_FORGEJO_REPO' is missing!"
     exit 1
   fi
 
@@ -211,7 +381,7 @@ function add_asset_to_forgejo_release() {
     --request POST \
     "${DOVE_FORGEJO_API_URL}/v1/repos/${DOVE_FORGEJO_REPO}/releases/${release_id}/assets?name=$(printf '%s' "${asset}" | "${DOVE_JQ}" -sRr @uri)"
 
-  echo_green_text "SUCCESS: Added ${asset} to release: ${DOVE_VERSION}"
+  echo_green_text "SUCCESS: Added ${asset} to release: '${DOVE_VERSION}'!"
 }
 
 # Publish a release to Forgejo (Codeberg)
@@ -224,8 +394,53 @@ function publish_to_forgejo() {
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]]; then
-    echo_red_text 'ERROR: Missing Forgejo CI API Token! Please set DOVE_FORGEJO_CI_API_TOKEN.'
+  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]] || [[ "${DOVE_FORGEJO_CI_API_TOKEN}" == "" ]]; then
+    echo_red_text "ERROR: Missing Forgejo CI API Token! Please set 'DOVE_FORGEJO_CI_API_TOKEN'."
+    exit 1
+  fi
+
+  # Ensure we have cat
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+
+  # Ensure we have jq
+  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || exit 1
+
+  # Ensure we have our curl flags
+  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_VERSION`
+  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_RELEASES_BASE_URL`
+  if [[ -z "${DOVE_RELEASES_BASE_URL+x}" ]] || [[ "${DOVE_RELEASES_BASE_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_RELEASES_BASE_URL' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_FORGEJO_API_URL`
+  if [[ -z "${DOVE_FORGEJO_API_URL+x}" ]] || [[ "${DOVE_FORGEJO_API_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_FORGEJO_API_URL' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_FORGEJO_BRANCH`
+  if [[ -z "${DOVE_FORGEJO_BRANCH+x}" ]] || [[ "${DOVE_FORGEJO_BRANCH}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_FORGEJO_BRANCH' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_FORGEJO_REPO`
+  if [[ -z "${DOVE_FORGEJO_REPO+x}" ]] || [[ "${DOVE_FORGEJO_REPO}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_FORGEJO_REPO' is missing!"
     exit 1
   fi
 
@@ -275,7 +490,7 @@ function publish_to_forgejo() {
   add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/windows/dove-${DOVE_VERSION}-windows.zip-sha512sum.txt"
 
   # We're done! :)
-  echo_green_text "SUCCESS: Published Dove: ${DOVE_VERSION} to Forgejo"
+  echo_green_text "SUCCESS: Published Dove: '${DOVE_VERSION}' to Forgejo!"
 }
 
 # Publish a release to GitHub
@@ -288,8 +503,47 @@ function publish_to_github() {
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_GITHUB_CI_API_TOKEN+x}" ]]; then
-    echo_red_text 'ERROR: Missing GitHub CI API Token! Please set DOVE_GITHUB_CI_API_TOKEN.'
+  if [[ -z "${DOVE_GITHUB_CI_API_TOKEN+x}" ]] || [[ "${DOVE_GITHUB_CI_API_TOKEN}" == "" ]]; then
+    echo_red_text "ERROR: Missing GitHub CI API Token! Please set 'DOVE_GITHUB_CI_API_TOKEN'."
+    exit 1
+  fi
+
+  # Ensure we have cat
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+
+  # Ensure we have jq
+  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || exit 1
+
+  # Ensure we have our curl flags
+  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_VERSION`
+  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_GITHUB_API_URL`
+  if [[ -z "${DOVE_GITHUB_API_URL+x}" ]] || [[ "${DOVE_GITHUB_API_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_GITHUB_API_URL' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_GITHUB_BRANCH`
+  if [[ -z "${DOVE_GITHUB_BRANCH+x}" ]] || [[ "${DOVE_GITHUB_BRANCH}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_GITHUB_BRANCH' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_GITHUB_REPO`
+  if [[ -z "${DOVE_GITHUB_REPO+x}" ]] || [[ "${DOVE_GITHUB_REPO}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_GITHUB_REPO' is missing!"
     exit 1
   fi
 
@@ -315,7 +569,7 @@ function publish_to_github() {
     "${DOVE_GITHUB_API_URL}/repos/${DOVE_GITHUB_REPO}/releases"
 
   # We're done! :)
-  echo_green_text "SUCCESS: Published Dove: ${DOVE_VERSION} to GitHub"
+  echo_green_text "SUCCESS: Published Dove: '${DOVE_VERSION}' to GitHub!"
 }
 
 # Publish a release to GitLab
@@ -328,8 +582,47 @@ function publish_to_gitlab() {
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_GITLAB_CI_API_TOKEN+x}" ]]; then
-    echo_red_text 'ERROR: Missing GitLab CI API Token! Please set DOVE_GITLAB_CI_API_TOKEN.'
+  if [[ -z "${DOVE_GITLAB_CI_API_TOKEN+x}" ]] || [[ "${DOVE_GITLAB_CI_API_TOKEN}" == "" ]]; then
+    echo_red_text "ERROR: Missing GitLab CI API Token! Please set 'DOVE_GITLAB_CI_API_TOKEN'."
+    exit 1
+  fi
+
+  # Ensure we have cat
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+
+  # Ensure we have jq
+  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || exit 1
+
+  # Ensure we have our curl flags
+  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_VERSION`
+  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_GITLAB_API_URL`
+  if [[ -z "${DOVE_GITLAB_API_URL+x}" ]] || [[ "${DOVE_GITLAB_API_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_GITLAB_API_URL' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_GITLAB_BRANCH`
+  if [[ -z "${DOVE_GITLAB_BRANCH+x}" ]] || [[ "${DOVE_GITLAB_BRANCH}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_GITLAB_BRANCH' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_GITLAB_PROJECT_ID`
+  if [[ -z "${DOVE_GITLAB_PROJECT_ID+x}" ]] || [[ "${DOVE_GITLAB_PROJECT_ID}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_GITLAB_PROJECT_ID' is missing!"
     exit 1
   fi
 
@@ -468,142 +761,7 @@ function publish_to_gitlab() {
     "${DOVE_GITLAB_API_URL}/projects/${DOVE_GITLAB_PROJECT_ID}/releases"
 
   # We're done! :)
-  echo_green_text "SUCCESS: Published Dove: ${DOVE_VERSION} to GitLab"
-}
-
-# Pushes a file to S3
-function push_file() {
-  function print_usage() {
-    echo "Usage: push_file '/path/to/file' 'path/on/s3'"
-  }
-
-  if [[ -z "${1+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the path to a file that should be uploaded to S3 storage'
-    print_usage
-    exit 1
-  fi
-
-  if [[ -z "${2+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the target path on S3 storage for where the file should be uploaded'
-    print_usage
-    exit 1
-  fi
-
-  local -r push_file="$1"
-  local -r s3_path="$2"
-  local -r s3_full_path="${s3_path}/$("${DOVE_BASENAME}" "${push_file}")"
-
-  # Ensure our file to push is valid
-  verify_file "${push_file}" || exit 1
-
-  # Set our MIME type
-  case "${push_file}" in
-    *.md)
-      local -r mime_type='text/markdown'
-      ;;
-    *.tar.xz)
-      local -r mime_type='application/x-gtar'
-      ;;
-    *.txt)
-      local -r mime_type='text/plain'
-      ;;
-    *.zip)
-      local -r mime_type='application/zip'
-      ;;
-    *)
-      echo_red_text "ERROR: Unsupported file type: ${push_file}"
-      exit 1
-      ;;
-  esac
-
-  local -r s3_access_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" | "${DOVE_XARGS}")
-  local -r s3_bucket_name=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" | "${DOVE_XARGS}")
-  local -r s3_endpoint=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" | "${DOVE_XARGS}")
-  local -r s3_secret_key=$("${DOVE_CAT}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" | "${DOVE_XARGS}")
-
-  if [[ "${s3_path}" == 'root' ]]; then
-    local -r s3_target_path="s3://${s3_bucket_name}"
-  else
-    local -r s3_target_path="s3://${s3_bucket_name}/${s3_full_path}"
-  fi
-
-  echo_red_text "Pushing ${push_file} to S3..."
-  source "${DOVE_PYENV}"
-  "${DOVE_S3CMD}" ${DOVE_S3CMD_FLAGS} --mime-type="${mime_type}" put "${push_file}" "${s3_target_path}" \
-    --access_key="${s3_access_key}" \
-    --secret_key="${s3_secret_key}" \
-    --host="${s3_endpoint}" \
-    --host-bucket="${s3_endpoint}"
-  echo_green_text "SUCCESS: Pushed ${push_file} to S3"
-}
-
-# Creates and pushes a SHA512sum for a file to S3
-function add_sha512sum() {
-  function print_usage() {
-    echo "Usage: add_sha512sum '/path/to/file'"
-  }
-
-  if [[ -z "${1+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the path to a file that a SHA512sum should be created for'
-    print_usage
-    exit 1
-  fi
-
-  local -r sha512sum_file_in="$1"
-  local -r sha512sum_file_name=$("${DOVE_BASENAME}" "${sha512sum_file_in}")
-  local -r sha512sum_file_path=$("${DOVE_DIRNAME}" "${sha512sum_file_in}")
-
-  if [[ -z "${2+x}" ]]; then
-    local -r sha512sum_s3path=$("${DOVE_BASENAME}" "${sha512sum_file_path}" | "${DOVE_AWK}" '{print tolower($0)}')
-  else
-    local -r sha512sum_s3path="$2"
-  fi
-
-  # Ensure our file to create a SHA512sum for is valid
-  verify_file "${sha512sum_file_in}" || exit 1
-
-  local -r sha512sum_file_out="${sha512sum_file_path}/${sha512sum_file_name}-sha512sum.txt"
-
-  # If there's already a SHA512sum file, remove it
-  if [[ -f "${sha512sum_file_out}" ]]; then
-    "${DOVE_RM}" -f "${sha512sum_file_out}"
-  fi
-
-  local -r local_sha512sum=$("${DOVE_SHASUM}" -a 512 "${sha512sum_file_in}" | "${DOVE_AWK}" '{print $1}')
-  echo -n "${local_sha512sum}" > "${sha512sum_file_out}"
-
-  push_file "${sha512sum_file_out}" "${sha512sum_s3path}"
-}
-
-# Creates a SHA512sum for and pushes a file to S3
-function push_and_add_sha512sum() {
-  function print_usage() {
-    echo "Usage: push_and_add_sha512sum '/path/to/file' 'path/on/s3'"
-  }
-
-  if [[ -z "${1+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the path to a file that should be uploaded to S3 storage'
-    print_usage
-    exit 1
-  fi
-
-  if [[ -z "${2+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the target path on S3 storage for where the file should be uploaded'
-    print_usage
-    exit 1
-  fi
-
-  local -r file_in="$1"
-  local -r s3_path_out="$2"
-
-  # Ensure our file to create a SHA512sum for and push is valid
-  verify_file "${file_in}" || exit 1
-
-  # Push our file to S3
-  push_file "${file_in}" "${s3_path_out}"
-
-  # Create and push a SHA512sum for our file to S3
-  add_sha512sum "${file_in}" "${s3_path_out}"
+  echo_green_text "SUCCESS: Published Dove: '${DOVE_VERSION}' to GitLab!"
 }
 
 # Push Dove for a desired platform
@@ -618,6 +776,15 @@ function _push_dove() {
     exit 1
   fi
 
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have `DOVE_VERSION`
+  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
+    exit 1
+  fi
+
   local -r dove_platform="$1"
 
   # Set our archive type
@@ -627,16 +794,22 @@ function _push_dove() {
     local -r dove_archive_type='tar.xz'
   fi
 
-  push_and_add_sha512sum "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "dove/releases/${DOVE_VERSION}/${dove_platform}"
+  push_to_s3 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "dove/releases/${DOVE_VERSION}/${dove_platform}"
 
   # Ensure the latest version can always be downloaded from https://releases.celenity.dev/dove/releases/latest/{dove_platform}/dove-latest-{dove_platform}.${dove_archive_type}
   ## (Ex. for convenience/packaging)
   "${DOVE_CP}" -f "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "${DOVE_ARTIFACTS}/dove-latest-${dove_platform}.${dove_archive_type}"
-  push_and_add_sha512sum "${DOVE_ARTIFACTS}/dove-latest-${dove_platform}.${dove_archive_type}" "dove/releases/latest/${dove_platform}"
+  push_to_s3 "${DOVE_ARTIFACTS}/dove-latest-${dove_platform}.${dove_archive_type}" "dove/releases/latest/${dove_platform}"
 }
 
 # Push Dove to S3 storage
 function push_dove() {
+  # Ensure we have mkdir
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+
+  # Ensure we have touch
+  verify_exec "${DOVE_TOUCH}" 'DOVE_TOUCH' || exit 1
+
   # Linux
   _push_dove 'linux'
 
@@ -656,12 +829,12 @@ function push_dove() {
   "${DOVE_MKDIR}" -p "${DOVE_TEMP}"
   "${DOVE_TOUCH}" "${DOVE_TEMP}/latest_release.txt"
   echo -n "${DOVE_VERSION}" > "${DOVE_TEMP}/latest_release.txt"
-  push_and_add_sha512sum "${DOVE_TEMP}/latest_release.txt" 'dove/releases'
+  push_to_s3 "${DOVE_TEMP}/latest_release.txt" 'dove/releases'
 
   # Add release notes
-  push_and_add_sha512sum "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md" "dove/releases/${DOVE_VERSION}"
+  push_to_s3 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md" "dove/releases/${DOVE_VERSION}"
 
-  echo_green_text "SUCCESS: Pushed Dove: ${DOVE_VERSION} to ${DOVE_CEL_RELEASES_URL}"
+  echo_green_text "SUCCESS: Pushed Dove: '${DOVE_VERSION}' to '${DOVE_CEL_RELEASES_URL}'!"
 }
 
 # First, create our release notes

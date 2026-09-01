@@ -3,32 +3,33 @@
 set -euo pipefail
 
 # Set-up our environment
-if [[ -z "${DOVE_CI+x}" ]]; then
-  export DOVE_CI=1
-fi
-source $(dirname $0)/env.sh
+source $(dirname $0)/env.sh || exit 1
 
 # Include utilities
-source "${DOVE_UTILS}"
-
-# Include version info
-source "${DOVE_VERSIONS}"
-
-if [[ -z "${DOVE_FROM_AR_DOWN+x}" ]]; then
-  echo_red_text 'ERROR: Do not call ci-download-artifacts-dove.sh directly. Instead, use ci-download-artifacts.sh.' >&1
-  exit 1
-fi
-
-if [[ -z "${DOVE_CI_ID+x}" ]]; then
-  echo_red_text 'ERROR: Missing CI ID! Please set DOVE_CI_ID.'
-  exit 1
-fi
+source "${DOVE_UTILS}" || exit 1
 
 # Set verbosity
-if [[ "${DOVE_VERBOSE}" == 1 ]]; then
-  set -x
-else
-  set +x
+set_verbosity
+
+# Include download utilities
+source "${DOVE_DOWNLOAD_UTILS}" || exit 1
+
+# Include version info
+source "${DOVE_VERSIONS}" || exit 1
+
+if [[ -z "${DOVE_FROM_AR_DOWN+x}" ]]; then
+  echo_red_text "ERROR: Do not call 'ci-download-artifacts-dove.sh' directly. Instead, use 'ci-download-artifacts.sh'." >&1
+  exit 1
+fi
+
+if [[ "${DOVE_CI}" != 1 ]]; then
+  echo_red_text "ERROR: '$0' should only be called from CI!"
+  exit 1
+fi
+
+if [[ -z "${DOVE_CI_ID+x}" ]] || [[ "${DOVE_CI_ID}" == "" ]]; then
+  echo_red_text "ERROR: Missing CI ID! Please set 'DOVE_CI_ID'."
+  exit 1
 fi
 
 readonly down_artifact="$1"
@@ -85,6 +86,55 @@ readonly DOVE_CEL_ARTIFACTS_URL='https://artifacts.celenity.dev/dove'
 
 # Function to download and verify the SHA512sum of an artifact
 function download_artifact() {
+  function print_usage() {
+    echo "Usage: download_artifact 'pipeline_id' 'artifact_name' 'path/to/download/artifact/to'"
+  }
+
+  if [[ -z "${1+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the pipeline ID to download the artifact from!'
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${2+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the name of the artifact to download!'
+    print_usage
+    exit 1
+  fi
+
+  if [[ -z "${3+x}" ]]; then
+    echo_red_text 'ERROR: Please provide the path to download the artifact to!'
+    print_usage
+    exit 1
+  fi
+
+  # Ensure we have cat
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+
+  # Ensure we have GNU awk
+  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
+
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
+  # Ensure we have shasum
+  verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || exit 1
+
+  # Ensure we have xargs
+  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || exit 1
+
+  # Ensure we have `DOVE_VERSION`
+  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
+    exit 1
+  fi
+
+  # Ensure we have `DOVE_CEL_ARTIFACTS_URL`
+  if [[ -z "${DOVE_CEL_ARTIFACTS_URL+x}" ]] || [[ "${DOVE_CEL_ARTIFACTS_URL}" == "" ]]; then
+    echo_red_text "ERROR: 'DOVE_CEL_ARTIFACTS_URL' is missing!"
+    exit 1
+  fi
+
   local -r pipeline_id="$1"
   local -r target="$2"
   local -r output_dir="$3"
@@ -104,28 +154,25 @@ function download_artifact() {
   local -r output_expected_sha512sum="${output_dir}/${target_expected_sha512sum}"
 
   # Download the artifact
-  "${DOVE_MKDIR}" -p "${output_dir}"
-  echo_red_text "Downloading ${target_file} from ${target_file_url}..."
-  "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --location "${target_file_url}" --output "${output_file}"
-  echo_green_text "SUCCESS: Downloaded ${target_file}"
+  download "${target_file_url}" "${output_file}"
 
   # Check the SHA512sum
-  echo_red_text "Validating SHA512sum for ${target_file}.."
-  "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --location "${target_expected_sha512sum_url}" --output "${output_expected_sha512sum}"
+  echo_red_text "Validating SHA512sum for file: '${target_file}'..."
+  download "${target_expected_sha512sum_url}" "${output_expected_sha512sum}"
   local -r expected_sha512sum=$("${DOVE_CAT}" "${output_expected_sha512sum}" | "${DOVE_XARGS}")
   local -r local_sha512sum=$("${DOVE_SHASUM}" -a 512 "${output_file}" | "${DOVE_AWK}" '{print $1}')
   if [[ "${local_sha512sum}" != "${expected_sha512sum}" ]]; then
-    echo_red_text 'ERROR: Checksum validation failed.'
-    echo "Expected SHA512sum: ${expected_sha512sum}"
-    echo "Actual SHA512sum:   ${local_sha512sum}"
+    echo_red_text "ERROR: Checksum validation for file failed: '${target_file}'!"
+    echo "Expected SHA512sum: '${expected_sha512sum}'"
+    echo "Actual SHA512sum:   '${local_sha512sum}'"
 
     # If checksum validation fails, also just clean-up the files
     "${DOVE_RM}" -f "${output_file}"
     "${DOVE_RM}" -f "${output_expected_sha512sum}"
     exit 1
   fi
-  echo_green_text "SUCCESS: Checksum validated for ${target_file}"
-  echo "SHA512sum: ${local_sha512sum}"
+  echo_green_text "SUCCESS: Validated checksum for file: '${target_file}'!"
+  echo "SHA512sum: '${local_sha512sum}'"
 }
 
 # dove-{DOVE_VERSION}-linux.tar.xz

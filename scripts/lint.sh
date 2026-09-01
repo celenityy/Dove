@@ -19,19 +19,15 @@ set -euo pipefail
 readonly DOVE_LINTING=1
 export DOVE_LINTING
 if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-  /bin/bash $(dirname $0)/env.sh
+  /bin/bash $(dirname $0)/env.sh || exit 1
 fi
-source $(dirname $0)/env.sh
+source $(dirname $0)/env.sh || exit 1
 
 # Include utilities
-source "${DOVE_UTILS}"
+source "${DOVE_UTILS}" || exit 1
 
 # Set verbosity
-if [[ "${DOVE_VERBOSE}" == 1 ]]; then
-  set -x
-else
-  set +x
-fi
+set_verbosity
 
 # Resolve and move to the repo root so relative paths and config discovery
 # (.shellcheckrc, .editorconfig) work regardless of the caller's cwd.

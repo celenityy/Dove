@@ -9,7 +9,7 @@ if [[ ! -f "$(dirname $0)/env_local.sh" ]]; then
   readonly ENV_LOCAL="${ROOT}/scripts/env_local.sh"
 
   # Write env_local.sh
-  echo "Writing ${ENV_LOCAL}..."
+  echo "Writing '${ENV_LOCAL}'..."
   cat > "${ENV_LOCAL}" << EOF
 # shellcheck shell=bash
 readonly DOVE_ROOT="${ROOT}"
@@ -96,13 +96,38 @@ function setup_lint_path() {
   export PATH
 }
 
+# For CI, ensure external environment variables are set
+function setup_ci() {
+  # Ensure our CI type is set
+  if [[ -z "${DOVE_CI_TYPE+x}" ]] || [[ "${DOVE_CI_TYPE}" == "" ]]; then
+    echo_red_text "ERROR: Missing CI type! Please set 'DOVE_CI_TYPE'."
+    exit 1
+  fi
+
+  # Ensure our branches are set
+  if [[ -z "${DOVE_DEV_BRANCH+x}" ]] || [[ "${DOVE_DEV_BRANCH}" == "" ]]; then
+    echo_red_text "ERROR: Missing developer branch! Please set 'DOVE_DEV_BRANCH'."
+    exit 1
+  fi
+
+  if [[ -z "${DOVE_PROD_BRANCH+x}" ]] || [[ "${DOVE_PROD_BRANCH}" == "" ]]; then
+    echo_red_text "ERROR: Missing production branch! Please set 'DOVE_PROD_BRANCH'."
+    exit 1
+  fi
+}
+
 if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-  source "$(dirname $0)/env_local.sh"
+  # Handle CI-specific logic
+  if [[ -n "${DOVE_CI+x}" ]]; then
+    setup_ci || exit 1
+  fi
+
+  source "$(dirname $0)/env_local.sh" || exit 1
 
   # Set-up our PATH
-  if [[ -z "${DOVE_LINTING+x}" ]]; then
-    setup_path
+  if [[ -n "${DOVE_LINTING+x}" ]]; then
+    setup_lint_path || exit 1
   else
-    setup_lint_path
+    setup_path || exit 1
   fi
 fi

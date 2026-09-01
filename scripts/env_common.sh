@@ -28,9 +28,17 @@ if [[ -f "${DOVE_ENV_OVERRIDE}" ]]; then
   source "${DOVE_ENV_OVERRIDE}"
 fi
 
-## Dove utilities
+# Utilities
 readonly DOVE_UTILS="${DOVE_SCRIPTS}/utilities.sh"
 export DOVE_UTILS
+
+# Download utilities
+readonly DOVE_DOWNLOAD_UTILS="${DOVE_SCRIPTS}/download-utilities.sh"
+export DOVE_DOWNLOAD_UTILS
+
+# File utilities
+readonly DOVE_FILE_UTILS="${DOVE_SCRIPTS}/file-utilities.sh"
+export DOVE_FILE_UTILS
 
 # Tools
 readonly DOVE_TOOLS="${DOVE_ROOT}/tools"

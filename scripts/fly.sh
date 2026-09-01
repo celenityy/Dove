@@ -6,22 +6,27 @@ set -euo pipefail
 # This script should be ran AFTER building Phoenix, from the ROOT of the Dove repo
 
 # Set-up our environment
-source $(dirname $0)/env.sh
+source $(dirname $0)/env.sh || exit 1
 
 # Include utilities
-source "${DOVE_UTILS}"
+source "${DOVE_UTILS}" || exit 1
+
+# Include file utilities
+source "${DOVE_FILE_UTILS}" || exit 1
+
+# Set verbosity
+set_verbosity
 
 if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
-  echo_red_text 'ERROR: Do not call fly.sh directly. Instead, use build.sh.' >&1
+  echo_red_text "ERROR: Do not call 'fly.sh' directly! Instead, use 'build.sh'." >&1
   exit 1
 fi
 
-# Set verbosity
-if [[ "${DOVE_VERBOSE}" == 1 ]]; then
-  set -x
-else
-  set +x
-fi
+# Ensure we have mkdir
+verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+
+# Ensure we have rm
+verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
 
 readonly target="$1"
 
@@ -71,106 +76,7 @@ readonly DOVE_OSX_INTEL
 readonly DOVE_WINDOWS
 
 # Include version info
-source "${DOVE_VERSIONS}"
-
-# Produce a (reproducible) archive from a directory
-## For reference/details on this process, see...
-## https://codeberg.org/celenity/Phoenix/issues/314
-## https://www.gnu.org/software/tar/manual/html_node/Reproducibility.html
-## https://wiki.debian.org/ReproducibleBuilds/TimestampsInZip
-## https://stackoverflow.com/questions/52668432/tar-package-has-different-checksum-for-exactly-the-same-content
-function create_archive() {
-  function print_usage() {
-    echo 'Usage: create_archive type /path/to/dir /path/to/output_archive'
-  }
-
-  if [[ -z "${1+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the desired archive type'
-    print_usage
-    exit 1
-  fi
-
-  if [[ -z "${2+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the path to a directory'
-    print_usage
-    exit 1
-  fi
-
-  if [[ -z "${3+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the path to the desired output archive'
-    print_usage
-    exit 1
-  fi
-
-  local -r archive_type="$1"
-  local -r target_dir="$2"
-  local -r output_archive="$3"
-
-  if [[ "${archive_type}" != 'tar' ]] && [[ "${archive_type}" != 'zip' ]]; then
-    echo_red_text "ERROR: Invalid archive type (${archive_type})! Aborting..."
-    exit 1
-  fi
-
-  if [[ ! -d "${target_dir}" ]]; then
-    echo_red_text "ERROR: Target directory (${target_dir}) does not exist! Aborting..."
-    exit 1
-  fi
-
-  # Check if the output archive already exists
-  if [[ -f "${output_archive}" ]]; then
-    echo_red_text "'${output_archive}' already exists"
-    echo_red_text 'Continuing WILL override this archive'
-    read -p "Are you sure you want to proceed? [y/N] " -n 1 -r
-    echo
-    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-      echo_red_text "Removing ${output_archive}..."
-      "${DOVE_RM}" -f "${output_archive}"
-    else
-      exit 1
-    fi
-  fi
-
-  # Set timezone to UTC for consistency
-  unset TZ
-  export TZ='UTC'
-
-  # If the directory for our output archive doesn't exist, create it
-  local -r output_archive_dir="$("${DOVE_DIRNAME}" "${output_archive}")"
-  if [[ ! -d "${output_archive_dir}" ]]; then
-    "${DOVE_MKDIR}" -p "${output_archive_dir}"
-  fi
-
-  # If we're on OS X, clean the target directory
-  if [[ "${DOVE_OS}" == 'osx' ]]; then
-    "${DOVE_DOT_CLEAN}" -mv "${target_dir}"
-  fi
-
-  # Set the file timestamp
-  ## (This is derived from DOVE_VERSION_DATE at `env_common.sh`)
-  local -r DOVE_STAMP="${DOVE_VERSION_DATE//./-}"
-  local -r DOVE_FIND_STAMP="$("${DOVE_DATE}" -d "${DOVE_STAMP}" +"%a, %d %b %Y %T %z")"
-  local -r DOVE_TIMESTAMP="$("${DOVE_DATE}" -d "${DOVE_STAMP}" +"%Y-%m-%dT%H:%M:%SZ")"
-
-  # Override the timestamps for each file to match our stamp above
-  "${DOVE_FIND}" "${target_dir}" -newermt "${DOVE_FIND_STAMP}" -print0 |
-    "${DOVE_XARGS}" -0r "${DOVE_TOUCH}" -h -d "${DOVE_TIMESTAMP}"
-
-  # Override the timestamps for each directory to match our stamp above
-  for dir in $("${DOVE_FIND}" "${target_dir}" -type d); do
-    "${DOVE_TOUCH}" -r "${dir}/$("${DOVE_LS}" -At "${dir}" | "${DOVE_HEAD}" -n 1)" "${dir}"
-  done
-
-  # Finally create our archive
-  pushd "${target_dir}"
-  if [[ "${archive_type}" == 'zip' ]]; then
-    # shellcheck disable=SC2035
-    "${DOVE_ZIP}" -X -r "${output_archive}" * -x '.DS_Store'
-  else
-    # shellcheck disable=SC2035
-    "${DOVE_TAR}" -cJv --exclude-vcs --group=0 --mode='go+u,go-w' --no-acls --no-selinux --no-xattrs --numeric-owner --owner=0 --pax-option='delete=atime,delete=ctime' --pax-option='exthdr.name=%d/PaxHeaders/%f' --restrict --sort=name --utc --clamp-mtime --mtime="${DOVE_TIMESTAMP}" --exclude ".DS_Store" -f "${output_archive}" *
-  fi
-  popd
-}
+source "${DOVE_VERSIONS}" || exit 1
 
 # Check if a file or directory already exists
 ## If the file or directory already exists, prompt the user to remove it
@@ -178,24 +84,27 @@ function create_archive() {
 ## If the file or directory doesn't already exist, we just do nothing
 function check_file_or_dir_exists() {
   function print_usage() {
-    echo 'Usage: check_file_or_dir_exists /path/to/file_or_dir'
+    echo "Usage: check_file_or_dir_exists '/path/to/file_or_dir'"
   }
 
   if [[ -z "${1+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the path to a file or directory to check'
+    echo_red_text 'ERROR: Please specify the path to a file or directory to check!'
     print_usage
     exit 1
   fi
 
+  # Ensure we have rm
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+
   local -r path="$1"
 
   if [[ -d "${path}" ]] || [[ -f "${path}" ]]; then
-    echo_red_text "'${path}' already exists"
-    echo_red_text 'Continuing WILL remove this file/directory'
+    echo_red_text "Path already exists: '${path}'!"
+    echo_red_text 'Continuing WILL remove this file/directory.'
     read -p "Are you sure you want to proceed? [y/N] " -n 1 -r
     echo
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-      echo_red_text "Removing ${path}..."
+      echo_red_text "Removing path: '${path}'..."
       if [[ -d "${path}" ]]; then
         "${DOVE_RM}" -rf "${path}"
       elif [[ -f "${path}" ]]; then
@@ -209,6 +118,12 @@ function check_file_or_dir_exists() {
 
 # Prepare to build Dove
 function prep_dove() {
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have GNU sed
+  verify_exec "${DOVE_SED}" 'DOVE_SED' || exit 1
+
   "${DOVE_CP}" -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg"
 
   # Update the versions
@@ -218,6 +133,12 @@ function prep_dove() {
 
 # Build Thunderbird's autoconfiguration database
 function build_autoconfig() {
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have mkdir
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+
   echo_red_text 'Building the Thunderbird autoconfiguration database...'
   "${DOVE_MKDIR}" -p "${DOVE_BUILD}/autoconfig/v1.1"
 
@@ -237,7 +158,7 @@ function build_phoenix() {
   /bin/bash -x "${DOVE_PHOENIX}/scripts/build.sh" "${target}"
   popd
 
-  echo_green_text 'SUCCESS: Built Phoenix'
+  echo_green_text 'SUCCESS: Built Phoenix!'
 }
 
 # Build Dove
@@ -247,10 +168,16 @@ function build_dove() {
   }
 
   if [[ -z "${1+x}" ]]; then
-    echo_red_text 'ERROR: Please specify the platform you would like to build Dove for'
+    echo_red_text 'ERROR: Please specify the platform you would like to build Dove for!'
     print_usage
     exit 1
   fi
+
+  # Ensure we have cp
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+
+  # Ensure we have mkdir
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
 
   local -r dove_platform="$1"
   local -r dove_output_dir="${DOVE_OUTPUTS}/${dove_platform}"
@@ -338,12 +265,7 @@ function build_dove() {
 
   # Finally, create our platform-specific archives
   if [[ "${DOVE_PRODUCE_ARCHIVES}" == 1 ]]; then
-    if [[ "${dove_platform}" == 'windows' ]]; then
-      local -r archive_type='zip'
-    else
-      local -r archive_type='tar'
-    fi
-    create_archive "${archive_type}" "${dove_output_dir}" "${dove_output_archive}"
+    create_archive "${dove_output_dir}" "${dove_output_archive}"
   fi
 }
 
