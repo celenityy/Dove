@@ -20,10 +20,10 @@ readonly DOVE_AUTOCONFIG_SHA512SUM='e20f3c8a024d74127549fbd6a37ac1821e2b217b54a3
 # Tools
 
 # lxml
-# Version: 7.0.0a3
+# Version: 7.0.0b1-1
 # https://github.com/lxml/lxml
-readonly DOVE_LXML_COMMIT='4f1bf555ca0ebb49099360b0dc13eb967d4fb7a9'
-readonly DOVE_LXML_SHA512SUM='79d8a4d9e3d490f6926a917a1b21bc037dd0e65adc0a019a6a26bbea8e44f48ea710edba96e022772e3cfdfbeff0b56b092ee45a043855e34d417c20304ccfc9'
+readonly DOVE_LXML_COMMIT='2ddf59b180105eca3739c5840a22bdf40e82f304'
+readonly DOVE_LXML_SHA512SUM='e8e8bc75babdf49c01f6ba23792f2e0490b1b5520323d83c0ced8590a3ff778e8aa6256cb790edf328ae1a29c835d1abea8259c0185b73fb5b3e2eefa5c80a78'
 
 # Python
 # Version: 20260825 (3.14.7)
