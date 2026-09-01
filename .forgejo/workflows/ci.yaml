@@ -10,6 +10,7 @@ on:
 env:
   DOVE_CI: 1
   DOVE_CI_TYPE: "forgejo"
+  DOVE_CHECKOUT_ACTION_COMMIT: "f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a" # v7.0.1
   DOVE_DEV_BRANCH: "dev"
   DOVE_FEDORA_VERSION: "44"
   DOVE_PROD_BRANCH: "pages"
@@ -28,7 +29,7 @@ jobs:
           /bin/sudo /bin/dnf install -y node
 
       - name: Checkout repo
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        uses: actions/checkout@${{ env.DOVE_CHECKOUT_ACTION_COMMIT }}
 
       - name: Lint
         run: |
@@ -53,7 +54,7 @@ jobs:
           /bin/sudo /bin/dnf install -y node
 
       - name: Checkout repo
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        uses: actions/checkout@${{ env.DOVE_CHECKOUT_ACTION_COMMIT }}
 
       - name: Build
         env:
@@ -80,7 +81,7 @@ jobs:
           /bin/sudo /bin/dnf install -y node
 
       - name: Checkout repo
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        uses: actions/checkout@${{ env.DOVE_CHECKOUT_ACTION_COMMIT }}
 
       - name: Publish release
         env:
