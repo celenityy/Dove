@@ -15,7 +15,7 @@ readonly DOVE_PHOENIX_VERSION='2026.08.17.1'
 # https://github.com/thunderbird/autoconfig
 # (This commit corresponds to the latest in the `prod` branch: https://github.com/thunderbird/autoconfig/tree/prod)
 readonly DOVE_AUTOCONFIG_COMMIT='3762f6cb54cb41b5f16e94ac083529579c8d0969'
-readonly DOVE_AUTOCONFIG_SHA512SUM='e20f3c8a024d74127549fbd6a37ac1821e2b217b54a36a5343f6226074e23dbf4a5081ef5832f989998d413e6213d2e490ba2ead851fa3ec93bf83e505f7cbb4'
+readonly DOVE_AUTOCONFIG_SHA512SUM='99a2cdb31208f592d811d63e273a2810d5cf0415707e68a2d053d71311040efe9c44d72481e7b426b34c1ea2e067c739d6e8b1cad72d263014de3b9c263c2a92'
 
 # Tools
 
