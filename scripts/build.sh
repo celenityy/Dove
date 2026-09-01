@@ -36,7 +36,7 @@ if [[ "${DOVE_LOG_BUILD}" == 1 ]]; then
   # Ensure we have tee
   verify_exec "${DOVE_TEE}" 'DOVE_TEE' || exit 1
 
-  rreadonly BUILD_LOG_FILE="${DOVE_LOG_DIR}/build.log"
+  readonly BUILD_LOG_FILE="${DOVE_LOG_DIR}/build.log"
 
   # If the log file already exists, remove it
   if [[ -f "${BUILD_LOG_FILE}" ]]; then
