@@ -5,11 +5,11 @@ readonly DOVE_VERSION="${DOVE_VERSION_DATE}.1"
 # Sources
 
 # Phoenix
-# Version: 2026.08.17.1
+# Version: 2026.09.01.1
 # https://gitlab.com/celenityy/Phoenix
-readonly DOVE_PHOENIX_COMMIT='19735030b3ed9b2fae606f140322e299e71b92c6'
-readonly DOVE_PHOENIX_SHA512SUM='071460291da40332ca2572cdbd7222acbf6cf3f0c3f6b96eb735ca55d5c98d5bdc9f8e7faf90fdd161414775b73e07d175ff1c239faca90861dfccf4dfbaddf0'
-readonly DOVE_PHOENIX_VERSION='2026.08.17.1'
+readonly DOVE_PHOENIX_COMMIT='164d383ca6cab8c66f6a7c37f24e662db6d80204'
+readonly DOVE_PHOENIX_SHA512SUM='caa3d949205aeee37b2b0963bfd76ddba5233d0a02a18d3287da12523f0d400487c00438eb6e678c3dec6ac21f0d19955e2b6649d43c9022da5a537b0f0c5e6a'
+readonly DOVE_PHOENIX_VERSION='2026.09.01.1'
 
 # Thunderbird Autoconfiguration Database (ISPDB)
 # https://github.com/thunderbird/autoconfig
