@@ -1,1 +1,4 @@
-- Updated to Phoenix [`2026.08.17.1`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.08.17.1).
+- Updated to Phoenix [`2026.09.01.1`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.09.01.1).
+- Updated [Thunderbird's Autoconfiguration Database](https://codeberg.org/celenity/Dove/commit/8d333fa2897032240ee623821f1048a7a0d4eba5) *(ISPDB)*.
+- [Enabled display of "experimental" features](https://codeberg.org/celenity/Dove/commit/00cca5b6d2d658b25b14c2b4f1fcfac5f66b9027) at `about:preferences` by default.
+- [Enabled update settings](https://codeberg.org/celenity/Dove/commit/047b237bd42be4cd727f3992a8d5057dfdfea4e6) at `about:preferences` by default.

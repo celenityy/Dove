@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-readonly DOVE_VERSION_DATE='2026.08.17'
+readonly DOVE_VERSION_DATE='2026.09.01'
 readonly DOVE_VERSION="${DOVE_VERSION_DATE}.1"
 
 # Sources
