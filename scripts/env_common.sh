@@ -101,7 +101,7 @@ export DOVE_VERSIONS
 
 # Build directory
 if [[ "${DOVE_NIX}" == 1 ]]; then
-  # Nix needs to use /tmp here, see: https://codeberg.org/celenity/Dove/issues/59
+  # Nix needs to use /tmp here, see: https://codeberg.org/celenity/bugs/issues/299
   readonly DOVE_BUILD_DEFAULT='/tmp/dove/build'
 else
   readonly DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"

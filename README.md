@@ -7,6 +7,9 @@
 
 **Dove is a suite of configurations & advanced modifications for Mozilla Thunderbird, designed to put the user first - with a focus on privacy, security, freedom, functionality, & usability.**
 
+> [!TIP]
+> Find a bug? Encounter an annoying problem? Have a tip, idea, or suggestion you'd like to share? **Please file any issues, bug reports, and suggestions over at [our unified issue tracker](https://codeberg.org/celenity/bugs/issues)!**
+
 > [!NOTE]
 > While Dove's home is [Codeberg](https://codeberg.org/celenity/Dove), this repo is also mirrored to both [GitLab](https://gitlab.com/celenityy/Dove) & [GitHub](https://github.com/celenityy/Dove).
 
