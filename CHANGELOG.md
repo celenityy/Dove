@@ -1,4 +1,7 @@
-- Updated to Phoenix [`2026.09.01.1`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.09.01.1).
-- Updated [Thunderbird's Autoconfiguration Database](https://codeberg.org/celenity/Dove/commit/8d333fa2897032240ee623821f1048a7a0d4eba5) *(ISPDB)*.
-- [Enabled display of "experimental" features](https://codeberg.org/celenity/Dove/commit/00cca5b6d2d658b25b14c2b4f1fcfac5f66b9027) at `about:preferences` by default.
-- [Enabled update settings](https://codeberg.org/celenity/Dove/commit/047b237bd42be4cd727f3992a8d5057dfdfea4e6) at `about:preferences` by default.
+**IMPORTANT**: We've officially migrated our issue tracker [to a new, unified one on Codeberg](https://codeberg.org/celenity/bugs/issues). **Please note that issues will no longer be accepted on GitHub, GitLab or in any repo outside of [the new unified Codeberg issue tracking repo](https://codeberg.org/celenity/bugs/issues))**.
+
+- Updated to Phoenix [`2026.09.29.2`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.09.29.2).
+- [Disabled `H264` decoding](https://codeberg.org/celenity/Dove/commit/df60dadfad04e7871bcbb71f2c0f208d0ca9d392) to reduce attack surface.
+- [Updated Firefox's Remote Settings server to `V2`](https://codeberg.org/celenity/Dove/commit/4ade978aeb6bf2dfe35d9cf40a56be3c29b28100) *(instead of V1)* to match what Firefox now uses upstream.
+- [Removed duplicate `UI` section](https://codeberg.org/celenity/Dove/commit/7923d1be673a9113e3308f98ae3f1b52f970fe72).
+- Minor tweaks/fixes/refinements and clean-up.
