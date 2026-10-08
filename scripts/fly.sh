@@ -22,6 +22,12 @@ verify_env "${build_target}" 'build_target' || {
   return 1
 }
 
+# Ensure we have `DOVE_AUTOCONFIG`
+verify_dir_with_env "${DOVE_AUTOCONFIG}" 'DOVE_AUTOCONFIG' || return 1
+
+# Ensure we have `DOVE_PHOENIX`
+verify_dir_with_env "${DOVE_PHOENIX}" 'DOVE_PHOENIX' || return 1
+
 # Set-up target parameters
 DOVE_LINUX=0
 DOVE_LINUX_FLATPAK=0
