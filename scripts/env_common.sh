@@ -841,4 +841,3 @@ source "${DOVE_ENV_EXTERNAL}" || exit 1
 
 # We've now set our environment variables...
 readonly DOVE_SET_ENVS=1
-export DOVE_SET_ENVS
