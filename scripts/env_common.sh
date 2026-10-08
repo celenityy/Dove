@@ -11,61 +11,51 @@
 
 # Scripts directory
 readonly DOVE_SCRIPTS="${DOVE_ROOT}/scripts"
-export DOVE_SCRIPTS
 
 # Set our platform, OS, and architecture
 readonly DOVE_ENV_HELPERS="${DOVE_SCRIPTS}/env_helpers.sh"
-export DOVE_ENV_HELPERS
-source "${DOVE_ENV_HELPERS}"
+source "${DOVE_ENV_HELPERS}" || exit 1
 
-# Do not use the system PATH
-unset PATH
+# Set version info
+readonly DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
+source "${DOVE_VERSIONS}" || exit 1
 
 # If variables are defined with a custom `env_override.sh` file (located at the root project directory), let's use those
 ## These need to be set first, to ensure that they don't interfere with certain variables
 readonly DOVE_ENV_OVERRIDE="${DOVE_ROOT}/env_override.sh"
 if [[ -f "${DOVE_ENV_OVERRIDE}" ]]; then
-  source "${DOVE_ENV_OVERRIDE}"
+  source "${DOVE_ENV_OVERRIDE}" || exit 1
 fi
 
 # Utilities
 readonly DOVE_UTILS="${DOVE_SCRIPTS}/utilities.sh"
-export DOVE_UTILS
 
 # Download utilities
 readonly DOVE_DOWNLOAD_UTILS="${DOVE_SCRIPTS}/download-utilities.sh"
-export DOVE_DOWNLOAD_UTILS
 
 # File utilities
 readonly DOVE_FILE_UTILS="${DOVE_SCRIPTS}/file-utilities.sh"
-export DOVE_FILE_UTILS
 
 # S3 utilities
 # (For CI)
 readonly DOVE_S3_UTILS="${DOVE_SCRIPTS}/s3-utilities.sh"
-export DOVE_S3_UTILS
 
 # Tools
 readonly DOVE_TOOLS="${DOVE_ROOT}/tools"
-export DOVE_TOOLS
 
 # Templates
 readonly DOVE_TEMPLATES="${DOVE_ROOT}/templates"
-export DOVE_TEMPLATES
 
 # CI artifacts
 readonly DOVE_ARTIFACTS="${DOVE_ROOT}/artifacts"
 readonly DOVE_LOG_ARTIFACTS="${DOVE_ARTIFACTS}/logs"
-export DOVE_ARTIFACTS
-export DOVE_LOG_ARTIFACTS
 
 # Whether we're being invoked from a Nix flake
 readonly DOVE_NIX_DEFAULT=0
-if [[ -z "${DOVE_NIX+x}" ]]; then
+if [[ -z "${DOVE_NIX+x}" ]] || [[ "${DOVE_NIX}" == "" ]] || [[ "${DOVE_NIX}" == "null" ]]; then
   DOVE_NIX="${DOVE_NIX_DEFAULT}"
 fi
 readonly DOVE_NIX
-export DOVE_NIX
 
 # Whether we should produce an output archive (Default)
 ## This is unnecessary/undesirable in some cases, such as Nix
@@ -75,29 +65,23 @@ if [[ "${DOVE_NIX}" == 1 ]]; then
 else
   readonly DOVE_PRODUCE_ARCHIVES_DEFAULT=1
 fi
-if [[ -z "${DOVE_PRODUCE_ARCHIVES+x}" ]]; then
+if [[ -z "${DOVE_PRODUCE_ARCHIVES+x}" ]] || [[ "${DOVE_PRODUCE_ARCHIVES}" == "" ]] || [[ "${DOVE_PRODUCE_ARCHIVES}" == "null" ]]; then
   DOVE_PRODUCE_ARCHIVES="${DOVE_PRODUCE_ARCHIVES_DEFAULT}"
 fi
 readonly DOVE_PRODUCE_ARCHIVES
-export DOVE_PRODUCE_ARCHIVES
 
 # Are we in a CI environment?
 readonly DOVE_CI_DEFAULT=0
-if [[ -z "${DOVE_CI+x}" ]]; then
+if [[ -z "${DOVE_CI+x}" ]] || [[ "${DOVE_CI}" == "" ]] || [[ "${DOVE_CI}" == "null" ]]; then
   DOVE_CI="${DOVE_CI_DEFAULT}"
 fi
 readonly DOVE_CI
-export DOVE_CI
 
 ## If so, set our CI environment variables
 readonly DOVE_ENV_CI="${DOVE_SCRIPTS}/env_ci.sh"
 if [[ "${DOVE_CI}" == 1 ]]; then
-  source "${DOVE_ENV_CI}"
+  source "${DOVE_ENV_CI}" || exit 1
 fi
-
-# Version info
-readonly DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
-export DOVE_VERSIONS
 
 # Build directory
 if [[ "${DOVE_NIX}" == 1 ]]; then
@@ -106,95 +90,81 @@ if [[ "${DOVE_NIX}" == 1 ]]; then
 else
   readonly DOVE_BUILD_DEFAULT="${DOVE_ROOT}/build"
 fi
-if [[ -z "${DOVE_BUILD+x}" ]]; then
+if [[ -z "${DOVE_BUILD+x}" ]] || [[ "${DOVE_BUILD}" == "" ]] || [[ "${DOVE_BUILD}" == "null" ]]; then
   DOVE_BUILD="${DOVE_BUILD_DEFAULT}"
 fi
 readonly DOVE_BUILD
-export DOVE_BUILD
 
 # Temporary build directory
 readonly DOVE_TEMP="${DOVE_BUILD}/tmp"
-export DOVE_TEMP
 
 # Dove PATH
 readonly DOVE_PATH="${DOVE_BUILD}/path"
-export DOVE_PATH
 
 # Minimal Dove PATH for linting
 readonly DOVE_LINT_PATH="${DOVE_BUILD}/lint-path"
-export DOVE_LINT_PATH
 
 # External sources directory
 readonly DOVE_EXTERNAL="${DOVE_ROOT}/external"
-export DOVE_EXTERNAL
 
 # External downloads/resources directory
 readonly DOVE_DOWNLOADS="${DOVE_EXTERNAL}/downloads"
-export DOVE_DOWNLOADS
 
 # Dove outputs directory
 readonly DOVE_OUTPUTS_DEFAULT="${DOVE_ROOT}/outputs"
-if [[ -z "${DOVE_OUTPUTS+x}" ]]; then
+if [[ -z "${DOVE_OUTPUTS+x}" ]] || [[ "${DOVE_OUTPUTS}" == "" ]] || [[ "${DOVE_OUTPUTS}" == "null" ]]; then
   DOVE_OUTPUTS="${DOVE_OUTPUTS_DEFAULT}"
 fi
 readonly DOVE_OUTPUTS
-export DOVE_OUTPUTS
 
 # Should we create a log file for build.sh? (Default)
 readonly DOVE_LOG_BUILD_DEFAULT=1
-if [[ -z "${DOVE_LOG_BUILD+x}" ]]; then
+if [[ -z "${DOVE_LOG_BUILD+x}" ]] || [[ "${DOVE_LOG_BUILD}" == "" ]] || [[ "${DOVE_LOG_BUILD}" == "null" ]]; then
   DOVE_LOG_BUILD="${DOVE_LOG_BUILD_DEFAULT}"
 fi
 readonly DOVE_LOG_BUILD
-export DOVE_LOG_BUILD
 
 # Should we create a log file for ci-download-artifacts.sh? (Default)
 readonly DOVE_LOG_AR_DOWN_DEFAULT=1
-if [[ -z "${DOVE_LOG_AR_DOWN+x}" ]]; then
+if [[ -z "${DOVE_LOG_AR_DOWN+x}" ]] || [[ "${DOVE_LOG_AR_DOWN}" == "" ]] || [[ "${DOVE_LOG_AR_DOWN}" == "null" ]]; then
   DOVE_LOG_AR_DOWN="${DOVE_LOG_AR_DOWN_DEFAULT}"
 fi
 readonly DOVE_LOG_AR_DOWN
-export DOVE_LOG_AR_DOWN
 
 # Should we create a log file for ci-upload-artifacts.sh? (Default)
 readonly DOVE_LOG_AR_UP_DEFAULT=1
-if [[ -z "${DOVE_LOG_AR_UP+x}" ]]; then
+if [[ -z "${DOVE_LOG_AR_UP+x}" ]] || [[ "${DOVE_LOG_AR_UP}" == "" ]] || [[ "${DOVE_LOG_AR_UP}" == "null" ]]; then
   DOVE_LOG_AR_UP="${DOVE_LOG_AR_UP_DEFAULT}"
 fi
 readonly DOVE_LOG_AR_UP
-export DOVE_LOG_AR_UP
 
 # Should we create a log file for get_sources.sh? (Default)
 readonly DOVE_LOG_SOURCES_DEFAULT=1
-if [[ -z "${DOVE_LOG_SOURCES+x}" ]]; then
+if [[ -z "${DOVE_LOG_SOURCES+x}" ]] || [[ "${DOVE_LOG_SOURCES}" == "" ]] || [[ "${DOVE_LOG_SOURCES}" == "null" ]]; then
   DOVE_LOG_SOURCES="${DOVE_LOG_SOURCES_DEFAULT}"
 fi
 readonly DOVE_LOG_SOURCES
-export DOVE_LOG_SOURCES
 
 # Should we create a log file for push.sh? (Default)
 readonly DOVE_LOG_PUSH_DEFAULT=1
-if [[ -z "${DOVE_LOG_PUSH+x}" ]]; then
+if [[ -z "${DOVE_LOG_PUSH+x}" ]] || [[ "${DOVE_LOG_PUSH}" == "" ]] || [[ "${DOVE_LOG_PUSH}" == "null" ]]; then
   DOVE_LOG_PUSH="${DOVE_LOG_PUSH_DEFAULT}"
 fi
 readonly DOVE_LOG_PUSH
-export DOVE_LOG_PUSH
 
 # Directory where we should store log files (if logging is desired)
 readonly DOVE_LOG_DIR_DEFAULT="${DOVE_BUILD}/logs"
-if [[ -z "${DOVE_LOG_DIR+x}" ]]; then
+if [[ -z "${DOVE_LOG_DIR+x}" ]] || [[ "${DOVE_LOG_DIR}" == "" ]] || [[ "${DOVE_LOG_DIR}" == "null" ]]; then
   DOVE_LOG_DIR="${DOVE_LOG_DIR_DEFAULT}"
 fi
 readonly DOVE_LOG_DIR
-export DOVE_LOG_DIR
 
 # Whether we should display verbose build output
 readonly DOVE_VERBOSE_DEFAULT=0
-if [[ -z "${DOVE_VERBOSE+x}" ]]; then
+if [[ -z "${DOVE_VERBOSE+x}" ]] || [[ "${DOVE_VERBOSE}" == "" ]] || [[ "${DOVE_VERBOSE}" == "null" ]]; then
   DOVE_VERBOSE="${DOVE_VERBOSE_DEFAULT}"
 fi
 readonly DOVE_VERBOSE
-export DOVE_VERBOSE
 
 # as (assembler)
 ## (Required by lxml on Linux)
@@ -203,11 +173,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_ASSEMBLER_DEFAULT='/bin/as'
 fi
-if [[ -z "${DOVE_ASSEMBLER+x}" ]]; then
+if [[ -z "${DOVE_ASSEMBLER+x}" ]] || [[ "${DOVE_ASSEMBLER}" == "" ]] || [[ "${DOVE_ASSEMBLER}" == "null" ]]; then
   DOVE_ASSEMBLER="${DOVE_ASSEMBLER_DEFAULT}"
 fi
 readonly DOVE_ASSEMBLER
-export DOVE_ASSEMBLER
 
 # basename
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -215,19 +184,24 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_BASENAME_DEFAULT='/bin/basename'
 fi
-if [[ -z "${DOVE_BASENAME+x}" ]]; then
+if [[ -z "${DOVE_BASENAME+x}" ]] || [[ "${DOVE_BASENAME}" == "" ]] || [[ "${DOVE_BASENAME}" == "null" ]]; then
   DOVE_BASENAME="${DOVE_BASENAME_DEFAULT}"
 fi
 readonly DOVE_BASENAME
-export DOVE_BASENAME
+
+# bash
+readonly DOVE_BASH_DEFAULT='/bin/bash'
+if [[ -z "${DOVE_BASH+x}" ]] || [[ "${DOVE_BASH}" == "" ]] || [[ "${DOVE_BASH}" == "null" ]]; then
+  DOVE_BASH="${DOVE_BASH_DEFAULT}"
+fi
+readonly DOVE_BASH
 
 # cat
 readonly DOVE_CAT_DEFAULT='/bin/cat'
-if [[ -z "${DOVE_CAT+x}" ]]; then
+if [[ -z "${DOVE_CAT+x}" ]] || [[ "${DOVE_CAT}" == "" ]] || [[ "${DOVE_CAT}" == "null" ]]; then
   DOVE_CAT="${DOVE_CAT_DEFAULT}"
 fi
 readonly DOVE_CAT
-export DOVE_CAT
 
 # cc
 ## (Required by lxml on Linux)
@@ -236,19 +210,17 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_CC_DEFAULT='/bin/cc'
 fi
-if [[ -z "${DOVE_CC+x}" ]]; then
+if [[ -z "${DOVE_CC+x}" ]] || [[ "${DOVE_CC}" == "" ]] || [[ "${DOVE_CC}" == "null" ]]; then
   DOVE_CC="${DOVE_CC_DEFAULT}"
 fi
 readonly DOVE_CC
-export DOVE_CC
 
 # chmod
 readonly DOVE_CHMOD_DEFAULT='/bin/chmod'
-if [[ -z "${DOVE_CHMOD+x}" ]]; then
+if [[ -z "${DOVE_CHMOD+x}" ]] || [[ "${DOVE_CHMOD}" == "" ]] || [[ "${DOVE_CHMOD}" == "null" ]]; then
   DOVE_CHMOD="${DOVE_CHMOD_DEFAULT}"
 fi
 readonly DOVE_CHMOD
-export DOVE_CHMOD
 
 # clang
 ## (Required by lxml)
@@ -257,19 +229,17 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_CLANG_DEFAULT='/bin/clang'
 fi
-if [[ -z "${DOVE_CLANG+x}" ]]; then
+if [[ -z "${DOVE_CLANG+x}" ]] || [[ "${DOVE_CLANG}" == "" ]] || [[ "${DOVE_CLANG}" == "null" ]]; then
   DOVE_CLANG="${DOVE_CLANG_DEFAULT}"
 fi
 readonly DOVE_CLANG
-export DOVE_CLANG
 
 # cp
 readonly DOVE_CP_DEFAULT='/bin/cp'
-if [[ -z "${DOVE_CP+x}" ]]; then
+if [[ -z "${DOVE_CP+x}" ]] || [[ "${DOVE_CP}" == "" ]] || [[ "${DOVE_CP}" == "null" ]]; then
   DOVE_CP="${DOVE_CP_DEFAULT}"
 fi
 readonly DOVE_CP
-export DOVE_CP
 
 # curl
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -277,11 +247,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_CURL_DEFAULT='/bin/curl'
 fi
-if [[ -z "${DOVE_CURL+x}" ]]; then
+if [[ -z "${DOVE_CURL+x}" ]] || [[ "${DOVE_CURL}" == "" ]] || [[ "${DOVE_CURL}" == "null" ]]; then
   DOVE_CURL="${DOVE_CURL_DEFAULT}"
 fi
 readonly DOVE_CURL
-export DOVE_CURL
 
 # dirname
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -289,27 +258,24 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_DIRNAME_DEFAULT='/bin/dirname'
 fi
-if [[ -z "${DOVE_DIRNAME+x}" ]]; then
+if [[ -z "${DOVE_DIRNAME+x}" ]] || [[ "${DOVE_DIRNAME}" == "" ]] || [[ "${DOVE_DIRNAME}" == "null" ]]; then
   DOVE_DIRNAME="${DOVE_DIRNAME_DEFAULT}"
 fi
 readonly DOVE_DIRNAME
-export DOVE_DIRNAME
 
 # dot_clean
 readonly DOVE_DOT_CLEAN_DEFAULT='/usr/sbin/dot_clean'
-if [[ -z "${DOVE_DOT_CLEAN+x}" ]]; then
+if [[ -z "${DOVE_DOT_CLEAN+x}" ]] || [[ "${DOVE_DOT_CLEAN}" == "" ]] || [[ "${DOVE_DOT_CLEAN}" == "null" ]]; then
   DOVE_DOT_CLEAN="${DOVE_DOT_CLEAN_DEFAULT}"
 fi
 readonly DOVE_DOT_CLEAN
-export DOVE_DOT_CLEAN
 
 # echo
 readonly DOVE_ECHO_DEFAULT="${DOVE_TOOLS}/echo.sh"
-if [[ -z "${DOVE_ECHO+x}" ]]; then
+if [[ -z "${DOVE_ECHO+x}" ]] || [[ "${DOVE_ECHO}" == "" ]] || [[ "${DOVE_ECHO}" == "null" ]]; then
   DOVE_ECHO="${DOVE_ECHO_DEFAULT}"
 fi
 readonly DOVE_ECHO
-export DOVE_ECHO
 
 # find
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -317,11 +283,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_FIND_DEFAULT='/bin/find'
 fi
-if [[ -z "${DOVE_FIND+x}" ]]; then
+if [[ -z "${DOVE_FIND+x}" ]] || [[ "${DOVE_FIND}" == "" ]] || [[ "${DOVE_FIND}" == "null" ]]; then
   DOVE_FIND="${DOVE_FIND_DEFAULT}"
 fi
 readonly DOVE_FIND
-export DOVE_FIND
 
 # git
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -329,11 +294,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_GIT_DEFAULT='/bin/git'
 fi
-if [[ -z "${DOVE_GIT+x}" ]]; then
+if [[ -z "${DOVE_GIT+x}" ]] || [[ "${DOVE_GIT}" == "" ]] || [[ "${DOVE_GIT}" == "null" ]]; then
   DOVE_GIT="${DOVE_GIT_DEFAULT}"
 fi
 readonly DOVE_GIT
-export DOVE_GIT
 
 # GNU awk
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -341,11 +305,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_AWK_DEFAULT='/bin/awk'
 fi
-if [[ -z "${DOVE_AWK+x}" ]]; then
+if [[ -z "${DOVE_AWK+x}" ]] || [[ "${DOVE_AWK}" == "" ]] || [[ "${DOVE_AWK}" == "null" ]]; then
   DOVE_AWK="${DOVE_AWK_DEFAULT}"
 fi
 readonly DOVE_AWK
-export DOVE_AWK
 
 # GNU date
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -353,11 +316,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_DATE_DEFAULT='/bin/date'
 fi
-if [[ -z "${DOVE_DATE+x}" ]]; then
+if [[ -z "${DOVE_DATE+x}" ]] || [[ "${DOVE_DATE}" == "" ]] || [[ "${DOVE_DATE}" == "null" ]]; then
   DOVE_DATE="${DOVE_DATE_DEFAULT}"
 fi
 readonly DOVE_DATE
-export DOVE_DATE
 
 # GNU sed
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -365,11 +327,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_SED_DEFAULT='/bin/sed'
 fi
-if [[ -z "${DOVE_SED+x}" ]]; then
+if [[ -z "${DOVE_SED+x}" ]] || [[ "${DOVE_SED}" == "" ]] || [[ "${DOVE_SED}" == "null" ]]; then
   DOVE_SED="${DOVE_SED_DEFAULT}"
 fi
 readonly DOVE_SED
-export DOVE_SED
 
 # GNU tar
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -377,11 +338,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_TAR_DEFAULT='/bin/tar'
 fi
-if [[ -z "${DOVE_TAR+x}" ]]; then
+if [[ -z "${DOVE_TAR+x}" ]] || [[ "${DOVE_TAR}" == "" ]] || [[ "${DOVE_TAR}" == "null" ]]; then
   DOVE_TAR="${DOVE_TAR_DEFAULT}"
 fi
 readonly DOVE_TAR
-export DOVE_TAR
 
 # grep
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -389,11 +349,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_GREP_DEFAULT='/bin/grep'
 fi
-if [[ -z "${DOVE_GREP+x}" ]]; then
+if [[ -z "${DOVE_GREP+x}" ]] || [[ "${DOVE_GREP}" == "" ]] || [[ "${DOVE_GREP}" == "null" ]]; then
   DOVE_GREP="${DOVE_GREP_DEFAULT}"
 fi
 readonly DOVE_GREP
-export DOVE_GREP
 
 # gzip
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -401,11 +360,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_GZIP_DEFAULT='/bin/gzip'
 fi
-if [[ -z "${DOVE_GZIP+x}" ]]; then
+if [[ -z "${DOVE_GZIP+x}" ]] || [[ "${DOVE_GZIP}" == "" ]] || [[ "${DOVE_GZIP}" == "null" ]]; then
   DOVE_GZIP="${DOVE_GZIP_DEFAULT}"
 fi
 readonly DOVE_GZIP
-export DOVE_GZIP
 
 # head
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -413,11 +371,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_HEAD_DEFAULT='/bin/head'
 fi
-if [[ -z "${DOVE_HEAD+x}" ]]; then
+if [[ -z "${DOVE_HEAD+x}" ]] || [[ "${DOVE_HEAD}" == "" ]] || [[ "${DOVE_HEAD}" == "null" ]]; then
   DOVE_HEAD="${DOVE_HEAD_DEFAULT}"
 fi
 readonly DOVE_HEAD
-export DOVE_HEAD
 
 # jq
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -427,11 +384,10 @@ elif [[ "${DOVE_OS}" == 'secureblue' ]]; then
 else
   readonly DOVE_JQ_DEFAULT='/bin/jq'
 fi
-if [[ -z "${DOVE_JQ+x}" ]]; then
+if [[ -z "${DOVE_JQ+x}" ]] || [[ "${DOVE_JQ}" == "" ]] || [[ "${DOVE_JQ}" == "null" ]]; then
   DOVE_JQ="${DOVE_JQ_DEFAULT}"
 fi
 readonly DOVE_JQ
-export DOVE_JQ
 
 # ld
 ## (Required by lxml on Linux)
@@ -440,27 +396,24 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_LD_DEFAULT='/bin/ld'
 fi
-if [[ -z "${DOVE_LD+x}" ]]; then
+if [[ -z "${DOVE_LD+x}" ]] || [[ "${DOVE_LD}" == "" ]] || [[ "${DOVE_LD}" == "null" ]]; then
   DOVE_LD="${DOVE_LD_DEFAULT}"
 fi
 readonly DOVE_LD
-export DOVE_LD
 
 # ln
 readonly DOVE_LN_DEFAULT='/bin/ln'
-if [[ -z "${DOVE_LN+x}" ]]; then
+if [[ -z "${DOVE_LN+x}" ]] || [[ "${DOVE_LN}" == "" ]] || [[ "${DOVE_LN}" == "null" ]]; then
   DOVE_LN="${DOVE_LN_DEFAULT}"
 fi
 readonly DOVE_LN
-export DOVE_LN
 
 # ls
 readonly DOVE_LS_DEFAULT='/bin/ls'
-if [[ -z "${DOVE_LS+x}" ]]; then
+if [[ -z "${DOVE_LS+x}" ]] || [[ "${DOVE_LS}" == "" ]] || [[ "${DOVE_LS}" == "null" ]]; then
   DOVE_LS="${DOVE_LS_DEFAULT}"
 fi
 readonly DOVE_LS
-export DOVE_LS
 
 # md5sum
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -468,27 +421,31 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_MD5SUM_DEFAULT='/bin/md5sum'
 fi
-if [[ -z "${DOVE_MD5SUM+x}" ]]; then
+if [[ -z "${DOVE_MD5SUM+x}" ]] || [[ "${DOVE_MD5SUM}" == "" ]] || [[ "${DOVE_MD5SUM}" == "null" ]]; then
   DOVE_MD5SUM="${DOVE_MD5SUM_DEFAULT}"
 fi
 readonly DOVE_MD5SUM
-export DOVE_MD5SUM
 
 # mkdir
 readonly DOVE_MKDIR_DEFAULT='/bin/mkdir'
-if [[ -z "${DOVE_MKDIR+x}" ]]; then
+if [[ -z "${DOVE_MKDIR+x}" ]] || [[ "${DOVE_MKDIR}" == "" ]] || [[ "${DOVE_MKDIR}" == "null" ]]; then
   DOVE_MKDIR="${DOVE_MKDIR_DEFAULT}"
 fi
 readonly DOVE_MKDIR
-export DOVE_MKDIR
 
 # rm
 readonly DOVE_RM_DEFAULT='/bin/rm'
-if [[ -z "${DOVE_RM+x}" ]]; then
+if [[ -z "${DOVE_RM+x}" ]] || [[ "${DOVE_RM}" == "" ]] || [[ "${DOVE_RM}" == "null" ]]; then
   DOVE_RM="${DOVE_RM_DEFAULT}"
 fi
 readonly DOVE_RM
-export DOVE_RM
+
+# sh
+readonly DOVE_SH_DEFAULT='/bin/sh'
+if [[ -z "${DOVE_SH+x}" ]] || [[ "${DOVE_SH}" == "" ]] || [[ "${DOVE_SH}" == "null" ]]; then
+  DOVE_SH="${DOVE_SH_DEFAULT}"
+fi
+readonly DOVE_SH
 
 # shasum
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -498,31 +455,26 @@ elif [[ "${DOVE_OS}" == 'secureblue' ]]; then
 else
   readonly DOVE_SHASUM_DEFAULT='/bin/shasum'
 fi
-if [[ -z "${DOVE_SHASUM+x}" ]]; then
+if [[ -z "${DOVE_SHASUM+x}" ]] || [[ "${DOVE_SHASUM}" == "" ]] || [[ "${DOVE_SHASUM}" == "null" ]]; then
   DOVE_SHASUM="${DOVE_SHASUM_DEFAULT}"
 fi
 readonly DOVE_SHASUM
-export DOVE_SHASUM
 
 # -shellcheck
 readonly DOVE_SHELLCHECK_DIR_DEFAULT="${DOVE_EXTERNAL}/shellcheck"
-if [[ -z "${DOVE_SHELLCHECK_DIR+x}" ]]; then
+if [[ -z "${DOVE_SHELLCHECK_DIR+x}" ]] || [[ "${DOVE_SHELLCHECK_DIR}" == "" ]] || [[ "${DOVE_SHELLCHECK_DIR}" == "null" ]]; then
   DOVE_SHELLCHECK_DIR="${DOVE_SHELLCHECK_DIR_DEFAULT}"
 fi
 readonly DOVE_SHELLCHECK_DIR
 readonly DOVE_SHELLCHECK="${DOVE_SHELLCHECK_DIR}/shellcheck"
-export DOVE_SHELLCHECK
-export DOVE_SHELLCHECK_DIR
 
 # shfmt
 readonly DOVE_SHFMT_DIR_DEFAULT="${DOVE_EXTERNAL}/shfmt"
-if [[ -z "${DOVE_SHFMT_DIR+x}" ]]; then
+if [[ -z "${DOVE_SHFMT_DIR+x}" ]] || [[ "${DOVE_SHFMT_DIR}" == "" ]] || [[ "${DOVE_SHFMT_DIR}" == "null" ]]; then
   DOVE_SHFMT_DIR="${DOVE_SHFMT_DIR_DEFAULT}"
 fi
 readonly DOVE_SHFMT_DIR
 readonly DOVE_SHFMT="${DOVE_SHFMT_DIR}/shfmt"
-export DOVE_SHFMT
-export DOVE_SHFMT_DIR
 
 # tee
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -530,11 +482,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_TEE_DEFAULT='/bin/tee'
 fi
-if [[ -z "${DOVE_TEE+x}" ]]; then
+if [[ -z "${DOVE_TEE+x}" ]] || [[ "${DOVE_TEE}" == "" ]] || [[ "${DOVE_TEE}" == "null" ]]; then
   DOVE_TEE="${DOVE_TEE_DEFAULT}"
 fi
 readonly DOVE_TEE
-export DOVE_TEE
 
 # touch
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -542,11 +493,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_TOUCH_DEFAULT='/bin/touch'
 fi
-if [[ -z "${DOVE_TOUCH+x}" ]]; then
+if [[ -z "${DOVE_TOUCH+x}" ]] || [[ "${DOVE_TOUCH}" == "" ]] || [[ "${DOVE_TOUCH}" == "null" ]]; then
   DOVE_TOUCH="${DOVE_TOUCH_DEFAULT}"
 fi
 readonly DOVE_TOUCH
-export DOVE_TOUCH
 
 # uname
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -554,11 +504,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_UNAME_DEFAULT='/bin/uname'
 fi
-if [[ -z "${DOVE_UNAME+x}" ]]; then
+if [[ -z "${DOVE_UNAME+x}" ]] || [[ "${DOVE_UNAME}" == "" ]] || [[ "${DOVE_UNAME}" == "null" ]]; then
   DOVE_UNAME="${DOVE_UNAME_DEFAULT}"
 fi
 readonly DOVE_UNAME
-export DOVE_UNAME
 
 # unzip
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -566,11 +515,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_UNZIP_DEFAULT='/bin/unzip'
 fi
-if [[ -z "${DOVE_UNZIP+x}" ]]; then
+if [[ -z "${DOVE_UNZIP+x}" ]] || [[ "${DOVE_UNZIP}" == "" ]] || [[ "${DOVE_UNZIP}" == "null" ]]; then
   DOVE_UNZIP="${DOVE_UNZIP_DEFAULT}"
 fi
 readonly DOVE_UNZIP
-export DOVE_UNZIP
 
 # xargs
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -578,20 +526,18 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_XARGS_DEFAULT='/bin/xargs'
 fi
-if [[ -z "${DOVE_XARGS+x}" ]]; then
+if [[ -z "${DOVE_XARGS+x}" ]] || [[ "${DOVE_XARGS}" == "" ]] || [[ "${DOVE_XARGS}" == "null" ]]; then
   DOVE_XARGS="${DOVE_XARGS_DEFAULT}"
 fi
 readonly DOVE_XARGS
-export DOVE_XARGS
 
 # xcrun
 ## (Required by lxml - for OS X)
 readonly DOVE_XCRUN_DEFAULT='/usr/bin/xcrun'
-if [[ -z "${DOVE_XCRUN+x}" ]]; then
+if [[ -z "${DOVE_XCRUN+x}" ]] || [[ "${DOVE_XCRUN}" == "" ]] || [[ "${DOVE_XCRUN}" == "null" ]]; then
   DOVE_XCRUN="${DOVE_XCRUN_DEFAULT}"
 fi
 readonly DOVE_XCRUN
-export DOVE_XCRUN
 
 # xml2-config
 ## (Required by lxml)
@@ -600,11 +546,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_XML2_CONFIG_DEFAULT='/bin/xml2-config'
 fi
-if [[ -z "${DOVE_XML2_CONFIG+x}" ]]; then
+if [[ -z "${DOVE_XML2_CONFIG+x}" ]] || [[ "${DOVE_XML2_CONFIG}" == "" ]] || [[ "${DOVE_XML2_CONFIG}" == "null" ]]; then
   DOVE_XML2_CONFIG="${DOVE_XML2_CONFIG_DEFAULT}"
 fi
 readonly DOVE_XML2_CONFIG
-export DOVE_XML2_CONFIG
 
 # xslt-config
 ## (Required by lxml)
@@ -613,11 +558,10 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_XSLT_CONFIG_DEFAULT='/bin/xslt-config'
 fi
-if [[ -z "${DOVE_XSLT_CONFIG+x}" ]]; then
+if [[ -z "${DOVE_XSLT_CONFIG+x}" ]] || [[ "${DOVE_XSLT_CONFIG}" == "" ]] || [[ "${DOVE_XSLT_CONFIG}" == "null" ]]; then
   DOVE_XSLT_CONFIG="${DOVE_XSLT_CONFIG_DEFAULT}"
 fi
 readonly DOVE_XSLT_CONFIG
-export DOVE_XSLT_CONFIG
 
 # xz
 if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -625,120 +569,103 @@ if [[ "${DOVE_OS}" == 'osx' ]]; then
 else
   readonly DOVE_XZ_DEFAULT='/bin/xz'
 fi
-if [[ -z "${DOVE_XZ+x}" ]]; then
+if [[ -z "${DOVE_XZ+x}" ]] || [[ "${DOVE_XZ}" == "" ]] || [[ "${DOVE_XZ}" == "null" ]]; then
   DOVE_XZ="${DOVE_XZ_DEFAULT}"
 fi
 readonly DOVE_XZ
-export DOVE_XZ
 
 # zip
 readonly DOVE_ZIP_DEFAULT='/usr/bin/zip'
-if [[ -z "${DOVE_ZIP+x}" ]]; then
+if [[ -z "${DOVE_ZIP+x}" ]] || [[ "${DOVE_ZIP}" == "" ]] || [[ "${DOVE_ZIP}" == "null" ]]; then
   DOVE_ZIP="${DOVE_ZIP_DEFAULT}"
 fi
 readonly DOVE_ZIP
-export DOVE_ZIP
 
 # lxml
 readonly DOVE_LXML_DEFAULT="${DOVE_EXTERNAL}/lxml"
-if [[ -z "${DOVE_LXML+x}" ]]; then
+if [[ -z "${DOVE_LXML+x}" ]] || [[ "${DOVE_LXML}" == "" ]] || [[ "${DOVE_LXML}" == "null" ]]; then
   DOVE_LXML="${DOVE_LXML_DEFAULT}"
 fi
 readonly DOVE_LXML
-export DOVE_LXML
 
 # Phoenix
 readonly DOVE_PHOENIX_DEFAULT="${DOVE_EXTERNAL}/phoenix"
-if [[ -z "${DOVE_PHOENIX+x}" ]]; then
+if [[ -z "${DOVE_PHOENIX+x}" ]] || [[ "${DOVE_PHOENIX}" == "" ]] || [[ "${DOVE_PHOENIX}" == "null" ]]; then
   DOVE_PHOENIX="${DOVE_PHOENIX_DEFAULT}"
 fi
 readonly DOVE_PHOENIX
-export DOVE_PHOENIX
 
 # Python
 readonly DOVE_PYTHON_DIR_DEFAULT="${DOVE_EXTERNAL}/python"
-if [[ -z "${DOVE_PYTHON_DIR+x}" ]]; then
+if [[ -z "${DOVE_PYTHON_DIR+x}" ]] || [[ "${DOVE_PYTHON_DIR}" == "" ]] || [[ "${DOVE_PYTHON_DIR}" == "null" ]]; then
   DOVE_PYTHON_DIR="${DOVE_PYTHON_DIR_DEFAULT}"
 fi
 readonly DOVE_PYTHON_DIR
-export DOVE_PYTHON_DIR
 
 # Python (uv) environment
 readonly DOVE_PYENV_DIR_DEFAULT="${DOVE_BUILD}/pyenv"
-if [[ -z "${DOVE_PYENV_DIR+x}" ]]; then
+if [[ -z "${DOVE_PYENV_DIR+x}" ]] || [[ "${DOVE_PYENV_DIR}" == "" ]] || [[ "${DOVE_PYENV_DIR}" == "null" ]]; then
   DOVE_PYENV_DIR="${DOVE_PYENV_DIR_DEFAULT}"
 fi
 readonly DOVE_PYENV_DIR
 readonly DOVE_PYENV="${DOVE_PYENV_DIR}/bin/activate"
-export DOVE_PYENV
-export DOVE_PYENV_DIR
 
 readonly DOVE_PYTHON_DEFAULT="${DOVE_PYENV_DIR}/bin/python"
-if [[ -z "${DOVE_PYTHON+x}" ]]; then
+if [[ -z "${DOVE_PYTHON+x}" ]] || [[ "${DOVE_PYTHON}" == "" ]] || [[ "${DOVE_PYTHON}" == "null" ]]; then
   DOVE_PYTHON="${DOVE_PYTHON_DEFAULT}"
 fi
 readonly DOVE_PYTHON
-export DOVE_PYTHON
 
 # s3cmd
 readonly DOVE_S3CMD_DIR_DEFAULT="${DOVE_EXTERNAL}/s3cmd"
-if [[ -z "${DOVE_S3CMD_DIR+x}" ]]; then
+if [[ -z "${DOVE_S3CMD_DIR+x}" ]] || [[ "${DOVE_S3CMD_DIR}" == "" ]] || [[ "${DOVE_S3CMD_DIR}" == "null" ]]; then
   DOVE_S3CMD_DIR="${DOVE_S3CMD_DIR_DEFAULT}"
 fi
 readonly DOVE_S3CMD_DIR
 readonly DOVE_S3CMD="${DOVE_PYENV_DIR}/bin/s3cmd"
-export DOVE_S3CMD
-export DOVE_S3CMD_DIR
 
 # uv
 readonly DOVE_UV_DIR_DEFAULT="${DOVE_EXTERNAL}/uv"
-if [[ -z "${DOVE_UV_DIR+x}" ]]; then
+if [[ -z "${DOVE_UV_DIR+x}" ]] || [[ "${DOVE_UV_DIR}" == "" ]] || [[ "${DOVE_UV_DIR}" == "null" ]]; then
   DOVE_UV_DIR="${DOVE_UV_DIR_DEFAULT}"
 fi
 readonly DOVE_UV_DIR
 readonly DOVE_UV="${DOVE_UV_DIR}/uv"
-export DOVE_UV
-export DOVE_UV_DIR
 
 # uv (local directory)
 readonly DOVE_UV_LOCAL_DEFAULT="${DOVE_BUILD}/uv"
-if [[ -z "${DOVE_UV_LOCAL+x}" ]]; then
+if [[ -z "${DOVE_UV_LOCAL+x}" ]] || [[ "${DOVE_UV_LOCAL}" == "" ]] || [[ "${DOVE_UV_LOCAL}" == "null" ]]; then
   DOVE_UV_LOCAL="${DOVE_UV_LOCAL_DEFAULT}"
 fi
 readonly DOVE_UV_LOCAL
-export DOVE_UV_LOCAL
 
 # uv cache
 readonly DOVE_UV_CACHE_DEFAULT="${DOVE_UV_LOCAL}/cache"
-if [[ -z "${DOVE_UV_CACHE+x}" ]]; then
+if [[ -z "${DOVE_UV_CACHE+x}" ]] || [[ "${DOVE_UV_CACHE}" == "" ]] || [[ "${DOVE_UV_CACHE}" == "null" ]]; then
   DOVE_UV_CACHE="${DOVE_UV_CACHE_DEFAULT}"
 fi
 readonly DOVE_UV_CACHE
-export DOVE_UV_CACHE
 
 # uv Python directory
 readonly DOVE_UV_PYTHON_DEFAULT="${DOVE_UV_LOCAL}/python"
-if [[ -z "${DOVE_UV_PYTHON+x}" ]]; then
+if [[ -z "${DOVE_UV_PYTHON+x}" ]] || [[ "${DOVE_UV_PYTHON}" == "" ]] || [[ "${DOVE_UV_PYTHON}" == "null" ]]; then
   DOVE_UV_PYTHON="${DOVE_UV_PYTHON_DEFAULT}"
 fi
 readonly DOVE_UV_PYTHON
-export DOVE_UV_PYTHON
 
 # uv tools
 readonly DOVE_UV_TOOLS_DEFAULT="${DOVE_UV_LOCAL}/tools"
-if [[ -z "${DOVE_UV_TOOLS+x}" ]]; then
+if [[ -z "${DOVE_UV_TOOLS+x}" ]] || [[ "${DOVE_UV_TOOLS}" == "" ]] || [[ "${DOVE_UV_TOOLS}" == "null" ]]; then
   DOVE_UV_TOOLS="${DOVE_UV_TOOLS_DEFAULT}"
 fi
 readonly DOVE_UV_TOOLS
-export DOVE_UV_TOOLS
 
 # Thunderbird Autoconfiguration Database (ISPDB)
 readonly DOVE_AUTOCONFIG_DEFAULT="${DOVE_EXTERNAL}/autoconfig"
-if [[ -z "${DOVE_AUTOCONFIG+x}" ]]; then
+if [[ -z "${DOVE_AUTOCONFIG+x}" ]] || [[ "${DOVE_AUTOCONFIG}" == "" ]] || [[ "${DOVE_AUTOCONFIG}" == "null" ]]; then
   DOVE_AUTOCONFIG="${DOVE_AUTOCONFIG_DEFAULT}"
 fi
 readonly DOVE_AUTOCONFIG
-export DOVE_AUTOCONFIG
 
 # Cipher suites
 ## (These enforce strong cipher suites - see ex. https://browserleaks.com/tls)
@@ -746,39 +673,36 @@ export DOVE_AUTOCONFIG
 ## For TLS 1.3 connections
 ### https://curl.se/docs/manpage.html#--tls13-ciphers
 readonly DOVE_TLS13_CIPHERS_DEFAULT='TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384'
-if [[ -z "${DOVE_TLS13_CIPHERS+x}" ]]; then
+if [[ -z "${DOVE_TLS13_CIPHERS+x}" ]] || [[ "${DOVE_TLS13_CIPHERS}" == "" ]] || [[ "${DOVE_TLS13_CIPHERS}" == "null" ]]; then
   DOVE_TLS13_CIPHERS="${DOVE_TLS13_CIPHERS_DEFAULT}"
 fi
 readonly DOVE_TLS13_CIPHERS
-export DOVE_TLS13_CIPHERS
 
 ## For non-TLS 1.3 connections
 ### https://curl.se/docs/manpage.html#--ciphers
 readonly DOVE_NONTLS13_CIPHERS_DEFAULT='ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384'
-if [[ -z "${DOVE_NONTLS13_CIPHERS+x}" ]]; then
+if [[ -z "${DOVE_NONTLS13_CIPHERS+x}" ]] || [[ "${DOVE_NONTLS13_CIPHERS}" == "" ]] || [[ "${DOVE_NONTLS13_CIPHERS}" == "null" ]]; then
   DOVE_NONTLS13_CIPHERS="${DOVE_NONTLS13_CIPHERS_DEFAULT}"
 fi
 readonly DOVE_NONTLS13_CIPHERS
-export DOVE_NONTLS13_CIPHERS
 
 # This includes all ciphers (combining DOVE_TLS13_CIPHERS + DOVE_NONTLS13_CIPHERS)
 ## Useful because many programs do not require specifying a separate set of ciphers for TLS 1.3 like curl does
 readonly DOVE_CIPHERS="${DOVE_TLS13_CIPHERS}:${DOVE_NONTLS13_CIPHERS}"
-export DOVE_CIPHERS
 
 # If compiler flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
 readonly DOVE_COMPILER_FLAGS_OVERRIDE_DEFAULT=0
-if [[ -z "${DOVE_COMPILER_FLAGS_OVERRIDE+x}" ]]; then
+if [[ -z "${DOVE_COMPILER_FLAGS_OVERRIDE+x}" ]] || [[ "${DOVE_COMPILER_FLAGS_OVERRIDE}" == "" ]] ||
+  [[ "${DOVE_COMPILER_FLAGS_OVERRIDE}" == "null" ]]; then
   DOVE_COMPILER_FLAGS_OVERRIDE="${DOVE_COMPILER_FLAGS_OVERRIDE_DEFAULT}"
 fi
 readonly DOVE_COMPILER_FLAGS_OVERRIDE
-export DOVE_COMPILER_FLAGS_OVERRIDE
 
 # Compiler flags
 ## (Used for lxml)
 readonly DOVE_COMPILER_FLAGS_DEFAULT='-DNDEBUG -O3 -fstack-clash-protection -fstack-protector-strong -ftrivial-auto-var-init=zero -fwrapv'
-if [[ -z "${DOVE_COMPILER_FLAGS+x}" ]]; then
+if [[ -z "${DOVE_COMPILER_FLAGS+x}" ]] || [[ "${DOVE_COMPILER_FLAGS}" == "" ]] || [[ "${DOVE_COMPILER_FLAGS}" == "null" ]]; then
   DOVE_COMPILER_FLAGS="${DOVE_COMPILER_FLAGS_DEFAULT}"
 elif [[ "${DOVE_COMPILER_FLAGS_OVERRIDE}" == 1 ]]; then
   DOVE_COMPILER_FLAGS="${DOVE_COMPILER_FLAGS}"
@@ -786,42 +710,37 @@ else
   DOVE_COMPILER_FLAGS="${DOVE_COMPILER_FLAGS_DEFAULT} ${DOVE_COMPILER_FLAGS}"
 fi
 readonly DOVE_COMPILER_FLAGS
-export DOVE_COMPILER_FLAGS
 
 # If curl flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
 readonly DOVE_CURL_FLAGS_OVERRIDE_DEFAULT=0
-if [[ -z "${DOVE_CURL_FLAGS_OVERRIDE+x}" ]]; then
+if [[ -z "${DOVE_CURL_FLAGS_OVERRIDE+x}" ]] || [[ "${DOVE_CURL_FLAGS_OVERRIDE}" == "" ]] || [[ "${DOVE_CURL_FLAGS_OVERRIDE}" == "null" ]]; then
   DOVE_CURL_FLAGS_OVERRIDE="${DOVE_CURL_FLAGS_OVERRIDE_DEFAULT}"
 fi
 readonly DOVE_CURL_FLAGS_OVERRIDE
-export DOVE_CURL_FLAGS_OVERRIDE
 
 # curl flags
 # shellcheck disable=SC2089
 readonly DOVE_CURL_FLAGS_DEFAULT="--disable --no-netrc --ciphers ${DOVE_NONTLS13_CIPHERS} --clobber --create-dirs --delegation none --disallow-username-in-url --doh-cert-status --fail --fail-early --junk-session-cookies --no-basic --no-ca-native --no-digest --no-doh-insecure --no-http0.9 --no-insecure --no-negotiate --no-ntlm --no-proxy-basic --no-proxy-ca-native --no-proxy-digest --no-proxy-insecure --no-proxy-ssl-auto-client-cert --no-sessionid --no-ssl-auto-client-cert --no-ssl-no-revoke --no-ssl-revoke-best-effort --no-xattr --parallel --post301 --post302 --post303 --progress-meter --proto -all,https --proto-default https --proto-redir -all,https --proxy-ciphers ${DOVE_NONTLS13_CIPHERS} --proxy-tls13-ciphers ${DOVE_TLS13_CIPHERS} --referer '' --remove-on-error --retry 5 --retry-all-errors --retry-connrefused --show-error --tls13-ciphers ${DOVE_TLS13_CIPHERS} --tlsv1.2 --trace-time --user-agent '' --verbose"
-if [[ -z "${DOVE_CURL_FLAGS+x}" ]]; then
+if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]] || [[ "${DOVE_CURL_FLAGS}" == "null" ]]; then
   readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT}"
 elif [[ "${DOVE_CURL_FLAGS_OVERRIDE}" == 1 ]]; then
   readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS}"
 else
   readonly DOVE_CURL_FLAGS="${DOVE_CURL_FLAGS_DEFAULT} ${DOVE_CURL_FLAGS}"
 fi
-# shellcheck disable=SC2090
-export DOVE_CURL_FLAGS
 
 # If s3cmd flags are added, this determines whether they should be appended to our default flags (default),
 ## or if they should override them entirely
 readonly DOVE_S3CMD_FLAGS_OVERRIDE_DEFAULT=0
-if [[ -z "${DOVE_S3CMD_FLAGS_OVERRIDE+x}" ]]; then
+if [[ -z "${DOVE_S3CMD_FLAGS_OVERRIDE+x}" ]] || [[ "${DOVE_S3CMD_FLAGS_OVERRIDE}" == "" ]] || [[ "${DOVE_S3CMD_FLAGS_OVERRIDE}" == "null" ]]; then
   DOVE_S3CMD_FLAGS_OVERRIDE="${DOVE_S3CMD_FLAGS_OVERRIDE_DEFAULT}"
 fi
 readonly DOVE_S3CMD_FLAGS_OVERRIDE
-export DOVE_S3CMD_FLAGS_OVERRIDE
 
 # s3cmd flags
 readonly DOVE_S3CMD_FLAGS_DEFAULT='--check-certificate --check-hostname --check-md5 --no-guess-mime-type --no-mime-magic --progress --ssl'
-if [[ -z "${DOVE_S3CMD_FLAGS+x}" ]]; then
+if [[ -z "${DOVE_S3CMD_FLAGS+x}" ]] || [[ "${DOVE_S3CMD_FLAGS}" == "" ]] || [[ "${DOVE_S3CMD_FLAGS}" == "null" ]]; then
   DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS_DEFAULT}"
 elif [[ "${DOVE_S3CMD_FLAGS_OVERRIDE}" == 1 ]]; then
   DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS}"
@@ -829,25 +748,22 @@ else
   DOVE_S3CMD_FLAGS="${DOVE_S3CMD_FLAGS_DEFAULT} ${DOVE_S3CMD_FLAGS}"
 fi
 readonly DOVE_S3CMD_FLAGS
-export DOVE_S3CMD_FLAGS
 
 # Whether we should hardcode/set Dove's target platform directly in the output dove.cfg file
 ## Setting this to 0 means that Dove will instead determine the OS automatically
 readonly DOVE_HARDCODE_PLATFORM_DEFAULT=1
-if [[ -z "${DOVE_HARDCODE_PLATFORM+x}" ]]; then
+if [[ -z "${DOVE_HARDCODE_PLATFORM+x}" ]] || [[ "${DOVE_HARDCODE_PLATFORM}" == "" ]] || [[ "${DOVE_HARDCODE_PLATFORM}" == "null" ]]; then
   DOVE_HARDCODE_PLATFORM="${DOVE_HARDCODE_PLATFORM_DEFAULT}"
 fi
 readonly DOVE_HARDCODE_PLATFORM
-export DOVE_HARDCODE_PLATFORM
 
 # Whether we should build Dove in the static .js prefs format
 ## This is not recommended in favor of the .cfg format, and will likely be removed entirely in the near future
 readonly DOVE_STATIC_JS_DEFAULT=0
-if [[ -z "${DOVE_STATIC_JS+x}" ]]; then
+if [[ -z "${DOVE_STATIC_JS+x}" ]] || [[ "${DOVE_STATIC_JS}" == "" ]] || [[ "${DOVE_STATIC_JS}" == "null" ]]; then
   DOVE_STATIC_JS="${DOVE_STATIC_JS_DEFAULT}"
 fi
 readonly DOVE_STATIC_JS
-export DOVE_STATIC_JS
 
 # S3
 
@@ -855,73 +771,73 @@ export DOVE_STATIC_JS
 
 ### S3 access key
 readonly DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE_DEFAULT='null'
-if [[ -z "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE+x}" ]]; then
+if [[ -z "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE+x}" ]] || [[ "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE}" == "" ]] ||
+  [[ "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE}" == "null" ]]; then
   DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE="${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE
-export DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE
 
 ### S3 bucket name
 readonly DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE_DEFAULT='null'
-if [[ -z "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE+x}" ]]; then
+if [[ -z "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE+x}" ]] || [[ "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE}" == "" ]] ||
+  [[ "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE}" == "null" ]]; then
   DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE="${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE
-export DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE
 
 ### S3 endpoint
 readonly DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE_DEFAULT='null'
-if [[ -z "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE+x}" ]]; then
+if [[ -z "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE+x}" ]] || [[ "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE}" == "" ]] ||
+  [[ "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE}" == "null" ]]; then
   DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE="${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE
-export DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE
 
 ### S3 secret key
 readonly DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE_DEFAULT='null'
-if [[ -z "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE+x}" ]]; then
+if [[ -z "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE+x}" ]] || [[ "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE}" == "" ]] ||
+  [[ "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE}" == "null" ]]; then
   DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE="${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE
-export DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE
 
 ## Releases
 
 ### S3 access key
 readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT='null'
-if [[ -z "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE+x}" ]]; then
+if [[ -z "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE+x}" ]] || [[ "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" == "" ]] ||
+  [[ "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" == "null" ]]; then
   DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE="${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
-export DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE
 
 ### S3 bucket name
 readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT='null'
-if [[ -z "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE+x}" ]]; then
+if [[ -z "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE+x}" ]] || [[ "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" == "" ]] ||
+  [[ "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" == "null" ]]; then
   DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE="${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
-export DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE
 
 ### S3 endpoint
 readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT='null'
-if [[ -z "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE+x}" ]]; then
+if [[ -z "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE+x}" ]] || [[ "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" == "" ]] ||
+  [[ "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" == "null" ]]; then
   DOVE_CEL_RELEASES_S3_ENDPOINT_FILE="${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
-export DOVE_CEL_RELEASES_S3_ENDPOINT_FILE
 
 ### S3 secret key
 readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT='null'
-if [[ -z "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE+x}" ]]; then
+if [[ -z "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE+x}" ]] || [[ "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" == "" ]] ||
+  [[ "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" == "null" ]]; then
   DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE="${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE_DEFAULT}"
 fi
 readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE
-export DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE
 
 # Set our external environment variables
 readonly DOVE_ENV_EXTERNAL="${DOVE_SCRIPTS}/env_external.sh"
-source "${DOVE_ENV_EXTERNAL}"
+source "${DOVE_ENV_EXTERNAL}" || exit 1
 
 # We've now set our environment variables...
 readonly DOVE_SET_ENVS=1

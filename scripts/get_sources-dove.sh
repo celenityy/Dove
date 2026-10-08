@@ -2,31 +2,34 @@
 
 set -euo pipefail
 
-# Set-up our environment
-source $(dirname $0)/env.sh || exit 1
-
-# Include utilities
-source "${DOVE_UTILS}" || exit 1
-
 # Set verbosity
 set_verbosity
 
 # Include download utilities
-source "${DOVE_DOWNLOAD_UTILS}" || exit 1
+verify_file_with_env "${DOVE_DOWNLOAD_UTILS}" 'DOVE_DOWNLOAD_UTILS' || return 1
+source "${DOVE_DOWNLOAD_UTILS}" || return 1
 
 # Include file utilities
-source "${DOVE_FILE_UTILS}" || exit 1
+verify_file_with_env "${DOVE_FILE_UTILS}" 'DOVE_FILE_UTILS' || return 1
+source "${DOVE_FILE_UTILS}" || return 1
 
 if [[ -z "${DOVE_FROM_SOURCES+x}" ]]; then
   echo_red_text "ERROR: Do not call 'get_sources-dove.sh' directly! Instead, use 'get_sources.sh'." >&1
-  exit 1
+  return 1
 fi
 
 # Ensure we have rm
-verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
-readonly target="$1"
-readonly mode="$2"
+verify_env "${source_target}" 'source_target' || {
+  echo_red_text "ERROR: Missing target!"
+  return 1
+}
+
+verify_env "${mode}" 'mode' || {
+  echo_red_text "ERROR: Missing mode!"
+  return 1
+}
 
 # Set-up target parameters
 DOVE_GET_SOURCE_AUTOCONFIG=0
@@ -38,31 +41,31 @@ DOVE_GET_SOURCE_SHELLCHECK=0
 DOVE_GET_SOURCE_SHFMT=0
 DOVE_GET_SOURCE_UV=0
 
-if [[ "${target}" == 'autoconfig' ]]; then
+if [[ "${source_target}" == 'autoconfig' ]]; then
   # Get Thunderbird's Autoconfiguration Database (ISPDB)
   DOVE_GET_SOURCE_AUTOCONFIG=1
-elif [[ "${target}" == 'lxml' ]]; then
+elif [[ "${source_target}" == 'lxml' ]]; then
   # Get lxml
   DOVE_GET_SOURCE_LXML=1
-elif [[ "${target}" == 'phoenix' ]]; then
+elif [[ "${source_target}" == 'phoenix' ]]; then
   # Get Phoenix
   DOVE_GET_SOURCE_PHOENIX=1
-elif [[ "${target}" == 'python' ]]; then
+elif [[ "${source_target}" == 'python' ]]; then
   #  Get Python
   DOVE_GET_SOURCE_PYTHON=1
-elif [[ "${target}" == 's3cmd' ]]; then
+elif [[ "${source_target}" == 's3cmd' ]]; then
   # Get s3cmd
   DOVE_GET_SOURCE_S3CMD=1
-elif [[ "${target}" == 'shellcheck' ]]; then
+elif [[ "${source_target}" == 'shellcheck' ]]; then
   # Get shellcheck
   DOVE_GET_SOURCE_SHELLCHECK=1
-elif [[ "${target}" == 'shfmt' ]]; then
+elif [[ "${source_target}" == 'shfmt' ]]; then
   # Get shfmt
   DOVE_GET_SOURCE_SHFMT=1
-elif [[ "${target}" == 'uv' ]]; then
+elif [[ "${source_target}" == 'uv' ]]; then
   # Get + set-up uv
   DOVE_GET_SOURCE_UV=1
-elif [[ "${target}" == 'all' ]]; then
+elif [[ "${source_target}" == 'all' ]]; then
   # If no argument is specified (or argument is set to "all"), just get everything, except s3cmd
   ## (We don't need to bother getting s3cmd here since it's only used in certain scenarios)
   DOVE_GET_SOURCE_AUTOCONFIG=1
@@ -79,7 +82,7 @@ elif [[ "${target}" == 'all' ]]; then
     DOVE_GET_SOURCE_SHFMT=1
   fi
 else
-  echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
+  echo_red_text "ERROR: Invalid target: '${source_target}'\n You must enter one of the following:"
   echo 'All:                                      all (Default)'
   echo 'lxml:                                     lxml'
   echo 'Phoenix:                                  phoenix'
@@ -89,7 +92,7 @@ else
   echo 'shfmt:                                    shfmt'
   echo 'Thunderbird Autoconfiguration Database:   autoconfig'
   echo 'uv:                                       uv'
-  exit 1
+  return 1
 fi
 readonly DOVE_GET_SOURCE_AUTOCONFIG
 readonly DOVE_GET_SOURCE_LXML
@@ -106,15 +109,12 @@ DOVE_GET_SOURCE_CHECKSUM_UPDATE=0
 if [[ "${mode}" == 'checksum-update' ]]; then
   DOVE_GET_SOURCE_CHECKSUM_UPDATE=1
 elif [[ "${mode}" != 'download' ]]; then
-  echo_red_text "ERROR: Invalid mode: ${mode}\n You must enter one of the following:"
+  echo_red_text "ERROR: Invalid mode: '${mode}'\n You must enter one of the following:"
   echo 'Download:                     download (Default)'
   echo 'Download + update checksums:  checksum-update'
-  exit 1
+  return 1
 fi
 readonly DOVE_GET_SOURCE_CHECKSUM_UPDATE
-
-# Include version info
-source "${DOVE_VERSIONS}" || exit 1
 
 # Back-up (and remove) a file if it exists
 function backup_file() {
@@ -125,23 +125,20 @@ function backup_file() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please provide the file path!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
-
-  # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   local -r file="$1"
   local -r file_name="$("${DOVE_BASENAME}" "${file}")"
@@ -164,23 +161,20 @@ function backup_dir() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please provide the directory path!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
-
-  # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   local -r dir="$1"
   local -r dir_name="$("${DOVE_BASENAME}" "${dir}")"
@@ -203,23 +197,20 @@ function restore_file() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please provide the file path!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
-
-  # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   local -r file="$1"
   local -r file_name="$("${DOVE_BASENAME}" "${file}")"
@@ -242,23 +233,20 @@ function restore_dir() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please provide the directory path!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
-
-  # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   local -r dir="$1"
   local -r dir_name="$("${DOVE_BASENAME}" "${dir}")"
@@ -281,32 +269,29 @@ function update_checksum() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text "ERROR: Please provide the file's current checksum!"
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text "ERROR: Please provide the file's new checksum!"
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please provide the file path!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please provide the checksum type!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have GNU sed
-  verify_exec "${DOVE_SED}" 'DOVE_SED' || exit 1
-
-  # Ensure we can update `versions.sh`
-  verify_file "${DOVE_VERSIONS}" || exit 1
+  verify_exec "${DOVE_SED}" 'DOVE_SED' || return 1
 
   local -r old_checksum="$1"
   local -r new_checksum="$2"
@@ -323,7 +308,7 @@ function update_checksum() {
     local -r checksum_type_pretty='SHA512sum'
   else
     echo_red_text "ERROR: Unsupported checksum type: '${checksum_type}'!"
-    exit 1
+    return 1
   fi
 
   if [[ "${old_checksum}" == "${new_checksum}" ]]; then
@@ -346,26 +331,23 @@ function validate_checksum() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text "ERROR: Please provide the file's expected checksum!"
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please provide the file path!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please provide the checksum type!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have GNU awk
-  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
-
-  # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || return 1
 
   local -r expected_checksum="$1"
   local -r file="$2"
@@ -373,14 +355,14 @@ function validate_checksum() {
 
   if [[ "${checksum_type}" == 'md5sum' ]]; then
     # Ensure we have md5sum
-    verify_exec "${DOVE_MD5SUM}" 'DOVE_MD5SUM' || exit 1
+    verify_exec "${DOVE_MD5SUM}" 'DOVE_MD5SUM' || return 1
   else
     # Ensure we have shasum
-    verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || exit 1
+    verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || return 1
   fi
 
   # Ensure our file to validate is valid
-  verify_file "${file}" || exit 1
+  verify_file "${file}" || return 1
 
   if [[ "${checksum_type}" == 'md5sum' ]]; then
     local -r checksum_type_pretty='MD5sum'
@@ -396,7 +378,7 @@ function validate_checksum() {
     local -r local_checksum=$("${DOVE_SHASUM}" -a 512 "${file}" | "${DOVE_AWK}" '{print $1}')
   else
     echo_red_text "ERROR: Unsupported checksum type: '${checksum_type}'!"
-    exit 1
+    return 1
   fi
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
@@ -409,7 +391,7 @@ function validate_checksum() {
     # If checksum validation fails, also just remove the file
     "${DOVE_RM}" -f "${file}"
 
-    exit 1
+    return 1
   else
     echo_green_text "SUCCESS: Validated checksum (${checksum_type_pretty}) for file: '${file}'!"
     echo "${checksum_type_pretty}: '${local_checksum}'"
@@ -425,26 +407,26 @@ function download_file() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please provide the URL for the file to download!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please provide the output file path!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text "ERROR: Please provide the file's SHA512sum!"
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
-  # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  # Ensure we have `DOVE_EXTERNAL`
+  verify_env "${DOVE_EXTERNAL}" 'DOVE_EXTERNAL' || return 1
 
   local -r url="$1"
   local -r file_in="$2"
@@ -495,13 +477,6 @@ function download_file() {
   local DOVE_CHECKSUM_FAILED=0
   local DOVE_DOWNLOAD_FAILED=0
 
-  if [[ ! -d "$("${DOVE_DIRNAME}" "${file}")" ]]; then
-    "${DOVE_MKDIR}" -vp "$("${DOVE_DIRNAME}" "${file}")"
-    local -r CREATED_DIR_FOR_DL=1
-  else
-    local -r CREATED_DIR_FOR_DL=0
-  fi
-
   # Download our file
   download "${url}" "${file}" || local DOVE_DOWNLOAD_FAILED=1
 
@@ -512,10 +487,10 @@ function download_file() {
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     if [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
       echo_red_text 'ERROR: Download failed!'
-      exit 1
+      return 1
     elif [[ "${DOVE_CHECKSUM_FAILED}" == 1 ]]; then
       echo_red_text 'ERROR: Failed to update checksum!'
-      exit 1
+      return 1
     else
       return 0
     fi
@@ -539,7 +514,7 @@ function download_file() {
       return 1
     else
       echo_red_text 'ERROR: Download failed!'
-      exit 1
+      return 1
     fi
   fi
 }
@@ -553,23 +528,26 @@ function download_and_extract() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please provide the URL for the archive to download!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please provide the path that the archive should be extracted to!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text "ERROR: Please provide the archive's SHA512sum!"
     print_usage
-    exit 1
+    return 1
   fi
 
-  # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  # Ensure we have `DOVE_EXTERNAL`
+  verify_env "${DOVE_EXTERNAL}" 'DOVE_EXTERNAL' || return 1
+
+  # Ensure we have `DOVE_DOWNLOADS`
+  verify_env "${DOVE_DOWNLOADS}" 'DOVE_DOWNLOADS' || return 1
 
   local -r url="$1"
   local -r path="$2"
@@ -628,7 +606,7 @@ function download_and_extract() {
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     if [[ "${DOVE_DOWNLOAD_FAILED}" == 1 ]]; then
       echo_red_text "ERROR: Download for archive failed: '${url}'!"
-      exit 1
+      return 1
     else
       return 0
     fi
@@ -639,11 +617,10 @@ function download_and_extract() {
     restore_dir "${path}"
     if [[ "${temp_archive_path_name}" == 'uv' ]]; then
       DOVE_PERFORM_POST_DOWNLOAD=0
-      return 1
     else
       echo_red_text "ERROR: Download for archive failed: '${url}'!"
-      exit 1
     fi
+    return 1
   fi
 
   # Extract the archive
@@ -655,17 +632,14 @@ function download_and_extract() {
 
 # Get Thunderbird's Autoconfiguration Database (ISPDB)
 function get_autoconfig() {
+  # Ensure we have `DOVE_AUTOCONFIG`
+  verify_env "${DOVE_AUTOCONFIG}" 'DOVE_AUTOCONFIG' || return 1
+
   # Ensure we have `DOVE_AUTOCONFIG_COMMIT`
-  if [[ -z "${DOVE_AUTOCONFIG_COMMIT+x}" ]] || [[ "${DOVE_AUTOCONFIG_COMMIT}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_AUTOCONFIG_COMMIT' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_AUTOCONFIG_COMMIT}" 'DOVE_AUTOCONFIG_COMMIT' || return 1
 
   # Ensure we have `DOVE_AUTOCONFIG_SHA512SUM`
-  if [[ -z "${DOVE_AUTOCONFIG_SHA512SUM+x}" ]] || [[ "${DOVE_AUTOCONFIG_SHA512SUM}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_AUTOCONFIG_SHA512SUM' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_AUTOCONFIG_SHA512SUM}" 'DOVE_AUTOCONFIG_SHA512SUM' || return 1
 
   echo_red_text "Downloading Thunderbird Autoconfiguration Database (ISPDB) to path: '${DOVE_AUTOCONFIG}'..."
   download_and_extract "https://github.com/thunderbird/autoconfig/archive/${DOVE_AUTOCONFIG_COMMIT}.tar.gz" "${DOVE_AUTOCONFIG}" "${DOVE_AUTOCONFIG_SHA512SUM}"
@@ -676,29 +650,32 @@ function get_autoconfig() {
 
 # Get lxml
 function get_lxml() {
+  # Ensure we have `DOVE_LXML`
+  verify_env "${DOVE_LXML}" 'DOVE_LXML' || return 1
+
   # Ensure we have `DOVE_LXML_COMMIT`
-  if [[ -z "${DOVE_LXML_COMMIT+x}" ]] || [[ "${DOVE_LXML_COMMIT}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_LXML_COMMIT' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_LXML_COMMIT}" 'DOVE_LXML_COMMIT' || return 1
 
   # Ensure we have `DOVE_LXML_SHA512SUM`
-  if [[ -z "${DOVE_LXML_SHA512SUM+x}" ]] || [[ "${DOVE_LXML_SHA512SUM}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_LXML_SHA512SUM' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_LXML_SHA512SUM}" 'DOVE_LXML_SHA512SUM' || return 1
 
   # If all we're doing is updating the checksum, we don't care if the environment is prepared
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
     # Ensure we have uv
     verify_exec "${DOVE_UV}" 'DOVE_UV' || {
       echo_red_text "ERROR: Unable to download and install lxml without uv!"
-      exit 1
+      return 1
     }
+
+    # Ensure we have `DOVE_PYENV`
+    verify_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
+
+    # Ensure we have `DOVE_UV_DIR`
+    verify_env "${DOVE_UV_DIR}" 'DOVE_UV_DIR' || return 1
 
     if [[ ! -d "${DOVE_UV_DIR}" ]] || [[ ! -f "${DOVE_PYENV}" ]]; then
       echo_red_text "ERROR: You tried to download lxml, but you don't have a Python environment set-up yet!"
-      exit 1
+      return 1
     fi
   fi
 
@@ -706,26 +683,23 @@ function get_lxml() {
   download_and_extract "https://github.com/lxml/lxml/archive/${DOVE_LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${DOVE_LXML_SHA512SUM}"
 
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
-    source "${DOVE_PYENV}"
-    echo_red_text "Installing lxml from path: '${DOVE_LXML}'..."
+    source "${DOVE_PYENV}" || exit 1
+    echo_red_text "Installing lxml to path: '${DOVE_LXML}'..."
     "${DOVE_UV}" pip install --no-editable --strict "${DOVE_LXML}"
-    echo_green_text "SUCCESS: Set-up lxml from path: '${DOVE_LXML}'!"
+    echo_green_text "SUCCESS: Set-up lxml at path: '${DOVE_LXML}'!"
   fi
 }
 
 # Get Phoenix
 function get_phoenix() {
+  # Ensure we have `DOVE_PHOENIX`
+  verify_env "${DOVE_PHOENIX}" 'DOVE_PHOENIX' || return 1
+
   # Ensure we have `DOVE_PHOENIX_COMMIT`
-  if [[ -z "${DOVE_PHOENIX_COMMIT+x}" ]] || [[ "${DOVE_PHOENIX_COMMIT}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_PHOENIX_COMMIT' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_PHOENIX_COMMIT}" 'DOVE_PHOENIX_COMMIT' || return 1
 
   # Ensure we have `DOVE_PHOENIX_SHA512SUM`
-  if [[ -z "${DOVE_PHOENIX_SHA512SUM+x}" ]] || [[ "${DOVE_PHOENIX_SHA512SUM}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_PHOENIX_SHA512SUM' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_PHOENIX_SHA512SUM}" 'DOVE_PHOENIX_SHA512SUM' || return 1
 
   echo_red_text "Downloading Phoenix to path: '${DOVE_PHOENIX}'..."
   download_and_extract "https://gitlab.com/celenityy/Phoenix/-/archive/${DOVE_PHOENIX_COMMIT}/Phoenix-${DOVE_PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${DOVE_PHOENIX_SHA512SUM}"
@@ -736,28 +710,34 @@ function get_phoenix() {
 
 # Get Python
 function get_python() {
+  # Ensure we have `DOVE_PYTHON_DIR`
+  verify_env "${DOVE_PYTHON_DIR}" 'DOVE_PYTHON_DIR' || return 1
+
   # Ensure we have `DOVE_PYTHON_GIT_RELEASE`
-  if [[ -z "${DOVE_PYTHON_GIT_RELEASE+x}" ]] || [[ "${DOVE_PYTHON_GIT_RELEASE}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_PYTHON_GIT_RELEASE' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_PYTHON_GIT_RELEASE}" 'DOVE_PYTHON_GIT_RELEASE' || return 1
 
   # Ensure we have `DOVE_PYTHON_VERSION`
-  if [[ -z "${DOVE_PYTHON_VERSION+x}" ]] || [[ "${DOVE_PYTHON_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_PYTHON_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_PYTHON_VERSION}" 'DOVE_PYTHON_VERSION' || return 1
 
   # If all we're doing is updating the checksum, we don't care about existing installations
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
-    # Ensure we have rm
-    verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
-
     # Ensure we have uv
     verify_exec "${DOVE_UV}" 'DOVE_UV' || {
       echo_red_text "ERROR: Unable to download and install Python without uv!"
-      exit 1
+      return 1
     }
+
+    # Ensure we have `DOVE_PYENV_DIR`
+    verify_env "${DOVE_PYENV_DIR}" 'DOVE_PYENV_DIR' || return 1
+
+    # Ensure we have `DOVE_UV_CACHE`
+    verify_env "${DOVE_UV_CACHE}" 'DOVE_UV_CACHE' || return 1
+
+    # Ensure we have `DOVE_UV_LOCAL`
+    verify_env "${DOVE_UV_LOCAL}" 'DOVE_UV_LOCAL' || return 1
+
+    # Ensure we have `DOVE_UV_PYTHON`
+    verify_env "${DOVE_UV_PYTHON}" 'DOVE_UV_PYTHON' || return 1
 
     if [[ -d "${DOVE_PYENV_DIR}" ]]; then
       echo_red_text "The Python environment is already set-up at path: '${DOVE_PYENV_DIR}'!"
@@ -794,8 +774,20 @@ function get_python() {
   local -r base_output="${DOVE_PYTHON_DIR}/${DOVE_PYTHON_GIT_RELEASE}"
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
+    echo_red_text 'Downloading Python (Linux - ARM)...'
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-armv7-unknown-linux-gnueabihf-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-armv7-unknown-linux-gnueabihf-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_ARM}"
+
     echo_red_text 'Downloading Python (Linux - ARM64)...'
     download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_ARM64}"
+
+    echo_red_text 'Downloading Python (Linux - PPC64)...'
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-ppc64le-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-ppc64le-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_PPC64}"
+
+    echo_red_text 'Downloading Python (Linux - RISC-V)...'
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_RISCV}"
+
+    echo_red_text 'Downloading Python (Linux - s390x)...'
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-s390x-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-s390x-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_S390X}"
 
     echo_red_text 'Downloading Python (Linux - x86_64)...'
     download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_X86_64}"
@@ -806,35 +798,64 @@ function get_python() {
     echo_red_text 'Downloading Python (OS X - x86_64)...'
     download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_X86_64}"
   else
-    # Ensure we have rm
-    verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
-
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
       local -r DOVE_PYTHON_PLATFORM='apple-darwin'
+    elif [[ "${DOVE_PLATFORM}" == 'linux' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm' ]]; then
+        local -r DOVE_PYTHON_PLATFORM='unknown-linux-gnueabihf'
+      else
+        local -r DOVE_PYTHON_PLATFORM='unknown-linux-gnu'
+      fi
     else
-      local -r DOVE_PYTHON_PLATFORM='unknown-linux-gnu'
+      echo_red_text "ERROR: Unsupported platform for Python: '${DOVE_PLATFORM}'!"
+      return 1
     fi
 
     # Set our platform architecture
-    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
+    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm' ]]; then
+      local -r DOVE_PYTHON_ARCH='armv7'
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
       local -r DOVE_PYTHON_ARCH='aarch64'
-    else
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'ppc64' ]]; then
+      local -r DOVE_PYTHON_ARCH='powerpc64le'
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'riscv' ]]; then
+      local -r DOVE_PYTHON_ARCH='riscv64gc'
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 's390x' ]]; then
+      local -r DOVE_PYTHON_ARCH='s390x'
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
       local -r DOVE_PYTHON_ARCH='x86_64'
+    else
+      echo_red_text "ERROR: Unsupported architecture for Python: '${DOVE_PLATFORM_ARCH}'!"
+      return 1
     fi
 
     # Set our checksum to verify
-    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
-      if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+    if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
         local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_OSX_ARM64}"
-      else
-        local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_LINUX_ARM64}"
-      fi
-    else
-      if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
         local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_OSX_X86_64}"
       else
+        echo_red_text "ERROR: Unsupported architecture for Python on OS X: '${DOVE_PLATFORM_ARCH}'!"
+        return 1
+      fi
+    elif [[ "${DOVE_PLATFORM}" == 'linux' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm' ]]; then
+        local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_LINUX_ARM}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
+        local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_LINUX_ARM64}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'ppc64' ]]; then
+        local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_LINUX_PPC64}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'riscv' ]]; then
+        local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_LINUX_RISCV}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 's390x' ]]; then
+        local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_LINUX_S390X}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
         local -r DOVE_PYTHON_SHA512SUM="${DOVE_PYTHON_SHA512SUM_LINUX_X86_64}"
+      else
+        echo_red_text "ERROR: Unsupported architecture for Python on Linux: '${DOVE_PLATFORM_ARCH}'!"
+        return 1
       fi
     fi
 
@@ -862,7 +883,7 @@ function get_python() {
       restore_dir "${DOVE_UV_PYTHON}"
       restore_dir "${DOVE_UV_LOCAL}/python-cache"
       "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
-      exit 1
+      return 1
     elif [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       echo_green_text "SUCCESS: Downloaded Python to path: '${dl_output}'!"
 
@@ -878,7 +899,7 @@ function get_python() {
         restore_dir "${DOVE_UV_PYTHON}"
         restore_dir "${DOVE_UV_LOCAL}/python-cache"
         "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
-        exit 1
+        return 1
       fi
 
       echo_red_text "Creating Python environment at path: '${DOVE_PYENV_DIR}'..."
@@ -886,12 +907,12 @@ function get_python() {
 
       # If the Python env set-up failed, restore our back-up, clean-up, and exit
       if [[ "${DOVE_PYENV_FAILED}" == 1 ]]; then
-        echo_red_text "ERROR: Unable to set-up Python environment at path: '${PHOENIX_PYENV_DIR}'!"
+        echo_red_text "ERROR: Unable to set-up Python environment at path: '${DOVE_PYENV_DIR}'!"
         restore_dir "${DOVE_PYENV_DIR}"
         "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
-        exit 1
+        return 1
       else
-        echo_green_text "SUCCESS: Set-up Python environment at path: '${PHOENIX_PYENV_DIR}'!"
+        echo_green_text "SUCCESS: Set-up Python environment at path: '${DOVE_PYENV_DIR}'!"
       fi
     fi
   fi
@@ -900,28 +921,34 @@ function get_python() {
 # Get s3cmd
 function get_s3cmd() {
   # Ensure we have `DOVE_S3CMD_COMMIT`
-  if [[ -z "${DOVE_S3CMD_COMMIT+x}" ]] || [[ "${DOVE_S3CMD_COMMIT}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_S3CMD_COMMIT' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_S3CMD_COMMIT}" 'DOVE_S3CMD_COMMIT' || return 1
+
+  # Ensure we have `DOVE_S3CMD_DIR`
+  verify_env "${DOVE_S3CMD_DIR}" 'DOVE_S3CMD_DIR' || return 1
 
   # Ensure we have `DOVE_S3CMD_SHA512SUM`
-  if [[ -z "${DOVE_S3CMD_SHA512SUM+x}" ]] || [[ "${DOVE_S3CMD_SHA512SUM}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_S3CMD_SHA512SUM' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_S3CMD_SHA512SUM}" 'DOVE_S3CMD_SHA512SUM' || return 1
 
-  # If all we're doing is updating the checksum, we don't care if the environment is prepared
+  # If all we're doing is updating the checksum, we don't care about existing installations
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
     # Ensure we have uv
     verify_exec "${DOVE_UV}" 'DOVE_UV' || {
       echo_red_text "ERROR: Unable to download and install s3cmd without uv!"
-      exit 1
+      return 1
     }
+
+    # Ensure we have `DOVE_PYENV_DIR`
+    verify_env "${DOVE_PYENV_DIR}" 'DOVE_PYENV_DIR' || return 1
+
+    # Ensure we have `DOVE_PYENV`
+    verify_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
+
+    # Ensure we have `DOVE_UV_DIR`
+    verify_env "${DOVE_UV_DIR}" 'DOVE_UV_DIR' || return 1
 
     if [[ ! -d "${DOVE_UV_DIR}" ]] || [[ ! -f "${DOVE_PYENV}" ]]; then
       echo_red_text "ERROR: You tried to download s3cmd, but you don't have a Python environment set-up yet!"
-      exit 1
+      return 1
     fi
 
     if [[ -d "${DOVE_PYENV_DIR}/bin/s3cmd" ]]; then
@@ -931,7 +958,6 @@ function get_s3cmd() {
       if [[ "${REPLY}" =~ ^[Nn]$ ]]; then
         return 0
       else
-        source "${DOVE_PYENV}"
         "${DOVE_UV}" pip uninstall s3cmd
       fi
     fi
@@ -941,7 +967,7 @@ function get_s3cmd() {
   download_and_extract "https://github.com/s3tools/s3cmd/archive/${DOVE_S3CMD_COMMIT}.tar.gz" "${DOVE_S3CMD_DIR}" "${DOVE_S3CMD_SHA512SUM}"
 
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
-    source "${DOVE_PYENV}"
+    source "${DOVE_PYENV}" || exit 1
     echo_red_text "Installing s3cmd to path: '${DOVE_S3CMD}'..."
     "${DOVE_UV}" pip install --no-editable --strict "${DOVE_S3CMD_DIR}"
     echo_green_text "SUCCESS: Set-up s3cmd at path: '${DOVE_S3CMD}'!"
@@ -950,11 +976,11 @@ function get_s3cmd() {
 
 # Get shellcheck
 function get_shellcheck() {
+  # Ensure we have `DOVE_SHELLCHECK_DIR`
+  verify_env "${DOVE_SHELLCHECK_DIR}" 'DOVE_SHELLCHECK_DIR' || return 1
+
   # Ensure we have `DOVE_SHELLCHECK_VERSION`
-  if [[ -z "${DOVE_SHELLCHECK_VERSION+x}" ]] || [[ "${DOVE_SHELLCHECK_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_SHELLCHECK_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_SHELLCHECK_VERSION}" 'DOVE_SHELLCHECK_VERSION' || return 1
 
   # Base download URL
   local -r base_url="https://github.com/koalaman/shellcheck/releases/download/${DOVE_SHELLCHECK_VERSION}"
@@ -975,29 +1001,41 @@ function get_shellcheck() {
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
       local -r DOVE_SHELLCHECK_PLATFORM='darwin'
-    else
+    elif [[ "${DOVE_PLATFORM}" == 'linux' ]]; then
       local -r DOVE_SHELLCHECK_PLATFORM='linux'
+    else
+      echo_red_text "ERROR: Unsupported platform for shellcheck: '${DOVE_PLATFORM}'!"
+      return 1
     fi
 
     # Set our platform architecture
     if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
       local -r DOVE_SHELLCHECK_ARCH='aarch64'
-    else
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
       local -r DOVE_SHELLCHECK_ARCH='x86_64'
+    else
+      echo_red_text "ERROR: Unsupported architecture for shellcheck: '${DOVE_PLATFORM_ARCH}'!"
+      return 1
     fi
 
     # Set our checksum to verify
-    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
-      if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+    if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
         local -r DOVE_SHELLCHECK_SHA512SUM="${DOVE_SHELLCHECK_SHA512SUM_OSX_ARM64}"
-      else
-        local -r DOVE_SHELLCHECK_SHA512SUM="${DOVE_SHELLCHECK_SHA512SUM_LINUX_ARM64}"
-      fi
-    else
-      if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
         local -r DOVE_SHELLCHECK_SHA512SUM="${DOVE_SHELLCHECK_SHA512SUM_OSX_X86_64}"
       else
+        echo_red_text "ERROR: Unsupported architecture for shellcheck on OS X: '${DOVE_PLATFORM_ARCH}'!"
+        return 1
+      fi
+    elif [[ "${DOVE_PLATFORM}" == 'linux' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
+        local -r DOVE_SHELLCHECK_SHA512SUM="${DOVE_SHELLCHECK_SHA512SUM_LINUX_ARM64}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
         local -r DOVE_SHELLCHECK_SHA512SUM="${DOVE_SHELLCHECK_SHA512SUM_LINUX_X86_64}"
+      else
+        echo_red_text "ERROR: Unsupported architecture for shellcheck on Linux: '${DOVE_PLATFORM_ARCH}'!"
+        return 1
       fi
     fi
 
@@ -1007,7 +1045,7 @@ function get_shellcheck() {
     if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       # Set-up the linting pre-commit hook
       if [[ "${DOVE_CI}" != 1 ]] && [[ -x "${DOVE_GIT}" ]] && [[ ! -f "${DOVE_BUILD}/set-hook" ]]; then
-        /bin/bash "${DOVE_SCRIPTS}/lint-hook.sh"
+        source "${DOVE_SCRIPTS}/lint-hook.sh"
       fi
 
       echo_green_text "SUCCESS: Set-up shellcheck at path: '${DOVE_SHELLCHECK}'!"
@@ -1017,16 +1055,16 @@ function get_shellcheck() {
 
 # Get shfmt
 function get_shfmt() {
+  # Ensure we have `DOVE_SHFMT`
+  verify_env "${DOVE_SHFMT}" 'DOVE_SHFMT' || return 1
+
   # Ensure we have `DOVE_SHFMT_VERSION`
-  if [[ -z "${DOVE_SHFMT_VERSION+x}" ]] || [[ "${DOVE_SHFMT_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_SHFMT_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_SHFMT_VERSION}" 'DOVE_SHFMT_VERSION' || return 1
 
   # If all we're doing is updating the checksum, we don't care about existing installations
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
     # Ensure we have chmod
-    verify_exec "${DOVE_CHMOD}" 'DOVE_CHMOD' || exit 1
+    verify_exec "${DOVE_CHMOD}" 'DOVE_CHMOD' || return 1
   fi
 
   # Base download URL
@@ -1048,29 +1086,41 @@ function get_shfmt() {
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
       local -r DOVE_SHFMT_PLATFORM='darwin'
-    else
+    elif [[ "${DOVE_PLATFORM}" == 'linux' ]]; then
       local -r DOVE_SHFMT_PLATFORM='linux'
+    else
+      echo_red_text "ERROR: Unsupported platform for shfmt: '${DOVE_PLATFORM}'!"
+      return 1
     fi
 
     # Set our platform architecture
     if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
       local -r DOVE_SHFMT_ARCH='arm64'
-    else
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
       local -r DOVE_SHFMT_ARCH='amd64'
+    else
+      echo_red_text "ERROR: Unsupported architecture for shfmt: '${DOVE_PLATFORM_ARCH}'!"
+      return 1
     fi
 
     # Set our checksum to verify
-    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
-      if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+    if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
         local -r DOVE_SHFMT_SHA512SUM="${DOVE_SHFMT_SHA512SUM_OSX_ARM64}"
-      else
-        local -r DOVE_SHFMT_SHA512SUM="${DOVE_SHFMT_SHA512SUM_LINUX_ARM64}"
-      fi
-    else
-      if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
         local -r DOVE_SHFMT_SHA512SUM="${DOVE_SHFMT_SHA512SUM_OSX_X86_64}"
       else
+        echo_red_text "ERROR: Unsupported architecture for shfmt on OS X: '${DOVE_PLATFORM_ARCH}'!"
+        return 1
+      fi
+    elif [[ "${DOVE_PLATFORM}" == 'linux' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
+        local -r DOVE_SHFMT_SHA512SUM="${DOVE_SHFMT_SHA512SUM_LINUX_ARM64}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
         local -r DOVE_SHFMT_SHA512SUM="${DOVE_SHFMT_SHA512SUM_LINUX_X86_64}"
+      else
+        echo_red_text "ERROR: Unsupported architecture for shfmt on Linux: '${DOVE_PLATFORM_ARCH}'!"
+        return 1
       fi
     fi
 
@@ -1082,7 +1132,7 @@ function get_shfmt() {
 
       # Set-up the linting pre-commit hook
       if [[ "${DOVE_CI}" != 1 ]] && [[ -x "${DOVE_GIT}" ]] && [[ ! -f "${DOVE_BUILD}/set-hook" ]]; then
-        /bin/bash "${DOVE_SCRIPTS}/lint-hook.sh"
+        source "${DOVE_SCRIPTS}/lint-hook.sh"
       fi
 
       echo_green_text "SUCCESS: Set-up shfmt at path: '${DOVE_SHFMT}'!"
@@ -1092,19 +1142,19 @@ function get_shfmt() {
 
 # Get + set-up uv
 function get_uv() {
+  # Ensure we have `DOVE_UV_DIR`
+  verify_env "${DOVE_UV_DIR}" 'DOVE_UV_DIR' || return 1
+
   # Ensure we have `DOVE_UV_VERSION`
-  if [[ -z "${DOVE_UV_VERSION+x}" ]] || [[ "${DOVE_UV_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_UV_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_UV_VERSION}" 'DOVE_UV_VERSION' || return 1
 
   # If all we're doing is updating the checksum, we don't care about existing installations
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" != 1 ]]; then
-    # Ensure we have rm
-    verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+    # Ensure we have `DOVE_UV_LOCAL`
+    verify_env "${DOVE_UV_LOCAL}" 'DOVE_UV_LOCAL' || return 1
 
     if [[ -d "${DOVE_UV_DIR}" ]]; then
-      echo_red_text "Found existing installation at path: '${PHOENIX_UV_DIR}'!"
+      echo_red_text "Found existing installation at path: '${DOVE_UV_DIR}'!"
       echo 'Continuing will remove this installation and related data.'
       read -p "Do you still want to continue? [y/N] " -n 1 -r
       echo
@@ -1122,8 +1172,20 @@ function get_uv() {
   local -r base_url="https://github.com/astral-sh/uv/releases/download/${DOVE_UV_VERSION}"
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
+    echo_red_text 'Downloading uv (Linux - ARM)...'
+    download_file "${base_url}/uv-armv7-unknown-linux-gnueabihf.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-arm.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_ARM}"
+
     echo_red_text 'Downloading uv (Linux - ARM64)...'
     download_file "${base_url}/uv-aarch64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-arm64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_ARM64}"
+
+    echo_red_text 'Downloading uv (Linux - PPC64)...'
+    download_file "${base_url}/uv-powerpc64le-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-ppc64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_PPC64}"
+
+    echo_red_text 'Downloading uv (Linux - RISC-V)...'
+    download_file "${base_url}/uv-riscv64gc-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-riscv.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_RISCV}"
+
+    echo_red_text 'Downloading uv (Linux - s390x)...'
+    download_file "${base_url}/uv-s390x-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-s390x.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_S390X}"
 
     echo_red_text 'Downloading uv (Linux - x86_64)...'
     download_file "${base_url}/uv-x86_64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_X86_64}"
@@ -1137,29 +1199,61 @@ function get_uv() {
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
       local -r DOVE_UV_PLATFORM='apple-darwin'
+    elif [[ "${DOVE_PLATFORM}" == 'linux' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm' ]]; then
+        local -r DOVE_UV_PLATFORM='unknown-linux-gnueabihf'
+      else
+        local -r DOVE_UV_PLATFORM='unknown-linux-gnu'
+      fi
     else
-      local -r DOVE_UV_PLATFORM='unknown-linux-gnu'
+      echo_red_text "ERROR: Unsupported platform for uv: '${DOVE_PLATFORM}'!"
+      return 1
     fi
 
     # Set our platform architecture
-    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
+    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm' ]]; then
+      local -r DOVE_UV_ARCH='armv7'
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
       local -r DOVE_UV_ARCH='aarch64'
-    else
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'ppc64' ]]; then
+      local -r DOVE_UV_ARCH='powerpc64le'
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'riscv' ]]; then
+      local -r DOVE_UV_ARCH='riscv64gc'
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 's390x' ]]; then
+      local -r DOVE_UV_ARCH='s390x'
+    elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
       local -r DOVE_UV_ARCH='x86_64'
+    else
+      echo_red_text "ERROR: Unsupported architecture for uv: '${DOVE_PLATFORM_ARCH}'!"
+      return 1
     fi
 
     # Set our checksum to verify
-    if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
-      if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+    if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
         local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_OSX_ARM64}"
-      else
-        local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_LINUX_ARM64}"
-      fi
-    else
-      if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
         local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_OSX_X86_64}"
       else
+        echo_red_text "ERROR: Unsupported architecture for uv on OS X: '${DOVE_PLATFORM_ARCH}'!"
+        return 1
+      fi
+    elif [[ "${DOVE_PLATFORM}" == 'linux' ]]; then
+      if [[ "${DOVE_PLATFORM_ARCH}" == 'arm' ]]; then
+        local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_LINUX_ARM}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'arm64' ]]; then
+        local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_LINUX_ARM64}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'ppc64' ]]; then
+        local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_LINUX_PPC64}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'riscv' ]]; then
+        local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_LINUX_RISCV}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 's390x' ]]; then
+        local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_LINUX_S390X}"
+      elif [[ "${DOVE_PLATFORM_ARCH}" == 'x86_64' ]]; then
         local -r DOVE_UV_SHA512SUM="${DOVE_UV_SHA512SUM_LINUX_X86_64}"
+      else
+        echo_red_text "ERROR: Unsupported architecture for uv on Linux: '${DOVE_PLATFORM_ARCH}'!"
+        return 1
       fi
     fi
 
@@ -1178,7 +1272,7 @@ function get_uv() {
       restore_dir "${DOVE_UV_DIR}"
       restore_dir "${DOVE_UV_LOCAL}"
       "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
-      exit 1
+      return 1
     elif [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       echo_green_text "SUCCESS: Set-up uv at path: '${DOVE_UV}'!"
     fi

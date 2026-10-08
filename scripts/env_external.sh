@@ -32,6 +32,7 @@ export TARGET_CXXFLAGS
 readonly PHOENIX_ANDROID=0
 readonly PHOENIX_AWK="${DOVE_AWK}"
 readonly PHOENIX_BASENAME="${DOVE_BASENAME}"
+readonly PHOENIX_BASH="${DOVE_BASH}"
 readonly PHOENIX_CAT="${DOVE_CAT}"
 readonly PHOENIX_CHMOD="${DOVE_CHMOD}"
 readonly PHOENIX_CP="${DOVE_CP}"
@@ -62,6 +63,7 @@ readonly PHOENIX_PYTHON="${DOVE_PYTHON}"
 readonly PHOENIX_PYTHON_DIR="${DOVE_PYTHON_DIR}"
 readonly PHOENIX_RM="${DOVE_RM}"
 readonly PHOENIX_SED="${DOVE_SED}"
+readonly PHOENIX_SH="${DOVE_SH}"
 readonly PHOENIX_SHASUM="${DOVE_SHASUM}"
 readonly PHOENIX_STATIC_JS="${DOVE_STATIC_JS}"
 readonly PHOENIX_TAR="${DOVE_TAR}"
@@ -82,6 +84,7 @@ readonly PHOENIX_ZIP="${DOVE_ZIP}"
 export PHOENIX_ANDROID
 export PHOENIX_AWK
 export PHOENIX_BASENAME
+export PHOENIX_BASH
 export PHOENIX_CAT
 export PHOENIX_CHMOD
 export PHOENIX_CP
@@ -112,6 +115,7 @@ export PHOENIX_PYTHON
 export PHOENIX_PYTHON_DIR
 export PHOENIX_RM
 export PHOENIX_SED
+export PHOENIX_SH
 export PHOENIX_SHASUM
 export PHOENIX_STATIC_JS
 export PHOENIX_TAR
@@ -251,9 +255,6 @@ readonly UV_TOOL_BIN_DIR="${DOVE_UV_LOCAL}/tools/bin"
 readonly UV_TOOL_DIR="${DOVE_UV_LOCAL}/tools"
 export UV_TOOL_BIN_DIR
 export UV_TOOL_DIR
-
-# Include version info
-source "${DOVE_VERSIONS}"
 
 ## Pin Python version
 readonly UV_PYTHON_CPYTHON_BUILD="${DOVE_PYTHON_GIT_RELEASE}"

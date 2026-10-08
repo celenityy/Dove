@@ -4,15 +4,6 @@ set -euo pipefail
 
 # File utility functions
 
-# Set-up our environment
-if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-  /bin/bash $(dirname $0)/env.sh || exit 1
-fi
-source $(dirname $0)/env.sh || exit 1
-
-# Include utilities
-source "${DOVE_UTILS}" || exit 1
-
 # Produce a (reproducible) archive from a directory
 ## For reference/details on this process, see...
 ## https://codeberg.org/celenity/bugs/issues/360
@@ -27,52 +18,49 @@ function create_archive() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a directory!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to the desired output archive!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have dot_clean
   if [[ "${DOVE_OS}" == 'osx' ]]; then
-    verify_exec "${DOVE_DOT_CLEAN}" 'DOVE_DOT_CLEAN' || exit 1
+    verify_exec "${DOVE_DOT_CLEAN}" 'DOVE_DOT_CLEAN' || return 1
   fi
 
   # Ensure we have find
-  verify_exec "${DOVE_FIND}" 'DOVE_FIND' || exit 1
+  verify_exec "${DOVE_FIND}" 'DOVE_FIND' || return 1
 
   # Ensure we have GNU date
-  verify_exec "${DOVE_DATE}" 'DOVE_DATE' || exit 1
+  verify_exec "${DOVE_DATE}" 'DOVE_DATE' || return 1
 
   # Ensure we have head
-  verify_exec "${DOVE_HEAD}" 'DOVE_HEAD' || exit 1
+  verify_exec "${DOVE_HEAD}" 'DOVE_HEAD' || return 1
 
   # Ensure we have ls
-  verify_exec "${DOVE_LS}" 'DOVE_LS' || exit 1
+  verify_exec "${DOVE_LS}" 'DOVE_LS' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
   # Ensure we have touch
-  verify_exec "${DOVE_TOUCH}" 'DOVE_TOUCH' || exit 1
+  verify_exec "${DOVE_TOUCH}" 'DOVE_TOUCH' || return 1
 
   # Ensure we have xargs
-  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || exit 1
+  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || return 1
 
   # Ensure we have `DOVE_VERSION_DATE`
-  if [[ -z "${DOVE_VERSION_DATE+x}" ]] || [[ "${DOVE_VERSION_DATE}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION_DATE' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION_DATE}" 'DOVE_VERSION_DATE' || return 1
 
   local -r target_dir="$1"
   local -r output_archive="$2"
@@ -81,25 +69,25 @@ function create_archive() {
   case "${output_archive}" in
     *.zip)
       # Ensure we have zip
-      verify_exec "${DOVE_ZIP}" 'DOVE_ZIP' || exit 1
+      verify_exec "${DOVE_ZIP}" 'DOVE_ZIP' || return 1
 
       local -r archive_format='zip'
       ;;
     *.tar.xz)
       # Ensure we have GNU tar
-      verify_exec "${DOVE_TAR}" 'DOVE_TAR' || exit 1
+      verify_exec "${DOVE_TAR}" 'DOVE_TAR' || return 1
 
       local -r archive_format='tar'
       ;;
     *)
       echo_red_text "ERROR: Unsupported archive format: '${output_archive}'!"
-      exit 1
+      return 1
       ;;
   esac
 
   if [[ ! -d "${target_dir}" ]]; then
     echo_red_text "ERROR: Target directory ('${target_dir}') does not exist! Aborting..."
-    exit 1
+    return 1
   fi
 
   # Check if the output archive already exists
@@ -112,7 +100,7 @@ function create_archive() {
       echo_red_text "Removing '${output_archive}'..."
       "${DOVE_RM}" -f "${output_archive}"
     else
-      exit 1
+      return 1
     fi
   fi
 
@@ -160,7 +148,7 @@ function create_archive() {
     "${DOVE_TAR}" -cJv --exclude-vcs --group=0 --mode='go+u,go-w' --no-acls --no-selinux --no-xattrs --numeric-owner --owner=0 --pax-option='delete=atime,delete=ctime' --pax-option='exthdr.name=%d/PaxHeaders/%f' --restrict --sort=name --utc --clamp-mtime --mtime="${DOVE_TIMESTAMP}" --exclude ".DS_Store" -f "${output_archive}" * || local archive_failed=1
   else
     echo_red_text "ERROR: Invalid archive format: '${archive_format}'!"
-    exit 1
+    return 1
   fi
   popd
 
@@ -187,37 +175,35 @@ function extract_archive() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please provide the path to an archive to extract!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please provide the path that the archive should be extracted to!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
   # Ensure we have ls
-  verify_exec "${DOVE_LS}" 'DOVE_LS' || exit 1
+  verify_exec "${DOVE_LS}" 'DOVE_LS' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
   local -r archive_path="$1"
   local -r target_path="$2"
 
-  if [[ ! -f "${archive_path}" ]]; then
-    echo_red_text "ERROR: Archive does not exist: '${archive_path}'!"
-    exit 1
-  fi
+  # Ensure the archive exists
+  verify_file "${archive_path}" || return 1
 
   # Set a temporary archive name
   local -r temp_archive_path_name=$("${DOVE_BASENAME}" "${target_path}")
@@ -244,16 +230,16 @@ function extract_archive() {
       ;;
     *)
       echo_red_text "ERROR: Unsupported archive format: '${archive_path}'!"
-      exit 1
+      return 1
       ;;
   esac
 
   if [[ "${archive_format}" == 'zip' ]]; then
     # Ensure we have unzip
-    verify_exec "${DOVE_UNZIP}" 'DOVE_UNZIP' || exit 1
+    verify_exec "${DOVE_UNZIP}" 'DOVE_UNZIP' || return 1
   else
     # Ensure we have GNU tar
-    verify_exec "${DOVE_TAR}" 'DOVE_TAR' || exit 1
+    verify_exec "${DOVE_TAR}" 'DOVE_TAR' || return 1
   fi
 
   # Create temporary directory for extraction
@@ -274,7 +260,7 @@ function extract_archive() {
     "${DOVE_TAR}" --zstd -xvf "${archive_path}" -C "${temp_archive_path}" || local extraction_failed=1
   else
     echo_red_text "ERROR: Invalid archive format: '${archive_format}'!"
-    exit 1
+    return 1
   fi
 
   local -r top_input_dir=$("${DOVE_LS}" "${temp_archive_path}")

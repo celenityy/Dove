@@ -2,37 +2,33 @@
 
 set -euo pipefail
 
-# Set-up our environment
-source $(dirname $0)/env.sh || exit 1
-
-# Include utilities
-source "${DOVE_UTILS}" || exit 1
-
 # Set verbosity
 set_verbosity
 
 # Include download utilities
-source "${DOVE_DOWNLOAD_UTILS}" || exit 1
-
-# Include version info
-source "${DOVE_VERSIONS}" || exit 1
+verify_file_with_env "${DOVE_DOWNLOAD_UTILS}" 'DOVE_DOWNLOAD_UTILS' || return 1
+source "${DOVE_DOWNLOAD_UTILS}" || return 1
 
 if [[ -z "${DOVE_FROM_AR_DOWN+x}" ]]; then
   echo_red_text "ERROR: Do not call 'ci-download-artifacts-dove.sh' directly. Instead, use 'ci-download-artifacts.sh'." >&1
-  exit 1
+  return 1
 fi
+
+# Ensure we have `DOVE_CI`
+verify_env "${DOVE_CI}" 'DOVE_CI' || return 1
 
 if [[ "${DOVE_CI}" != 1 ]]; then
   echo_red_text "ERROR: '$0' should only be called from CI!"
-  exit 1
+  return 1
 fi
 
-if [[ -z "${DOVE_CI_ID+x}" ]] || [[ "${DOVE_CI_ID}" == "" ]]; then
-  echo_red_text "ERROR: Missing CI ID! Please set 'DOVE_CI_ID'."
-  exit 1
-fi
+# Ensure we have `DOVE_CI_ID`
+verify_env "${DOVE_CI_ID}" 'DOVE_CI_ID' || return 1
 
-readonly down_artifact="$1"
+verify_env "${target_artifact}" 'target_artifact' || {
+  echo_red_text "ERROR: Missing target artifact!"
+  return 1
+}
 
 # Set-up target parameters
 DOVE_AR_DOWN_LINUX_ARCHIVE=0
@@ -41,22 +37,22 @@ DOVE_AR_DOWN_OSX_ARCHIVE=0
 DOVE_AR_DOWN_OSX_INTEL_ARCHIVE=0
 DOVE_AR_DOWN_WINDOWS_ARCHIVE=0
 
-if [[ "${down_artifact}" == 'linux-archive' ]]; then
+if [[ "${target_artifact}" == 'linux-archive' ]]; then
   # dove-{DOVE_VERSION}-linux.tar.xz
   DOVE_AR_DOWN_LINUX_ARCHIVE=1
-elif [[ "${down_artifact}" == 'linux-flatpak-archive' ]]; then
+elif [[ "${target_artifact}" == 'linux-flatpak-archive' ]]; then
   # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
   DOVE_AR_DOWN_LINUX_FLATPAK_ARCHIVE=1
-elif [[ "${down_artifact}" == 'osx-archive' ]]; then
+elif [[ "${target_artifact}" == 'osx-archive' ]]; then
   # dove-{DOVE_VERSION}-osx.tar.xz
   DOVE_AR_DOWN_OSX_ARCHIVE=1
-elif [[ "${down_artifact}" == 'osx-intel-archive' ]]; then
+elif [[ "${target_artifact}" == 'osx-intel-archive' ]]; then
   # dove-{DOVE_VERSION}-osx-intel.tar.xz
   DOVE_AR_DOWN_OSX_INTEL_ARCHIVE=1
-elif [[ "${down_artifact}" == 'windows-archive' ]]; then
+elif [[ "${target_artifact}" == 'windows-archive' ]]; then
   # dove-{DOVE_VERSION}-windows.zip
   DOVE_AR_DOWN_WINDOWS_ARCHIVE=1
-elif [[ "${down_artifact}" == 'all' ]]; then
+elif [[ "${target_artifact}" == 'all' ]]; then
   # If no argument is specified (or argument is set to "all"), just download everything
   DOVE_AR_DOWN_LINUX_ARCHIVE=1
   DOVE_AR_DOWN_LINUX_FLATPAK_ARCHIVE=1
@@ -64,14 +60,14 @@ elif [[ "${down_artifact}" == 'all' ]]; then
   DOVE_AR_DOWN_OSX_INTEL_ARCHIVE=1
   DOVE_AR_DOWN_WINDOWS_ARCHIVE=1
 else
-  echo_red_text "ERROR: Invalid target: ${down_artifact}\n You must enter one of the following:"
+  echo_red_text "ERROR: Invalid target: ${target_artifact}\n You must enter one of the following:"
   echo 'All:                      all (Default)'
   echo 'Linux archive:            linux-archive'
   echo 'Linux (Flatpak) archive:  linux-flatpak-archive'
   echo 'OS X archive:             osx-archive'
   echo 'OS X (Intel) archive:     osx-intel-archive'
   echo 'Windows archive:          windows-archive'
-  exit 1
+  return 1
 fi
 readonly DOVE_AR_DOWN_LINUX_ARCHIVE
 readonly DOVE_AR_DOWN_LINUX_FLATPAK_ARCHIVE
@@ -93,47 +89,41 @@ function download_artifact() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please provide the pipeline ID to download the artifact from!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please provide the name of the artifact to download!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please provide the path to download the artifact to!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have cat
-  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || return 1
 
   # Ensure we have GNU awk
-  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
+  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || return 1
 
   # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
   # Ensure we have shasum
-  verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || exit 1
+  verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || return 1
 
   # Ensure we have xargs
-  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || exit 1
+  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || return 1
 
   # Ensure we have `DOVE_VERSION`
-  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_URL`
-  if [[ -z "${DOVE_CEL_ARTIFACTS_URL+x}" ]] || [[ "${DOVE_CEL_ARTIFACTS_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_CEL_ARTIFACTS_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_CEL_ARTIFACTS_URL}" 'DOVE_CEL_ARTIFACTS_URL' || return 1
 
   local -r pipeline_id="$1"
   local -r target="$2"
@@ -169,7 +159,7 @@ function download_artifact() {
     # If checksum validation fails, also just clean-up the files
     "${DOVE_RM}" -f "${output_file}"
     "${DOVE_RM}" -f "${output_expected_sha512sum}"
-    exit 1
+    return 1
   fi
   echo_green_text "SUCCESS: Validated checksum for file: '${target_file}'!"
   echo "SHA512sum: '${local_sha512sum}'"

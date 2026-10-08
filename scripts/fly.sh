@@ -5,30 +5,22 @@ set -euo pipefail
 # Welcome to the Dove Unified build script!
 # This script should be ran AFTER building Phoenix, from the ROOT of the Dove repo
 
-# Set-up our environment
-source $(dirname $0)/env.sh || exit 1
-
-# Include utilities
-source "${DOVE_UTILS}" || exit 1
-
 # Include file utilities
-source "${DOVE_FILE_UTILS}" || exit 1
+verify_file_with_env "${DOVE_FILE_UTILS}" 'DOVE_FILE_UTILS' || return 1
+source "${DOVE_FILE_UTILS}" || return 1
 
 # Set verbosity
 set_verbosity
 
 if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
   echo_red_text "ERROR: Do not call 'fly.sh' directly! Instead, use 'build.sh'." >&1
-  exit 1
+  return 1
 fi
 
-# Ensure we have mkdir
-verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
-
-# Ensure we have rm
-verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
-
-readonly target="$1"
+verify_env "${build_target}" 'build_target' || {
+  echo_red_text "ERROR: Missing build target!"
+  return 1
+}
 
 # Set-up target parameters
 DOVE_LINUX=0
@@ -37,22 +29,22 @@ DOVE_OSX=0
 DOVE_OSX_INTEL=0
 DOVE_WINDOWS=0
 
-if [[ "${target}" == 'linux' ]]; then
+if [[ "${build_target}" == 'linux' ]]; then
   # Linux (non-Flatpak)
   DOVE_LINUX=1
-elif [[ "${target}" == 'linux-flatpak' ]]; then
+elif [[ "${build_target}" == 'linux-flatpak' ]]; then
   # Linux (Flatpak)
   DOVE_LINUX_FLATPAK=1
-elif [[ "${target}" == 'osx' ]]; then
+elif [[ "${build_target}" == 'osx' ]]; then
   # OS X (Silicon)
   DOVE_OSX=1
-elif [[ "${target}" == 'osx-intel' ]]; then
+elif [[ "${build_target}" == 'osx-intel' ]]; then
   # OS X (Intel)
   DOVE_OSX_INTEL=1
-elif [[ "${target}" == 'windows' ]]; then
+elif [[ "${build_target}" == 'windows' ]]; then
   # Windows
   DOVE_WINDOWS=1
-elif [[ "${target}" == 'all' ]]; then
+elif [[ "${build_target}" == 'all' ]]; then
   # If no argument is specified (or argument is set to "all"), build everything
   DOVE_LINUX=1
   DOVE_LINUX_FLATPAK=1
@@ -60,23 +52,20 @@ elif [[ "${target}" == 'all' ]]; then
   DOVE_OSX_INTEL=1
   DOVE_WINDOWS=1
 else
-  echo_red_text "ERROR: Invalid target: ${target}\n You must enter one of the following:"
+  echo_red_text "ERROR: Invalid target: '${build_target}'\n You must enter one of the following:"
   echo 'All:                  all (Default)'
   echo 'Linux (non-Flatpak):  linux'
   echo 'Linux (Flatpak):      linux-flatpak'
   echo 'OS X (Silicon):       osx'
   echo 'OS X (Intel):         osx-intel'
   echo 'Windows:              windows'
-  exit 1
+  return 1
 fi
 readonly DOVE_LINUX
 readonly DOVE_LINUX_FLATPAK
 readonly DOVE_OSX
 readonly DOVE_OSX_INTEL
 readonly DOVE_WINDOWS
-
-# Include version info
-source "${DOVE_VERSIONS}" || exit 1
 
 # Check if a file or directory already exists
 ## If the file or directory already exists, prompt the user to remove it
@@ -90,11 +79,8 @@ function check_file_or_dir_exists() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file or directory to check!'
     print_usage
-    exit 1
+    return 1
   fi
-
-  # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
 
   local -r path="$1"
 
@@ -111,7 +97,7 @@ function check_file_or_dir_exists() {
         "${DOVE_RM}" -f "${path}" "${path}-sha512sum.txt"
       fi
     else
-      exit 1
+      return 1
     fi
   fi
 }
@@ -119,10 +105,10 @@ function check_file_or_dir_exists() {
 # Prepare to build Dove
 function prep_dove() {
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
   # Ensure we have GNU sed
-  verify_exec "${DOVE_SED}" 'DOVE_SED' || exit 1
+  verify_exec "${DOVE_SED}" 'DOVE_SED' || return 1
 
   "${DOVE_CP}" -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg"
 
@@ -133,11 +119,8 @@ function prep_dove() {
 
 # Build Thunderbird's autoconfiguration database
 function build_autoconfig() {
-  # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
-
-  # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+  # Ensure we have `DOVE_BUILD`
+  verify_env "${DOVE_BUILD}" 'DOVE_BUILD' || return 1
 
   echo_red_text 'Building the Thunderbird autoconfiguration database...'
   "${DOVE_MKDIR}" -p "${DOVE_BUILD}/autoconfig/v1.1"
@@ -147,7 +130,7 @@ function build_autoconfig() {
   "${DOVE_PYTHON}" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml
   popd
 
-  echo_green_text 'SUCCESS: Built the Thunderbird autoconfiguration database'
+  echo_green_text 'SUCCESS: Built the Thunderbird autoconfiguration database!'
 }
 
 # Build Phoenix
@@ -155,7 +138,7 @@ function build_phoenix() {
   echo_red_text 'Building Phoenix...'
 
   pushd "${DOVE_PHOENIX}"
-  /bin/bash -x "${DOVE_PHOENIX}/scripts/build.sh" "${target}"
+  "${DOVE_BASH}" "${DOVE_PHOENIX}/scripts/build.sh" "${build_target}"
   popd
 
   echo_green_text 'SUCCESS: Built Phoenix!'
@@ -170,14 +153,20 @@ function build_dove() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the platform you would like to build Dove for!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
-  # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+  # Ensure we have `DOVE_VERSION`
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
+
+  # Ensure we have `DOVE_PHOENIX_VERSION`
+  verify_env "${DOVE_PHOENIX_VERSION}" 'DOVE_PHOENIX_VERSION' || return 1
+
+  # Ensure we have `DOVE_OUTPUTS`
+  verify_env "${DOVE_OUTPUTS}" 'DOVE_OUTPUTS' || return 1
 
   local -r dove_platform="$1"
   local -r dove_output_dir="${DOVE_OUTPUTS}/${dove_platform}"
@@ -269,7 +258,19 @@ function build_dove() {
   fi
 }
 
+# Ensure we have mkdir
+verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
+
+# Ensure we have rm
+verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
+
+# Ensure we have `DOVE_TEMP`
+verify_env "${DOVE_TEMP}" 'DOVE_TEMP' || return 1
+
 # Create our temporary file directory
+if [[ -d "${DOVE_TEMP}" ]]; then
+  "${DOVE_RM}" -rf "${DOVE_TEMP}"
+fi
 "${DOVE_MKDIR}" -p "${DOVE_TEMP}"
 
 # Set-up Python environment
@@ -280,7 +281,7 @@ else
 fi
 if [[ "${dove_py}" == 1 ]]; then
   # Ensure Python is properly set-up
-  verify_exec "${DOVE_PYTHON}" 'DOVE_PYTHON' || exit 1
+  verify_exec "${DOVE_PYTHON}" 'DOVE_PYTHON' || return 1
 
   # The Python environment *should* already be created by `get_sources.sh`, but it may not be (ex. if the user provides their own Python and/or
   # doesn't use `get_sources.sh`), so if it doesn't exist then create it
@@ -295,11 +296,11 @@ if [[ "${dove_py}" == 1 ]]; then
       echo_red_text 'Creating Python environment with Python...'
       "${DOVE_PYTHON}" -m venv "${DOVE_PYENV_DIR}"
     fi
-    echo_green_text "Created Python environment: ${DOVE_PYENV}"
+    echo_green_text "SUCCESS: Created Python environment: '${DOVE_PYENV}'!"
   fi
-  echo_red_text 'Sourcing Python environment...'
-  source "${DOVE_PYENV}"
-  echo_green_text "Sourced Python environment: ${DOVE_PYENV}"
+  echo_red_text "Sourcing Python environment: '${DOVE_PYENV}'..."
+  source "${DOVE_PYENV}" || exit 1
+  echo_green_text "SUCCESS: Sourced Python environment: '${DOVE_PYENV}'!"
 fi
 
 # First, prepare our build environment
@@ -312,7 +313,7 @@ build_autoconfig
 build_phoenix
 
 # Begin the build...
-echo_red_text "Building Dove ${DOVE_VERSION}..."
+echo_red_text "Building Dove '${DOVE_VERSION}'..."
 
 # Build Dove for Linux (non-Flatpak)
 if [[ "${DOVE_LINUX}" == 1 ]]; then
@@ -339,7 +340,7 @@ if [[ "${DOVE_WINDOWS}" == 1 ]]; then
   build_dove 'windows'
 fi
 
-echo_green_text "SUCCESS: Built Dove ${DOVE_VERSION}"
+echo_green_text "SUCCESS: Built Dove '${DOVE_VERSION}'!"
 
 # Clean-up temporary files
 "${DOVE_RM}" -rf "${DOVE_TEMP}"

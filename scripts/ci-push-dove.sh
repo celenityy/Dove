@@ -3,38 +3,34 @@
 set -euo pipefail
 
 # Ensure this is never ran with xtrace...
-set +x || exit 1
-
-# Set-up our environment
-source $(dirname $0)/env.sh || exit 1
-
-# Include utilities
-source "${DOVE_UTILS}" || exit 1
+set +x || return 1
 
 # Include download utilities
-source "${DOVE_DOWNLOAD_UTILS}" || exit 1
+verify_file_with_env "${DOVE_DOWNLOAD_UTILS}" 'DOVE_DOWNLOAD_UTILS' || return 1
+source "${DOVE_DOWNLOAD_UTILS}" || return 1
 
 # Include S3 utilities
-source "${DOVE_S3_UTILS}" || exit 1
+verify_file_with_env "${DOVE_S3_UTILS}" 'DOVE_S3_UTILS' || return 1
+source "${DOVE_S3_UTILS}" || return 1
 
 if [[ -z "${DOVE_FROM_PUSH+x}" ]]; then
   echo_red_text 'ERROR: Do not call ci-push-dove.sh directly. Instead, use ci-push.sh.' >&1
-  exit 1
+  return 1
 fi
+
+# Ensure we have `DOVE_CI`
+verify_env "${DOVE_CI}" 'DOVE_CI' || return 1
 
 if [[ "${DOVE_CI}" != 1 ]]; then
   echo_red_text "ERROR: '$0' should only be called from CI!"
-  exit 1
+  return 1
 fi
 
 # Verify secrets
-verify_file_with_env "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE' || exit 1
-verify_file_with_env "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" 'DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE' || exit 1
-verify_file_with_env "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" 'DOVE_CEL_RELEASES_S3_ENDPOINT_FILE' || exit 1
-verify_file_with_env "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE' || exit 1
-
-# Include version info
-source "${DOVE_VERSIONS}" || exit 1
+verify_file_with_env "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE' || return 1
+verify_file_with_env "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" 'DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE' || return 1
+verify_file_with_env "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" 'DOVE_CEL_RELEASES_S3_ENDPOINT_FILE' || return 1
+verify_file_with_env "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE' || return 1
 
 # Constants
 
@@ -71,13 +67,13 @@ function push_to_s3() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file that should be uploaded to S3 storage!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the target path on S3 storage for where the file should be uploaded!'
     print_usage
-    exit 1
+    return 1
   fi
 
   local -r push_file="$1"
@@ -89,7 +85,7 @@ function push_to_s3() {
   local -r s3_secret_key_file="${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}"
 
   # Ensure our file to push is valid
-  verify_file "${push_file}" || exit 1
+  verify_file "${push_file}" || return 1
 
   # Create and push a SHA512sum for our file to S3 storage
   push_and_add_sha512sum "${push_file}" "${s3_path}" "${s3_access_key_file}" "${s3_bucket_name_file}" "${s3_endpoint_file}" "${s3_secret_key_file}"
@@ -98,48 +94,48 @@ function push_to_s3() {
 # Create release notes
 function create_release_notes() {
   # Ensure we have cat
-  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || return 1
 
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
   # Ensure we have GNU awk
-  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
+  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || return 1
 
   # Ensure we have GNU sed
-  verify_exec "${DOVE_SED}" 'DOVE_SED' || exit 1
+  verify_exec "${DOVE_SED}" 'DOVE_SED' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
   # Ensure we have shasum
-  verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || exit 1
+  verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || return 1
 
   # Ensure we have xargs
-  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || exit 1
+  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || return 1
 
   # Ensure we have `DOVE_VERSION`
-  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
+
+  # Ensure we have `DOVE_ARTIFACTS`
+  verify_env "${DOVE_ARTIFACTS}" 'DOVE_ARTIFACTS' || return 1
 
   # Ensure we have `DOVE_CEL_RELEASES_URL`
-  if [[ -z "${DOVE_CEL_RELEASES_URL+x}" ]] || [[ "${DOVE_CEL_RELEASES_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_CEL_RELEASES_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_CEL_RELEASES_URL}" 'DOVE_CEL_RELEASES_URL' || return 1
+
+  # Ensure we have `DOVE_TEMPLATES`
+  verify_env "${DOVE_TEMPLATES}" 'DOVE_TEMPLATES' || return 1
 
   # Ensure our changelog (for release-specific changes) exists
   local -r DOVE_CHANGELOG_FILE="${DOVE_ROOT}/CHANGELOG.md"
-  verify_file "${DOVE_CHANGELOG_FILE}" || exit 1
+  verify_file "${DOVE_CHANGELOG_FILE}" || return 1
 
   # Ensure our release template exists
   local -r DOVE_RELEASE_TEMPLATE="${DOVE_TEMPLATES}/release-notes.md"
-  verify_file "${DOVE_RELEASE_TEMPLATE}" || exit 1
+  verify_file "${DOVE_RELEASE_TEMPLATE}" || return 1
 
   local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
   local -r DOVE_RELEASE_NOTES_TEMP="${DOVE_TEMP}/dove-${DOVE_VERSION}-release-notes-temp.md"
@@ -193,6 +189,9 @@ function create_release_notes() {
 
   "${DOVE_RM}" -f "${DOVE_RELEASE_NOTES_TEMP}"
 
+  # Ensure our release notes were successfully created
+  verify_file "${DOVE_RELEASE_NOTES}" || return 1
+
   echo_green_text "SUCCESS: Created release notes for Dove: '${DOVE_VERSION}'!"
 }
 
@@ -205,56 +204,38 @@ function upload_to_forgejo_package_registry() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file that should be uploaded to the Forgejo package registry'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]] || [[ "${DOVE_FORGEJO_CI_API_TOKEN}" == "" ]]; then
-    echo_red_text "ERROR: Missing Forgejo CI API Token! Please set 'DOVE_FORGEJO_CI_API_TOKEN'."
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_CI_API_TOKEN}" 'DOVE_FORGEJO_CI_API_TOKEN' || return 1
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have curl
-  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || return 1
 
   # Ensure we have our curl flags
-  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_CURL_FLAGS}" 'DOVE_CURL_FLAGS' || return 1
 
   # Ensure we have `DOVE_VERSION`
-  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
 
   # Ensure we have `DOVE_FORGEJO_GENERIC_PACKAGES_URL`
-  if [[ -z "${DOVE_FORGEJO_GENERIC_PACKAGES_URL+x}" ]] || [[ "${DOVE_FORGEJO_GENERIC_PACKAGES_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_FORGEJO_GENERIC_PACKAGES_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_GENERIC_PACKAGES_URL}" 'DOVE_FORGEJO_GENERIC_PACKAGES_URL' || return 1
 
   # Ensure we have `DOVE_FORGEJO_PACKAGE_NAME`
-  if [[ -z "${DOVE_FORGEJO_PACKAGE_NAME+x}" ]] || [[ "${DOVE_FORGEJO_PACKAGE_NAME}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_FORGEJO_PACKAGE_NAME' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_PACKAGE_NAME}" 'DOVE_FORGEJO_PACKAGE_NAME' || return 1
 
   # Ensure we have `DOVE_FORGEJO_USER`
-  if [[ -z "${DOVE_FORGEJO_USER+x}" ]] || [[ "${DOVE_FORGEJO_USER}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_FORGEJO_USER' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_USER}" 'DOVE_FORGEJO_USER' || return 1
 
   local -r upload_file="$1"
   local -r upload_file_name="$("${DOVE_BASENAME}" "${upload_file}")"
 
   # Ensure our file to upload is valid
-  verify_file "${upload_file}" || exit 1
+  verify_file "${upload_file}" || return 1
 
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --user "${DOVE_FORGEJO_USER}:${DOVE_FORGEJO_CI_API_TOKEN}" \
     --upload-file "${upload_file}" \
@@ -270,50 +251,35 @@ function upload_to_gitlab_package_registry() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file that should be uploaded to the GitLab package registry'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_GITLAB_CI_API_TOKEN+x}" ]] || [[ "${DOVE_GITLAB_CI_API_TOKEN}" == "" ]]; then
-    echo_red_text "ERROR: Missing GitLab CI API Token! Please set 'DOVE_GITLAB_CI_API_TOKEN'."
-    exit 1
-  fi
+  verify_env "${DOVE_GITLAB_CI_API_TOKEN}" 'DOVE_GITLAB_CI_API_TOKEN' || return 1
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have curl
-  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || return 1
 
   # Ensure we have our curl flags
-  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_CURL_FLAGS}" 'DOVE_CURL_FLAGS' || return 1
 
   # Ensure we have `DOVE_VERSION`
-  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
 
   # Ensure we have `DOVE_GITLAB_GENERIC_PACKAGES_URL`
-  if [[ -z "${DOVE_GITLAB_GENERIC_PACKAGES_URL+x}" ]] || [[ "${DOVE_GITLAB_GENERIC_PACKAGES_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_GITLAB_GENERIC_PACKAGES_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_GITLAB_GENERIC_PACKAGES_URL}" 'DOVE_GITLAB_GENERIC_PACKAGES_URL' || return 1
 
   # Ensure we have `DOVE_GITLAB_PACKAGE_NAME`
-  if [[ -z "${DOVE_GITLAB_PACKAGE_NAME+x}" ]] || [[ "${DOVE_GITLAB_PACKAGE_NAME}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_GITLAB_PACKAGE_NAME' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_GITLAB_PACKAGE_NAME}" 'DOVE_GITLAB_PACKAGE_NAME' || return 1
 
   local -r upload_file="$1"
   local -r upload_file_name="$("${DOVE_BASENAME}" "${upload_file}")"
 
   # Ensure our file to upload is valid
-  verify_file "${upload_file}" || exit 1
+  verify_file "${upload_file}" || return 1
 
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header "PRIVATE-TOKEN: ${DOVE_GITLAB_CI_API_TOKEN}" \
     --upload-file "${upload_file}" \
@@ -329,120 +295,87 @@ function add_asset_to_forgejo_release() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the ID of the release we should attach the asset to!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the external URL of an asset to attach!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have an API token...
-  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]] || [[ "${DOVE_FORGEJO_CI_API_TOKEN}" == "" ]]; then
-    echo_red_text "ERROR: Missing Forgejo CI API Token! Please set 'DOVE_FORGEJO_CI_API_TOKEN'."
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_CI_API_TOKEN}" 'DOVE_FORGEJO_CI_API_TOKEN' || return 1
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have curl
-  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || return 1
 
   # Ensure we have jq
-  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || exit 1
+  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || return 1
 
   # Ensure we have our curl flags
-  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_CURL_FLAGS}" 'DOVE_CURL_FLAGS' || return 1
 
   # Ensure we have `DOVE_FORGEJO_API_URL`
-  if [[ -z "${DOVE_FORGEJO_API_URL+x}" ]] || [[ "${DOVE_FORGEJO_API_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_FORGEJO_API_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_API_URL}" 'DOVE_FORGEJO_API_URL' || return 1
 
   # Ensure we have `DOVE_FORGEJO_REPO`
-  if [[ -z "${DOVE_FORGEJO_REPO+x}" ]] || [[ "${DOVE_FORGEJO_REPO}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_FORGEJO_REPO' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_REPO}" 'DOVE_FORGEJO_REPO' || return 1
 
   local -r release_id="$1"
   local -r asset_url="$2"
   local -r asset=$("${DOVE_BASENAME}" "${asset_url}")
 
+  echo_red_text "Adding '${asset}' to release..."
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header 'accept: application/json' \
     --header "Authorization: token ${DOVE_FORGEJO_CI_API_TOKEN}" \
     -F "external_url=${asset_url}" \
     --request POST \
     "${DOVE_FORGEJO_API_URL}/v1/repos/${DOVE_FORGEJO_REPO}/releases/${release_id}/assets?name=$(printf '%s' "${asset}" | "${DOVE_JQ}" -sRr @uri)"
-
-  echo_green_text "SUCCESS: Added ${asset} to release: '${DOVE_VERSION}'!"
+  echo_green_text "SUCCESS: Added '${asset}' to release: '${DOVE_VERSION}'!"
 }
 
 # Publish a release to Forgejo (Codeberg)
 function publish_to_forgejo() {
-  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
-
-  if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
-    echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
-    exit 1
-  fi
-
-  # Ensure we have an API token...
-  if [[ -z "${DOVE_FORGEJO_CI_API_TOKEN+x}" ]] || [[ "${DOVE_FORGEJO_CI_API_TOKEN}" == "" ]]; then
-    echo_red_text "ERROR: Missing Forgejo CI API Token! Please set 'DOVE_FORGEJO_CI_API_TOKEN'."
-    exit 1
-  fi
-
-  # Ensure we have cat
-  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
-
-  # Ensure we have curl
-  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
-
-  # Ensure we have jq
-  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || exit 1
-
-  # Ensure we have our curl flags
-  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
-    exit 1
-  fi
+  # Ensure we have `DOVE_ARTIFACTS`
+  verify_env "${DOVE_ARTIFACTS}" 'DOVE_ARTIFACTS' || return 1
 
   # Ensure we have `DOVE_VERSION`
-  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
+
+  # Ensure we have our release notes
+  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
+  verify_file "${DOVE_RELEASE_NOTES}" || return 1
+
+  # Ensure we have an API token...
+  verify_env "${DOVE_FORGEJO_CI_API_TOKEN}" 'DOVE_FORGEJO_CI_API_TOKEN' || return 1
+
+  # Ensure we have cat
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || return 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || return 1
+
+  # Ensure we have jq
+  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || return 1
+
+  # Ensure we have our curl flags
+  verify_env "${DOVE_CURL_FLAGS}" 'DOVE_CURL_FLAGS' || return 1
 
   # Ensure we have `DOVE_RELEASES_BASE_URL`
-  if [[ -z "${DOVE_RELEASES_BASE_URL+x}" ]] || [[ "${DOVE_RELEASES_BASE_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_RELEASES_BASE_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_RELEASES_BASE_URL}" 'DOVE_RELEASES_BASE_URL' || return 1
 
   # Ensure we have `DOVE_FORGEJO_API_URL`
-  if [[ -z "${DOVE_FORGEJO_API_URL+x}" ]] || [[ "${DOVE_FORGEJO_API_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_FORGEJO_API_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_API_URL}" 'DOVE_FORGEJO_API_URL' || return 1
 
   # Ensure we have `DOVE_FORGEJO_BRANCH`
-  if [[ -z "${DOVE_FORGEJO_BRANCH+x}" ]] || [[ "${DOVE_FORGEJO_BRANCH}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_FORGEJO_BRANCH' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_BRANCH}" 'DOVE_FORGEJO_BRANCH' || return 1
 
   # Ensure we have `DOVE_FORGEJO_REPO`
-  if [[ -z "${DOVE_FORGEJO_REPO+x}" ]] || [[ "${DOVE_FORGEJO_REPO}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_FORGEJO_REPO' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_FORGEJO_REPO}" 'DOVE_FORGEJO_REPO' || return 1
 
   local -r dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
 
@@ -495,57 +428,39 @@ function publish_to_forgejo() {
 
 # Publish a release to GitHub
 function publish_to_github() {
-  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
-
-  if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
-    echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
-    exit 1
-  fi
-
-  # Ensure we have an API token...
-  if [[ -z "${DOVE_GITHUB_CI_API_TOKEN+x}" ]] || [[ "${DOVE_GITHUB_CI_API_TOKEN}" == "" ]]; then
-    echo_red_text "ERROR: Missing GitHub CI API Token! Please set 'DOVE_GITHUB_CI_API_TOKEN'."
-    exit 1
-  fi
-
-  # Ensure we have cat
-  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
-
-  # Ensure we have curl
-  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
-
-  # Ensure we have jq
-  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || exit 1
-
-  # Ensure we have our curl flags
-  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
-    exit 1
-  fi
+  # Ensure we have `DOVE_ARTIFACTS`
+  verify_env "${DOVE_ARTIFACTS}" 'DOVE_ARTIFACTS' || return 1
 
   # Ensure we have `DOVE_VERSION`
-  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
+
+  # Ensure we have our release notes
+  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
+  verify_file "${DOVE_RELEASE_NOTES}" || return 1
+
+  # Ensure we have an API token...
+  verify_env "${DOVE_GITHUB_CI_API_TOKEN}" 'DOVE_GITHUB_CI_API_TOKEN' || return 1
+
+  # Ensure we have cat
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || return 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || return 1
+
+  # Ensure we have jq
+  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || return 1
+
+  # Ensure we have our curl flags
+  verify_env "${DOVE_CURL_FLAGS}" 'DOVE_CURL_FLAGS' || return 1
 
   # Ensure we have `DOVE_GITHUB_API_URL`
-  if [[ -z "${DOVE_GITHUB_API_URL+x}" ]] || [[ "${DOVE_GITHUB_API_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_GITHUB_API_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_GITHUB_API_URL}" 'DOVE_GITHUB_API_URL' || return 1
 
   # Ensure we have `DOVE_GITHUB_BRANCH`
-  if [[ -z "${DOVE_GITHUB_BRANCH+x}" ]] || [[ "${DOVE_GITHUB_BRANCH}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_GITHUB_BRANCH' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_GITHUB_BRANCH}" 'DOVE_GITHUB_BRANCH' || return 1
 
   # Ensure we have `DOVE_GITHUB_REPO`
-  if [[ -z "${DOVE_GITHUB_REPO+x}" ]] || [[ "${DOVE_GITHUB_REPO}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_GITHUB_REPO' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_GITHUB_REPO}" 'DOVE_GITHUB_REPO' || return 1
 
   local -r dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
 
@@ -574,57 +489,39 @@ function publish_to_github() {
 
 # Publish a release to GitLab
 function publish_to_gitlab() {
-  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
-
-  if [[ ! -f "${DOVE_RELEASE_NOTES}" ]]; then
-    echo_red_text "ERROR: Missing release notes! (${DOVE_RELEASE_NOTES})"
-    exit 1
-  fi
-
-  # Ensure we have an API token...
-  if [[ -z "${DOVE_GITLAB_CI_API_TOKEN+x}" ]] || [[ "${DOVE_GITLAB_CI_API_TOKEN}" == "" ]]; then
-    echo_red_text "ERROR: Missing GitLab CI API Token! Please set 'DOVE_GITLAB_CI_API_TOKEN'."
-    exit 1
-  fi
-
-  # Ensure we have cat
-  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
-
-  # Ensure we have curl
-  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || exit 1
-
-  # Ensure we have jq
-  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || exit 1
-
-  # Ensure we have our curl flags
-  if [[ -z "${DOVE_CURL_FLAGS+x}" ]] || [[ "${DOVE_CURL_FLAGS}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_CURL_FLAGS' is missing!"
-    exit 1
-  fi
+  # Ensure we have `DOVE_ARTIFACTS`
+  verify_env "${DOVE_ARTIFACTS}" 'DOVE_ARTIFACTS' || return 1
 
   # Ensure we have `DOVE_VERSION`
-  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
+
+  # Ensure we have our release notes
+  local -r DOVE_RELEASE_NOTES="${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md"
+  verify_file "${DOVE_RELEASE_NOTES}" || return 1
+
+  # Ensure we have an API token...
+  verify_env "${DOVE_GITLAB_CI_API_TOKEN}" 'DOVE_GITLAB_CI_API_TOKEN' || return 1
+
+  # Ensure we have cat
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || return 1
+
+  # Ensure we have curl
+  verify_exec "${DOVE_CURL}" 'DOVE_CURL' || return 1
+
+  # Ensure we have jq
+  verify_exec "${DOVE_JQ}" 'DOVE_JQ' || return 1
+
+  # Ensure we have our curl flags
+  verify_env "${DOVE_CURL_FLAGS}" 'DOVE_CURL_FLAGS' || return 1
 
   # Ensure we have `DOVE_GITLAB_API_URL`
-  if [[ -z "${DOVE_GITLAB_API_URL+x}" ]] || [[ "${DOVE_GITLAB_API_URL}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_GITLAB_API_URL' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_GITLAB_API_URL}" 'DOVE_GITLAB_API_URL' || return 1
 
   # Ensure we have `DOVE_GITLAB_BRANCH`
-  if [[ -z "${DOVE_GITLAB_BRANCH+x}" ]] || [[ "${DOVE_GITLAB_BRANCH}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_GITLAB_BRANCH' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_GITLAB_BRANCH}" 'DOVE_GITLAB_BRANCH' || return 1
 
   # Ensure we have `DOVE_GITLAB_PROJECT_ID`
-  if [[ -z "${DOVE_GITLAB_PROJECT_ID+x}" ]] || [[ "${DOVE_GITLAB_PROJECT_ID}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_GITLAB_PROJECT_ID' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_GITLAB_PROJECT_ID}" 'DOVE_GITLAB_PROJECT_ID' || return 1
 
   local -r dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
 
@@ -773,17 +670,14 @@ function _push_dove() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the platform you wou would like to push Dove for'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have cp
-  verify_exec "${DOVE_CP}" 'DOVE_CP' || exit 1
+  verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
   # Ensure we have `DOVE_VERSION`
-  if [[ -z "${DOVE_VERSION+x}" ]] || [[ "${DOVE_VERSION}" == "" ]]; then
-    echo_red_text "ERROR: 'DOVE_VERSION' is missing!"
-    exit 1
-  fi
+  verify_env "${DOVE_VERSION}" 'DOVE_VERSION' || return 1
 
   local -r dove_platform="$1"
 
@@ -805,10 +699,19 @@ function _push_dove() {
 # Push Dove to S3 storage
 function push_dove() {
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   # Ensure we have touch
-  verify_exec "${DOVE_TOUCH}" 'DOVE_TOUCH' || exit 1
+  verify_exec "${DOVE_TOUCH}" 'DOVE_TOUCH' || return 1
+
+  # Ensure we have `DOVE_ARTIFACTS`
+  verify_env "${DOVE_ARTIFACTS}" 'DOVE_ARTIFACTS' || return 1
+
+  # Ensure we have `DOVE_CEL_RELEASES_URL`
+  verify_env "${DOVE_CEL_RELEASES_URL}" 'DOVE_CEL_RELEASES_URL' || return 1
+
+  # Ensure we have `DOVE_TEMP`
+  verify_env "${DOVE_TEMP}" 'DOVE_TEMP' || return 1
 
   # Linux
   _push_dove 'linux'
@@ -840,7 +743,7 @@ function push_dove() {
 # First, create our release notes
 create_release_notes
 
-# Push Dove to S3
+# Push Dove to S3 storage
 push_dove
 
 # Create a Forgejo (Codeberg) release

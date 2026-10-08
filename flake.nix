@@ -131,11 +131,6 @@
                 gawk
               ];
 
-              patchPhase = ''
-                sed -i 's|/bin/bash|${bashNonInteractive}/bin/bash|g' ./scripts/build.sh
-                sed -i 's|/bin/bash|${bashNonInteractive}/bin/bash|g' ./scripts/fly.sh
-              '';
-
               buildPhase = ''
                 runHook preBuild
 
@@ -147,16 +142,17 @@
                 export DOVE_NIX=1
 
                 # external tools used during build
-                export DOVE_RM="${coreutils}/bin/rm"
-                export DOVE_MKDIR="${coreutils}/bin/mkdir"
-                export DOVE_LN="${coreutils}/bin/ln"
-                export DOVE_TEE="${coreutils}/bin/tee"
-                export DOVE_DIRNAME="${coreutils}/bin/dirname"
-                export DOVE_CP="${coreutils}/bin/cp"
-                export DOVE_SED="${gnused}/bin/sed"
                 export DOVE_AWK="${gawk}/bin/awk"
+                export DOVE_BASH="${bashNonInteractive}/bin/bash"
                 export DOVE_CAT="${coreutils}/bin/cat"
+                export DOVE_CP="${coreutils}/bin/cp"
+                export DOVE_DIRNAME="${coreutils}/bin/dirname"
                 export DOVE_JQ="${jq}/bin/jq"
+                export DOVE_LN="${coreutils}/bin/ln"
+                export DOVE_MKDIR="${coreutils}/bin/mkdir"
+                export DOVE_RM="${coreutils}/bin/rm"
+                export DOVE_SED="${gnused}/bin/sed"
+                export DOVE_TEE="${coreutils}/bin/tee"
                 export DOVE_UNAME="${coreutils}/bin/uname"
                 export DOVE_PYTHON="${python3.withPackages (ps: [ ps.lxml ])}/bin/python"
 

@@ -4,15 +4,6 @@ set -euo pipefail
 
 # S3 utility functions
 
-# Set-up our environment
-if [[ -z "${DOVE_SET_ENVS+x}" ]]; then
-  /bin/bash $(dirname $0)/env.sh || exit 1
-fi
-source $(dirname $0)/env.sh || exit 1
-
-# Include utilities
-source "${DOVE_UTILS}" || exit 1
-
 # Push a file to S3 storage
 function push_file() {
   function print_usage() {
@@ -23,53 +14,53 @@ function push_file() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file that should be uploaded to S3 storage!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the target path on S3 storage for where the file should be uploaded!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 access key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 bucket name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${5+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 endpoint!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${6+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 secret key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have cat
-  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || return 1
 
   # Ensure we have s3cmd
-  verify_exec "${DOVE_S3CMD}" 'DOVE_S3CMD' || exit 1
+  verify_exec "${DOVE_S3CMD}" 'DOVE_S3CMD' || return 1
 
   # Ensure we have xargs
-  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || exit 1
+  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || return 1
 
   # Ensure we can source our Python environment
-  verify_file "${DOVE_PYENV}" || exit 1
+  verify_file_with_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
 
   local -r push_file="$1"
   local -r s3_path="$2"
@@ -80,13 +71,13 @@ function push_file() {
   local -r s3_full_path="${s3_path}/$("${DOVE_BASENAME}" "${push_file}")"
 
   # Ensure our file to push is valid
-  verify_file "${push_file}" || exit 1
+  verify_file "${push_file}" || return 1
 
   # Ensure our secrets are valid
-  verify_file "${s3_access_key_file}" || exit 1
-  verify_file "${s3_bucket_name_file}" || exit 1
-  verify_file "${s3_endpoint_file}" || exit 1
-  verify_file "${s3_secret_key_file}" || exit 1
+  verify_file "${s3_access_key_file}" || return 1
+  verify_file "${s3_bucket_name_file}" || return 1
+  verify_file "${s3_endpoint_file}" || return 1
+  verify_file "${s3_secret_key_file}" || return 1
 
   # Set our MIME type
   case "${push_file}" in
@@ -125,7 +116,7 @@ function push_file() {
       ;;
     *)
       echo_red_text "ERROR: Unsupported file type: '${push_file}'!"
-      exit 1
+      return 1
       ;;
   esac
 
@@ -166,47 +157,47 @@ function push_sha512sum() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file that a SHA512sum should be created for!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 access key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 bucket name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 endpoint!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${5+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 secret key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have awk
-  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
+  verify_exec "${DOVE_AWK}" 'DOVE_AWK' || return 1
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
   # Ensure we have shasum
-  verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || exit 1
+  verify_exec "${DOVE_SHASUM}" 'DOVE_SHASUM' || return 1
 
   local -r sha512sum_file_in="$1"
   local -r sha512sum_s3path="$2"
@@ -218,13 +209,13 @@ function push_sha512sum() {
   local -r sha512sum_file_path=$("${DOVE_DIRNAME}" "${sha512sum_file_in}")
 
   # Ensure our file to create a SHA512sum for is valid
-  verify_file "${sha512sum_file_in}" || exit 1
+  verify_file "${sha512sum_file_in}" || return 1
 
   # Ensure our secrets are valid
-  verify_file "${s3_access_key_file}" || exit 1
-  verify_file "${s3_bucket_name_file}" || exit 1
-  verify_file "${s3_endpoint_file}" || exit 1
-  verify_file "${s3_secret_key_file}" || exit 1
+  verify_file "${s3_access_key_file}" || return 1
+  verify_file "${s3_bucket_name_file}" || return 1
+  verify_file "${s3_endpoint_file}" || return 1
+  verify_file "${s3_secret_key_file}" || return 1
 
   local -r sha512sum_file_out="${sha512sum_file_path}/${sha512sum_file_name}-sha512sum.txt"
 
@@ -250,37 +241,37 @@ function push_and_add_sha512sum() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file that should be uploaded to S3 storage!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the target path on S3 storage for where the file should be uploaded!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 access key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 bucket name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${5+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 endpoint!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${6+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 secret key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   local -r file_in="$1"
@@ -291,13 +282,13 @@ function push_and_add_sha512sum() {
   local -r s3_secret_key_file="$6"
 
   # Ensure our file to create a SHA512sum for and push is valid
-  verify_file "${file_in}" || exit 1
+  verify_file "${file_in}" || return 1
 
   # Ensure our secrets are valid
-  verify_file "${s3_access_key_file}" || exit 1
-  verify_file "${s3_bucket_name_file}" || exit 1
-  verify_file "${s3_endpoint_file}" || exit 1
-  verify_file "${s3_secret_key_file}" || exit 1
+  verify_file "${s3_access_key_file}" || return 1
+  verify_file "${s3_bucket_name_file}" || return 1
+  verify_file "${s3_endpoint_file}" || return 1
+  verify_file "${s3_secret_key_file}" || return 1
 
   # Push our file to S3 storage
   push_file "${file_in}" "${s3_path_out}" "${s3_access_key_file}" "${s3_bucket_name_file}" "${s3_endpoint_file}" "${s3_secret_key_file}"
@@ -316,52 +307,55 @@ function push_dir() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a directory that should be uploaded to S3 storage!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the target path on S3 storage for where the directory should be uploaded!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 access key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 bucket name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${5+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 endpoint!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${6+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 secret key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have dot_clean
   if [[ "${DOVE_OS}" == 'osx' ]]; then
-    verify_exec "${DOVE_DOT_CLEAN}" 'DOVE_DOT_CLEAN' || exit 1
+    verify_exec "${DOVE_DOT_CLEAN}" 'DOVE_DOT_CLEAN' || return 1
   fi
 
   # Ensure we have find
-  verify_exec "${DOVE_FIND}" 'DOVE_FIND' || exit 1
+  verify_exec "${DOVE_FIND}" 'DOVE_FIND' || return 1
+
+  # Ensure we have `DOVE_OS`
+  verify_env "${DOVE_OS}" 'DOVE_OS' || return 1
 
   local -r push_dir="$1"
   local -r target_s3_path="$2"
@@ -373,14 +367,14 @@ function push_dir() {
   # Ensure our directory to push is valid
   if [[ ! -d "${push_dir}" ]]; then
     echo_red_text "ERROR: Directory does not exist: '${push_dir}'!"
-    exit 1
+    return 1
   fi
 
   # Ensure our secrets are valid
-  verify_file "${s3_access_key_file}" || exit 1
-  verify_file "${s3_bucket_name_file}" || exit 1
-  verify_file "${s3_endpoint_file}" || exit 1
-  verify_file "${s3_secret_key_file}" || exit 1
+  verify_file "${s3_access_key_file}" || return 1
+  verify_file "${s3_bucket_name_file}" || return 1
+  verify_file "${s3_endpoint_file}" || return 1
+  verify_file "${s3_secret_key_file}" || return 1
 
   # First, if necessary, clean our directory...
   if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -418,52 +412,55 @@ function push_dir_and_add_sha512sum() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a directory that should be uploaded to S3 storage!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the target path on S3 storage for where the directory should be uploaded!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 access key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 bucket name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${5+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 endpoint!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${6+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 secret key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have dot_clean
   if [[ "${DOVE_OS}" == 'osx' ]]; then
-    verify_exec "${DOVE_DOT_CLEAN}" 'DOVE_DOT_CLEAN' || exit 1
+    verify_exec "${DOVE_DOT_CLEAN}" 'DOVE_DOT_CLEAN' || return 1
   fi
 
   # Ensure we have find
-  verify_exec "${DOVE_FIND}" 'DOVE_FIND' || exit 1
+  verify_exec "${DOVE_FIND}" 'DOVE_FIND' || return 1
+
+  # Ensure we have `DOVE_OS`
+  verify_env "${DOVE_OS}" 'DOVE_OS' || return 1
 
   local -r push_dir="$1"
   local -r target_s3_path="$2"
@@ -475,14 +472,14 @@ function push_dir_and_add_sha512sum() {
   # Ensure our directory to push is valid
   if [[ ! -d "${push_dir}" ]]; then
     echo_red_text "ERROR: Directory does not exist: '${push_dir}'!"
-    exit 1
+    return 1
   fi
 
   # Ensure our secrets are valid
-  verify_file "${s3_access_key_file}" || exit 1
-  verify_file "${s3_bucket_name_file}" || exit 1
-  verify_file "${s3_endpoint_file}" || exit 1
-  verify_file "${s3_secret_key_file}" || exit 1
+  verify_file "${s3_access_key_file}" || return 1
+  verify_file "${s3_bucket_name_file}" || return 1
+  verify_file "${s3_endpoint_file}" || return 1
+  verify_file "${s3_secret_key_file}" || return 1
 
   # First, if necessary, clean our directory...
   if [[ "${DOVE_OS}" == 'osx' ]]; then
@@ -520,47 +517,47 @@ function delete_file() {
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the target path on S3 storage for the file to delete!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 access key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 bucket name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${5+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 endpoint!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${6+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 secret key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have basename
-  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || exit 1
+  verify_exec "${DOVE_BASENAME}" 'DOVE_BASENAME' || return 1
 
   # Ensure we have cat
-  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || exit 1
+  verify_exec "${DOVE_CAT}" 'DOVE_CAT' || return 1
 
   # Ensure we have s3cmd
-  verify_exec "${DOVE_S3CMD}" 'DOVE_S3CMD' || exit 1
+  verify_exec "${DOVE_S3CMD}" 'DOVE_S3CMD' || return 1
 
   # Ensure we have xargs
-  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || exit 1
+  verify_exec "${DOVE_XARGS}" 'DOVE_XARGS' || return 1
 
   # Ensure we can source our Python environment
-  verify_file "${DOVE_PYENV}" || exit 1
+  verify_file_with_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
 
   local -r s3_file="$1"
   local -r s3_access_key_file="$2"
@@ -570,10 +567,10 @@ function delete_file() {
   local -r s3_file_name="$("${DOVE_BASENAME}" "${s3_file}")"
 
   # Ensure our secrets are valid
-  verify_file "${s3_access_key_file}" || exit 1
-  verify_file "${s3_bucket_name_file}" || exit 1
-  verify_file "${s3_endpoint_file}" || exit 1
-  verify_file "${s3_secret_key_file}" || exit 1
+  verify_file "${s3_access_key_file}" || return 1
+  verify_file "${s3_bucket_name_file}" || return 1
+  verify_file "${s3_endpoint_file}" || return 1
+  verify_file "${s3_secret_key_file}" || return 1
 
   # Ensure we're not running with xtrace at this point...
   set +x
