@@ -70,10 +70,16 @@ fi
 # gitignored files (e.g. scripts/env_local.sh, scripts/env_build.sh).
 declare -a targets=()
 if [[ "${mode}" == 'staged' ]]; then
+  # Ensure we have git
+  verify_exec "${DOVE_GIT}" 'DOVE_GIT' || exit 1
+
   while IFS= read -r file; do
     [[ -n "${file}" ]] && targets+=("${file}")
   done < <("${DOVE_GIT}" diff --cached --name-only --diff-filter=ACM -- 'scripts/*.sh')
 else
+  # Ensure we have ls
+  verify_exec "${DOVE_LS}" 'DOVE_LS' || exit 1
+
   while IFS= read -r file; do
     targets+=("${file}")
   done < <("${DOVE_LS}" scripts/*.sh)
