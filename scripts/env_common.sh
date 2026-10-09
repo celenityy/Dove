@@ -14,17 +14,17 @@ readonly DOVE_SCRIPTS="${DOVE_ROOT}/scripts"
 
 # Set our platform, OS, and architecture
 readonly DOVE_ENV_HELPERS="${DOVE_SCRIPTS}/env_helpers.sh"
-source "${DOVE_ENV_HELPERS}" || exit 1
+source "${DOVE_ENV_HELPERS}" || return 1
 
 # Set version info
 readonly DOVE_VERSIONS="${DOVE_SCRIPTS}/versions.sh"
-source "${DOVE_VERSIONS}" || exit 1
+source "${DOVE_VERSIONS}" || return 1
 
 # If variables are defined with a custom `env_override.sh` file (located at the root project directory), let's use those
 ## These need to be set first, to ensure that they don't interfere with certain variables
 readonly DOVE_ENV_OVERRIDE="${DOVE_ROOT}/env_override.sh"
 if [[ -f "${DOVE_ENV_OVERRIDE}" ]]; then
-  source "${DOVE_ENV_OVERRIDE}" || exit 1
+  source "${DOVE_ENV_OVERRIDE}" || return 1
 fi
 
 # Utilities
@@ -80,7 +80,7 @@ readonly DOVE_CI
 ## If so, set our CI environment variables
 readonly DOVE_ENV_CI="${DOVE_SCRIPTS}/env_ci.sh"
 if [[ "${DOVE_CI}" == 1 ]]; then
-  source "${DOVE_ENV_CI}" || exit 1
+  source "${DOVE_ENV_CI}" || return 1
 fi
 
 # Build directory
@@ -837,7 +837,7 @@ readonly DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE
 
 # Set our external environment variables
 readonly DOVE_ENV_EXTERNAL="${DOVE_SCRIPTS}/env_external.sh"
-source "${DOVE_ENV_EXTERNAL}" || exit 1
+source "${DOVE_ENV_EXTERNAL}" || return 1
 
 # We've now set our environment variables...
 readonly DOVE_SET_ENVS=1
