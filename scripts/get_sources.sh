@@ -44,7 +44,7 @@ verify_env "${DOVE_LOG_SOURCES}" 'DOVE_LOG_SOURCES' || exit 1
 verify_dir_with_env "${DOVE_SCRIPTS}" 'DOVE_SCRIPTS' || exit 1
 
 # Ensure we have our target script
-readonly DOVE_SOURCES_SH="${DOVE_SCRIPTS}/get_sources-phoenix.sh"
+readonly DOVE_SOURCES_SH="${DOVE_SCRIPTS}/get_sources-dove.sh"
 verify_file "${DOVE_SOURCES_SH}" || exit 1
 
 # Set-up target parameters
