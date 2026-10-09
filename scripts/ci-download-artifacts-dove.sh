@@ -25,6 +25,9 @@ fi
 # Ensure we have `DOVE_CI_ID`
 verify_env "${DOVE_CI_ID}" 'DOVE_CI_ID' || return 1
 
+# Ensure we have `DOVE_ARTIFACTS`
+verify_env "${DOVE_ARTIFACTS}" 'DOVE_ARTIFACTS' || return 1
+
 verify_env "${target_artifact}" 'target_artifact' || {
   echo_red_text "ERROR: Missing target artifact!"
   return 1
@@ -60,7 +63,7 @@ elif [[ "${target_artifact}" == 'all' ]]; then
   DOVE_AR_DOWN_OSX_INTEL_ARCHIVE=1
   DOVE_AR_DOWN_WINDOWS_ARCHIVE=1
 else
-  echo_red_text "ERROR: Invalid target: ${target_artifact}\n You must enter one of the following:"
+  echo_red_text "ERROR: Invalid target: '${target_artifact}'\n You must enter one of the following:"
   echo 'All:                      all (Default)'
   echo 'Linux archive:            linux-archive'
   echo 'Linux (Flatpak) archive:  linux-flatpak-archive'

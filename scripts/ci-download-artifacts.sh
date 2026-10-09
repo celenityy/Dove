@@ -45,8 +45,18 @@ fi
 # Ensure we have GNU awk
 verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
 
+# Ensure we have `DOVE_LOG_AR_DOWN`
+verify_env "${DOVE_LOG_AR_DOWN}" 'DOVE_LOG_AR_DOWN' || exit 1
+
 # Ensure we have `DOVE_CI_TYPE`
 verify_env "${DOVE_CI_TYPE}" 'DOVE_CI_TYPE' || exit 1
+
+# Ensure we have `DOVE_SCRIPTS`
+verify_dir_with_env "${DOVE_SCRIPTS}" 'DOVE_SCRIPTS' || exit 1
+
+# Ensure we have our target script
+readonly DOVE_AR_DOWN_SH="${DOVE_SCRIPTS}/ci-download-artifacts-dove.sh"
+verify_file "${DOVE_AR_DOWN_SH}" || exit 1
 
 # Set our CI ID
 ## For Forgejo (Codeberg), we use the run ID
@@ -98,9 +108,9 @@ if [[ "${DOVE_LOG_AR_DOWN}" == 1 ]]; then
   # Ensure our log directory exists
   "${DOVE_MKDIR}" -vp "${DOVE_LOG_DIR}"
 
-  source "${DOVE_SCRIPTS}/ci-download-artifacts-dove.sh" "${target_artifact}" > >("${DOVE_TEE}" -a "${AR_DOWN_LOG_FILE}") 2>&1 || exit 1
+  source "${DOVE_AR_DOWN_SH}" "${target_artifact}" > >("${DOVE_TEE}" -a "${AR_DOWN_LOG_FILE}") 2>&1 || exit 1
 else
-  source "${DOVE_SCRIPTS}/ci-download-artifacts-dove.sh" "${target_artifact}" || exit 1
+  source "${DOVE_AR_DOWN_SH}" "${target_artifact}" || exit 1
 fi
 
 popd

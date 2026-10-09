@@ -523,6 +523,9 @@ function publish_to_gitlab() {
   # Ensure we have `DOVE_GITLAB_PROJECT_ID`
   verify_env "${DOVE_GITLAB_PROJECT_ID}" 'DOVE_GITLAB_PROJECT_ID' || return 1
 
+  # Ensure we have `DOVE_RELEASES_BASE_URL`
+  verify_env "${DOVE_RELEASES_BASE_URL}" 'DOVE_RELEASES_BASE_URL' || return 1
+
   local -r dove_release_desc=$("${DOVE_CAT}" "${DOVE_RELEASE_NOTES}")
 
   # Attach our assets

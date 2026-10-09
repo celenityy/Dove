@@ -37,6 +37,16 @@ setup_env
 # Ensure we have GNU awk
 verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
 
+# Ensure we have `DOVE_LOG_SOURCES`
+verify_env "${DOVE_LOG_SOURCES}" 'DOVE_LOG_SOURCES' || exit 1
+
+# Ensure we have `DOVE_SCRIPTS`
+verify_dir_with_env "${DOVE_SCRIPTS}" 'DOVE_SCRIPTS' || exit 1
+
+# Ensure we have our target script
+readonly DOVE_SOURCES_SH="${DOVE_SCRIPTS}/get_sources-phoenix.sh"
+verify_file "${DOVE_SOURCES_SH}" || exit 1
+
 # Set-up target parameters
 if [[ -z "${1+x}" ]]; then
   readonly source_target='all'
@@ -76,7 +86,7 @@ if [[ "${DOVE_LOG_SOURCES}" == 1 ]]; then
   # Ensure our log directory exists
   "${DOVE_MKDIR}" -vp "${DOVE_LOG_DIR}"
 
-  source "${DOVE_SCRIPTS}/get_sources-dove.sh" "${source_target}" "${mode}" > >("${DOVE_TEE}" -a "${SOURCES_LOG_FILE}") 2>&1 || exit 1
+  source "${DOVE_SOURCES_SH}" "${source_target}" "${mode}" > >("${DOVE_TEE}" -a "${SOURCES_LOG_FILE}") 2>&1 || exit 1
 else
-  source "${DOVE_SCRIPTS}/get_sources-dove.sh" "${source_target}" "${mode}" || exit 1
+  source "${DOVE_SOURCES_SH}" "${source_target}" "${mode}" || exit 1
 fi

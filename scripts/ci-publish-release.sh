@@ -45,19 +45,38 @@ if [[ "${DOVE_CI}" != 1 ]]; then
   exit 1
 fi
 
+# Ensure we have bash
+verify_exec "${DOVE_BASH}" 'DOVE_BASH' || exit 1
+
+# Ensure we have `DOVE_SCRIPTS`
+verify_dir_with_env "${DOVE_SCRIPTS}" 'DOVE_SCRIPTS' || exit 1
+
+# Ensure we have our target scripts
+readonly DOVE_CI_DL_AR_SH="${DOVE_SCRIPTS}/ci-download-artifacts.sh"
+verify_file "${DOVE_CI_DL_AR_SH}" || exit 1
+
+readonly DOVE_CI_GET_SOURCES_SH="${DOVE_SCRIPTS}/get_sources.sh"
+verify_file "${DOVE_CI_GET_SOURCES_SH}" || exit 1
+
+readonly DOVE_CI_PREP_SH="${DOVE_SCRIPTS}/ci-prep.sh"
+verify_file "${DOVE_CI_PREP_SH}" || exit 1
+
+readonly DOVE_CI_PUBLISH_SH="${DOVE_SCRIPTS}/ci-push.sh"
+verify_file "${DOVE_CI_PUBLISH_SH}" || exit 1
+
 # Get dependencies
 echo_red_text 'CI - Downloading dependencies...'
 /bin/sudo /bin/dnf update -y --refresh || exit 1
 /bin/sudo /bin/dnf install -y curl jq shasum tar zip || exit 1
-"${DOVE_BASH}" "${DOVE_SCRIPTS}/get_sources.sh" 'uv' || exit 1
-"${DOVE_BASH}" "${DOVE_SCRIPTS}/get_sources.sh" 'python' || exit 1
-"${DOVE_BASH}" "${DOVE_SCRIPTS}/get_sources.sh" 's3cmd' || exit 1
+"${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 'uv' || exit 1
+"${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 'python' || exit 1
+"${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 's3cmd' || exit 1
 echo_green_text 'CI - SUCCESS: Downloaded dependencies.'
 
 # Get secrets
 echo_red_text 'CI - Preparing secrets...'
 set +x || exit 1
-"${DOVE_BASH}" "${DOVE_SCRIPTS}/ci-prep.sh" 's3-releases' || exit 1
+"${DOVE_BASH}" "${DOVE_CI_PREP_SH}" 's3-releases' || exit 1
 echo_green_text 'CI - SUCCESS: Prepared secrets.'
 
 # Set verbosity
@@ -65,11 +84,11 @@ set_verbosity
 
 # Get artifacts
 echo_red_text 'CI - Downloading artifacts...'
-"${DOVE_BASH}" "${DOVE_SCRIPTS}/ci-download-artifacts.sh" 'all' || exit 1
+"${DOVE_BASH}" "${DOVE_CI_DL_AR_SH}" 'all' || exit 1
 echo_green_text 'CI - SUCCESS: Downloaded artifacts.'
 
 # Publish our release
 echo_red_text 'CI - Publishing release...'
 set +x || exit 1
-"${DOVE_BASH}" "${DOVE_SCRIPTS}/ci-push.sh" || exit 1
+"${DOVE_BASH}" "${DOVE_CI_PUBLISH_SH}" || exit 1
 echo_green_text 'CI - SUCCESS: Published release.'

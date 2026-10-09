@@ -37,6 +37,16 @@ setup_env
 # Ensure we have GNU awk
 verify_exec "${DOVE_AWK}" 'DOVE_AWK' || exit 1
 
+# Ensure we have `DOVE_LOG_BUILD`
+verify_env "${DOVE_LOG_BUILD}" 'DOVE_LOG_BUILD' || exit 1
+
+# Ensure we have `DOVE_SCRIPTS`
+verify_dir_with_env "${DOVE_SCRIPTS}" 'DOVE_SCRIPTS' || exit 1
+
+# Ensure we have our target script
+readonly DOVE_BUILD_SH="${DOVE_SCRIPTS}/fly.sh"
+verify_file "${DOVE_BUILD_SH}" || exit 1
+
 # Set-up target parameters
 if [[ -z "${1+x}" ]]; then
   readonly build_target='all'
@@ -72,9 +82,9 @@ if [[ "${DOVE_LOG_BUILD}" == 1 ]]; then
   # Ensure our log directory exists
   "${DOVE_MKDIR}" -vp "${DOVE_LOG_DIR}"
 
-  source "${DOVE_SCRIPTS}/fly.sh" "${build_target}" > >("${DOVE_TEE}" -a "${BUILD_LOG_FILE}") 2>&1 || exit 1
+  source "${DOVE_BUILD_SH}" "${build_target}" > >("${DOVE_TEE}" -a "${BUILD_LOG_FILE}") 2>&1 || exit 1
 else
-  source "${DOVE_SCRIPTS}/fly.sh" "${build_target}" || exit 1
+  source "${DOVE_BUILD_SH}" "${build_target}" || exit 1
 fi
 
 popd

@@ -668,22 +668,17 @@ function get_lxml() {
     }
 
     # Ensure we have `DOVE_PYENV`
-    verify_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
+    verify_file_with_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
 
     # Ensure we have `DOVE_UV_DIR`
-    verify_env "${DOVE_UV_DIR}" 'DOVE_UV_DIR' || return 1
-
-    if [[ ! -d "${DOVE_UV_DIR}" ]] || [[ ! -f "${DOVE_PYENV}" ]]; then
-      echo_red_text "ERROR: You tried to download lxml, but you don't have a Python environment set-up yet!"
-      return 1
-    fi
+    verify_dir_with_env "${DOVE_UV_DIR}" 'DOVE_UV_DIR' || return 1
   fi
 
   echo_red_text "Downloading lxml to path: '${DOVE_LXML}'..."
   download_and_extract "https://github.com/lxml/lxml/archive/${DOVE_LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${DOVE_LXML_SHA512SUM}"
 
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
-    source "${DOVE_PYENV}" || exit 1
+    source "${DOVE_PYENV}" || return 1
     echo_red_text "Installing lxml to path: '${DOVE_LXML}'..."
     "${DOVE_UV}" pip install --no-editable --strict "${DOVE_LXML}"
     echo_green_text "SUCCESS: Set-up lxml at path: '${DOVE_LXML}'!"
@@ -920,6 +915,9 @@ function get_python() {
 
 # Get s3cmd
 function get_s3cmd() {
+  # Ensure we have `DOVE_S3CMD`
+  verify_env "${DOVE_S3CMD}" 'DOVE_S3CMD' || return 1
+
   # Ensure we have `DOVE_S3CMD_COMMIT`
   verify_env "${DOVE_S3CMD_COMMIT}" 'DOVE_S3CMD_COMMIT' || return 1
 
@@ -938,18 +936,16 @@ function get_s3cmd() {
     }
 
     # Ensure we have `DOVE_PYENV_DIR`
-    verify_env "${DOVE_PYENV_DIR}" 'DOVE_PYENV_DIR' || return 1
+    verify_dir_with_env "${DOVE_PYENV_DIR}" 'DOVE_PYENV_DIR' || return 1
 
     # Ensure we have `DOVE_PYENV`
-    verify_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
+    verify_file_with_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
 
     # Ensure we have `DOVE_UV_DIR`
-    verify_env "${DOVE_UV_DIR}" 'DOVE_UV_DIR' || return 1
+    verify_dir_with_env "${DOVE_UV_DIR}" 'DOVE_UV_DIR' || return 1
 
-    if [[ ! -d "${DOVE_UV_DIR}" ]] || [[ ! -f "${DOVE_PYENV}" ]]; then
-      echo_red_text "ERROR: You tried to download s3cmd, but you don't have a Python environment set-up yet!"
-      return 1
-    fi
+    # By default, we have not sourced the Python environment
+    local pyenv_sourced=0
 
     if [[ -d "${DOVE_PYENV_DIR}/bin/s3cmd" ]]; then
       echo_red_text "s3cmd is already installed at path: '${DOVE_PYENV_DIR}/bin/s3cmd'!"
@@ -958,6 +954,10 @@ function get_s3cmd() {
       if [[ "${REPLY}" =~ ^[Nn]$ ]]; then
         return 0
       else
+        if [[ "${pyenv_sourced}" != 1 ]]; then
+          source "${DOVE_PYENV}" || return 1
+          local pyenv_sourced=1
+        fi
         "${DOVE_UV}" pip uninstall s3cmd
       fi
     fi
@@ -967,7 +967,10 @@ function get_s3cmd() {
   download_and_extract "https://github.com/s3tools/s3cmd/archive/${DOVE_S3CMD_COMMIT}.tar.gz" "${DOVE_S3CMD_DIR}" "${DOVE_S3CMD_SHA512SUM}"
 
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
-    source "${DOVE_PYENV}" || exit 1
+    if [[ "${pyenv_sourced}" != 1 ]]; then
+      source "${DOVE_PYENV}" || return 1
+      local pyenv_sourced=1
+    fi
     echo_red_text "Installing s3cmd to path: '${DOVE_S3CMD}'..."
     "${DOVE_UV}" pip install --no-editable --strict "${DOVE_S3CMD_DIR}"
     echo_green_text "SUCCESS: Set-up s3cmd at path: '${DOVE_S3CMD}'!"
@@ -976,6 +979,9 @@ function get_s3cmd() {
 
 # Get shellcheck
 function get_shellcheck() {
+  # Ensure we have `DOVE_SHELLCHECK`
+  verify_env "${DOVE_SHELLCHECK}" 'DOVE_SHELLCHECK' || return 1
+
   # Ensure we have `DOVE_SHELLCHECK_DIR`
   verify_env "${DOVE_SHELLCHECK_DIR}" 'DOVE_SHELLCHECK_DIR' || return 1
 
@@ -1142,6 +1148,9 @@ function get_shfmt() {
 
 # Get + set-up uv
 function get_uv() {
+  # Ensure we have `DOVE_UV`
+  verify_env "${DOVE_UV}" 'DOVE_UV' || return 1
+
   # Ensure we have `DOVE_UV_DIR`
   verify_env "${DOVE_UV_DIR}" 'DOVE_UV_DIR' || return 1
 

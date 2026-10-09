@@ -72,7 +72,7 @@ elif [[ "${target_artifact}" == 'all' ]]; then
   DOVE_AR_UP_OSX_INTEL_ARCHIVE=1
   DOVE_AR_UP_WINDOWS_ARCHIVE=1
 else
-  echo_red_text "ERROR: Invalid target: ${target_artifact}\n You must enter one of the following:"
+  echo_red_text "ERROR: Invalid target: '${target_artifact}'\n You must enter one of the following:"
   echo 'All:                      all (Default)'
   echo 'Linux archive:            linux-archive'
   echo 'Linux (Flatpak) archive:  linux-flatpak-archive'

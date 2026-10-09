@@ -132,6 +132,7 @@ function build_autoconfig() {
   "${DOVE_MKDIR}" -p "${DOVE_BUILD}/autoconfig/v1.1"
 
   pushd "${DOVE_BUILD}/autoconfig"
+  verify_file "${DOVE_AUTOCONFIG}/tools/convert.py" || return 1
   "${DOVE_CP}" "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_BUILD}/autoconfig/LICENSE.txt"
   "${DOVE_PYTHON}" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml
   popd
@@ -144,6 +145,7 @@ function build_phoenix() {
   echo_red_text 'Building Phoenix...'
 
   pushd "${DOVE_PHOENIX}"
+  verify_file "${DOVE_PHOENIX}/scripts/build.sh" || return 1
   "${DOVE_BASH}" "${DOVE_PHOENIX}/scripts/build.sh" "${build_target}"
   popd
 
@@ -302,10 +304,11 @@ if [[ "${dove_py}" == 1 ]]; then
       echo_red_text 'Creating Python environment with Python...'
       "${DOVE_PYTHON}" -m venv "${DOVE_PYENV_DIR}"
     fi
+    verify_file_with_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
     echo_green_text "SUCCESS: Created Python environment: '${DOVE_PYENV}'!"
   fi
   echo_red_text "Sourcing Python environment: '${DOVE_PYENV}'..."
-  source "${DOVE_PYENV}" || exit 1
+  source "${DOVE_PYENV}" || return 1
   echo_green_text "SUCCESS: Sourced Python environment: '${DOVE_PYENV}'!"
 fi
 

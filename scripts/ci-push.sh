@@ -42,6 +42,16 @@ if [[ "${DOVE_CI}" != 1 ]]; then
   exit 1
 fi
 
+# Ensure we have `DOVE_LOG_PUSH`
+verify_env "${DOVE_LOG_PUSH}" 'DOVE_LOG_PUSH' || exit 1
+
+# Ensure we have `DOVE_SCRIPTS`
+verify_dir_with_env "${DOVE_SCRIPTS}" 'DOVE_SCRIPTS' || exit 1
+
+# Ensure we have our target script
+readonly DOVE_PUSH_SH="${DOVE_SCRIPTS}/ci-push-dove.sh"
+verify_file "${DOVE_PUSH_SH}" || exit 1
+
 # Push Dove
 readonly DOVE_FROM_PUSH=1
 export DOVE_FROM_PUSH
@@ -68,7 +78,7 @@ if [[ "${DOVE_LOG_PUSH}" == 1 ]]; then
   # Ensure our log directory exists
   "${DOVE_MKDIR}" -vp "${DOVE_LOG_DIR}"
 
-  source "${DOVE_SCRIPTS}/ci-push-dove.sh" > >("${DOVE_TEE}" -a "${PUSH_LOG_FILE}") 2>&1 || exit 1
+  source "${DOVE_PUSH_SH}" > >("${DOVE_TEE}" -a "${PUSH_LOG_FILE}") 2>&1 || exit 1
 else
-  source "${DOVE_SCRIPTS}/ci-push-dove.sh" || exit 1
+  source "${DOVE_PUSH_SH}" || exit 1
 fi
