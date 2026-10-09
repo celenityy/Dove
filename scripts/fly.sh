@@ -5,12 +5,12 @@ set -euo pipefail
 # Welcome to the Dove Unified build script!
 # This script should be ran AFTER building Phoenix, from the ROOT of the Dove repo
 
+# Set verbosity
+set_verbosity
+
 # Include file utilities
 verify_file_with_env "${DOVE_FILE_UTILS}" 'DOVE_FILE_UTILS' || return 1
 source "${DOVE_FILE_UTILS}" || return 1
-
-# Set verbosity
-set_verbosity
 
 if [[ -z "${DOVE_FROM_BUILD+x}" ]]; then
   echo_red_text "ERROR: Do not call 'fly.sh' directly! Instead, use 'build.sh'." >&1
