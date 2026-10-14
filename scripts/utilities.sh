@@ -54,9 +54,9 @@ function set_verbosity() {
   verify_env "${DOVE_VERBOSE}" 'DOVE_VERBOSE' || return 1
 
   if [[ "${DOVE_VERBOSE}" == 1 ]]; then
-    set -x
+    set -x || return 1
   else
-    set +x
+    set +x || return 1
   fi
 }
 

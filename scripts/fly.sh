@@ -116,11 +116,11 @@ function prep_dove() {
   # Ensure we have GNU sed
   verify_exec "${DOVE_SED}" 'DOVE_SED' || return 1
 
-  "${DOVE_CP}" -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg"
+  "${DOVE_CP}" -f "${DOVE_ROOT}/dove-unified.cfg" "${DOVE_TEMP}/dove-parsed.cfg" || return 1
 
   # Update the versions
-  "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|g" "${DOVE_TEMP}/dove-parsed.cfg"
-  "${DOVE_SED}" -i "s|{DOVE_PHOENIX_VERSION}|${DOVE_PHOENIX_VERSION}|g" "${DOVE_TEMP}/dove-parsed.cfg"
+  "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|g" "${DOVE_TEMP}/dove-parsed.cfg" || return 1
+  "${DOVE_SED}" -i "s|{DOVE_PHOENIX_VERSION}|${DOVE_PHOENIX_VERSION}|g" "${DOVE_TEMP}/dove-parsed.cfg" || return 1
 }
 
 # Build Thunderbird's autoconfiguration database
@@ -131,11 +131,11 @@ function build_autoconfig() {
   echo_red_text 'Building the Thunderbird autoconfiguration database...'
   "${DOVE_MKDIR}" -p "${DOVE_BUILD}/autoconfig/v1.1"
 
-  pushd "${DOVE_BUILD}/autoconfig"
+  pushd "${DOVE_BUILD}/autoconfig" || return 1
   verify_file "${DOVE_AUTOCONFIG}/tools/convert.py" || return 1
-  "${DOVE_CP}" "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_BUILD}/autoconfig/LICENSE.txt"
-  "${DOVE_PYTHON}" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml
-  popd
+  "${DOVE_CP}" "${DOVE_AUTOCONFIG}/LICENSE" "${DOVE_BUILD}/autoconfig/LICENSE.txt" || return 1
+  "${DOVE_PYTHON}" "${DOVE_AUTOCONFIG}/tools/convert.py" -d "${DOVE_BUILD}/autoconfig/v1.1" -a ${DOVE_AUTOCONFIG}/ispdb/*.xml || return 1
+  popd || return 1
 
   echo_green_text 'SUCCESS: Built the Thunderbird autoconfiguration database!'
 }
@@ -144,10 +144,10 @@ function build_autoconfig() {
 function build_phoenix() {
   echo_red_text 'Building Phoenix...'
 
-  pushd "${DOVE_PHOENIX}"
+  pushd "${DOVE_PHOENIX}" || return 1
   verify_file "${DOVE_PHOENIX}/scripts/build.sh" || return 1
-  "${DOVE_BASH}" "${DOVE_PHOENIX}/scripts/build.sh" "${build_target}"
-  popd
+  "${DOVE_BASH}" "${DOVE_PHOENIX}/scripts/build.sh" "${build_target}" || return 1
+  popd || return 1
 
   echo_green_text 'SUCCESS: Built Phoenix!'
 }
@@ -188,16 +188,16 @@ function build_dove() {
   fi
 
   # Ensure existing outputs don't already exist
-  check_file_or_dir_exists "${dove_output_dir}"
-  check_file_or_dir_exists "${dove_output_archive}"
-  check_file_or_dir_exists "${dove_output_archive_latest}"
+  check_file_or_dir_exists "${dove_output_dir}" || return 1
+  check_file_or_dir_exists "${dove_output_archive}" || return 1
+  check_file_or_dir_exists "${dove_output_archive_latest}" || return 1
 
   # Create our output directory
   "${DOVE_MKDIR}" -p "${dove_output_dir}/assets/autoconfig/v1.1"
 
   # Copy our bootstrap dove.js
   "${DOVE_MKDIR}" -p "${dove_output_dir}/defaults/pref"
-  "${DOVE_CP}" "${DOVE_ROOT}/dove.js" "${dove_output_dir}/defaults/pref/dove.js"
+  "${DOVE_CP}" "${DOVE_ROOT}/dove.js" "${dove_output_dir}/defaults/pref/dove.js" || return 1
 
   # Copy our parsed dove.cfg
   if [[ "${dove_platform}" == 'osx' ]]; then
@@ -210,59 +210,59 @@ function build_dove() {
     local -r phoenix_cfg_input_path="${dove_platform}"
   fi
   "${DOVE_MKDIR}" -p "${dove_cfg_output_dir}"
-  "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${phoenix_cfg_input_path}/phoenix.cfg" "${dove_cfg_output_dir}/dove.cfg"
+  "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${phoenix_cfg_input_path}/phoenix.cfg" "${dove_cfg_output_dir}/dove.cfg" || return 1
 
   # If necessary, copy our static dove.js
   if [[ "${DOVE_STATIC_JS}" == 1 ]]; then
-    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/phoenix-static-${DOVE_PHOENIX_VERSION}-${dove_platform}.js" "${dove_output_dir}/dove-static-${DOVE_VERSION}-${dove_platform}.js"
+    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/phoenix-static-${DOVE_PHOENIX_VERSION}-${dove_platform}.js" "${dove_output_dir}/dove-static-${DOVE_VERSION}-${dove_platform}.js" || return 1
   fi
 
   # Copy icon
-  "${DOVE_CP}" "${DOVE_ROOT}/assets/dove.png" "${dove_output_dir}/assets/dove.png"
+  "${DOVE_CP}" "${DOVE_ROOT}/assets/dove.png" "${dove_output_dir}/assets/dove.png" || return 1
 
   # Copy license
-  "${DOVE_CP}" "${DOVE_ROOT}/COPYING.txt" "${dove_output_dir}/COPYING.txt"
+  "${DOVE_CP}" "${DOVE_ROOT}/COPYING.txt" "${dove_output_dir}/COPYING.txt" || return 1
 
   # Copy README
-  "${DOVE_CP}" "${DOVE_ROOT}/README.md" "${dove_output_dir}/README.md"
+  "${DOVE_CP}" "${DOVE_ROOT}/README.md" "${dove_output_dir}/README.md" || return 1
 
   # Copy generic platform files
   if [[ "${dove_platform}" == 'osx' ]] || [[ "${dove_platform}" == 'osx-intel' ]]; then
-    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/shared/Library" "${dove_output_dir}/"
+    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/shared/Library" "${dove_output_dir}/" || return 1
   fi
 
   # Copy platform-specific files
   if [[ "${dove_platform}" == 'linux' ]]; then
-    "${DOVE_CP}" -r "${DOVE_ROOT}/linux/etc" "${dove_output_dir}/"
+    "${DOVE_CP}" -r "${DOVE_ROOT}/linux/etc" "${dove_output_dir}/" || return 1
   elif [[ "${dove_platform}" == 'osx' ]]; then
-    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/osx-silicon/Library/" "${dove_output_dir}/Library/"
+    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/osx-silicon/Library/" "${dove_output_dir}/Library/" || return 1
   elif [[ "${dove_platform}" == 'osx-intel' ]]; then
-    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/osx-intel/Library/" "${dove_output_dir}/Library/"
+    "${DOVE_CP}" -r "${DOVE_ROOT}/osx/osx-intel/Library/" "${dove_output_dir}/Library/" || return 1
   fi
 
   # Copy enterprise policies
   if [[ "${dove_platform}" == 'linux' ]] || [[ "${dove_platform}" == 'linux-flatpak' ]]; then
-    "${DOVE_CP}" -r "${DOVE_PHOENIX}/outputs/${dove_platform}/policies" "${dove_output_dir}/"
+    "${DOVE_CP}" -r "${DOVE_PHOENIX}/outputs/${dove_platform}/policies" "${dove_output_dir}/" || return 1
   elif [[ "${dove_platform}" == 'osx' ]]; then
-    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/macos/org.mozilla.firefox.plist" "${dove_output_dir}/macos/org.mozilla.thunderbird.plist"
+    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/macos/org.mozilla.firefox.plist" "${dove_output_dir}/macos/org.mozilla.thunderbird.plist" || return 1
   elif [[ "${dove_platform}" == 'osx-intel' ]]; then
-    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/org.mozilla.firefox.plist" "${dove_output_dir}/org.mozilla.thunderbird.plist"
+    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/org.mozilla.firefox.plist" "${dove_output_dir}/org.mozilla.thunderbird.plist" || return 1
   elif [[ "${dove_platform}" == 'windows' ]]; then
-    "${DOVE_CP}" -r "${DOVE_PHOENIX}/outputs/${dove_platform}/distribution" "${dove_output_dir}/"
+    "${DOVE_CP}" -r "${DOVE_PHOENIX}/outputs/${dove_platform}/distribution" "${dove_output_dir}/" || return 1
   fi
 
   # For OS X, also copy the standard policies.json
   if [[ "${dove_platform}" == 'osx' ]] || [[ "${dove_platform}" == 'osx-intel' ]]; then
     "${DOVE_MKDIR}" -p "${dove_output_dir}/unused"
-    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/unused/policies.json" "${dove_output_dir}/unused/policies.json"
+    "${DOVE_CP}" "${DOVE_PHOENIX}/outputs/${dove_platform}/unused/policies.json" "${dove_output_dir}/unused/policies.json" || return 1
   fi
 
   # Copy Thunderbird's autoconfiguration files
-  "${DOVE_CP}" -vrf "${DOVE_BUILD}/autoconfig" "${dove_output_dir}/assets/"
+  "${DOVE_CP}" -vrf "${DOVE_BUILD}/autoconfig" "${dove_output_dir}/assets/" || return 1
 
   # Finally, create our platform-specific archives
   if [[ "${DOVE_PRODUCE_ARCHIVES}" == 1 ]]; then
-    create_archive "${dove_output_dir}" "${dove_output_archive}"
+    create_archive "${dove_output_dir}" "${dove_output_archive}" || return 1
   fi
 }
 
@@ -279,7 +279,7 @@ verify_env "${DOVE_TEMP}" 'DOVE_TEMP' || return 1
 if [[ -d "${DOVE_TEMP}" ]]; then
   "${DOVE_RM}" -rf "${DOVE_TEMP}"
 fi
-"${DOVE_MKDIR}" -p "${DOVE_TEMP}"
+"${DOVE_MKDIR}" -p "${DOVE_TEMP}" || return 1
 
 # Set-up Python environment
 if [[ "${DOVE_NIX}" == 1 ]]; then
@@ -299,10 +299,10 @@ if [[ "${dove_py}" == 1 ]]; then
     verify_exec "${DOVE_UV}" 'DOVE_UV' || DOVE_UV_AVAILABLE=0
     if [[ "${DOVE_UV_AVAILABLE}" == 1 ]]; then
       echo_red_text 'Creating Python environment with uv...'
-      "${DOVE_UV}" venv "${DOVE_PYENV_DIR}"
+      "${DOVE_UV}" venv "${DOVE_PYENV_DIR}" || return 1
     else
       echo_red_text 'Creating Python environment with Python...'
-      "${DOVE_PYTHON}" -m venv "${DOVE_PYENV_DIR}"
+      "${DOVE_PYTHON}" -m venv "${DOVE_PYENV_DIR}" || return 1
     fi
     verify_file_with_env "${DOVE_PYENV}" 'DOVE_PYENV' || return 1
     echo_green_text "SUCCESS: Created Python environment: '${DOVE_PYENV}'!"
@@ -313,40 +313,40 @@ if [[ "${dove_py}" == 1 ]]; then
 fi
 
 # First, prepare our build environment
-prep_dove
+prep_dove || return 1
 
 # Build Thunderbird's autoconfiguration Database
-build_autoconfig
+build_autoconfig || return 1
 
 # Build Phoenix
-build_phoenix
+build_phoenix || return 1
 
 # Begin the build...
 echo_red_text "Building Dove '${DOVE_VERSION}'..."
 
 # Build Dove for Linux (non-Flatpak)
 if [[ "${DOVE_LINUX}" == 1 ]]; then
-  build_dove 'linux'
+  build_dove 'linux' || return 1
 fi
 
 # Build Dove for Linux (Flatpak)
 if [[ "${DOVE_LINUX_FLATPAK}" == 1 ]]; then
-  build_dove 'linux-flatpak'
+  build_dove 'linux-flatpak' || return 1
 fi
 
 # Build Dove for OS X (Silicon)
 if [[ "${DOVE_OSX}" == 1 ]]; then
-  build_dove 'osx'
+  build_dove 'osx' || return 1
 fi
 
 # Build Dove for OS X (Intel)
 if [[ "${DOVE_OSX_INTEL}" == 1 ]]; then
-  build_dove 'osx-intel'
+  build_dove 'osx-intel' || return 1
 fi
 
 # Build Dove for Windows
 if [[ "${DOVE_WINDOWS}" == 1 ]]; then
-  build_dove 'windows'
+  build_dove 'windows' || return 1
 fi
 
 echo_green_text "SUCCESS: Built Dove '${DOVE_VERSION}'!"

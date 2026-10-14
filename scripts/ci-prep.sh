@@ -18,7 +18,7 @@ function setup_env() {
     else
       if ! command -v dirname > /dev/null 2>&1; then
         echo "ERROR: Missing dirname!" >&2
-        exit 1
+        return 1
       fi
       # It isn't a known location, so we sadly have to just fall-back to the PATH
       local -r dirname="$(dirname)"
@@ -28,14 +28,14 @@ function setup_env() {
     readonly DOVE_ENV_SH="$("${dirname}" $0)/env.sh"
     if [[ ! -f "${DOVE_ENV_SH}" ]] || [[ ! -s "${DOVE_ENV_SH}" ]]; then
       echo "ERROR: '${DOVE_ENV_SH}' is invalid!"
-      exit 1
+      return 1
     fi
-    source "${DOVE_ENV_SH}" || exit 1
+    source "${DOVE_ENV_SH}" || return 1
   fi
 }
 
 # Set-up our environment
-setup_env
+setup_env || exit 1
 
 # Ensure we have `DOVE_CI`
 verify_env "${DOVE_CI}" 'DOVE_CI' || exit 1
@@ -83,29 +83,29 @@ function create_key_file() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the secret key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to the key file!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have chmod
-  verify_exec "${DOVE_CHMOD}" 'DOVE_CHMOD' || exit 1
+  verify_exec "${DOVE_CHMOD}" 'DOVE_CHMOD' || return 1
 
   # Ensure we have dirname
-  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || exit 1
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
   # Ensure we have touch
-  verify_exec "${DOVE_TOUCH}" 'DOVE_TOUCH' || exit 1
+  verify_exec "${DOVE_TOUCH}" 'DOVE_TOUCH' || return 1
 
   local -r key="$1"
   local -r key_file="$2"
@@ -143,7 +143,7 @@ function create_key_file() {
       "${DOVE_RM}" -rf "${key_file_dir}"
     fi
     echo_red_text "ERROR: Unable to create key file: '${key_file}'!"
-    exit 1
+    return 1
   else
     echo_green_text "SUCCESS: Created key file: '${key_file}'!"
   fi
@@ -159,49 +159,49 @@ function prep_s3() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the S3 access key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the S3 bucket name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the S3 endpoint!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the S3 secret key!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${5+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to the S3 access key file!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${6+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to the S3 bucket name file!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${7+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to the S3 endpoint file!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${8+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to the S3 secret key file!'
     print_usage
-    exit 1
+    return 1
   fi
 
   local -r s3_access_key="$1"
@@ -214,16 +214,16 @@ function prep_s3() {
   local -r s3_secret_key_file="$8"
 
   # Create the S3 access key file
-  create_key_file "${s3_access_key}" "${s3_access_key_file}"
+  create_key_file "${s3_access_key}" "${s3_access_key_file}" || return 1
 
   # Create the S3 bucket name file
-  create_key_file "${s3_bucket_name}" "${s3_bucket_name_file}"
+  create_key_file "${s3_bucket_name}" "${s3_bucket_name_file}" || return 1
 
   # Create the S3 endpoint file
-  create_key_file "${s3_endpoint}" "${s3_endpoint_file}"
+  create_key_file "${s3_endpoint}" "${s3_endpoint_file}" || return 1
 
   # Create the S3 secret key file
-  create_key_file "${s3_secret_key}" "${s3_secret_key_file}"
+  create_key_file "${s3_secret_key}" "${s3_secret_key_file}" || return 1
 }
 
 # Prepare secrets for S3 storage - Artifacts
@@ -233,33 +233,33 @@ function prep_s3_artifacts() {
   # First, check environment variables specified externally (via CI)
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY`
-  verify_env "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY}" 'DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY' || exit 1
+  verify_env "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY}" 'DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY' || return 1
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME`
-  verify_env "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME}" 'DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME' || exit 1
+  verify_env "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME}" 'DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME' || return 1
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_S3_ENDPOINT`
-  verify_env "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT}" 'DOVE_CEL_ARTIFACTS_S3_ENDPOINT' || exit 1
+  verify_env "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT}" 'DOVE_CEL_ARTIFACTS_S3_ENDPOINT' || return 1
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_S3_SECRET_KEY`
-  verify_env "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY}" 'DOVE_CEL_ARTIFACTS_S3_SECRET_KEY' || exit 1
+  verify_env "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY}" 'DOVE_CEL_ARTIFACTS_S3_SECRET_KEY' || return 1
 
   # Now, check environment variables specified directly (via `env_ci.sh`/`env_common.sh`)
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE`
-  verify_env "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE}" 'DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE' || exit 1
+  verify_env "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE}" 'DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE' || return 1
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE`
-  verify_env "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE}" 'DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE' || exit 1
+  verify_env "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE}" 'DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE' || return 1
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE`
-  verify_env "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE}" 'DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE' || exit 1
+  verify_env "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE}" 'DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE' || return 1
 
   # Ensure we have `DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE`
-  verify_env "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE}" 'DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE' || exit 1
+  verify_env "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE}" 'DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE' || return 1
 
   # Prepare our secrets
-  prep_s3 "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY}" "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME}" "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT}" "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY}" "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE}" "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE}" "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE}" "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE}"
+  prep_s3 "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY}" "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME}" "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT}" "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY}" "${DOVE_CEL_ARTIFACTS_S3_ACCESS_KEY_FILE}" "${DOVE_CEL_ARTIFACTS_S3_BUCKET_NAME_FILE}" "${DOVE_CEL_ARTIFACTS_S3_ENDPOINT_FILE}" "${DOVE_CEL_ARTIFACTS_S3_SECRET_KEY_FILE}" || return 1
 
   echo_green_text 'SUCCESS: Prepared S3 storage - Artifacts!'
 }
@@ -271,40 +271,40 @@ function prep_s3_releases() {
   # First, check environment variables specified externally (via CI)
 
   # Ensure we have `DOVE_CEL_RELEASES_S3_ACCESS_KEY`
-  verify_env "${DOVE_CEL_RELEASES_S3_ACCESS_KEY}" 'DOVE_CEL_RELEASES_S3_ACCESS_KEY' || exit 1
+  verify_env "${DOVE_CEL_RELEASES_S3_ACCESS_KEY}" 'DOVE_CEL_RELEASES_S3_ACCESS_KEY' || return 1
 
   # Ensure we have `DOVE_CEL_RELEASES_S3_BUCKET_NAME`
-  verify_env "${DOVE_CEL_RELEASES_S3_BUCKET_NAME}" 'DOVE_CEL_RELEASES_S3_BUCKET_NAME' || exit 1
+  verify_env "${DOVE_CEL_RELEASES_S3_BUCKET_NAME}" 'DOVE_CEL_RELEASES_S3_BUCKET_NAME' || return 1
 
   # Ensure we have `DOVE_CEL_RELEASES_S3_ENDPOINT`
-  verify_env "${DOVE_CEL_RELEASES_S3_ENDPOINT}" 'DOVE_CEL_RELEASES_S3_ENDPOINT' || exit 1
+  verify_env "${DOVE_CEL_RELEASES_S3_ENDPOINT}" 'DOVE_CEL_RELEASES_S3_ENDPOINT' || return 1
 
   # Ensure we have `DOVE_CEL_RELEASES_S3_SECRET_KEY`
-  verify_env "${DOVE_CEL_RELEASES_S3_SECRET_KEY}" 'DOVE_CEL_RELEASES_S3_SECRET_KEY' || exit 1
+  verify_env "${DOVE_CEL_RELEASES_S3_SECRET_KEY}" 'DOVE_CEL_RELEASES_S3_SECRET_KEY' || return 1
 
   # Now, check environment variables specified directly (via `env_ci.sh`/`env_common.sh`)
 
   # Ensure we have `DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE`
-  verify_env "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE' || exit 1
+  verify_env "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE' || return 1
 
   # Ensure we have `DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE`
-  verify_env "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" 'DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE' || exit 1
+  verify_env "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" 'DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE' || return 1
 
   # Ensure we have `DOVE_CEL_RELEASES_S3_ENDPOINT_FILE`
-  verify_env "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" 'DOVE_CEL_RELEASES_S3_ENDPOINT_FILE' || exit 1
+  verify_env "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" 'DOVE_CEL_RELEASES_S3_ENDPOINT_FILE' || return 1
 
   # Ensure we have `DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE`
-  verify_env "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE' || exit 1
+  verify_env "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" 'DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE' || return 1
 
   # Prepare our secrets
-  prep_s3 "${DOVE_CEL_RELEASES_S3_ACCESS_KEY}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME}" "${DOVE_CEL_RELEASES_S3_ENDPOINT}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY}" "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}"
+  prep_s3 "${DOVE_CEL_RELEASES_S3_ACCESS_KEY}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME}" "${DOVE_CEL_RELEASES_S3_ENDPOINT}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY}" "${DOVE_CEL_RELEASES_S3_ACCESS_KEY_FILE}" "${DOVE_CEL_RELEASES_S3_BUCKET_NAME_FILE}" "${DOVE_CEL_RELEASES_S3_ENDPOINT_FILE}" "${DOVE_CEL_RELEASES_S3_SECRET_KEY_FILE}" || return 1
 
   echo_green_text 'SUCCESS: Prepared S3 storage - Releases!'
 }
 
 # Prepare our secrets...
 if [[ "${DOVE_CI_PREP_S3_ARTIFACTS}" == 1 ]]; then
-  prep_s3_artifacts
+  prep_s3_artifacts || exit 1
 elif [[ "${DOVE_CI_PREP_S3_RELEASES}" == 1 ]]; then
-  prep_s3_releases
+  prep_s3_releases || exit 1
 fi

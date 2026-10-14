@@ -147,8 +147,8 @@ function backup_file() {
   if [[ -f "${file}" ]]; then
     "${DOVE_RM}" -f "${backup_file}"
     "${DOVE_MKDIR}" -p "$("${DOVE_DIRNAME}" "${backup_file}")"
-    "${DOVE_CP}" -f "${file}" "${backup_file}"
-    "${DOVE_RM}" -f "${file}"
+    "${DOVE_CP}" -f "${file}" "${backup_file}" || return 1
+    "${DOVE_RM}" -f "${file}" || return 1
   fi
 }
 
@@ -183,8 +183,8 @@ function backup_dir() {
   if [[ -d "${dir}" ]]; then
     "${DOVE_RM}" -rf "${backup_dir}"
     "${DOVE_MKDIR}" -p "$("${DOVE_DIRNAME}" "${backup_dir}")"
-    "${DOVE_CP}" -rf "${dir}/" "${backup_dir}"
-    "${DOVE_RM}" -rf "${dir}"
+    "${DOVE_CP}" -rf "${dir}/" "${backup_dir}" || return 1
+    "${DOVE_RM}" -rf "${dir}" || return 1
   fi
 }
 
@@ -219,8 +219,8 @@ function restore_file() {
   if [[ -f "${backed_up_file}" ]]; then
     "${DOVE_RM}" -f "${file}"
     "${DOVE_MKDIR}" -p "$("${DOVE_DIRNAME}" "${file}")"
-    "${DOVE_CP}" -f "${backed_up_file}" "${file}"
-    "${DOVE_RM}" -f "${backed_up_file}"
+    "${DOVE_CP}" -f "${backed_up_file}" "${file}" || return 1
+    "${DOVE_RM}" -f "${backed_up_file}" || return 1
   fi
 }
 
@@ -255,8 +255,8 @@ function restore_dir() {
   if [[ -d "${backed_up_dir}" ]]; then
     "${DOVE_RM}" -rf "${dir}"
     "${DOVE_MKDIR}" -p "$("${DOVE_DIRNAME}" "${dir}")"
-    "${DOVE_CP}" -rf "${backed_up_dir}/" "${dir}"
-    "${DOVE_RM}" -rf "${backed_up_dir}"
+    "${DOVE_CP}" -rf "${backed_up_dir}/" "${dir}" || return 1
+    "${DOVE_RM}" -rf "${backed_up_dir}" || return 1
   fi
 }
 
@@ -317,7 +317,7 @@ function update_checksum() {
     echo "New ${checksum_type_pretty}: '${new_checksum}'"
   else
     echo_red_text "Updating ${checksum_type_pretty} for file: '${file}'..."
-    "${DOVE_SED}" -i "s|'${old_checksum}'|'${new_checksum}'|g" "${DOVE_VERSIONS}"
+    "${DOVE_SED}" -i "s|'${old_checksum}'|'${new_checksum}'|g" "${DOVE_VERSIONS}" || return 1
     echo_green_text "SUCCESS: Updated ${checksum_type_pretty} for file: '${file}'!"
   fi
 }
@@ -382,7 +382,7 @@ function validate_checksum() {
   fi
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
-    update_checksum "${expected_checksum}" "${local_checksum}" "${file}" "${checksum_type}"
+    update_checksum "${expected_checksum}" "${local_checksum}" "${file}" "${checksum_type}" || return 1
   elif [[ "${local_checksum}" != "${expected_checksum}" ]]; then
     echo_red_text "ERROR: Checksum (${checksum_type_pretty}) validation for file failed: '${file}'!"
     echo "Expected ${checksum_type_pretty}:   '${expected_checksum}'"
@@ -585,8 +585,11 @@ function download_and_extract() {
     local -r extension=".tar.gz"
   elif [[ "${url}" =~ \.tar\.zst$ ]]; then
     local -r extension=".tar.zst"
-  else
+  elif [[ "${url}" =~ \.zip$ ]]; then
     local -r extension=".zip"
+  else
+    echo_red_text "ERROR: Unsupported archive format: '${path}'!"
+    return 1
   fi
 
   # Tell `download` to return instead of exit upon an error
@@ -624,7 +627,7 @@ function download_and_extract() {
   fi
 
   # Extract the archive
-  extract_archive "${temp_archive_path}" "${path}"
+  extract_archive "${temp_archive_path}" "${path}" || return 1
 
   # Clean-up
   "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp/backup/${temp_archive_path_name}"
@@ -642,7 +645,7 @@ function get_autoconfig() {
   verify_env "${DOVE_AUTOCONFIG_SHA512SUM}" 'DOVE_AUTOCONFIG_SHA512SUM' || return 1
 
   echo_red_text "Downloading Thunderbird Autoconfiguration Database (ISPDB) to path: '${DOVE_AUTOCONFIG}'..."
-  download_and_extract "https://github.com/thunderbird/autoconfig/archive/${DOVE_AUTOCONFIG_COMMIT}.tar.gz" "${DOVE_AUTOCONFIG}" "${DOVE_AUTOCONFIG_SHA512SUM}"
+  download_and_extract "https://github.com/thunderbird/autoconfig/archive/${DOVE_AUTOCONFIG_COMMIT}.tar.gz" "${DOVE_AUTOCONFIG}" "${DOVE_AUTOCONFIG_SHA512SUM}" || return 1
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
     echo_green_text "SUCCESS: Set-up Thunderbird Autoconfiguration Database (ISPDB) at path: '${DOVE_AUTOCONFIG}'!"
   fi
@@ -675,12 +678,12 @@ function get_lxml() {
   fi
 
   echo_red_text "Downloading lxml to path: '${DOVE_LXML}'..."
-  download_and_extract "https://github.com/lxml/lxml/archive/${DOVE_LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${DOVE_LXML_SHA512SUM}"
+  download_and_extract "https://github.com/lxml/lxml/archive/${DOVE_LXML_COMMIT}.tar.gz" "${DOVE_LXML}" "${DOVE_LXML_SHA512SUM}" || return 1
 
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
     source "${DOVE_PYENV}" || return 1
     echo_red_text "Installing lxml to path: '${DOVE_LXML}'..."
-    "${DOVE_UV}" pip install --no-editable --strict "${DOVE_LXML}"
+    "${DOVE_UV}" pip install --no-editable --strict "${DOVE_LXML}" || return 1
     echo_green_text "SUCCESS: Set-up lxml at path: '${DOVE_LXML}'!"
   fi
 }
@@ -697,7 +700,7 @@ function get_phoenix() {
   verify_env "${DOVE_PHOENIX_SHA512SUM}" 'DOVE_PHOENIX_SHA512SUM' || return 1
 
   echo_red_text "Downloading Phoenix to path: '${DOVE_PHOENIX}'..."
-  download_and_extract "https://gitlab.com/celenityy/Phoenix/-/archive/${DOVE_PHOENIX_COMMIT}/Phoenix-${DOVE_PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${DOVE_PHOENIX_SHA512SUM}"
+  download_and_extract "https://gitlab.com/celenityy/Phoenix/-/archive/${DOVE_PHOENIX_COMMIT}/Phoenix-${DOVE_PHOENIX_COMMIT}.tar.gz" "${DOVE_PHOENIX}" "${DOVE_PHOENIX_SHA512SUM}" || return 1
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
     echo_green_text "SUCCESS: Set-up Phoenix at path: '${DOVE_PHOENIX}'!"
   fi
@@ -770,28 +773,28 @@ function get_python() {
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     echo_red_text 'Downloading Python (Linux - ARM)...'
-    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-armv7-unknown-linux-gnueabihf-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-armv7-unknown-linux-gnueabihf-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_ARM}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-armv7-unknown-linux-gnueabihf-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-armv7-unknown-linux-gnueabihf-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_ARM}" || return 1
 
     echo_red_text 'Downloading Python (Linux - ARM64)...'
-    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_ARM64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_ARM64}" || return 1
 
     echo_red_text 'Downloading Python (Linux - PPC64)...'
-    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-ppc64le-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-ppc64le-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_PPC64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-ppc64le-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-ppc64le-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_PPC64}" || return 1
 
     echo_red_text 'Downloading Python (Linux - RISC-V)...'
-    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_RISCV}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-riscv64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_RISCV}" || return 1
 
     echo_red_text 'Downloading Python (Linux - s390x)...'
-    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-s390x-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-s390x-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_S390X}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-s390x-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-s390x-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_S390X}" || return 1
 
     echo_red_text 'Downloading Python (Linux - x86_64)...'
-    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_X86_64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_LINUX_X86_64}" || return 1
 
     echo_red_text 'Downloading Python (OS X - ARM64)...'
-    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_ARM64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-aarch64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_ARM64}" || return 1
 
     echo_red_text 'Downloading Python (OS X - x86_64)...'
-    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_X86_64}"
+    download_file "${base_url}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${base_output}/cpython-${DOVE_PYTHON_VERSION}+${DOVE_PYTHON_GIT_RELEASE}-x86_64-apple-darwin-install_only_stripped.tar.gz" "${DOVE_PYTHON_SHA512SUM_OSX_X86_64}" || return 1
   else
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
@@ -964,7 +967,7 @@ function get_s3cmd() {
   fi
 
   echo_red_text "Downloading s3cmd to path: '${DOVE_S3CMD_DIR}'..."
-  download_and_extract "https://github.com/s3tools/s3cmd/archive/${DOVE_S3CMD_COMMIT}.tar.gz" "${DOVE_S3CMD_DIR}" "${DOVE_S3CMD_SHA512SUM}"
+  download_and_extract "https://github.com/s3tools/s3cmd/archive/${DOVE_S3CMD_COMMIT}.tar.gz" "${DOVE_S3CMD_DIR}" "${DOVE_S3CMD_SHA512SUM}" || return 1
 
   if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
     if [[ "${pyenv_sourced}" != 1 ]]; then
@@ -972,7 +975,7 @@ function get_s3cmd() {
       local pyenv_sourced=1
     fi
     echo_red_text "Installing s3cmd to path: '${DOVE_S3CMD}'..."
-    "${DOVE_UV}" pip install --no-editable --strict "${DOVE_S3CMD_DIR}"
+    "${DOVE_UV}" pip install --no-editable --strict "${DOVE_S3CMD_DIR}" || return 1
     echo_green_text "SUCCESS: Set-up s3cmd at path: '${DOVE_S3CMD}'!"
   fi
 }
@@ -993,16 +996,16 @@ function get_shellcheck() {
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     echo_red_text 'Downloading shellcheck (Linux - ARM64)...'
-    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.linux.aarch64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_LINUX_ARM64}"
+    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.linux.aarch64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_LINUX_ARM64}" || return 1
 
     echo_red_text 'Downloading shellcheck (Linux - x86_64)...'
-    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.linux.x86_64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_LINUX_X86_64}"
+    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.linux.x86_64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_LINUX_X86_64}" || return 1
 
     echo_red_text 'Downloading shellcheck (OS X - ARM64)...'
-    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.darwin.aarch64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_OSX_ARM64}"
+    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.darwin.aarch64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_OSX_ARM64}" || return 1
 
     echo_red_text 'Downloading shellcheck (OS X - x86_64)...'
-    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.darwin.x86_64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_OSX_X86_64}"
+    download_file "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.darwin.x86_64.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM_OSX_X86_64}" || return 1
   else
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
@@ -1046,12 +1049,12 @@ function get_shellcheck() {
     fi
 
     echo_red_text "Downloading shellcheck to path: '${DOVE_SHELLCHECK_DIR}'..."
-    download_and_extract "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.${DOVE_SHELLCHECK_PLATFORM}.${DOVE_SHELLCHECK_ARCH}.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM}"
+    download_and_extract "${base_url}/shellcheck-${DOVE_SHELLCHECK_VERSION}.${DOVE_SHELLCHECK_PLATFORM}.${DOVE_SHELLCHECK_ARCH}.tar.xz" "${DOVE_SHELLCHECK_DIR}" "${DOVE_SHELLCHECK_SHA512SUM}" || return 1
 
     if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       # Set-up the linting pre-commit hook
       if [[ "${DOVE_CI}" != 1 ]] && [[ -x "${DOVE_GIT}" ]] && [[ ! -f "${DOVE_BUILD}/set-hook" ]]; then
-        source "${DOVE_SCRIPTS}/lint-hook.sh"
+        source "${DOVE_SCRIPTS}/lint-hook.sh" || return 1
       fi
 
       echo_green_text "SUCCESS: Set-up shellcheck at path: '${DOVE_SHELLCHECK}'!"
@@ -1078,16 +1081,16 @@ function get_shfmt() {
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     echo_red_text 'Downloading shfmt (Linux - ARM64)...'
-    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_linux_arm64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_LINUX_ARM64}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_linux_arm64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_LINUX_ARM64}" || return 1
 
     echo_red_text 'Downloading shfmt (Linux - x86_64)...'
-    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_linux_amd64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_LINUX_X86_64}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_linux_amd64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_LINUX_X86_64}" || return 1
 
     echo_red_text 'Downloading shfmt (OS X - ARM64)...'
-    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_darwin_arm64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_OSX_ARM64}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_darwin_arm64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_OSX_ARM64}" || return 1
 
     echo_red_text 'Downloading shfmt (OS X - x86_64)...'
-    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_darwin_amd64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_OSX_X86_64}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_darwin_amd64" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM_OSX_X86_64}" || return 1
   else
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
@@ -1131,14 +1134,14 @@ function get_shfmt() {
     fi
 
     echo_red_text "Downloading shfmt to path: '${DOVE_SHFMT}'..."
-    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_${DOVE_SHFMT_PLATFORM}_${DOVE_SHFMT_ARCH}" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM}"
+    download_file "${base_url}/shfmt_${DOVE_SHFMT_VERSION}_${DOVE_SHFMT_PLATFORM}_${DOVE_SHFMT_ARCH}" "${DOVE_SHFMT}" "${DOVE_SHFMT_SHA512SUM}" || return 1
 
     if [[ "${DOVE_PERFORM_POST_DOWNLOAD}" == 1 ]]; then
       "${DOVE_CHMOD}" +x "${DOVE_SHFMT}"
 
       # Set-up the linting pre-commit hook
       if [[ "${DOVE_CI}" != 1 ]] && [[ -x "${DOVE_GIT}" ]] && [[ ! -f "${DOVE_BUILD}/set-hook" ]]; then
-        source "${DOVE_SCRIPTS}/lint-hook.sh"
+        source "${DOVE_SCRIPTS}/lint-hook.sh" || return 1
       fi
 
       echo_green_text "SUCCESS: Set-up shfmt at path: '${DOVE_SHFMT}'!"
@@ -1182,28 +1185,28 @@ function get_uv() {
 
   if [[ "${DOVE_GET_SOURCE_CHECKSUM_UPDATE}" == 1 ]]; then
     echo_red_text 'Downloading uv (Linux - ARM)...'
-    download_file "${base_url}/uv-armv7-unknown-linux-gnueabihf.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-arm.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_ARM}"
+    download_file "${base_url}/uv-armv7-unknown-linux-gnueabihf.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-arm.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_ARM}" || return 1
 
     echo_red_text 'Downloading uv (Linux - ARM64)...'
-    download_file "${base_url}/uv-aarch64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-arm64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_ARM64}"
+    download_file "${base_url}/uv-aarch64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-arm64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_ARM64}" || return 1
 
     echo_red_text 'Downloading uv (Linux - PPC64)...'
-    download_file "${base_url}/uv-powerpc64le-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-ppc64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_PPC64}"
+    download_file "${base_url}/uv-powerpc64le-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-ppc64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_PPC64}" || return 1
 
     echo_red_text 'Downloading uv (Linux - RISC-V)...'
-    download_file "${base_url}/uv-riscv64gc-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-riscv.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_RISCV}"
+    download_file "${base_url}/uv-riscv64gc-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-riscv.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_RISCV}" || return 1
 
     echo_red_text 'Downloading uv (Linux - s390x)...'
-    download_file "${base_url}/uv-s390x-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-s390x.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_S390X}"
+    download_file "${base_url}/uv-s390x-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-s390x.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_S390X}" || return 1
 
     echo_red_text 'Downloading uv (Linux - x86_64)...'
-    download_file "${base_url}/uv-x86_64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_X86_64}"
+    download_file "${base_url}/uv-x86_64-unknown-linux-gnu.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-linux-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_LINUX_X86_64}" || return 1
 
     echo_red_text 'Downloading uv (OS X - ARM64)...'
-    download_file "${base_url}/uv-aarch64-apple-darwin.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-osx-arm64.tar.gz" "${DOVE_UV_SHA512SUM_OSX_ARM64}"
+    download_file "${base_url}/uv-aarch64-apple-darwin.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-osx-arm64.tar.gz" "${DOVE_UV_SHA512SUM_OSX_ARM64}" || return 1
 
     echo_red_text 'Downloading uv (OS X - x86_64)...'
-    download_file "${base_url}/uv-x86_64-apple-darwin.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-osx-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_OSX_X86_64}"
+    download_file "${base_url}/uv-x86_64-apple-darwin.tar.gz" "${DOVE_EXTERNAL}/temp/uv-checksum-update-osx-x86_64.tar.gz" "${DOVE_UV_SHA512SUM_OSX_X86_64}" || return 1
   else
     # Set our platform
     if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
@@ -1293,34 +1296,34 @@ function get_uv() {
 "${DOVE_RM}" -rf "${DOVE_EXTERNAL}/temp"
 
 if [[ "${DOVE_GET_SOURCE_AUTOCONFIG}" == 1 ]]; then
-  get_autoconfig
+  get_autoconfig || return 1
 fi
 
 # These need to run before we get lxml and s3cmd
 if [[ "${DOVE_GET_SOURCE_UV}" == 1 ]]; then
-  get_uv
+  get_uv || return 1
 fi
 
 if [[ "${DOVE_GET_SOURCE_PYTHON}" == 1 ]]; then
-  get_python
+  get_python || return 1
 fi
 
 if [[ "${DOVE_GET_SOURCE_LXML}" == 1 ]]; then
-  get_lxml
+  get_lxml || return 1
 fi
 
 if [[ "${DOVE_GET_SOURCE_PHOENIX}" == 1 ]]; then
-  get_phoenix
+  get_phoenix || return 1
 fi
 
 if [[ "${DOVE_GET_SOURCE_S3CMD}" == 1 ]]; then
-  get_s3cmd
+  get_s3cmd || return 1
 fi
 
 if [[ "${DOVE_GET_SOURCE_SHELLCHECK}" == 1 ]]; then
-  get_shellcheck
+  get_shellcheck || return 1
 fi
 
 if [[ "${DOVE_GET_SOURCE_SHFMT}" == 1 ]]; then
-  get_shfmt
+  get_shfmt || return 1
 fi

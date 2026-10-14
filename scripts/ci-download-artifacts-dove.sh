@@ -147,11 +147,11 @@ function download_artifact() {
   local -r output_expected_sha512sum="${output_dir}/${target_expected_sha512sum}"
 
   # Download the artifact
-  download "${target_file_url}" "${output_file}"
+  download "${target_file_url}" "${output_file}" || return 1
 
   # Check the SHA512sum
   echo_red_text "Validating SHA512sum for file: '${target_file}'..."
-  download "${target_expected_sha512sum_url}" "${output_expected_sha512sum}"
+  download "${target_expected_sha512sum_url}" "${output_expected_sha512sum}" || return 1
   local -r expected_sha512sum=$("${DOVE_CAT}" "${output_expected_sha512sum}" | "${DOVE_XARGS}")
   local -r local_sha512sum=$("${DOVE_SHASUM}" -a 512 "${output_file}" | "${DOVE_AWK}" '{print $1}')
   if [[ "${local_sha512sum}" != "${expected_sha512sum}" ]]; then
@@ -170,25 +170,25 @@ function download_artifact() {
 
 # dove-{DOVE_VERSION}-linux.tar.xz
 if [[ "${DOVE_AR_DOWN_LINUX_ARCHIVE}" == 1 ]]; then
-  download_artifact "${DOVE_CI_ID}" 'linux' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'linux' "${DOVE_ARTIFACTS}" || return 1
 fi
 
 # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
 if [[ "${DOVE_AR_DOWN_LINUX_FLATPAK_ARCHIVE}" == 1 ]]; then
-  download_artifact "${DOVE_CI_ID}" 'linux-flatpak' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'linux-flatpak' "${DOVE_ARTIFACTS}" || return 1
 fi
 
 # dove-{DOVE_VERSION}-osx.tar.xz
 if [[ "${DOVE_AR_DOWN_OSX_ARCHIVE}" == 1 ]]; then
-  download_artifact "${DOVE_CI_ID}" 'osx' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'osx' "${DOVE_ARTIFACTS}" || return 1
 fi
 
 # dove-{DOVE_VERSION}-osx-intel.tar.xz
 if [[ "${DOVE_AR_DOWN_OSX_INTEL_ARCHIVE}" == 1 ]]; then
-  download_artifact "${DOVE_CI_ID}" 'osx-intel' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'osx-intel' "${DOVE_ARTIFACTS}" || return 1
 fi
 
 # dove-{DOVE_VERSION}-windows.zip
 if [[ "${DOVE_AR_DOWN_WINDOWS_ARCHIVE}" == 1 ]]; then
-  download_artifact "${DOVE_CI_ID}" 'windows' "${DOVE_ARTIFACTS}"
+  download_artifact "${DOVE_CI_ID}" 'windows' "${DOVE_ARTIFACTS}" || return 1
 fi

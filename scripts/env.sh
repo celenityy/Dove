@@ -22,7 +22,7 @@ function set_root() {
   else
     if ! command -v dirname > /dev/null 2>&1; then
       echo "ERROR: Missing dirname!" >&2
-      exit 1
+      return 1
     fi
     # It isn't a known location, so we sadly have to just fall-back to the PATH
     local -r dirname="$(dirname)"
@@ -33,10 +33,10 @@ function set_root() {
   if [[ ! -f "${root_txt}" ]]; then
     readonly DOVE_ROOT=$(cd "$("${dirname}" "${BASH_SOURCE[0]}")/.." && pwd)
     if [[ -d "${DOVE_ROOT}" ]]; then
-      echo -n "${DOVE_ROOT}" > "${root_txt}" || exit 1
+      echo -n "${DOVE_ROOT}" > "${root_txt}" || return 1
     else
       echo "ERROR: Unable to find a valid root directory: '${DOVE_ROOT}'!"
-      exit 1
+      return 1
     fi
   else
     # Find cat
@@ -49,7 +49,7 @@ function set_root() {
     else
       if ! command -v cat > /dev/null 2>&1; then
         echo "ERROR: Missing cat!" >&2
-        exit 1
+        return 1
       fi
       # It isn't a known location, so we sadly have to just fall-back to the PATH
       local -r cat="$(cat)"
@@ -65,7 +65,7 @@ function set_root() {
     else
       if ! command -v xargs > /dev/null 2>&1; then
         echo "ERROR: Missing xargs!" >&2
-        exit 1
+        return 1
       fi
       # It isn't a known location, so we sadly have to just fall-back to the PATH
       local -r xargs="$(xargs)"
@@ -75,7 +75,7 @@ function set_root() {
 
     if [[ ! -d "${DOVE_ROOT}" ]]; then
       echo "ERROR: Unable to find a valid root directory: '${DOVE_ROOT}'!"
-      exit 1
+      return 1
     fi
   fi
 }
@@ -90,35 +90,35 @@ function add_to_path() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text "ERROR: Please specify the PATH's path!"
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to an executable!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text "ERROR: Please specify the executable's environment variable!"
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the executable name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have ln
-  verify_exec "${DOVE_LN}" 'DOVE_LN' || exit 1
+  verify_exec "${DOVE_LN}" 'DOVE_LN' || return 1
 
   # Ensure we have mkdir
-  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || exit 1
+  verify_exec "${DOVE_MKDIR}" 'DOVE_MKDIR' || return 1
 
   # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
   local -r path="$1"
   local -r exec="$2"
@@ -135,7 +135,7 @@ function add_to_path() {
     if [[ -f "${path}/${exec_name}" ]]; then
       "${DOVE_RM}" -f "${path}/${exec_name}"
     fi
-    "${DOVE_LN}" -sf "${exec}" "${path}/${exec_name}"
+    "${DOVE_LN}" -sf "${exec}" "${path}/${exec_name}" || return 1
     echo_green_text "Added '${exec_name}' to PATH (from '${exec_env}')!"
   else
     echo_red_text "WARNING: Unable to add '${exec_name}' to PATH!"
@@ -152,29 +152,29 @@ function add_to_full_path() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to an executable!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text "ERROR: Please specify the executable's environment variable!"
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the executable name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have `DOVE_PATH`
-  verify_env "${DOVE_PATH}" 'DOVE_PATH' || exit 1
+  verify_env "${DOVE_PATH}" 'DOVE_PATH' || return 1
 
   local -r exec="$1"
   local -r exec_env="$2"
   local -r exec_name="$3"
 
-  add_to_path "${DOVE_PATH}" "${exec}" "${exec_env}" "${exec_name}"
+  add_to_path "${DOVE_PATH}" "${exec}" "${exec_env}" "${exec_name}" || return 1
 }
 
 # Add an executable to Dove's lint PATH
@@ -186,92 +186,92 @@ function add_to_lint_path() {
   if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to an executable!'
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${2+x}" ]]; then
     echo_red_text "ERROR: Please specify the executable's environment variable!"
     print_usage
-    exit 1
+    return 1
   fi
 
   if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the executable name!'
     print_usage
-    exit 1
+    return 1
   fi
 
   # Ensure we have `DOVE_LINT_PATH`
-  verify_env "${DOVE_LINT_PATH}" 'DOVE_LINT_PATH' || exit 1
+  verify_env "${DOVE_LINT_PATH}" 'DOVE_LINT_PATH' || return 1
 
   local -r exec="$1"
   local -r exec_env="$2"
   local -r exec_name="$3"
 
-  add_to_path "${DOVE_LINT_PATH}" "${exec}" "${exec_env}" "${exec_name}"
+  add_to_path "${DOVE_LINT_PATH}" "${exec}" "${exec_env}" "${exec_name}" || return 1
 }
 
 # Set-up the full Dove PATH
 function setup_path() {
   # Ensure we have `DOVE_CI`
-  verify_env "${DOVE_CI}" 'DOVE_CI' || exit 1
+  verify_env "${DOVE_CI}" 'DOVE_CI' || return 1
 
   # Ensure we have `DOVE_PLATFORM`
-  verify_env "${DOVE_PLATFORM}" 'DOVE_PLATFORM' || exit 1
+  verify_env "${DOVE_PLATFORM}" 'DOVE_PLATFORM' || return 1
 
-  add_to_full_path "${DOVE_AWK}" 'DOVE_AWK' 'awk'
-  add_to_full_path "${DOVE_AWK}" 'DOVE_AWK' 'gawk'
-  add_to_full_path "${DOVE_BASENAME}" 'DOVE_BASENAME' 'basename'
-  add_to_full_path "${DOVE_BASH}" 'DOVE_BASH' 'bash'
-  add_to_full_path "${DOVE_CAT}" 'DOVE_CAT' 'cat'
-  add_to_full_path "${DOVE_CHMOD}" 'DOVE_CHMOD' 'chmod'
-  add_to_full_path "${DOVE_CLANG}" 'DOVE_CLANG' 'clang'
-  add_to_full_path "${DOVE_CP}" 'DOVE_CP' 'cp'
-  add_to_full_path "${DOVE_CURL}" 'DOVE_CURL' 'curl'
-  add_to_full_path "${DOVE_DATE}" 'DOVE_DATE' 'date'
-  add_to_full_path "${DOVE_DATE}" 'DOVE_DATE' 'gdate'
-  add_to_full_path "${DOVE_DIRNAME}" 'DOVE_DIRNAME' 'dirname'
-  add_to_full_path "${DOVE_ECHO}" 'DOVE_ECHO' 'echo'
-  add_to_full_path "${DOVE_FIND}" 'DOVE_FIND' 'find'
-  add_to_full_path "${DOVE_GIT}" 'DOVE_GIT' 'git'
-  add_to_full_path "${DOVE_GREP}" 'DOVE_GREP' 'grep'
-  add_to_full_path "${DOVE_GZIP}" 'DOVE_GZIP' 'gzip'
-  add_to_full_path "${DOVE_HEAD}" 'DOVE_HEAD' 'head'
-  add_to_full_path "${DOVE_JQ}" 'DOVE_JQ' 'jq'
-  add_to_full_path "${DOVE_LN}" 'DOVE_LN' 'ln'
-  add_to_full_path "${DOVE_LS}" 'DOVE_LS' 'ls'
-  add_to_full_path "${DOVE_MD5SUM}" 'DOVE_MD5SUM' 'md5sum'
-  add_to_full_path "${DOVE_MKDIR}" 'DOVE_MKDIR' 'mkdir'
-  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python'
-  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3'
-  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3.14'
-  add_to_full_path "${DOVE_RM}" 'DOVE_RM' 'rm'
-  add_to_full_path "${DOVE_S3CMD}" 'DOVE_S3CMD' 's3cmd'
-  add_to_full_path "${DOVE_SED}" 'DOVE_SED' 'gsed'
-  add_to_full_path "${DOVE_SED}" 'DOVE_SED' 'sed'
-  add_to_full_path "${DOVE_SH}" 'DOVE_SH' 'sh'
-  add_to_full_path "${DOVE_SHASUM}" 'DOVE_SHASUM' 'shasum'
-  add_to_full_path "${DOVE_TAR}" 'DOVE_TAR' 'gtar'
-  add_to_full_path "${DOVE_TAR}" 'DOVE_TAR' 'tar'
-  add_to_full_path "${DOVE_TEE}" 'DOVE_TEE' 'tee'
-  add_to_full_path "${DOVE_TOUCH}" 'DOVE_TOUCH' 'touch'
-  add_to_full_path "${DOVE_UNAME}" 'DOVE_UNAME' 'uname'
-  add_to_full_path "${DOVE_UNZIP}" 'DOVE_UNZIP' 'unzip'
-  add_to_full_path "${DOVE_UV}" 'DOVE_UV' 'uv'
-  add_to_full_path "${DOVE_XARGS}" 'DOVE_XARGS' 'xargs'
-  add_to_full_path "${DOVE_XML2_CONFIG}" 'DOVE_XML2_CONFIG' 'xml2-config'
-  add_to_full_path "${DOVE_XSLT_CONFIG}" 'DOVE_XSLT_CONFIG' 'xslt-config'
-  add_to_full_path "${DOVE_XZ}" 'DOVE_XZ' 'xz'
-  add_to_full_path "${DOVE_ZIP}" 'DOVE_ZIP' 'zip'
+  add_to_full_path "${DOVE_AWK}" 'DOVE_AWK' 'awk' || return 1
+  add_to_full_path "${DOVE_AWK}" 'DOVE_AWK' 'gawk' || return 1
+  add_to_full_path "${DOVE_BASENAME}" 'DOVE_BASENAME' 'basename' || return 1
+  add_to_full_path "${DOVE_BASH}" 'DOVE_BASH' 'bash' || return 1
+  add_to_full_path "${DOVE_CAT}" 'DOVE_CAT' 'cat' || return 1
+  add_to_full_path "${DOVE_CHMOD}" 'DOVE_CHMOD' 'chmod' || return 1
+  add_to_full_path "${DOVE_CLANG}" 'DOVE_CLANG' 'clang' || return 1
+  add_to_full_path "${DOVE_CP}" 'DOVE_CP' 'cp' || return 1
+  add_to_full_path "${DOVE_CURL}" 'DOVE_CURL' 'curl' || return 1
+  add_to_full_path "${DOVE_DATE}" 'DOVE_DATE' 'date' || return 1
+  add_to_full_path "${DOVE_DATE}" 'DOVE_DATE' 'gdate' || return 1
+  add_to_full_path "${DOVE_DIRNAME}" 'DOVE_DIRNAME' 'dirname' || return 1
+  add_to_full_path "${DOVE_ECHO}" 'DOVE_ECHO' 'echo' || return 1
+  add_to_full_path "${DOVE_FIND}" 'DOVE_FIND' 'find' || return 1
+  add_to_full_path "${DOVE_GIT}" 'DOVE_GIT' 'git' || return 1
+  add_to_full_path "${DOVE_GREP}" 'DOVE_GREP' 'grep' || return 1
+  add_to_full_path "${DOVE_GZIP}" 'DOVE_GZIP' 'gzip' || return 1
+  add_to_full_path "${DOVE_HEAD}" 'DOVE_HEAD' 'head' || return 1
+  add_to_full_path "${DOVE_JQ}" 'DOVE_JQ' 'jq' || return 1
+  add_to_full_path "${DOVE_LN}" 'DOVE_LN' 'ln' || return 1
+  add_to_full_path "${DOVE_LS}" 'DOVE_LS' 'ls' || return 1
+  add_to_full_path "${DOVE_MD5SUM}" 'DOVE_MD5SUM' 'md5sum' || return 1
+  add_to_full_path "${DOVE_MKDIR}" 'DOVE_MKDIR' 'mkdir' || return 1
+  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python' || return 1
+  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3' || return 1
+  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3.14' || return 1
+  add_to_full_path "${DOVE_RM}" 'DOVE_RM' 'rm' || return 1
+  add_to_full_path "${DOVE_S3CMD}" 'DOVE_S3CMD' 's3cmd' || return 1
+  add_to_full_path "${DOVE_SED}" 'DOVE_SED' 'gsed' || return 1
+  add_to_full_path "${DOVE_SED}" 'DOVE_SED' 'sed' || return 1
+  add_to_full_path "${DOVE_SH}" 'DOVE_SH' 'sh' || return 1
+  add_to_full_path "${DOVE_SHASUM}" 'DOVE_SHASUM' 'shasum' || return 1
+  add_to_full_path "${DOVE_TAR}" 'DOVE_TAR' 'gtar' || return 1
+  add_to_full_path "${DOVE_TAR}" 'DOVE_TAR' 'tar' || return 1
+  add_to_full_path "${DOVE_TEE}" 'DOVE_TEE' 'tee' || return 1
+  add_to_full_path "${DOVE_TOUCH}" 'DOVE_TOUCH' 'touch' || return 1
+  add_to_full_path "${DOVE_UNAME}" 'DOVE_UNAME' 'uname' || return 1
+  add_to_full_path "${DOVE_UNZIP}" 'DOVE_UNZIP' 'unzip' || return 1
+  add_to_full_path "${DOVE_UV}" 'DOVE_UV' 'uv' || return 1
+  add_to_full_path "${DOVE_XARGS}" 'DOVE_XARGS' 'xargs' || return 1
+  add_to_full_path "${DOVE_XML2_CONFIG}" 'DOVE_XML2_CONFIG' 'xml2-config' || return 1
+  add_to_full_path "${DOVE_XSLT_CONFIG}" 'DOVE_XSLT_CONFIG' 'xslt-config' || return 1
+  add_to_full_path "${DOVE_XZ}" 'DOVE_XZ' 'xz' || return 1
+  add_to_full_path "${DOVE_ZIP}" 'DOVE_ZIP' 'zip' || return 1
 
   # OS X-specific
   if [[ "${DOVE_PLATFORM}" == 'darwin' ]]; then
-    add_to_full_path "${DOVE_DOT_CLEAN}" 'DOVE_DOT_CLEAN' 'dot_clean'
-    add_to_full_path "${DOVE_XCRUN}" 'DOVE_XCRUN' 'xcrun'
+    add_to_full_path "${DOVE_DOT_CLEAN}" 'DOVE_DOT_CLEAN' 'dot_clean' || return 1
+    add_to_full_path "${DOVE_XCRUN}" 'DOVE_XCRUN' 'xcrun' || return 1
   else
-    add_to_full_path "${DOVE_ASSEMBLER}" 'DOVE_ASSEMBLER' 'as'
-    add_to_full_path "${DOVE_CC}" 'DOVE_CC' 'cc'
-    add_to_full_path "${DOVE_LD}" 'DOVE_LD' 'ld'
+    add_to_full_path "${DOVE_ASSEMBLER}" 'DOVE_ASSEMBLER' 'as' || return 1
+    add_to_full_path "${DOVE_CC}" 'DOVE_CC' 'cc' || return 1
+    add_to_full_path "${DOVE_LD}" 'DOVE_LD' 'ld' || return 1
   fi
 
   PATH="${DOVE_PATH}"
@@ -280,12 +280,12 @@ function setup_path() {
 
 # Set-up a minimal PATH for linting
 function setup_lint_path() {
-  add_to_lint_path "${DOVE_BASH}" 'DOVE_BASH' 'bash'
-  add_to_lint_path "${DOVE_GIT}" 'DOVE_GIT' 'git'
-  add_to_lint_path "${DOVE_LS}" 'DOVE_LS' 'ls'
-  add_to_lint_path "${DOVE_SH}" 'DOVE_SH' 'sh'
-  add_to_lint_path "${DOVE_SHELLCHECK}" 'DOVE_SHELLCHECK' 'shellcheck'
-  add_to_lint_path "${DOVE_SHFMT}" 'DOVE_SHFMT' 'shfmt'
+  add_to_lint_path "${DOVE_BASH}" 'DOVE_BASH' 'bash' || return 1
+  add_to_lint_path "${DOVE_GIT}" 'DOVE_GIT' 'git' || return 1
+  add_to_lint_path "${DOVE_LS}" 'DOVE_LS' 'ls' || return 1
+  add_to_lint_path "${DOVE_SH}" 'DOVE_SH' 'sh' || return 1
+  add_to_lint_path "${DOVE_SHELLCHECK}" 'DOVE_SHELLCHECK' 'shellcheck' || return 1
+  add_to_lint_path "${DOVE_SHFMT}" 'DOVE_SHFMT' 'shfmt' || return 1
 
   readonly PATH="${DOVE_LINT_PATH}"
   export PATH
@@ -297,27 +297,27 @@ function setup_ci() {
   if [[ -z "${DOVE_CI_TYPE+x}" ]] || [[ "${DOVE_CI_TYPE}" == "" ]] ||
     [[ "${DOVE_CI_TYPE}" == "null" ]]; then
     echo "ERROR: Missing CI type! Please set 'DOVE_CI_TYPE'."
-    exit 1
+    return 1
   fi
 
   # Ensure our branches are set
   if [[ -z "${DOVE_DEV_BRANCH+x}" ]] || [[ "${DOVE_DEV_BRANCH}" == "" ]] ||
     [[ "${DOVE_DEV_BRANCH}" == "null" ]]; then
     echo "ERROR: Missing developer branch! Please set 'DOVE_DEV_BRANCH'."
-    exit 1
+    return 1
   fi
 
   if [[ -z "${DOVE_PROD_BRANCH+x}" ]] || [[ "${DOVE_PROD_BRANCH}" == "" ]] ||
     [[ "${DOVE_PROD_BRANCH}" == "null" ]]; then
     echo "ERROR: Missing production branch! Please set 'DOVE_PROD_BRANCH'."
-    exit 1
+    return 1
   fi
 }
 
 # Remove the legacy `env_local.sh`
 function clean_env_local() {
   # Ensure we have rm
-  verify_exec "${DOVE_RM}" 'DOVE_RM' || exit 1
+  verify_exec "${DOVE_RM}" 'DOVE_RM' || return 1
 
   if [[ -f "$(dirname $0)/env_local.sh" ]]; then
     "${DOVE_RM}" -f "$(dirname $0)/env_local.sh"
@@ -328,37 +328,37 @@ function clean_env_local() {
 function set_env() {
   if [[ -z "${DOVE_SET_ENVS+x}" ]] || [[ "${DOVE_SET_ENVS}" != 1 ]]; then
     # Get our root directory
-    set_root || exit 1
+    set_root || return 1
 
     # Ensure we have `DOVE_ROOT`
     if [[ -z "${DOVE_ROOT+x}" ]] || [[ ! -d "${DOVE_ROOT}" ]]; then
       echo "ERROR: 'DOVE_ROOT' is missing or invalid!"
-      exit 1
+      return 1
     fi
 
     # Do not use the system PATH
-    unset PATH || exit 1
-    hash -r || exit 1
+    unset PATH
+    hash -r || return 1
 
     # Handle CI-specific logic
     if [[ -n "${DOVE_CI+x}" ]]; then
-      setup_ci || exit 1
+      setup_ci || return 1
     fi
 
-    source "${DOVE_ROOT}/scripts/env_common.sh" || exit 1
+    source "${DOVE_ROOT}/scripts/env_common.sh" || return 1
 
     # Include utilities
     if [[ -z "${DOVE_UTILS+x}" ]] || [[ ! -f "${DOVE_UTILS}" ]] || [[ ! -s "${DOVE_UTILS}" ]]; then
       echo "ERROR: 'DOVE_UTILS' is missing or invalid!"
-      exit 1
+      return 1
     fi
-    source "${DOVE_UTILS}" || exit 1
+    source "${DOVE_UTILS}" || return 1
 
     # Set-up our PATH
     if [[ -n "${DOVE_LINTING+x}" ]]; then
-      setup_lint_path || exit 1
+      setup_lint_path || return 1
     else
-      setup_path || exit 1
+      setup_path || return 1
     fi
 
     # Clean-up the old `env_local.sh` (if necessary)
@@ -367,4 +367,4 @@ function set_env() {
 }
 
 # Set-up our environment
-set_env
+set_env || exit 1

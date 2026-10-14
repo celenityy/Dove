@@ -125,11 +125,11 @@ function create_archive() {
 
   # Override the timestamps for each file to match our stamp above
   "${DOVE_FIND}" "${target_dir}" -newermt "${DOVE_FIND_STAMP}" -print0 |
-    "${DOVE_XARGS}" -0r "${DOVE_TOUCH}" -h -d "${DOVE_TIMESTAMP}"
+    "${DOVE_XARGS}" -0r "${DOVE_TOUCH}" -h -d "${DOVE_TIMESTAMP}" || return 1
 
   # Override the timestamps for each directory to match our stamp above
   for dir in $("${DOVE_FIND}" "${target_dir}" -type d); do
-    "${DOVE_TOUCH}" -r "${dir}/$("${DOVE_LS}" -At "${dir}" | "${DOVE_HEAD}" -n 1)" "${dir}"
+    "${DOVE_TOUCH}" -r "${dir}/$("${DOVE_LS}" -At "${dir}" | "${DOVE_HEAD}" -n 1)" "${dir}" || return 1
   done
 
   # By default, we know the archive creation has not failed...
@@ -137,7 +137,7 @@ function create_archive() {
 
   # Finally, create our archive
   echo_red_text "Creating archive: '${output_archive}' from path: '${target_dir}'..."
-  pushd "${target_dir}"
+  pushd "${target_dir}" || return 1
   if [[ "${archive_format}" == 'zip' ]]; then
     # shellcheck disable=SC2035
     "${DOVE_ZIP}" -X -r "${output_archive}" * -x '.DS_Store' || local archive_failed=1
@@ -148,7 +148,7 @@ function create_archive() {
     echo_red_text "ERROR: Invalid archive format: '${archive_format}'!"
     return 1
   fi
-  popd
+  popd || return 1
 
   # Ensure the archive we just created is valid
   if [[ "${archive_failed}" != 1 ]]; then

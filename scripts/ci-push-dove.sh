@@ -88,7 +88,7 @@ function push_to_s3() {
   verify_file "${push_file}" || return 1
 
   # Create and push a SHA512sum for our file to S3 storage
-  push_and_add_sha512sum "${push_file}" "${s3_path}" "${s3_access_key_file}" "${s3_bucket_name_file}" "${s3_endpoint_file}" "${s3_secret_key_file}"
+  push_and_add_sha512sum "${push_file}" "${s3_path}" "${s3_access_key_file}" "${s3_bucket_name_file}" "${s3_endpoint_file}" "${s3_secret_key_file}" || return 1
 }
 
 # Create release notes
@@ -142,50 +142,50 @@ function create_release_notes() {
   "${DOVE_RM}" -f "${DOVE_RELEASE_NOTES}" "${DOVE_RELEASE_NOTES_TEMP}"
 
   "${DOVE_MKDIR}" -p "${DOVE_ARTIFACTS}" "${DOVE_TEMP}"
-  "${DOVE_CP}" -f "${DOVE_RELEASE_TEMPLATE}" "${DOVE_RELEASE_NOTES_TEMP}"
+  "${DOVE_CP}" -f "${DOVE_RELEASE_TEMPLATE}" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
 
   # Set our version
-  "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|g" "${DOVE_RELEASE_NOTES_TEMP}"
+  "${DOVE_SED}" -i "s|{DOVE_VERSION}|${DOVE_VERSION}|g" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
 
   # Set the previous (current) version
-  download "${DOVE_CEL_RELEASES_URL}/dove/releases/latest_release.txt" "${DOVE_TEMP}/previous_release.txt"
+  download "${DOVE_CEL_RELEASES_URL}/dove/releases/latest_release.txt" "${DOVE_TEMP}/previous_release.txt" || return 1
   local -r DOVE_PREVIOUS_VERSION=$("${DOVE_CAT}" "${DOVE_TEMP}/previous_release.txt" | "${DOVE_XARGS}")
-  "${DOVE_SED}" -i "s|{DOVE_PREVIOUS_VERSION}|${DOVE_PREVIOUS_VERSION}|g" "${DOVE_RELEASE_NOTES_TEMP}"
+  "${DOVE_SED}" -i "s|{DOVE_PREVIOUS_VERSION}|${DOVE_PREVIOUS_VERSION}|g" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
 
   # Set our SHA512sums
 
   # dove-{DOVE_VERSION}-linux.tar.xz
   local -r DOVE_LINUX_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux.tar.xz" | "${DOVE_AWK}" '{print $1}')
-  "${DOVE_SED}" -i "s|{DOVE_LINUX_ARCHIVE_SHA512SUM}|${DOVE_LINUX_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
+  "${DOVE_SED}" -i "s|{DOVE_LINUX_ARCHIVE_SHA512SUM}|${DOVE_LINUX_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
 
   # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
   local -r DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" | "${DOVE_AWK}" '{print $1}')
-  "${DOVE_SED}" -i "s|{DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM}|${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
+  "${DOVE_SED}" -i "s|{DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM}|${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
 
   # dove-{DOVE_VERSION}-osx.tar.xz
   local -r DOVE_OSX_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx.tar.xz" | "${DOVE_AWK}" '{print $1}')
-  "${DOVE_SED}" -i "s|{DOVE_OSX_ARCHIVE_SHA512SUM}|${DOVE_OSX_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
+  "${DOVE_SED}" -i "s|{DOVE_OSX_ARCHIVE_SHA512SUM}|${DOVE_OSX_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
 
   # dove-{DOVE_VERSION}-osx-intel.tar.xz
   local -r DOVE_OSX_INTEL_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" | "${DOVE_AWK}" '{print $1}')
-  "${DOVE_SED}" -i "s|{DOVE_OSX_INTEL_ARCHIVE_SHA512SUM}|${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
+  "${DOVE_SED}" -i "s|{DOVE_OSX_INTEL_ARCHIVE_SHA512SUM}|${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
 
   # dove-{DOVE_VERSION}-windows.zip
   local -r DOVE_WINDOWS_ARCHIVE_SHA512SUM=$("${DOVE_SHASUM}" -a 512 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-windows.zip" | "${DOVE_AWK}" '{print $1}')
-  "${DOVE_SED}" -i "s|{DOVE_WINDOWS_ARCHIVE_SHA512SUM}|${DOVE_WINDOWS_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}"
+  "${DOVE_SED}" -i "s|{DOVE_WINDOWS_ARCHIVE_SHA512SUM}|${DOVE_WINDOWS_ARCHIVE_SHA512SUM}|g" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
 
   # Add release-specific changes
   local -r DOVE_CHANGELOG=$("${DOVE_CAT}" "${DOVE_CHANGELOG_FILE}")
   {
-    echo "# Dove ${DOVE_VERSION}"
-    echo '____'
-    echo ''
-    echo '## Changes'
-    echo ''
-    "${DOVE_CAT}" "${DOVE_ROOT}/CHANGELOG.md"
-    echo ''
-    "${DOVE_CAT}" "${DOVE_RELEASE_NOTES_TEMP}"
-  } >> "${DOVE_RELEASE_NOTES}"
+    echo "# Dove ${DOVE_VERSION}" || return 1
+    echo '____' || return 1
+    echo '' || return 1
+    echo '## Changes' || return 1
+    echo '' || return 1
+    "${DOVE_CAT}" "${DOVE_ROOT}/CHANGELOG.md" || return 1
+    echo '' || return 1
+    "${DOVE_CAT}" "${DOVE_RELEASE_NOTES_TEMP}" || return 1
+  } >> "${DOVE_RELEASE_NOTES}" || return 1
 
   "${DOVE_RM}" -f "${DOVE_RELEASE_NOTES_TEMP}"
 
@@ -239,7 +239,7 @@ function upload_to_forgejo_package_registry() {
 
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --user "${DOVE_FORGEJO_USER}:${DOVE_FORGEJO_CI_API_TOKEN}" \
     --upload-file "${upload_file}" \
-    "${DOVE_FORGEJO_GENERIC_PACKAGES_URL}/${DOVE_FORGEJO_PACKAGE_NAME}/${DOVE_VERSION}/${upload_file_name}"
+    "${DOVE_FORGEJO_GENERIC_PACKAGES_URL}/${DOVE_FORGEJO_PACKAGE_NAME}/${DOVE_VERSION}/${upload_file_name}" || return 1
 }
 
 # Upload a release to GitLab's package registry
@@ -283,7 +283,7 @@ function upload_to_gitlab_package_registry() {
 
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header "PRIVATE-TOKEN: ${DOVE_GITLAB_CI_API_TOKEN}" \
     --upload-file "${upload_file}" \
-    "${DOVE_GITLAB_GENERIC_PACKAGES_URL}/${DOVE_GITLAB_PACKAGE_NAME}/${DOVE_VERSION}/${upload_file_name}"
+    "${DOVE_GITLAB_GENERIC_PACKAGES_URL}/${DOVE_GITLAB_PACKAGE_NAME}/${DOVE_VERSION}/${upload_file_name}" || return 1
 }
 
 # Add an asset to a Forgejo (Codeberg) release
@@ -334,7 +334,7 @@ function add_asset_to_forgejo_release() {
     --header "Authorization: token ${DOVE_FORGEJO_CI_API_TOKEN}" \
     -F "external_url=${asset_url}" \
     --request POST \
-    "${DOVE_FORGEJO_API_URL}/v1/repos/${DOVE_FORGEJO_REPO}/releases/${release_id}/assets?name=$(printf '%s' "${asset}" | "${DOVE_JQ}" -sRr @uri)"
+    "${DOVE_FORGEJO_API_URL}/v1/repos/${DOVE_FORGEJO_REPO}/releases/${release_id}/assets?name=$(printf '%s' "${asset}" | "${DOVE_JQ}" -sRr @uri)" || return 1
   echo_green_text "SUCCESS: Added '${asset}' to release: '${DOVE_VERSION}'!"
 }
 
@@ -387,7 +387,7 @@ function publish_to_forgejo() {
       draft: false,
       prerelease: false,
       body: .
-      }' <<< "${dove_release_desc}"
+      }' <<< "${dove_release_desc}" || return 1
   )"
 
   local -r dove_codeberg_release=$("${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header 'Content-Type: application/json' \
@@ -403,24 +403,24 @@ function publish_to_forgejo() {
   # Attach our assets
 
   # dove-{DOVE_VERSION}-linux.tar.xz
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/linux/dove-${DOVE_VERSION}-linux.tar.xz"
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/linux/dove-${DOVE_VERSION}-linux.tar.xz-sha512sum.txt"
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/linux/dove-${DOVE_VERSION}-linux.tar.xz" || return 1
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/linux/dove-${DOVE_VERSION}-linux.tar.xz-sha512sum.txt" || return 1
 
   # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/linux-flatpak/dove-${DOVE_VERSION}-linux-flatpak.tar.xz"
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/linux-flatpak/dove-${DOVE_VERSION}-linux-flatpak.tar.xz-sha512sum.txt"
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/linux-flatpak/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" || return 1
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/linux-flatpak/dove-${DOVE_VERSION}-linux-flatpak.tar.xz-sha512sum.txt" || return 1
 
   # dove-{DOVE_VERSION}-osx.tar.xz
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/osx/dove-${DOVE_VERSION}-osx.tar.xz"
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/osx/dove-${DOVE_VERSION}-osx.tar.xz-sha512sum.txt"
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/osx/dove-${DOVE_VERSION}-osx.tar.xz" || return 1
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/osx/dove-${DOVE_VERSION}-osx.tar.xz-sha512sum.txt" || return 1
 
   # dove-{DOVE_VERSION}-osx-intel.tar.xz
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/osx-intel/dove-${DOVE_VERSION}-osx-intel.tar.xz"
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/osx-intel/dove-${DOVE_VERSION}-osx-intel.tar.xz-sha512sum.txt"
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/osx-intel/dove-${DOVE_VERSION}-osx-intel.tar.xz" || return 1
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/osx-intel/dove-${DOVE_VERSION}-osx-intel.tar.xz-sha512sum.txt" || return 1
 
   # dove-{DOVE_VERSION}-windows.zip
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/windows/dove-${DOVE_VERSION}-windows.zip"
-  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/windows/dove-${DOVE_VERSION}-windows.zip-sha512sum.txt"
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/windows/dove-${DOVE_VERSION}-windows.zip" || return 1
+  add_asset_to_forgejo_release "${dove_codeberg_release_id}" "${DOVE_RELEASES_BASE_URL}/windows/dove-${DOVE_VERSION}-windows.zip-sha512sum.txt" || return 1
 
   # We're done! :)
   echo_green_text "SUCCESS: Published Dove: '${DOVE_VERSION}' to Forgejo!"
@@ -472,7 +472,7 @@ function publish_to_github() {
       draft: false,
       prerelease: false,
       body: .
-      }' <<< "${dove_release_desc}"
+      }' <<< "${dove_release_desc}" || return 1
   )"
 
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header 'Content-Type: application/json' \
@@ -481,7 +481,7 @@ function publish_to_github() {
     --header "X-GitHub-Api-Version: 2026-03-10" \
     --data "${dove_github_release_data}" \
     --request POST \
-    "${DOVE_GITHUB_API_URL}/repos/${DOVE_GITHUB_REPO}/releases"
+    "${DOVE_GITHUB_API_URL}/repos/${DOVE_GITHUB_REPO}/releases" || return 1
 
   # We're done! :)
   echo_green_text "SUCCESS: Published Dove: '${DOVE_VERSION}' to GitHub!"
@@ -535,40 +535,40 @@ function publish_to_gitlab() {
   local -r DOVE_LINUX_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/linux/${DOVE_LINUX_ARCHIVE_NAME}"
   local -r DOVE_LINUX_ARCHIVE_SHA512SUM_NAME="${DOVE_LINUX_ARCHIVE_NAME}-sha512sum.txt"
   local -r DOVE_LINUX_ARCHIVE_SHA512SUM_URL="${DOVE_LINUX_ARCHIVE_URL}-sha512sum.txt"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_ARCHIVE_NAME}"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_ARCHIVE_SHA512SUM_NAME}"
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_ARCHIVE_NAME}" || return 1
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_ARCHIVE_SHA512SUM_NAME}" || return 1
 
   # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
   local -r DOVE_LINUX_FLATPAK_ARCHIVE_NAME="dove-${DOVE_VERSION}-linux-flatpak.tar.xz"
   local -r DOVE_LINUX_FLATPAK_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/linux-flatpak/${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}"
   local -r DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_NAME="${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}-sha512sum.txt"
   local -r DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_URL="${DOVE_LINUX_FLATPAK_ARCHIVE_URL}-sha512sum.txt"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_NAME}"
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_FLATPAK_ARCHIVE_NAME}" || return 1
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_LINUX_FLATPAK_ARCHIVE_SHA512SUM_NAME}" || return 1
 
   # dove-{DOVE_VERSION}-osx.tar.xz
   local -r DOVE_OSX_ARCHIVE_NAME="dove-${DOVE_VERSION}-osx.tar.xz"
   local -r DOVE_OSX_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/osx/${DOVE_OSX_ARCHIVE_NAME}"
   local -r DOVE_OSX_ARCHIVE_SHA512SUM_NAME="${DOVE_OSX_ARCHIVE_NAME}-sha512sum.txt"
   local -r DOVE_OSX_ARCHIVE_SHA512SUM_URL="${DOVE_OSX_ARCHIVE_URL}-sha512sum.txt"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_ARCHIVE_NAME}"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_ARCHIVE_SHA512SUM_NAME}"
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_ARCHIVE_NAME}" || return 1
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_ARCHIVE_SHA512SUM_NAME}" || return 1
 
   # dove-{DOVE_VERSION}-osx-intel.tar.xz
   local -r DOVE_OSX_INTEL_ARCHIVE_NAME="dove-${DOVE_VERSION}-osx-intel.tar.xz"
   local -r DOVE_OSX_INTEL_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/osx-intel/${DOVE_OSX_INTEL_ARCHIVE_NAME}"
   local -r DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_NAME="${DOVE_OSX_INTEL_ARCHIVE_NAME}-sha512sum.txt"
   local -r DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_URL="${DOVE_OSX_INTEL_ARCHIVE_URL}-sha512sum.txt"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_INTEL_ARCHIVE_NAME}"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_NAME}"
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_INTEL_ARCHIVE_NAME}" || return 1
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_OSX_INTEL_ARCHIVE_SHA512SUM_NAME}" || return 1
 
   # dove-{DOVE_VERSION}-windows.zip
   local -r DOVE_WINDOWS_ARCHIVE_NAME="dove-${DOVE_VERSION}-windows.zip"
   local -r DOVE_WINDOWS_ARCHIVE_URL="${DOVE_RELEASES_BASE_URL}/windows/${DOVE_WINDOWS_ARCHIVE_NAME}"
   local -r DOVE_WINDOWS_ARCHIVE_SHA512SUM_NAME="${DOVE_WINDOWS_ARCHIVE_NAME}-sha512sum.txt"
   local -r DOVE_WINDOWS_ARCHIVE_SHA512SUM_URL="${DOVE_WINDOWS_ARCHIVE_URL}-sha512sum.txt"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_WINDOWS_ARCHIVE_NAME}"
-  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_WINDOWS_ARCHIVE_SHA512SUM_NAME}"
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_WINDOWS_ARCHIVE_NAME}" || return 1
+  upload_to_gitlab_package_registry "${DOVE_ARTIFACTS}/${DOVE_WINDOWS_ARCHIVE_SHA512SUM_NAME}" || return 1
 
   local -r dove_gitlab_release_data="$(
     "${DOVE_JQ}" -Rs --arg name "${DOVE_VERSION}" --arg ref "${DOVE_GITLAB_BRANCH}" --arg tag "${DOVE_VERSION}" --arg version "${DOVE_VERSION}" \
@@ -651,14 +651,14 @@ function publish_to_gitlab() {
         ]
       },
       description: .
-      }' <<< "${dove_release_desc}"
+      }' <<< "${dove_release_desc}" || return 1
   )"
 
   "${DOVE_CURL}" ${DOVE_CURL_FLAGS} --no-verbose --header 'Content-Type: application/json' \
     --header "PRIVATE-TOKEN: ${DOVE_GITLAB_CI_API_TOKEN}" \
     --data "${dove_gitlab_release_data}" \
     --request POST \
-    "${DOVE_GITLAB_API_URL}/projects/${DOVE_GITLAB_PROJECT_ID}/releases"
+    "${DOVE_GITLAB_API_URL}/projects/${DOVE_GITLAB_PROJECT_ID}/releases" || return 1
 
   # We're done! :)
   echo_green_text "SUCCESS: Published Dove: '${DOVE_VERSION}' to GitLab!"
@@ -691,12 +691,12 @@ function _push_dove() {
     local -r dove_archive_type='tar.xz'
   fi
 
-  push_to_s3 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "dove/releases/${DOVE_VERSION}/${dove_platform}"
+  push_to_s3 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "dove/releases/${DOVE_VERSION}/${dove_platform}" || return 1
 
   # Ensure the latest version can always be downloaded from https://releases.celenity.dev/dove/releases/latest/{dove_platform}/dove-latest-{dove_platform}.${dove_archive_type}
   ## (Ex. for convenience/packaging)
-  "${DOVE_CP}" -f "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "${DOVE_ARTIFACTS}/dove-latest-${dove_platform}.${dove_archive_type}"
-  push_to_s3 "${DOVE_ARTIFACTS}/dove-latest-${dove_platform}.${dove_archive_type}" "dove/releases/latest/${dove_platform}"
+  "${DOVE_CP}" -f "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-${dove_platform}.${dove_archive_type}" "${DOVE_ARTIFACTS}/dove-latest-${dove_platform}.${dove_archive_type}" || return 1
+  push_to_s3 "${DOVE_ARTIFACTS}/dove-latest-${dove_platform}.${dove_archive_type}" "dove/releases/latest/${dove_platform}" || return 1
 }
 
 # Push Dove to S3 storage
@@ -717,43 +717,43 @@ function push_dove() {
   verify_env "${DOVE_TEMP}" 'DOVE_TEMP' || return 1
 
   # Linux
-  _push_dove 'linux'
+  _push_dove 'linux' || return 1
 
   # Linux (Flatpak)
-  _push_dove 'linux-flatpak'
+  _push_dove 'linux-flatpak' || return 1
 
   # OS X
-  _push_dove 'osx'
+  _push_dove 'osx' || return 1
 
   # OS X (Intel)
-  _push_dove 'osx-intel'
+  _push_dove 'osx-intel' || return 1
 
   # Windows
-  _push_dove 'windows'
+  _push_dove 'windows' || return 1
 
   # Update the current Dove version
   "${DOVE_MKDIR}" -p "${DOVE_TEMP}"
   "${DOVE_TOUCH}" "${DOVE_TEMP}/latest_release.txt"
-  echo -n "${DOVE_VERSION}" > "${DOVE_TEMP}/latest_release.txt"
-  push_to_s3 "${DOVE_TEMP}/latest_release.txt" 'dove/releases'
+  echo -n "${DOVE_VERSION}" > "${DOVE_TEMP}/latest_release.txt" || return 1
+  push_to_s3 "${DOVE_TEMP}/latest_release.txt" 'dove/releases' || return 1
 
   # Add release notes
-  push_to_s3 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md" "dove/releases/${DOVE_VERSION}"
+  push_to_s3 "${DOVE_ARTIFACTS}/dove-${DOVE_VERSION}-release-notes.md" "dove/releases/${DOVE_VERSION}" || return 1
 
   echo_green_text "SUCCESS: Pushed Dove: '${DOVE_VERSION}' to '${DOVE_CEL_RELEASES_URL}'!"
 }
 
 # First, create our release notes
-create_release_notes
+create_release_notes || return 1
 
 # Push Dove to S3 storage
-push_dove
+push_dove || return 1
 
 # Create a Forgejo (Codeberg) release
-publish_to_forgejo
+publish_to_forgejo || return 1
 
 # Create a GitLab release
-publish_to_gitlab
+publish_to_gitlab || return 1
 
 # Create a GitHub release
-publish_to_github
+publish_to_github || return 1

@@ -122,30 +122,30 @@ function push_to_s3() {
   verify_file "${push_file}" || return 1
 
   # Create and push a SHA512sum for our file to S3 storage
-  push_and_add_sha512sum "${push_file}" "${s3_path}" "${s3_access_key_file}" "${s3_bucket_name_file}" "${s3_endpoint_file}" "${s3_secret_key_file}"
+  push_and_add_sha512sum "${push_file}" "${s3_path}" "${s3_access_key_file}" "${s3_bucket_name_file}" "${s3_endpoint_file}" "${s3_secret_key_file}" || return 1
 }
 
 # dove-{DOVE_VERSION}-linux.tar.xz
 if [[ "${DOVE_AR_UP_LINUX_ARCHIVE}" == 1 ]]; then
-  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-linux.tar.xz" "${DOVE_S3_PATH}"
+  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-linux.tar.xz" "${DOVE_S3_PATH}" || return 1
 fi
 
 # dove-{DOVE_VERSION}-linux-flatpak.tar.xz
 if [[ "${DOVE_AR_UP_LINUX_FLATPAK_ARCHIVE}" == 1 ]]; then
-  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" "${DOVE_S3_PATH}"
+  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-linux-flatpak.tar.xz" "${DOVE_S3_PATH}" || return 1
 fi
 
 # dove-{DOVE_VERSION}-osx.tar.xz
 if [[ "${DOVE_AR_UP_OSX_ARCHIVE}" == 1 ]]; then
-  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-osx.tar.xz" "${DOVE_S3_PATH}"
+  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-osx.tar.xz" "${DOVE_S3_PATH}" || return 1
 fi
 
 # dove-{DOVE_VERSION}-osx-intel.tar.xz
 if [[ "${DOVE_AR_UP_OSX_INTEL_ARCHIVE}" == 1 ]]; then
-  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" "${DOVE_S3_PATH}"
+  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-osx-intel.tar.xz" "${DOVE_S3_PATH}" || return 1
 fi
 
 # dove-{DOVE_VERSION}-windows.zip
 if [[ "${DOVE_AR_UP_WINDOWS_ARCHIVE}" == 1 ]]; then
-  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-windows.zip" "${DOVE_S3_PATH}"
+  push_to_s3 "${DOVE_OUTPUTS}/dove-${DOVE_VERSION}-windows.zip" "${DOVE_S3_PATH}" || return 1
 fi
