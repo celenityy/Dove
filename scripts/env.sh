@@ -219,6 +219,12 @@ function setup_path() {
   # Ensure we have `DOVE_PLATFORM`
   verify_env "${DOVE_PLATFORM}" 'DOVE_PLATFORM' || return 1
 
+  # Ensure we have `DOVE_PYTHON_MAJOR_VERSION`
+  verify_env "${DOVE_PYTHON_MAJOR_VERSION}" 'DOVE_PYTHON_MAJOR_VERSION' || return 1
+
+  # Ensure we have `DOVE_PYTHON_FULL_MAJOR_VERSION`
+  verify_env "${DOVE_PYTHON_FULL_MAJOR_VERSION}" 'DOVE_PYTHON_FULL_MAJOR_VERSION' || return 1
+
   add_to_full_path "${DOVE_AWK}" 'DOVE_AWK' 'awk' || return 1
   add_to_full_path "${DOVE_AWK}" 'DOVE_AWK' 'gawk' || return 1
   add_to_full_path "${DOVE_BASENAME}" 'DOVE_BASENAME' 'basename' || return 1
@@ -243,8 +249,8 @@ function setup_path() {
   add_to_full_path "${DOVE_MD5SUM}" 'DOVE_MD5SUM' 'md5sum' || return 1
   add_to_full_path "${DOVE_MKDIR}" 'DOVE_MKDIR' 'mkdir' || return 1
   add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python' || return 1
-  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3' || return 1
-  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3.15' || return 1
+  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' "python${DOVE_PYTHON_MAJOR_VERSION}" || return 1
+  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' "python${DOVE_PYTHON_FULL_MAJOR_VERSION}" || return 1
   add_to_full_path "${DOVE_RM}" 'DOVE_RM' 'rm' || return 1
   add_to_full_path "${DOVE_S3CMD}" 'DOVE_S3CMD' 's3cmd' || return 1
   add_to_full_path "${DOVE_SED}" 'DOVE_SED' 'gsed' || return 1
