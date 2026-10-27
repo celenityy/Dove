@@ -508,31 +508,31 @@ function delete_file() {
       '/path/to/s3_secret_key_file'"
   }
 
-  if [[ -z "${2+x}" ]]; then
+  if [[ -z "${1+x}" ]]; then
     echo_red_text 'ERROR: Please specify the target path on S3 storage for the file to delete!'
     print_usage
     return 1
   fi
 
-  if [[ -z "${3+x}" ]]; then
+  if [[ -z "${2+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 access key!'
     print_usage
     return 1
   fi
 
-  if [[ -z "${4+x}" ]]; then
+  if [[ -z "${3+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 bucket name!'
     print_usage
     return 1
   fi
 
-  if [[ -z "${5+x}" ]]; then
+  if [[ -z "${4+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 endpoint!'
     print_usage
     return 1
   fi
 
-  if [[ -z "${6+x}" ]]; then
+  if [[ -z "${5+x}" ]]; then
     echo_red_text 'ERROR: Please specify the path to a file containing the S3 secret key!'
     print_usage
     return 1
@@ -578,7 +578,7 @@ function delete_file() {
 
   echo_red_text "Deleting file: '${s3_file_name}' from S3 storage..."
   source "${DOVE_PYENV}" || return 1
-  "${DOVE_S3CMD}" ${DOVE_S3CMD_FLAGS} rm "${s3_file}" \
+  "${DOVE_S3CMD}" ${DOVE_S3CMD_FLAGS} rm "${s3_target_path}" \
     --access_key="${s3_access_key}" \
     --secret_key="${s3_secret_key}" \
     --host="${s3_endpoint}" \
