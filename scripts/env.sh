@@ -244,7 +244,7 @@ function setup_path() {
   add_to_full_path "${DOVE_MKDIR}" 'DOVE_MKDIR' 'mkdir' || return 1
   add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python' || return 1
   add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3' || return 1
-  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3.14' || return 1
+  add_to_full_path "${DOVE_PYTHON}" 'DOVE_PYTHON' 'python3.15' || return 1
   add_to_full_path "${DOVE_RM}" 'DOVE_RM' 'rm' || return 1
   add_to_full_path "${DOVE_S3CMD}" 'DOVE_S3CMD' 's3cmd' || return 1
   add_to_full_path "${DOVE_SED}" 'DOVE_SED' 'gsed' || return 1
