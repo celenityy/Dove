@@ -67,9 +67,25 @@ verify_file "${DOVE_CI_UP_AR_SH}" || exit 1
 # Get dependencies
 echo_red_text 'CI - Downloading dependencies...'
 /bin/sudo /bin/dnf update -y --refresh || exit 1
-/bin/sudo /bin/dnf install -y as cc clang curl jq ld libxml2 libxml2-devel libxslt libxslt-devel shasum tar zip || exit 1
-"${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" || exit 1
-"${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" || exit 1
+/bin/sudo /bin/dnf install -y \
+  as \
+  bash \
+  cc \
+  clang \
+  curl \
+  jq \
+  ld \
+  libxml2 \
+  libxml2-devel \
+  libxslt \
+  libxslt-devel \
+  shasum \
+  tar \
+  unzip \
+  xz \
+  zip || exit 1
+"${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 'all' || exit 1
+"${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 's3cmd' || exit 1
 echo_green_text 'CI - SUCCESS: Downloaded dependencies.'
 
 # Get secrets

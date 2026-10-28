@@ -67,7 +67,15 @@ verify_file "${DOVE_CI_PUBLISH_SH}" || exit 1
 # Get dependencies
 echo_red_text 'CI - Downloading dependencies...'
 /bin/sudo /bin/dnf update -y --refresh || exit 1
-/bin/sudo /bin/dnf install -y curl jq shasum tar zip || exit 1
+/bin/sudo /bin/dnf install -y \
+  bash \
+  curl \
+  jq \
+  shasum \
+  tar \
+  unzip \
+  xz \
+  zip || exit 1
 "${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 'uv' || exit 1
 "${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 'python' || exit 1
 "${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 's3cmd' || exit 1
