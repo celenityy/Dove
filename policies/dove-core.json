@@ -42,6 +42,7 @@
         }
       }
     },
+    "DisableDataCollectionSettings": true,
     "ExtensionSettings": {
       "*": {
         "blocked_install_message": "I am Iron Man.",
