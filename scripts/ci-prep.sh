@@ -5,12 +5,6 @@ set -euo pipefail
 # Ensure this is never ran with xtrace...
 set +x || exit 1
 
-# Ensure this only runs for the official repo
-if [[ "${DOVE_CURRENT_REPO}" != "${DOVE_OFFICIAL_REPO}" ]]; then
-  echo_red_text "ERROR: Unable to get secrets for repo: '${DOVE_CURRENT_REPO}'!"
-  exit 1
-fi
-
 # Set-up our environment
 function setup_env() {
   if [[ -z "${DOVE_SET_ENVS+x}" ]] || [[ "${DOVE_SET_ENVS}" != 1 ]]; then
@@ -48,6 +42,12 @@ verify_env "${DOVE_CI}" 'DOVE_CI' || exit 1
 
 if [[ "${DOVE_CI}" != 1 ]]; then
   echo_red_text "ERROR: '$0' should only be called from CI!"
+  exit 1
+fi
+
+# Ensure this only runs for the official repo
+if [[ "${DOVE_CURRENT_REPO}" != "${DOVE_OFFICIAL_REPO}" ]]; then
+  echo_red_text "ERROR: Unable to get secrets for repo: '${DOVE_CURRENT_REPO}'!"
   exit 1
 fi
 
