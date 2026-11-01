@@ -259,3 +259,6 @@ export UV_TOOL_DIR
 ## Pin Python version
 readonly UV_PYTHON_CPYTHON_BUILD="${DOVE_PYTHON_GIT_RELEASE}"
 export UV_PYTHON_CPYTHON_BUILD
+
+# This is exported for our tools/wrappers
+export DOVE_BASH

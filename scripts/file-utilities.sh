@@ -188,6 +188,9 @@ function extract_archive() {
   # Ensure we have cp
   verify_exec "${DOVE_CP}" 'DOVE_CP' || return 1
 
+  # Ensure we have dirname
+  verify_exec "${DOVE_DIRNAME}" 'DOVE_DIRNAME' || return 1
+
   # Ensure we have ls
   verify_exec "${DOVE_LS}" 'DOVE_LS' || return 1
 
@@ -205,7 +208,7 @@ function extract_archive() {
 
   # Set a temporary archive name
   local -r temp_archive_path_name=$("${DOVE_BASENAME}" "${target_path}")
-  local -r temp_archive_path="${DOVE_EXTERNAL}/temp/${temp_archive_path}"
+  local -r temp_archive_path="${DOVE_EXTERNAL}/temp/${temp_archive_path_name}"
 
   # If our temporary directory for extraction already exists, delete it
   if [[ -d "${temp_archive_path}" ]]; then
@@ -261,8 +264,19 @@ function extract_archive() {
     return 1
   fi
 
+  # Ensure the directory above the directory we want to extract the archive into exists
+  local -r top_target_dir=$("${DOVE_DIRNAME}" "${target_path}")
+  if [[ ! -d "${top_target_dir}" ]]; then
+    "${DOVE_MKDIR}" -p "${top_target_dir}"
+  fi
+
   local -r top_input_dir=$("${DOVE_LS}" "${temp_archive_path}")
-  "${DOVE_CP}" -rf "${temp_archive_path}/${top_input_dir}/" "${target_path}" || local extraction_failed=1
+  if [[ -d "${temp_archive_path}/${top_input_dir}" ]]; then
+    local -r input_dir="${temp_archive_path}/${top_input_dir}"
+  else
+    local -r input_dir="${temp_archive_path}"
+  fi
+  "${DOVE_CP}" -rf "${input_dir}/" "${target_path}" || local extraction_failed=1
 
   # Ensure the directory we just extracted the archive to is valid
   if [[ "${extraction_failed}" != 1 ]] && [[ ! -d "${target_path}" ]]; then

@@ -5,6 +5,12 @@ set -euo pipefail
 # Ensure this is never ran with xtrace...
 set +x
 
+# Ensure this only runs for the official repo
+if [[ "${DOVE_CURRENT_REPO}" != "${DOVE_OFFICIAL_REPO}" ]]; then
+  echo_red_text "ERROR: Unable to upload artifacts for repo: '${DOVE_CURRENT_REPO}'!"
+  exit 1
+fi
+
 # Include S3 utilities
 verify_file_with_env "${DOVE_S3_UTILS}" 'DOVE_S3_UTILS' || return 1
 source "${DOVE_S3_UTILS}" || return 1

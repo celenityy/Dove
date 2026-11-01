@@ -66,7 +66,10 @@ verify_file "${DOVE_CI_UP_AR_SH}" || exit 1
 
 # Get dependencies
 echo_red_text 'CI - Downloading dependencies...'
-/bin/sudo /bin/dnf update -y --refresh || exit 1
+if [[ "${DOVE_CI_TYPE}" != 'forgejo' ]]; then
+  # We run this early as part of the Forgejo workflow (so that we can get Node.js to checkout the repo), so no need to run it twice
+  /bin/sudo /bin/dnf update -y --refresh || exit 1
+fi
 /bin/sudo /bin/dnf install -y \
   as \
   bash \
@@ -86,13 +89,15 @@ echo_red_text 'CI - Downloading dependencies...'
   zip || exit 1
 "${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 'all' || exit 1
 "${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 's3cmd' || exit 1
-echo_green_text 'CI - SUCCESS: Downloaded dependencies.'
+echo_green_text 'CI - SUCCESS: Downloaded dependencies!'
 
 # Get secrets
-echo_red_text 'CI - Preparing secrets...'
-set +x || exit 1
-"${DOVE_BASH}" "${DOVE_CI_PREP_SH}" 's3-artifacts' || exit 1
-echo_green_text 'CI - SUCCESS: Prepared secrets.'
+if [[ "${DOVE_CURRENT_REPO}" == "${DOVE_OFFICIAL_REPO}" ]]; then
+  echo_red_text 'CI - Preparing secrets...'
+  set +x || exit 1
+  "${DOVE_BASH}" "${DOVE_CI_PREP_SH}" 's3-artifacts' || exit 1
+  echo_green_text 'CI - SUCCESS: Prepared secrets!'
+fi
 
 # Set verbosity
 set_verbosity
@@ -100,10 +105,12 @@ set_verbosity
 # Build Dove
 echo_red_text 'CI - Building Dove...'
 "${DOVE_BASH}" "${DOVE_CI_BUILD_SH}" 'all' || exit 1
-echo_green_text 'CI - SUCCESS: Built Dove.'
+echo_green_text 'CI - SUCCESS: Built Dove!'
 
 # Upload artifacts
-echo_red_text 'CI - Uploading artifacts..'
-set +x || exit 1
-"${DOVE_BASH}" "${DOVE_CI_UP_AR_SH}" 'all' || exit 1
-echo_green_text 'CI - SUCCESS: Uploaded artifacts.'
+if [[ "${DOVE_CURRENT_REPO}" == "${DOVE_OFFICIAL_REPO}" ]]; then
+  echo_red_text 'CI - Uploading artifacts..'
+  set +x || exit 1
+  "${DOVE_BASH}" "${DOVE_CI_UP_AR_SH}" 'all' || exit 1
+  echo_green_text 'CI - SUCCESS: Uploaded artifacts!'
+fi

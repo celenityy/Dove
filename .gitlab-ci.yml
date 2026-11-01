@@ -22,6 +22,7 @@ variables: &common_variables
   DOVE_CI_TYPE: "gitlab"
   DOVE_DEV_BRANCH: "dev"
   DOVE_FEDORA_VERSION: "44"
+  DOVE_OFFICIAL_REPO: "celenityy/Dove"
   DOVE_PROD_BRANCH: "pages"
   FF_USE_FASTZIP: "1"
   TRANSFER_METER_FREQUENCY: "2s"
@@ -68,8 +69,6 @@ build:
     paths:
       - $CI_PROJECT_DIR/artifacts/logs/**/*
   rules:
-    - if: $CI_PROJECT_NAMESPACE != 'celenityy'
-      when: never
     - changes:
         - scripts/**/*
         - .gitlab-ci.yml
@@ -84,7 +83,7 @@ release:
     - job: 'build'
       optional: false
   rules:
-    - if: $CI_PROJECT_NAMESPACE != 'celenityy'
+    - if: $CI_PROJECT_PATH != $DOVE_OFFICIAL_REPO
       when: never
     - if: $CI_COMMIT_TAG
       when: never

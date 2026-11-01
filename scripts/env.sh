@@ -299,10 +299,59 @@ function setup_lint_path() {
 
 # For CI, ensure external environment variables are set
 function setup_ci() {
-  # Ensure our CI type is set
+  # Ensure our CI type is set and valid
   if [[ -z "${DOVE_CI_TYPE+x}" ]] || [[ "${DOVE_CI_TYPE}" == "" ]] ||
     [[ "${DOVE_CI_TYPE}" == "null" ]]; then
     echo "ERROR: Missing CI type! Please set 'DOVE_CI_TYPE'."
+    return 1
+  fi
+
+  if [[ "${DOVE_CI_TYPE}" != 'forgejo' ]] && [[ "${DOVE_CI_TYPE}" != 'gitlab' ]]; then
+    echo "ERROR: Invalid CI type: '${DOVE_CI_TYPE}'!"
+    return 1
+  fi
+
+  # Get our current branch
+  if [[ "${DOVE_CI_TYPE}" == 'forgejo' ]]; then
+    if [[ -z "${FORGEJO_REF_NAME+x}" ]] || [[ "${FORGEJO_REF_NAME}" == "" ]] ||
+      [[ "${FORGEJO_REF_NAME}" == "null" ]]; then
+      echo "ERROR: Missing current branch! Please set 'FORGEJO_REF_NAME'."
+      return 1
+    else
+      readonly DOVE_CURRENT_BRANCH="${FORGEJO_REF_NAME}"
+    fi
+  elif [[ "${DOVE_CI_TYPE}" == 'gitlab' ]]; then
+    if [[ -z "${CI_COMMIT_BRANCH+x}" ]] || [[ "${CI_COMMIT_BRANCH}" == "" ]] ||
+      [[ "${CI_COMMIT_BRANCH}" == "null" ]]; then
+      echo "ERROR: Missing current branch! Please set 'CI_COMMIT_BRANCH'."
+      return 1
+    else
+      readonly DOVE_CURRENT_BRANCH="${CI_COMMIT_BRANCH}"
+    fi
+  else
+    echo "ERROR: Unable to get current branch for CI type: '${DOVE_CI_TYPE}'!"
+    return 1
+  fi
+
+  # Get our current repo
+  if [[ "${DOVE_CI_TYPE}" == 'forgejo' ]]; then
+    if [[ -z "${FORGEJO_REPOSITORY+x}" ]] || [[ "${FORGEJO_REPOSITORY}" == "" ]] ||
+      [[ "${FORGEJO_REPOSITORY}" == "null" ]]; then
+      echo "ERROR: Missing current repo! Please set 'FORGEJO_REPOSITORY'."
+      return 1
+    else
+      readonly DOVE_CURRENT_REPO="${FORGEJO_REPOSITORY}"
+    fi
+  elif [[ "${DOVE_CI_TYPE}" == 'gitlab' ]]; then
+    if [[ -z "${CI_PROJECT_PATH+x}" ]] || [[ "${CI_PROJECT_PATH}" == "" ]] ||
+      [[ "${CI_PROJECT_PATH}" == "null" ]]; then
+      echo "ERROR: Missing current repo! Please set 'CI_PROJECT_PATH'."
+      return 1
+    else
+      readonly DOVE_CURRENT_REPO="${CI_PROJECT_PATH}"
+    fi
+  else
+    echo "ERROR: Unable to get current repo for CI type: '${DOVE_CI_TYPE}'!"
     return 1
   fi
 
@@ -316,6 +365,13 @@ function setup_ci() {
   if [[ -z "${DOVE_PROD_BRANCH+x}" ]] || [[ "${DOVE_PROD_BRANCH}" == "" ]] ||
     [[ "${DOVE_PROD_BRANCH}" == "null" ]]; then
     echo "ERROR: Missing production branch! Please set 'DOVE_PROD_BRANCH'."
+    return 1
+  fi
+
+  # Ensure the offical repo is set
+  if [[ -z "${DOVE_OFFICIAL_REPO+x}" ]] || [[ "${DOVE_OFFICIAL_REPO}" == "" ]] ||
+    [[ "${DOVE_OFFICIAL_REPO}" == "null" ]]; then
+    echo "ERROR: Missing official repo! Please set 'DOVE_OFFICIAL_REPO'."
     return 1
   fi
 }

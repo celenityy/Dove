@@ -13,6 +13,7 @@ env:
   DOVE_CHECKOUT_ACTION_COMMIT: "f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a" # v7.0.1
   DOVE_DEV_BRANCH: "dev"
   DOVE_FEDORA_VERSION: "44"
+  DOVE_OFFICIAL_REPO: "celenity/Dove"
   DOVE_PROD_BRANCH: "pages"
 
 jobs:
@@ -68,7 +69,7 @@ jobs:
 
   release:
     name: Release
-    if: forgejo.ref_name == env.DOVE_PROD_BRANCH && forgejo.repository == 'celenity/Dove'
+    if: forgejo.ref_name == env.DOVE_PROD_BRANCH && forgejo.repository == env.DOVE_OFFICIAL_REPO
     needs: [build]
     runs-on: codeberg-medium
     container:

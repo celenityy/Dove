@@ -64,9 +64,24 @@ verify_file "${DOVE_CI_PREP_SH}" || exit 1
 readonly DOVE_CI_PUBLISH_SH="${DOVE_SCRIPTS}/ci-push.sh"
 verify_file "${DOVE_CI_PUBLISH_SH}" || exit 1
 
+# Ensure this only runs if we're in the production branch
+if [[ "${DOVE_CURRENT_BRANCH}" != "${DOVE_PROD_BRANCH}" ]]; then
+  echo_red_text "ERROR: Unable to publish a release from branch: '${DOVE_CURRENT_BRANCH}'!"
+  exit 1
+fi
+
+# Ensure this only runs for the official repo
+if [[ "${DOVE_CURRENT_REPO}" != "${DOVE_OFFICIAL_REPO}" ]]; then
+  echo_red_text "ERROR: Unable to publish a release from repo: '${DOVE_CURRENT_REPO}'!"
+  exit 1
+fi
+
 # Get dependencies
 echo_red_text 'CI - Downloading dependencies...'
-/bin/sudo /bin/dnf update -y --refresh || exit 1
+if [[ "${DOVE_CI_TYPE}" != 'forgejo' ]]; then
+  # We run this early as part of the Forgejo workflow (so that we can get Node.js to checkout the repo), so no need to run it twice
+  /bin/sudo /bin/dnf update -y --refresh || exit 1
+fi
 /bin/sudo /bin/dnf install -y \
   bash \
   curl \
@@ -79,13 +94,13 @@ echo_red_text 'CI - Downloading dependencies...'
 "${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 'uv' || exit 1
 "${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 'python' || exit 1
 "${DOVE_BASH}" "${DOVE_CI_GET_SOURCES_SH}" 's3cmd' || exit 1
-echo_green_text 'CI - SUCCESS: Downloaded dependencies.'
+echo_green_text 'CI - SUCCESS: Downloaded dependencies!'
 
 # Get secrets
 echo_red_text 'CI - Preparing secrets...'
 set +x || exit 1
 "${DOVE_BASH}" "${DOVE_CI_PREP_SH}" 's3-releases' || exit 1
-echo_green_text 'CI - SUCCESS: Prepared secrets.'
+echo_green_text 'CI - SUCCESS: Prepared secrets!'
 
 # Set verbosity
 set_verbosity
@@ -93,10 +108,10 @@ set_verbosity
 # Get artifacts
 echo_red_text 'CI - Downloading artifacts...'
 "${DOVE_BASH}" "${DOVE_CI_DL_AR_SH}" 'all' || exit 1
-echo_green_text 'CI - SUCCESS: Downloaded artifacts.'
+echo_green_text 'CI - SUCCESS: Downloaded artifacts!'
 
 # Publish our release
 echo_red_text 'CI - Publishing release...'
 set +x || exit 1
 "${DOVE_BASH}" "${DOVE_CI_PUBLISH_SH}" || exit 1
-echo_green_text 'CI - SUCCESS: Published release.'
+echo_green_text 'CI - SUCCESS: Published release!'
