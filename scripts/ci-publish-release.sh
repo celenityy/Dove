@@ -66,13 +66,13 @@ verify_file "${DOVE_CI_PUBLISH_SH}" || exit 1
 
 # Ensure this only runs if we're in the production branch
 if [[ "${DOVE_CURRENT_BRANCH}" != "${DOVE_PROD_BRANCH}" ]]; then
-  echo_red_text "ERROR: Unable to publish a release from branch: '${DOVE_CURRENT_BRANCH}'!"
+  echo_red_text "ERROR: Unable to publish release from branch: '${DOVE_CURRENT_BRANCH}'!"
   exit 1
 fi
 
 # Ensure this only runs for the official repo
 if [[ "${DOVE_CURRENT_REPO}" != "${DOVE_OFFICIAL_REPO}" ]]; then
-  echo_red_text "ERROR: Unable to publish a release from repo: '${DOVE_CURRENT_REPO}'!"
+  echo_red_text "ERROR: Unable to publish release from repo: '${DOVE_CURRENT_REPO}'!"
   exit 1
 fi
 
