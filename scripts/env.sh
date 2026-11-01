@@ -321,12 +321,12 @@ function setup_ci() {
       readonly DOVE_CURRENT_BRANCH="${FORGEJO_REF_NAME}"
     fi
   elif [[ "${DOVE_CI_TYPE}" == 'gitlab' ]]; then
-    if [[ -z "${CI_COMMIT_BRANCH+x}" ]] || [[ "${CI_COMMIT_BRANCH}" == "" ]] ||
-      [[ "${CI_COMMIT_BRANCH}" == "null" ]]; then
-      echo "ERROR: Missing current branch! Please set 'CI_COMMIT_BRANCH'."
+    if [[ -z "${CI_COMMIT_REF_NAME+x}" ]] || [[ "${CI_COMMIT_REF_NAME}" == "" ]] ||
+      [[ "${CI_COMMIT_REF_NAME}" == "null" ]]; then
+      echo "ERROR: Missing current branch! Please set 'CI_COMMIT_REF_NAME'."
       return 1
     else
-      readonly DOVE_CURRENT_BRANCH="${CI_COMMIT_BRANCH}"
+      readonly DOVE_CURRENT_BRANCH="${CI_COMMIT_REF_NAME}"
     fi
   else
     echo "ERROR: Unable to get current branch for CI type: '${DOVE_CI_TYPE}'!"
