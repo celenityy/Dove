@@ -8,7 +8,7 @@ set +x || return 1
 # Ensure this only runs for the official repo
 if [[ "${DOVE_CURRENT_REPO}" != "${DOVE_OFFICIAL_REPO}" ]]; then
   echo_red_text "ERROR: Unable to push to S3 for repo: '${DOVE_CURRENT_REPO}'!"
-  exit 1
+  return 1
 fi
 
 # Include download utilities
