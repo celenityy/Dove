@@ -1,7 +1,14 @@
-**IMPORTANT**: We've officially migrated our issue tracker [to a new, unified one on Codeberg](https://codeberg.org/celenity/bugs/issues). **Please note that issues will no longer be accepted on GitHub, GitLab or in any repo outside of [the new unified Codeberg issue tracking repo](https://codeberg.org/celenity/bugs/issues))**.
-
-- Updated to Phoenix [`2026.09.29.2`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.09.29.2).
-- [Disabled `H264` decoding](https://codeberg.org/celenity/Dove/commit/df60dadfad04e7871bcbb71f2c0f208d0ca9d392) to reduce attack surface.
-- [Updated Firefox's Remote Settings server to `V2`](https://codeberg.org/celenity/Dove/commit/4ade978aeb6bf2dfe35d9cf40a56be3c29b28100) *(instead of V1)* to match what Firefox now uses upstream.
-- [Removed duplicate `UI` section](https://codeberg.org/celenity/Dove/commit/7923d1be673a9113e3308f98ae3f1b52f970fe72).
-- Minor tweaks/fixes/refinements and clean-up.
+- Updated to Phoenix [`2026.11.01.1`](https://codeberg.org/celenity/Phoenix/releases/tag/2026.11.01.1).
+- Switched the default DNS over HTTPS back to [Quad9](https://quad9.net/), due to them now meeting our criteria *(as well as the discontinuation of our current default provider, Mullvad)*.
+- [Enabled DNS over HTTPS for DKIM Verifier](https://codeberg.org/celenity/Dove/commit/c72dafd67129cb5c5bdcac89d53f79f2bd7c6238) by default.
+  - DKIM Verifier's default DNS provider has also been switched back to Quad9, for the same reasons outlined above.
+- [Disabled searching company/network directories for contacts when addressing emails](https://codeberg.org/celenity/Dove/commit/db8bcbd8227fd38cc5108274fffe2be615d0133b) by default.
+  - This ensures that only local address books are used.
+- [Disabled data collection UI settings](https://codeberg.org/celenity/Dove/commit/3052129aece6fd868c178915d7ca7bc8920f8f72).
+  - This removes the `Data collection to improve Thunderbird` section from `Settings` -> `Privacy & Security`.
+- [Disabled "community" features](https://codeberg.org/celenity/Dove/commit/0c1c37dd0492022d85ca1ff702d830669f7d0f71).
+  - This covers ex. donation prompts and feedback prompts/nags.
+- [First-party add-ons *(ATN-XPIHandler and uBird)* are now installed from `addons.celenity.dev` directly](https://codeberg.org/celenity/Dove/commit/c4cb5a3bd8822bd544c3da5f3acfa027a49bc044), instead of `addons.thunderbird.net`.
+  - This allows us to provide faster updates directly to users, and gives us more control over the distribution process.
+  - Note that the add-ons are still reviewed and signed by Mozilla.
+- Other minor tweaks and adjustments.
