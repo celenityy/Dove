@@ -2,7 +2,7 @@
   "policies": {
     "3rdparty": {
       "Extensions": {
-        "uBird@celenity.dev": {
+        "ubird-direct@celenity.dev": {
           "adminSettings": {
             "assetsBootstrapLocation": "https://assets.celenity.dev/ublock/dove/assets.json"
           }
@@ -53,10 +53,10 @@
           "locale"
         ]
       },
-      "atn-xpihandler@celenity.dev": {
-        "blocked_install_message": "ATN-XPIHandler: https://addons.thunderbird.net/addon/atn-xpihandler/",
+      "atn-xpihandler-direct@celenity.dev": {
+        "blocked_install_message": "ATN-XPIHandler: https://addons.celenity.dev/addons/atn-xpihandler/",
         "installation_mode": "normal_installed",
-        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/atn-xpihandler/latest.xpi",
+        "install_url": "https://releases.celenity.dev/addons/atn-xpihandler/releases/atn-xpihandler-latest.xpi",
         "private_browsing": true
       },
       "dkim_verifier@pl": {
@@ -65,23 +65,23 @@
         "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/dkim-verifier/latest.xpi",
         "private_browsing": true
       },
-      "uBird@celenity.dev": {
-        "blocked_install_message": "uBird: https://addons.thunderbird.net/addon/ubird/",
+      "ubird-direct@celenity.dev": {
+        "blocked_install_message": "uBird: https://addons.celenity.dev/addons/ubird/",
         "installation_mode": "normal_installed",
-        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/ubird/latest.xpi",
+        "install_url": "https://releases.celenity.dev/addons/ubird/releases/ubird-latest.xpi",
         "private_browsing": true
       },
       "uBlock0@raymondhill.net": {
         "installation_mode": "blocked",
         "blocked_install_message": "We're now using our own builds with our own add-on ID, so we need to ensure this is removed. uBlock Origin no longer offers official builds for Thunderbird anyways either."
       },
-      "atn-xpihandler-direct@celenity.dev": {
-        "blocked_install_message": "ATN-XPIHandler (Direct): https://codeberg.org/celenity/atn-xpihandler",
-        "private_browsing": true
+      "atn-xpihandler@celenity.dev": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "We now use direct releases from addons.celenity.dev for first-party addons instead, to provide faster updates directly from us (Note that the add-on is still reviewed and signed by Mozilla regardless)."
       },
-      "ubird-direct@celenity.dev": {
-        "blocked_install_message": "uBird (Direct): https://codeberg.org/celenity/uBird",
-        "private_browsing": true
+      "uBird@celenity.dev": {
+        "installation_mode": "blocked",
+        "blocked_install_message": "We now use direct releases from addons.celenity.dev for first-party addons instead, to provide faster updates directly from us (Note that the add-on is still reviewed and signed by Mozilla regardless)."
       },
       "{12a1584b-2123-473d-8752-e82e74e3cb1b}": {
         "blocked_install_message": "NestedQuote Remover: https://addons.thunderbird.net/addon/nestedquote-remover/",
